@@ -1,0 +1,67 @@
+13641-2002
+2000
+Kundert-Zinke2004
+Williams2014
+Stine2004
+9781601982193-summary
+Bergeron2006
+vdoc.pub
+Taraate2022
+Sutherland2002
+Vijayaraghavan-A Practical Guide for SystemVerilog Assertions
+JohnWilliams-Digital VLSI Design with Verilog
+CernyDudani-SVA- The Power of Assertions in SystemVerilog
+Digital Design - An Embedded Systems Approach Using Verilog
+Lee1999
+FPGA-Design
+Thomas-Moorby1998
+Sagdeo1998
+Golze1996
+9780429196171
+SpearTumbush-SystemVerilog for Verification
+Chonnad-Balachander2004
+FreescaleVerilog
+Mintz-Ekendahl2007
+The Complete Verilog Book (Vivek Sagdeo)
+VerilogIntroduction
+Foster2003
+s00084ed1v01y200702dcs013
+Vijayaraghavan-Ramanathan2005
+document
+Digital Design (4th Edition) by M. Morris Mano, Michael D. Ciletti (z-lib.org)
+0136392539
+intro
+Hamblen-Furman2001
+Taraate2020
+StuartSutherland-The Verilog PLI Handbook
+BeningFoster-Principles of Verifiable RTL Design
+verilog
+FosterKrolnikLacey-Assertion-Based Design
+Mittra1999
+49816
+VerilogQuickRef
+Williams2008
+ch9-assertions4.jpg
+Taraate2019
+Sutherland1999
+FPGA Prototyping by Verilog Examples - 2008 - Chu
+Sutherland-Mills2007
+sv
+Mehta2020
+s00060ed1v01y200610dcs006
+BallJones-Computer Aided Verification
+FSM‐Based Digital Design Using Verilog HDL - 2008 - Minns
+Mehta2018
+Cohen1999
+ch9-assertions1.jpg
+LaMeres2019
+Fundamentals of Digital Logic with Verilog Design by Stephen Brown, Zvonko Vranesic (z-lib.org)
+SutherlandMills-Verilog and SystemVerilog Gotchas
+1800-2005
+Glasser2009
+Digital Design With an Introduction to the Verilog HDL, VHDL, and SystemVerilog by M. Morris R. Mano, Michael D. Ciletti (z-lib.org)
+Lee2002
+Verilog
+Cerny2010
+CummingsSNUG2008Boston
+AshokMehta-System Verilog Assertions and Functional Coverage
