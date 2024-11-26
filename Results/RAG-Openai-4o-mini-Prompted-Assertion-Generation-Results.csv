@@ -192,7 +192,7 @@ Assertion 1:
 This assertion checks that at every rising edge of the clock (posedge clk), the value of the output (out) from the delay module matches the expected value (reference_queue[0]). 
 This assertion should be in the format:
 ```assert property(xxxx)```
-","Here's the rewritten version of the provided Verilog code snippet with the useful assertion included:
+","Here's the rewritten version of the provided Verilog code snippet with the requested assertion added:
 
 ```verilog
 module delay_tb2;
@@ -203,16 +203,15 @@ module delay_tb2;
    localparam logic HAS_ASYNC_RESET = 1'b1;   
    localparam logic RESET_ACTIVATION_LEVEL = 1'b1;   
    localparam logic [WIDTH-1:0] RESET_VALUE = '0; 
-   logic clk = 1'b0;
-   logic rst;
-   logic en;
+   logic             clk = 1'b0;
+   logic             rst;
+   logic             en;
    logic [WIDTH-1:0] in; 
    logic [WIDTH-1:0] out;
 
    delay #(.CYCLES(CYCLES), .WIDTH(WIDTH), .HAS_ASYNC_RESET(HAS_ASYNC_RESET),
            .RESET_ACTIVATION_LEVEL(RESET_ACTIVATION_LEVEL), 
            .RESET_VALUE(RESET_VALUE))
-   
    DUT (.*);
    
    initial begin : generate_clock
@@ -253,14 +252,13 @@ module delay_tb2;
         reference_queue = {reference_queue[1:$], in};
      end
 
-   // Assertion 1: Check that at every rising edge of the clock (posedge clk),
-   // the value of the output (out) from the delay module matches the expected value (reference_queue[0]).
+   // Assertion 1: Check that at every rising edge of the clock, the output matches the expected value
    assert property (@(posedge clk) out === reference_queue[0]);
 
 endmodule
 ```
 
-In this rewritten version, I've added the specified assertion after the `always_ff` block. This assertion checks that at every rising edge of the clock, the output `out` matches the expected value stored in `reference_queue[0]`."
+In this rewritten version, the assertion checks that at every rising edge of the clock (`posedge clk`), the value of the output (`out`) from the delay module matches the expected value (`reference_queue[0]`)."
 "module delay_tb3;
 
    localparam NUM_TESTS = 1000;
@@ -432,7 +430,7 @@ This assertion ensures that the output (out) of the delay module matches the inp
 Assertion 2:
 This assertion ensures that the output (out) of the delay module matches the parameter RESET_VALUE on the posedge of clk. But this assertion is disabled when count equals CYCLES.
 
-","Here's a rewritten version of the provided Verilog code snippet with the specified assertions added:
+","Here is a rewritten version of your Verilog code snippet that includes the specified assertions:
 
 ```verilog
 module delay_tb3;
@@ -443,16 +441,16 @@ module delay_tb3;
    localparam logic HAS_ASYNC_RESET = 1'b1;   
    localparam logic RESET_ACTIVATION_LEVEL = 1'b1;   
    localparam logic [WIDTH-1:0] RESET_VALUE = '0; 
-   
-   logic clk = 1'b0;
-   logic rst;
-   logic en;
+   logic             clk = 1'b0;
+   logic             rst;
+   logic             en;
    logic [WIDTH-1:0] in; 
    logic [WIDTH-1:0] out;
 
    delay #(.CYCLES(CYCLES), .WIDTH(WIDTH), .HAS_ASYNC_RESET(HAS_ASYNC_RESET),
            .RESET_ACTIVATION_LEVEL(RESET_ACTIVATION_LEVEL), 
            .RESET_VALUE(RESET_VALUE))
+
    DUT (.en(1'b1), .*);
 
    initial begin : generate_clock
@@ -485,22 +483,24 @@ module delay_tb3;
      if (rst) count = 0;
      else if (count < CYCLES) count ++;
 
-   // Assertion 1: Ensure output matches input delayed by CYCLES
-   assert property (@(posedge clk)
-      (rst || count < CYCLES) |=> (out == in) 
-   ) else $error(""Assertion 1 failed: Output does not match input delayed by CYCLES when reset is inactive and count is sufficient."");
+   // Assertion 1: Output matches input delayed by CYCLES
+   property p_output_matches_input_delayed;
+      @(posedge clk) 
+      (count >= CYCLES && !rst) |=> (out === in);
+   endproperty
+   assert p_output_matches_input_delayed;
 
-   // Assertion 2: Ensure output matches RESET_VALUE
-   assert property (@(posedge clk)
-      (count == CYCLES) |=> (out == RESET_VALUE) 
-   ) else $error(""Assertion 2 failed: Output does not match RESET_VALUE when count equals CYCLES."");
+   // Assertion 2: Output matches RESET_VALUE when count equals CYCLES
+   property p_output_matches_reset_value;
+      @(posedge clk) 
+      (count == CYCLES) |=> (out === RESET_VALUE);
+   endproperty
+   assert p_output_matches_reset_value;
 
 endmodule
 ```
 
-In this version, the assertions are added to ensure that:
-- Assertion 1 checks that `out` matches `in` delayed by the specified number of cycles, only when the reset is inactive and the count is sufficient.
-- Assertion 2 checks that `out` matches `RESET_VALUE` when `count` equals `CYCLES`."
+In this rewritten version, I have included the two assertions as specified. Assertion 1 checks that the output matches the input delayed by the specified number of cycles, and Assertion 2 checks that the output matches the reset value when the count equals the specified cycles. Both assertions are appropriately disabled based on the conditions described."
 "module ff_tb1;
 
    localparam NUM_TESTS = 10000;   
@@ -652,15 +652,15 @@ always @(rst) begin
       assert(xxxx);      
 end
 ```
-","Here is the rewritten version of the Verilog testbench with the specified assertions included:
+","Here is the rewritten version of the Verilog code snippet with the specified assertions included:
 
 ```verilog
 module ff_tb1;
 
    localparam NUM_TESTS = 10000;   
-   logic clk=1'b0, rst, en, in, out;
+   logic clk = 1'b0, rst, en, in, out;
 
-   ff DUT (.en(1'b1), .*);
+   ff DUT (.en(1'b1), .rst(rst), .in(in), .out(out));
 
    initial begin : generate_clock
       while(1)
@@ -674,13 +674,13 @@ module ff_tb1;
       in <= 1'b0;      
       en <= 1'b0;
 
-      for (int i=0; i < 5; i++)
+      for (int i = 0; i < 5; i++)
         @(posedge clk);
 
       @(negedge clk);
       rst <= 1'b0;
 
-      for (int i=0; i < NUM_TESTS; i++) begin    
+      for (int i = 0; i < NUM_TESTS; i++) begin    
          in <= $random;
          en <= $random;
          @(posedge clk);
@@ -690,22 +690,23 @@ module ff_tb1;
       $display(""Tests completed."");
    end 
 
-   // Assertion 1: Checks that whenever in is true on a clock cycle,
-   // out must be true in the following clock cycle, disabled when rst is high.
-   assert property (@(posedge clk) (in == 1'b1) |-> (out == 1'b1)) disable iff (rst);
+   // Assertion 1: Check that whenever the signal in is true on a clock cycle,
+   // the signal out must be true in the following clock cycle, evaluated on rising edge of clk,
+   // disabled when rst is high.
+   assert property (@(posedge clk) disable iff (rst) (in == 1'b1) |=> (out == 1'b1));
 
    // Assertion 2: Check that out is not asserted on every rising edge after rst is 1.
-   assert property (@(posedge clk) (rst == 1'b1) |-> (out == 1'b0));
+   assert property (@(posedge clk) disable iff (rst) (rst == 1'b0) |=> (out == 1'b1));
 
-   // Assertion 3: Check for asynchronous reset, when rst is 1, out should be 0.
+   // Assertion 3: Check for the asynchronous reset, when rst is 1, out signal should be 0.
    always @(rst) begin  
-      assert (rst == 1'b1) |-> (out == 1'b0);      
+      assert (rst == 1'b1) |=> (out == 1'b0);      
    end
 
 endmodule
 ```
 
-In this rewritten version, I have added the three assertions according to your specifications. Each assertion checks the respective conditions regarding the signals `in`, `out`, and `rst`."
+This code includes the three assertions as specified, ensuring that they follow the requirements for checking the behavior of the flip-flop related to the reset conditions and input/output relationships."
 "module ff_tb2;
 
    localparam NUM_TESTS = 10000;   
@@ -847,7 +848,7 @@ Assertion 4:
 Check for the asynchronous reset, i.e., when rst is 1, out signal should be 0.
 This assertion should be in the format:
 ``` always @(rst) #1 assert(xxxx)```
-","Here is the rewritten version of your Verilog testbench with the requested assertions included:
+","Here is the rewritten version of your Verilog testbench with the specified assertions included:
 
 ```verilog
 module ff_tb2;
@@ -885,31 +886,22 @@ module ff_tb2;
       $display(""Tests completed."");
    end 
 
-   // Assertion 1: Check if the output is equal to the input from one cycle in the past
-   property p1_output_equals_input;
-      @(posedge clk) disable iff (rst) (in == $past(out));
-   endproperty
-   assert property (p1_output_equals_input);
+   // Assertion 1: Check if output is equal to input from one cycle in the past
+   assert property (@(posedge clk) (in == $past(out)));
 
-   // Assertion 2: Check that the output does not change when enable is not asserted
-   property p2_output_stable_when_not_enabled;
-      @(posedge clk) disable iff (rst) (!en | out == $past(out));
-   endproperty
-   assert property (p2_output_stable_when_not_enabled);
+   // Assertion 2: Check that output doesn't change when enable isn't asserted (using $past)
+   assert property (@(posedge clk) (!en | (out == $past(out)));
 
-   // Assertion 3: Another assertion for output stability when enable is not asserted
-   property p3_output_stable_when_not_enabled;
-      @(posedge clk) disable iff (rst) (!en | $stable(out));
-   endproperty
-   assert property (p3_output_stable_when_not_enabled);
+   // Assertion 3: Check that output doesn't change when enable isn't asserted (using $stable)
+   assert property (@(posedge clk) (!en | $stable(out)));
 
-   // Assertion 4: Check for the asynchronous reset, i.e., when rst is 1, out should be 0
-   always @(rst) #1 assert (rst == 1'b1 -> out == 1'b0);
+   // Assertion 4: Check for asynchronous reset
+   always @(rst) #1 assert(out == 1'b0) if (rst == 1'b1);
 
 endmodule
 ```
 
-This version of the testbench includes the required assertions based on your specifications."
+This code includes the specified assertions that check the conditions outlined in your request."
 "module fifo_tb1;
 
    localparam WIDTH = 8;
@@ -1114,14 +1106,14 @@ This assertion should be with the format:
 ```
 assert property (xxxx)
 ```
-","Here is the rewritten version of your Verilog code snippet with the requested assertions included:
+","Here is the rewritten version of the provided Verilog code snippet with the specified assertions included:
 
 ```verilog
 module fifo_tb1;
 
    localparam WIDTH = 8;
    localparam DEPTH = 16;
-
+   
    logic             clk;
    logic             rst;
    logic             full;
@@ -1132,7 +1124,7 @@ module fifo_tb1;
    logic [WIDTH-1:0] rd_data;
 
    fifo #(.WIDTH(WIDTH), .DEPTH(DEPTH)) DUT (.*);
-
+   
    initial begin : generate_clock
       clk = 1'b0;
       while(1) #5 clk = ~clk;
@@ -1155,35 +1147,31 @@ module fifo_tb1;
       end
 
       disable generate_clock;
-      $display(""""Tests Completed."""");      
+      $display(""Tests Completed."");      
    end // initial begin
 
-   // Assertion 1: Check that when clk is at posedge, there is never a write while the FIFO is full.
+   // Assertion 1-2: Check that there is no write while the FIFO is full or read while it is empty
    always @(posedge clk) begin
-      assert(!(wr_en && full)) else $error(""Write attempted while FIFO is full."");
+      assert(!(wr_en && full)) else $error(""Write attempted when FIFO is full."");
+      assert(!(rd_en && empty)) else $error(""Read attempted when FIFO is empty."");
    end 
 
-   // Assertion 2: Check that when clk is at posedge, there is never a read while the FIFO is empty.
-   always @(posedge clk) begin
-      assert(!(rd_en && empty)) else $error(""Read attempted while FIFO is empty."");
-   end 
+   // Assertion 3: Check that valid write and full cannot be 1 at the same time
+   assert property (@(posedge clk) (DUT.valid_wr && full) |-> 0);
 
-   // Assertion 3: Check that when clk is at posedge, DUT.valid_wr and full signal cannot be 1 at the same time.
-   assert property (@(posedge clk) (DUT.valid_wr && full) |-> (DUT.valid_wr == 0));
+   // Assertion 4: Check that valid read and empty cannot be 1 at the same time
+   assert property (@(posedge clk) (DUT.valid_rd && empty) |-> 0);
 
-   // Assertion 4: Check that when clk is at posedge, DUT.valid_rd and empty signal cannot be 1 at the same time.
-   assert property (@(posedge clk) (DUT.valid_rd && empty) |-> (DUT.valid_rd == 0));
+   // Assertion 5: Check if valid_wr is high, full must be 0
+   assert property (@(posedge clk) (DUT.valid_wr) |-> !full);
 
-   // Assertion 5: Check if DUT.valid_wr is high, then full must be 0.
-   assert property (@(posedge clk) (DUT.valid_wr) |-> (full == 0));
-
-   // Assertion 6: Check if DUT.valid_rd is high, then empty must be 0.
-   assert property (@(posedge clk) (DUT.valid_rd) |-> (empty == 0));
+   // Assertion 6: Check if valid_rd is high, empty must be 0
+   assert property (@(posedge clk) (DUT.valid_rd) |-> !empty);
 
 endmodule
 ```
 
-This version contains the specified assertions to ensure proper behavior of the FIFO module, checking for write and read conditions based on the full and empty signals."
+In this rewritten code, the assertions are added as per your requirements to ensure the proper functioning of the FIFO."
 "module fifo_tb2;
 
    localparam WIDTH = 8;
@@ -1349,7 +1337,7 @@ This assertion should be with the format:
 ```
 assert property (xxxx)
 ```
-","Here's the rewritten version of the Verilog code snippet with the specified assertions added:
+","Here is a rewritten version of the provided Verilog code snippet, including the specified assertions:
 
 ```verilog
 module fifo_tb2;
@@ -1394,21 +1382,24 @@ module fifo_tb2;
       $display(""Tests Completed."");      
    end  
 
-   // Assertion 1: Check for write while FIFO is full
-   a1: assert property (@(posedge clk) (wr_en && full) |=> $error(""Attempted to write while FIFO is full at time %t"", $time));
+   // Assertion 1: Check that we never write to the FIFO when it is full
+   a1: assert property (@(posedge clk) (!full) |=> (wr_en |-> !full));
 
-   // Assertion 2: Check for read while FIFO is empty
-   a2: assert property (@(posedge clk) (rd_en && empty) |=> $error(""Attempted to read while FIFO is empty at time %t"", $time));
+   // Assertion 2: Check that we never read from the FIFO when it is empty
+   a2: assert property (@(posedge clk) (!empty) |=> (rd_en |-> !empty));
 
-   // Assertion 3: Check for valid write followed by valid read with matching data
-   logic [WIDTH-1:0] data;
-   a3: assert property (@(posedge clk) (wr_en && !full) |=> (data = wr_data) |=> ##[1:$] (rd_en && !empty && (rd_data == data)) 
-      else $error(""Data mismatch at time %t: Expected %0d but got %0d"", $time, data, rd_data));
+   // Assertion 3: Check that a valid write leads to a matching read
+   logic [WIDTH-1:0] data; // local variable to store wr_data
+   a3: assert property (
+      @(posedge clk) 
+      (wr_en && !full && (data = wr_data)) |=> 
+      ##[1:$] (rd_en && !empty && (rd_data == data))
+   ) else $display(""At time %0t: Matching read for data %0d"", $time, rd_data);
 
 endmodule
 ```
 
-This version includes the required assertions to check FIFO properties, ensuring that writes do not occur when the FIFO is full, reads do not occur when the FIFO is empty, and that valid writes lead to matching reads. Each assertion has a custom error message to provide context when the assertion fails."
+In this rewritten version, three assertions have been added as per the requirements. Assertion 1 ensures that no write occurs while the FIFO is full, Assertion 2 ensures that no read occurs while the FIFO is empty, and Assertion 3 checks that a valid write eventually leads to a read of the same data, with a message logged if the assertion is satisfied."
 "module fifo_tb3;
 
    localparam WIDTH = 8;
@@ -1580,7 +1571,7 @@ This assertion should be with the format:
 ```
 assert property (xxxx)
 ```
-","Here is a rewritten version of the Verilog code snippet that includes the specified assertions:
+","Here is a rewritten version of the Verilog code snippet containing the specified assertions:
 
 ```verilog
 module fifo_tb3;
@@ -1596,8 +1587,9 @@ module fifo_tb3;
    logic             empty; 
    logic             rd_en; 
    logic [WIDTH-1:0] rd_data;
-   logic [WIDTH-1:0] wr_tag; // To keep track of write tags
-   logic [WIDTH-1:0] serving_id; // To track the serving ID for reads
+   logic [WIDTH-1:0] wr_tag; // Tag for write operations
+   logic [WIDTH-1:0] rd_tag; // Tag for read operations
+   integer serving_id;       // Counter to track writes
 
    fifo #(.WIDTH(WIDTH), .DEPTH(DEPTH)) DUT (.*);
    
@@ -1612,6 +1604,8 @@ module fifo_tb3;
       rd_en <= 1'b0;
       wr_en <= 1'b0;
       wr_data <= '0;      
+      serving_id = 0; // Initialize serving_id
+      
       for (int i=0; i < 5; i++) @(posedge clk);
       @(negedge clk);
       rst <= 1'b0;
@@ -1620,6 +1614,8 @@ module fifo_tb3;
          wr_data <= $random;
          wr_en <= $random;
          rd_en <= $random;
+         wr_tag <= serving_id; // Assign current serving id to the write tag
+         serving_id++; // Increment serving id for the next write
          @(posedge clk);         
       end
 
@@ -1627,23 +1623,38 @@ module fifo_tb3;
       $display(""Tests Completed."");
    end
 
-   // Assertion 1: Check that a write does not occur when FIFO is full
-   assert property ( @(posedge clk) !(wr_en && full) );
+   // Assertion 1: Check that there is never a write while the FIFO is full
+   assert property (@(posedge clk) 
+      (wr_en && full) |=> $fatal(""Error: Write operation attempted while FIFO is full."")
+   );
 
-   // Assertion 2: Check that a read does not occur when FIFO is empty
-   assert property ( @(posedge clk) !(rd_en && empty) );
+   // Assertion 2: Check that there is never a read while the FIFO is empty
+   assert property (@(posedge clk) 
+      (rd_en && empty) |=> $fatal(""Error: Read operation attempted while FIFO is empty."")
+   );
 
-   // Assertion 3: Check that on each valid write, we have a corresponding valid read with matching tag
-   // Assume wr_tag is assigned during write operations
-   assert property ( @(posedge clk) 
-      (wr_en) |=> 
-      (wr_tag = serving_id) ##1 (rd_en && (rd_data == wr_data))
+   // Assertion 3: Check that on each valid write, the read matches the original write data with the same tag
+   logic valid_write; // To check if write is valid
+   logic [WIDTH-1:0] written_data;
+
+   always @(posedge clk) begin
+      if (wr_en) begin
+         written_data <= wr_data; // Store the written data
+         valid_write <= 1'b1; // Mark the write as valid
+      end else begin
+         valid_write <= 1'b0; // Reset valid write if not writing
+      end
+   end
+
+   assert property (@(posedge clk) 
+      (valid_write && rd_en && (rd_tag == wr_tag)) |=> 
+      (rd_data == written_data) ##1
    );
 
 endmodule
 ```
 
-In this rewritten version, the specified FIFO properties are checked with assertions. The first two assertions ensure that there is no write when the FIFO is full and no read when the FIFO is empty. The third assertion links writes and reads through a tagging mechanism, ensuring that the correct data is read after a valid write."
+In this updated version, I have added the specified assertions to check for FIFO properties according to the descriptions provided. Each assertion is designed to enforce the behavior of the FIFO regarding writing and reading operations."
 "module fifo_tb4;
 
    localparam WIDTH = 8;
@@ -1821,7 +1832,7 @@ This assertion should be with the format:
 ```
 assert property (xxxx)
 ```
-","Here's the rewritten version of your Verilog testbench with the requested assertions included:
+","Here is the rewritten version of the `fifo_tb4` module with the specified assertions included:
 
 ```verilog
 module fifo_tb4;
@@ -1855,10 +1866,6 @@ module fifo_tb4;
       @(negedge clk);
       rst <= 1'b0;
 
-      // FIFO property assertions
-      assert property (@(posedge clk) !(wr_en && full)) else $error(""Write attempted while FIFO is full."");
-      assert property (@(posedge clk) !(rd_en && empty)) else $error(""Read attempted while FIFO is empty."");
-
       for (int i=0; i < 10000; i++) begin
          wr_data <= $random;
          wr_en <= $random;
@@ -1870,17 +1877,20 @@ module fifo_tb4;
       $display(""Tests Completed."");
    end
 
-   // Assertion to check if read data equals the first element of data stored in the FIFO
-   logic [WIDTH-1:0] correct_rd_data; // Assume this is the correct read data
-   always_ff @(posedge clk) begin
-      // Assuming correct_rd_data is updated correctly in the FIFO implementation
-      assert property (@(posedge clk) rd_en |=> (rd_data == correct_rd_data)) else $error(""Read data does not match the expected first element."");
-   end
+   // Assertion 1: Check that there is never a write while the FIFO is full
+   assert property (@(posedge clk) !(full && wr_en));
+
+   // Assertion 2: Check that there is never a read while the FIFO is empty
+   assert property (@(posedge clk) !(empty && rd_en));
+
+   // Assertion 3: Check that the read data should equal the first element in FIFO
+   logic [WIDTH-1:0] correct_rd_data; // Assume this is defined and set appropriately in the FIFO implementation
+   assert property (@(posedge clk) (rd_en |=> (rd_data == correct_rd_data)));
 
 endmodule
 ```
 
-In this rewritten version, I added two assertions to check for write attempts when the FIFO is full and read attempts when the FIFO is empty. I also included a third assertion to verify that the read data matches the expected value. Adjust the logic for `correct_rd_data` according to your FIFO implementation."
+In this code, the assertions have been added to check the FIFO properties as described. The assertions ensure that a write operation does not occur when the FIFO is full, a read operation does not occur when the FIFO is empty, and that the read data matches the expected first element in the FIFO."
 "module mux2x1_tb;
 
    logic in0, in1, sel;
@@ -1960,35 +1970,35 @@ This assertion should be with the format:
 ```
 assert (xxxx)
 ```
-","Here is the rewritten version of the provided Verilog code snippet with the specified immediate assertion included:
+","Here's the rewritten version of the Verilog code snippet with the specified immediate assertion included:
 
 ```verilog
 module mux2x1_tb;
 
    logic in0, in1, sel;
+   
    logic out_assign, out_if, out_if2, out_case;   
 
    localparam period = 20;
-
+   
    mux2x1_assign DUT_ASSIGN (.out(out_assign), .*);
    mux2x1_if DUT_IF (.out(out_if), .*);
    mux2x1_if2 DUT_IF2 (.out(out_if2), .*);
    mux2x1_case DUT_CASE (.out(out_case), .*);
 
-   // Immediate assertion to check if out_assign equals the expected correct output
+   // Immediate assertion to check if the output of DUT_ASSIGN equals the expected output
    always_comb begin
-      // Assuming 'correct' is the expected output based on in0, in1, and sel
-      logic correct;
-      correct = (sel) ? in1 : in0; // Example logic for expected output
+       // Assuming 'correct' is defined or calculated based on inputs in0, in1, and sel
+       logic correct = (sel) ? in1 : in0; // Example logic for expected output
 
-      // Immediate assertion
-      assert (out_assign == correct) else $fatal(""Immediate Assertion Failed: out_assign does not equal correct value."");
+       assert (out_assign == correct) else
+           $fatal(""Assertion failed: out_assign does not equal correct"");
    end
 
 endmodule
 ```
 
-In this code, an immediate assertion is added within an `always_comb` block to check whether `out_assign` equals the expected value `correct`. If the assertion fails, it calls `$fatal` to terminate the simulation with an error message."
+In this code, the immediate assertion checks if the output `out_assign` from the `DUT_ASSIGN` module equals the expected value `correct`, based on the select signal `sel` and the inputs `in0` and `in1`."
 "module register_tb1;
 
    localparam NUM_TESTS = 10000;
@@ -2159,7 +2169,7 @@ This assertion should be with the format:
 ```
 always @(rst) assert(xxxx)
 ```
-","Here is the rewritten version of the provided Verilog code snippet with the requested assertions included:
+","Here is the rewritten version of the provided Verilog code snippet with the specified assertions added:
 
 ```verilog
 module register_tb1;
@@ -2169,7 +2179,7 @@ module register_tb1;
    logic clk, rst, en;
    logic [WIDTH-1:0] in, out;
    
-   register #(.WIDTH(WIDTH)) DUT (.en(1'b1), .in(in), .out(out));
+   register #(.WIDTH(WIDTH)) DUT (.en(1'b1), .in(in), .out(out), .rst(rst));
 
    initial begin : generate_clock
       clk = 1'b0;
@@ -2198,22 +2208,27 @@ module register_tb1;
       $display(""Tests completed."");
    end 
 
-   // Assertion 1: Validate output equals input when rst = 0
-   assert property (@(posedge clk) (rst == 0) |=> (out == in));
+   // Assertion 1: Check output equals input when rst is 0 at posedge clk
+   assert property (@(posedge clk) (rst == 0) |-> (out === in)) 
+      else $fatal(""Assertion 1 failed: Output does not equal input when rst is 0."");
 
-   // Assertion 2: Validate output equals input in last cycle when rst = 0
-   assert property (@(posedge clk) (rst == 0) |=> (out == in));
+   // Assertion 2: Repeat check for cases where rst is 0 at posedge clk
+   assert property (@(posedge clk) (rst == 0) |-> (out === in)) 
+      else $fatal(""Assertion 2 failed: Output does not equal input when rst is 0."");
 
-   // Assertion 3: Validate output equals 0 when rst = 1
-   assert property (@(posedge clk) (rst == 1) |=> (out == 0));
+   // Assertion 3: Check output equals 0 when rst is 1 at posedge clk
+   assert property (@(posedge clk) (rst == 1) |-> (out === 0)) 
+      else $fatal(""Assertion 3 failed: Output is not 0 when rst is 1."");
 
-   // Assertion 4: Immediate assertion to check out equals 0 when rst equals 1
-   always @(rst) assert(rst == 1 |=> (out == 0));
+   // Assertion 4: Immediate assertion in an always block for rst equals 1
+   always @(rst) 
+      assert (rst == 1 -> out === 0) 
+      else $fatal(""Assertion 4 failed: Output is not 0 when rst is 1."");
 
 endmodule
 ```
 
-This code includes the specified assertions to check the behavior of the `register` module under various conditions related to the `rst` signal."
+In this rewritten code, the assertions have been implemented according to your specifications, ensuring that they check the conditions outlined for each case."
 "module register_tb2;
 
    localparam NUM_TESTS = 10000;
@@ -2398,7 +2413,7 @@ This assertion should be with the format:
 ```
 always @(rst) assert(xxxx)
 ```
-","Here is the rewritten version of the Verilog code snippet with the requested assertions included:
+","Here is the rewritten version of your Verilog code snippet with the requested assertions included:
 
 ```verilog
 module register_tb2;
@@ -2442,22 +2457,34 @@ module register_tb2;
       $display(""Tests completed."");
    end 
 
-   // Assertion 1: Validate output under rst=0 and en=1
-   assert property (@(posedge clk) (rst == 0) |-> (en == 1) -> (out == $past(in)));
+   // Assertion 1: Check output equals input when rst=0 and en=1
+   always @(posedge clk) begin
+      assert property (rst == 0 && en == 1 |-> out == in)
+      else $error(""Assertion 1 failed: Output does not equal input when rst=0 and en=1."");
+   end
 
-   // Assertion 2: Validate output under rst=0 and en=0
-   assert property (@(posedge clk) (rst == 0) |-> (en == 0) -> (out == $past(out)));
+   // Assertion 2: Check output equals previous output when rst=0 and en=0
+   always @(posedge clk) begin
+      assert property (rst == 0 && en == 0 |-> out == $past(out))
+      else $error(""Assertion 2 failed: Output does not equal previous output when rst=0 and en=0."");
+   end
 
-   // Assertion 3: Validate output does not change under rst=0 and en=0
-   assert property (@(posedge clk) (rst == 0) |-> (en == 0) -> (out == $past(out)));
+   // Assertion 3: Check output does not change when rst=0 and en=0
+   always @(posedge clk) begin
+      assert property (rst == 0 && en == 0 |-> out == $past(out))
+      else $error(""Assertion 3 failed: Output changed when rst=0 and en=0."");
+   end
 
-   // Assertion 4: Immediate assertion when rst is 1
-   always @(rst) assert (rst == 1 -> out == 0);
+   // Assertion 4: Check output equals 0 when rst=1
+   always @(rst) begin
+      assert (rst == 1 -> out == 0)
+      else $error(""Assertion 4 failed: Output is not 0 when rst=1."");
+   end
 
 endmodule
 ```
 
-This code snippet now contains the four assertions as per your description, integrated into the testbench module."
+This code now includes the specified assertions, each serving the described purpose."
 "module simple_pipeline_tb;
 
    localparam int NUM_TESTS = 1000;
@@ -2647,7 +2674,7 @@ This assertion should be with the format:
 ```
 assert property (xxxx)
 ```
-","Here is the rewritten version of the Verilog code snippet with the specified assertions included:
+","Here is the rewritten Verilog code snippet with the specified assertions included:
 
 ```verilog
 module simple_pipeline_tb;
@@ -2658,9 +2685,7 @@ module simple_pipeline_tb;
    logic          clk, rst, valid_in, valid_out;
    logic [WIDTH-1:0] in[8];
    logic [WIDTH-1:0] out;
-   
-   // Assuming DUT has a parameter LATENCY
-   localparam int LATENCY = simple_pipeline.LATENCY;
+   localparam int LATENCY = DUT.LATENCY; // Assuming DUT.LATENCY is defined
 
    simple_pipeline #(.WIDTH(WIDTH)) DUT (.*);
 
@@ -2690,30 +2715,22 @@ module simple_pipeline_tb;
       disable generate_clock;
    end
 
-   // Assertion 1: Check that output is correct after latency when rst is 0
-   assert property (@(posedge clk) 
-                    (rst == 0) |-> (now >= LATENCY * 10ns) -> (out == in[$past(LATENCY)]))
-   else $error(""Output is not correct based on input values from DUT.LATENCY cycles ago."");
+   // Assertion 1: Check that once the pipeline reaches its defined latency, the output is correct based on the input values from DUT.LATENCY cycles ago
+   assert property (rst == 0 |-> (now >= LATENCY * 10ns) |=> (out == in[(LATENCY - 1) % 8]));
 
-   // Assertion 2: Check that valid_out remains low until latency has been reached when rst is 0
-   assert property (@(posedge clk) 
-                    (rst == 0) |-> (valid_out == 0) throughout (now < LATENCY * 10ns))
-   else $error(""valid_out is not low until pipeline latency has been reached."");
+   // Assertion 2: Check that valid_out remains low until the pipeline latency has been reached
+   assert property (rst == 0 |-> (now < LATENCY * 10ns) |=> (valid_out == 0));
 
-   // Assertion 3: Check that valid_out matches valid_in from DUT.LATENCY cycles ago when rst is 0
-   assert property (@(posedge clk) 
-                    (rst == 0) |-> (valid_out == $past(valid_in, LATENCY)))
-   else $error(""valid_out does not match valid_in from DUT.LATENCY cycles ago."");
+   // Assertion 3: Check that valid_out matches valid_in from DUT.LATENCY cycles ago
+   assert property (rst == 0 |-> (now >= LATENCY * 10ns) |=> (valid_out == valid_in[(LATENCY - 1) % 8]));
 
-   // Assertion 4: Check that out remains low until pipeline latency has been reached when rst is 0
-   assert property (@(posedge clk) 
-                    (rst == 0) |-> (out == 0) throughout (now < LATENCY * 10ns))
-   else $error(""out is not low until pipeline latency has been reached."");
+   // Assertion 4: Check that out remains low until the pipeline latency has been reached
+   assert property (rst == 0 |-> (now < LATENCY * 10ns) |=> (out == 0));
 
 endmodule
 ```
 
-Make sure to replace `10ns` with the appropriate time unit used in your simulation environment if necessary, and adjust the conditions in the assertions based on your specific design requirements."
+Please note that the syntax for assertions in SystemVerilog is based on the assumption that `LATENCY` is defined and represents the latency of the DUT instance. Adjust the indexing based on how your pipeline handles the input and output values."
 "module simple_pipeline_with_en_tb;
 
    localparam int NUM_TESTS = 10000;
@@ -2910,14 +2927,14 @@ This assertion should be with the format:
 assert property (xxxx)
 ```
 
-","Here is the rewritten version of the provided Verilog code snippet with the requested assertions included:
+","Here is a rewritten version of the Verilog testbench with the requested assertions included:
 
 ```verilog
 module simple_pipeline_with_en_tb;
 
    localparam int NUM_TESTS = 10000;
    localparam int WIDTH = 8;
-   localparam int LATENCY = 3; // Assuming LATENCY is defined as 3 for example
+   localparam int LATENCY = DUT.LATENCY; // Assuming DUT.LATENCY is defined in the DUT
 
    logic          clk, rst, en, valid_in, valid_out;
    logic [WIDTH-1:0] in[8];
@@ -2953,24 +2970,27 @@ module simple_pipeline_with_en_tb;
       disable generate_clock;
    end
 
-   // Assertions
-   always @(posedge clk) begin
-      if (!rst) begin
-         // Assertion 1: Check output matches expected value after latency when en is high
-         assert property (@(posedge clk) (en && ($past(rst, LATENCY) == 0)) |=> (out == model_function($past(in, LATENCY))));
+   // Assertion 1: Check output matches expected value after latency when rst is 0
+   assert property ( 
+      !rst |-> ( ((out == model_function(in[$past(clk, LATENCY)])) && (en)) throughout (DUT.LATENCY) )
+   );
 
-         // Assertion 2: Check valid_out remains low until latency has gone
-         assert property (@(posedge clk) (en && ($past(rst) == 0)) |=> valid_out == 0 throughout [1:$past(LATENCY)]);
-         
-         // Assertion 3: Check valid_out matches valid_in from LATENCY cycles ago
-         assert property (@(posedge clk) (en && ($past(rst) == 0)) |=> (valid_out == $past(valid_in, LATENCY)));
+   // Assertion 2: Check valid_out remains low until DUT.LATENCY clocks have gone when rst is 0
+   assert property ( 
+      !rst |-> (valid_out == 1'b0 throughout (DUT.LATENCY) )
+   );
 
-         // Assertion 4: Check out remains zero until LATENCY clocks has gone
-         assert property (@(posedge clk) (en && ($past(rst) == 0)) |=> (out == 0 throughout [1:$past(LATENCY)]));
-      end
-   end
+   // Assertion 3: Check valid_out matches valid_in from DUT.LATENCY cycles ago, when en is high
+   assert property ( 
+      !rst |-> (valid_out == $past(valid_in, LATENCY) when (en))
+   );
+
+   // Assertion 4: Check out remains zero until DUT.LATENCY clocks have gone when rst is 0
+   assert property ( 
+      !rst |-> (out == 0 throughout (DUT.LATENCY) )
+   );
 
 endmodule
 ```
 
-In this code, the assertions are placed within an `always` block that triggers on the rising edge of the clock and checks the conditions based on the specified requirements. Make sure to replace `model_function` with the actual function that computes the expected output based on the input values from `DUT.LATENCY` cycles ago."
+In this version of the testbench, each assertion is added according to the specified requirements. Note that you may need to replace `model_function(in[$past(clk, LATENCY)])` with the actual expected output calculation based on the input values from `DUT.LATENCY` cycles ago."
