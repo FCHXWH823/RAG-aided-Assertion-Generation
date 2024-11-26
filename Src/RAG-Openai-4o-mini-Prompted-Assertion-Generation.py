@@ -3,6 +3,7 @@ import pandas as pd
 import csv
 from langchain_openai import OpenAIEmbeddings
 from langchain_community.vectorstores import FAISS
+import yaml
 
 PDF_Name = "CernyDudani-SVA- The Power of Assertions in SystemVerilog"
 Folder_Name = f"Book1-{PDF_Name}"
