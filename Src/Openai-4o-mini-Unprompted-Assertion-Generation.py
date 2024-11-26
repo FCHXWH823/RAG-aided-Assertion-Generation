@@ -2,6 +2,7 @@ from openai import OpenAI
 import pandas as pd
 import csv
 import random
+import yaml
 #client = OpenAI()
 
 def init_prompt_template_completion(model_id,code):
@@ -13,8 +14,12 @@ def init_prompt_template_completion(model_id,code):
         ]
     )
 
+with open("Src/Config.yml") as file:
+    config = yaml.safe_load(file)
+
+OpenAI_API_Key = config["Openai_API_Key"]
 client = OpenAI(
-        api_key=""
+        api_key=OpenAI_API_Key
 )
 
 #model_name = "ft:gpt-3.5-turbo-0125:personal::A9KbE7Vx"

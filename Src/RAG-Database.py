@@ -2,6 +2,7 @@ from langchain_community.document_loaders import PyMuPDFLoader
 import pandas as pd
 import csv
 import os
+import yaml
 
 # Load your PDFs
 PDF_Name = "CernyDudani-SVA- The Power of Assertions in SystemVerilog"
@@ -27,7 +28,11 @@ from langchain_openai import OpenAIEmbeddings
 from langchain_community.vectorstores import FAISS
 
 # Initialize embeddings
-embeddings = OpenAIEmbeddings(openai_api_key="")
+with open("Src/Config.yml") as file:
+    config = yaml.safe_load(file)
+
+OpenAI_API_Key = config["Openai_API_Key"]
+embeddings = OpenAIEmbeddings(openai_api_key=OpenAI_API_Key)
 
 # Index the document chunks in a vector store
 vector_store = FAISS.from_texts([chunk.page_content for chunk in chunks], embeddings)

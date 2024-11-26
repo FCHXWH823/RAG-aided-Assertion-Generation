@@ -6,8 +6,13 @@ from langchain_community.vectorstores import FAISS
 
 PDF_Name = "CernyDudani-SVA- The Power of Assertions in SystemVerilog"
 Folder_Name = f"Book1-{PDF_Name}"
+
+with open("Src/Config.yml") as file:
+    config = yaml.safe_load(file)
+
+OpenAI_API_Key = config["Openai_API_Key"]
 # Initialize embeddings
-embeddings = OpenAIEmbeddings(openai_api_key="")
+embeddings = OpenAIEmbeddings(openai_api_key=OpenAI_API_Key)
 vector_store = FAISS.load_local(f"RAG_Database/{Folder_Name}",embeddings,allow_dangerous_deserialization=True)
 
 retriever = vector_store.as_retriever(search_kwargs={'k': 3})
@@ -18,7 +23,7 @@ from langchain.chains import RetrievalQA
 
 llm = ChatOpenAI(
     model="gpt-4o-mini-2024-07-18",
-    api_key=""
+    api_key=OpenAI_API_Key
     )
 
 qa_chain = RetrievalQA.from_chain_type(llm, retriever=retriever)

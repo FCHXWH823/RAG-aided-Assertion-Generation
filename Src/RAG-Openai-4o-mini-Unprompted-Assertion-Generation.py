@@ -23,8 +23,12 @@ from langchain_openai import OpenAIEmbeddings
 # from langchain_community.embeddings import OpenAIEmbeddings
 from langchain_community.vectorstores import FAISS
 
+with open("Src/Config.yml") as file:
+    config = yaml.safe_load(file)
+
+OpenAI_API_Key = config["Openai_API_Key"]
 # Initialize embeddings
-embeddings = OpenAIEmbeddings(openai_api_key="")
+embeddings = OpenAIEmbeddings(openai_api_key=OpenAI_API_Key)
 
 # Index the document chunks in a vector store
 vector_store = FAISS.from_texts([chunk.page_content for chunk in chunks], embeddings)
@@ -44,7 +48,7 @@ from langchain.chains import RetrievalQA
 
 llm = ChatOpenAI(
     model="gpt-4o-mini-2024-07-18",
-    api_key=""
+    api_key=OpenAI_API_Key
     )
 
 qa_chain = RetrievalQA.from_chain_type(llm, retriever=retriever)
