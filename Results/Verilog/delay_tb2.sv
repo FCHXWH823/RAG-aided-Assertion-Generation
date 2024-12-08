@@ -57,5 +57,7 @@ module delay_tb2;
         reference_queue = {reference_queue[1:$], in};
      end
 
+
+   assert property(@(posedge clk) out == reference_queue[0]);
          
 endmodule
