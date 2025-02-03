@@ -518,14 +518,14 @@ assert property (@(posedge clk) xxxx)
 ```
 
 Assertion 5:
-This assertion is to check when clk is at posedge, if a write operation is valid (DUT.valid_wr) on the current clock edge, then on the next clock edge, the FIFO should not be full (!full). 
+This assertion is to check when clk is at posedge, if a write operation is valid (DUT.valid_wr) on the current clock edge, then the FIFO should not be full (!full) in th current clock cycle. 
 This assertion should be with the format:
 ```
 assert property (@(posedge clk) xxxx)
 ```
 
 Assertion 6:
-This assertion is to check when clk is at posedge, if a read operation is valid (DUT.valid_rd), the FIFO should not be empty (!empty).
+This assertion is to check when clk is at posedge, if a read operation is valid (DUT.valid_rd), the FIFO should not be empty (!empty) in the current clock cycle.
 This assertion should be with the format:
 ```
 assert property (@(posedge clk) xxxx)
@@ -626,14 +626,14 @@ endmodule"""
    end
 
 endmodule","Assertion 1:
-This assertion checks that if a write operation is initiated (DUT.valid_wr is true) at the positive edge of the clock, the FIFO should not be full on the following clock edge.
+This assertion checks that if a write operation is initiated (DUT.valid_wr is true) at the positive edge of the clock, the FIFO should not be full in the current clock cycle.
 This assertion should be with the following format:
 ```
 assert property (@(posedge clk) xxxx)
 ```
 
 Assertion 2:
-This assertion ensures that if a read operation is initiated (DUT.valid_rd is true) at the positive edge of the clock, the FIFO should not be empty (!empty) on the subsequent clock edge. 
+This assertion ensures that if a read operation is initiated (DUT.valid_rd is true) at the positive edge of the clock, the FIFO should not be empty (!empty) in the current clock cycle. 
 This assertion should be with the format:
 ```
 assert property (@(posedge clk) xxxx)
@@ -750,14 +750,14 @@ endmodule"
    ap_check_output : assert property (check_output);
          
 endmodule","Assertion 1:
-This assertion verifies that if a write operation is initiated (DUT.valid_wr) at the posedge of clock (clk), then the FIFO should not be full (!full) in the subsequent clock cycle.
+This assertion verifies that if a write operation is initiated (DUT.valid_wr) at the posedge of clock (clk), then the FIFO should not be full (!full) in the current clock cycle.
 The assertion should be with the following format:
 ```
 assert property (@(posedge clk) xxxx)
 ```
 
 Assertion 2:
-This assertion checks that if a read operation is initiated (DUT.valid_rd) at the posedge of clock (clk), then the FIFO should not be empty (!empty) in the subsequent clock cycle. 
+This assertion checks that if a read operation is initiated (DUT.valid_rd) at the posedge of clock (clk), then the FIFO should not be empty (!empty) in the current clock cycle. 
 This assertion should be with the format:
 ```
 assert property (@(posedge clk) xxxx)
@@ -877,21 +877,21 @@ endmodule"
    assert property(@(posedge clk) rd_en && !empty |=> rd_data == correct_rd_data);     
          
 endmodule","Assertion 1:
-This assertion ensures that if a write operation is validated (DUT.valid_wr) at the posedge of clock (clk), the FIFO cannot be full (!full) on the subsequent clock edge.
+This assertion ensures that if a write operation is validated (DUT.valid_wr) at the posedge of clock (clk), the FIFO cannot be full (!full) in the current clock cycle.
 The assertion should be with the format:
 ```
 assert property (@(posedge clk) xxxx)
 ```
 
 Assertion 2:
-This assertion checks that if a read operation is validated (DUT.valid_rd) at the posedge of clock (clk), then the FIFO cannot be empty (!empty) on the subsequent clock edge.
+This assertion checks that if a read operation is validated (DUT.valid_rd) at the posedge of clock (clk), then the FIFO cannot be empty (!empty) in the current clock cycle.
 This assertion should be with the format:
 ```
 assert property (@(posedge clk) xxxx)
 ```
 
 Assertion 3:
-The assertion verifies that whenever a read operation occurs (rd_en && !empty), the data read from the FIFO (rd_data) should match the data (correct_rd_data) that was expected to be read based on the FIFO's operation modeled in the reference array.
+The assertion verifies that whenever a read operation occurs (rd_en && !empty), the data read from the FIFO (rd_data) should match the data (correct_rd_data) in the next clock cycle that was expected to be read based on the FIFO's operation modeled in the reference array.
 This assertion should be with the format:
 ```
 assert property (@(posedge clk) xxxx)
@@ -1125,7 +1125,7 @@ assert property (@(posedge clk) disable iff (rst) xxxx)
 ```
 
 Assertion 3:
-This assertion verifies that the output (out) remains stable (unchanged) when the enable signal (en) is not asserted. The assertion is disabled when the reset signal (rst) is asserted.
+This assertion verifies that the output (out) remains stable (unchanged) in the next clock cycle when the enable signal (en) is not asserted. The assertion is disabled when the reset signal (rst) is asserted.
 This assertion should be with the format:
 ```
 assert property (@(posedge clk) disable iff (rst) xxxx)
@@ -1245,28 +1245,28 @@ endmodule"
    assert property (@(posedge clk) disable iff (rst) count < DUT.LATENCY |-> out == '0);
       
 endmodule","Assertion 1:
-This assertion checks the correctness of the output data (out) when the pipeline latency period has been met (count == DUT.LATENCY). The function is_out_correct2 computes a sum of products of input pairs and compares this sum to the out. It uses $past to access the input data (in) from DUT.LATENCY cycles ago. The assertion is checked at the posedge of clock (clk) and disabled if rst is high.
+This assertion checks the correctness of the output data (out) in the current clock cycle when the pipeline latency period has been met (count == DUT.LATENCY). The function is_out_correct2 computes a sum of products of input pairs and compares this sum to the out. It uses $past to access the input data (in) from DUT.LATENCY cycles ago. The assertion is checked at the posedge of clock (clk) and disabled if rst is high.
 This assertion should be with the format:
 ```
 assert property (@(posedge clk) disable iff (rst) xxxx)
 ```
 
 Assertion 2:
-This assertion ensures that the output validity flag (valid_out) remains deasserted (1'b0) while the pipeline count is less than the latency (count < DUT.LATENCY). This assertion is checked at the posedge of clock (clk) and disabled if rst is high.
+This assertion ensures that the output validity flag (valid_out) remains deasserted (1'b0) in the current clock cycle while the pipeline count is less than the latency (count < DUT.LATENCY). This assertion is checked at the posedge of clock (clk) and disabled if rst is high.
 This assertion should be with the format:
 ```
 assert property (@(posedge clk) disable iff (rst) xxxx)
 ```
 
 Assertion 3:
-This assertion verifies that when the pipeline has processed the input data for exactly its latency period (count == DUT.LATENCY), the output validity flag (valid_out) matches the state of the input validity flag (valid_in) from DUT.LATENCY cycles ago. This assertion is checked at the posedge of clock (clk) and disabled if rst is high.
+This assertion verifies that when the pipeline has processed the input data for exactly its latency period (count == DUT.LATENCY), the output validity flag (valid_out) matches the state of the input validity flag (valid_in) from DUT.LATENCY cycles ago in the current clock cycle. This assertion is checked at the posedge of clock (clk) and disabled if rst is high.
 This assertion should be with the format:
 ```
 assert property (@(posedge clk) disable iff (rst) xxxx)
 ```
 
 Assertion 4:
-This assertion checks that the output data (out) remains zeroed ('0) while the count is less than the pipeline's latency (count < DUT.LATENCY). This assertion is checked at the posedge of clock (clk) and disabled if rst is high.
+This assertion checks that the output data (out) remains zeroed ('0) in the current clock cycle while the count is less than the pipeline's latency (count < DUT.LATENCY). This assertion is checked at the posedge of clock (clk) and disabled if rst is high.
 This assertion should be with the format:
 ```
 assert property (@(posedge clk) disable iff (rst) xxxx)
@@ -1384,28 +1384,28 @@ endmodule"
    assert property (@(posedge clk) disable iff (rst) count < DUT.LATENCY |-> out == '0);
       
 endmodule","Assertion 1:
-This assertion verifies that when the count equals the pipeline latency (DUT.LATENCY), the output data (out) should match the result of a computational model (model) applied to input data (in) that was valid DUT.LATENCY cycles ago considering the enable signal (en). The model function calculates a sum of products from pairs of input data. This assertion is checked at the posedge of clock (clk) and disabled if rst is high.
+This assertion verifies that when the count equals the pipeline latency (DUT.LATENCY), the output data (out) should match the result of a computational model (model) applied to input data (in) in the current clock cycle that was valid DUT.LATENCY cycles ago considering the enable signal (en). The model function calculates a sum of products from pairs of input data. This assertion is checked at the posedge of clock (clk) and disabled if rst is high.
 This assertion should be with the format:
 ``` 
 assert property (@(posedge clk) disable iff (rst) xxxx)
 ```
 
 Assertion 2:
-This assertion checks that the output validity signal (valid_out) remains deasserted ('0) while the internal count is less than the pipeline latency (count < DUT.LATENCY). This assertion is checked at the posedge of clock (clk) and disabled if rst is high.
+This assertion checks that the output validity signal (valid_out) remains deasserted ('0) in the current clock cycle while the internal count is less than the pipeline latency (count < DUT.LATENCY). This assertion is checked at the posedge of clock (clk) and disabled if rst is high.
 This assertion should be with the format:
 ```
 assert property (@(posedge clk) disable iff (rst) xxxx)
 ```
 
 Assertion 3:
-This assertion verifies that once the pipeline count reaches its latency (count == DUT.LATENCY), the output validity signal (valid_out) should match the input validity signal (valid_in) from DUT.LATENCY cycles ago, taking the enable signal (en) into account. This assertion is checked at posedge of clock (clk) and disabled if rst is high.
+This assertion verifies that once the pipeline count reaches its latency (count == DUT.LATENCY), the output validity signal (valid_out) should match the input validity signal (valid_in) from DUT.LATENCY cycles ago in the current clock cycle, taking the enable signal (en) into account. This assertion is checked at posedge of clock (clk) and disabled if rst is high.
 This assertion should be with the format:
 ```
 assert property (@(posedge clk) disable iff (rst) xxxx)
 ```
 
 Assertion 4:
-This assertion ensures that while the count is less than the pipeline's latency (count < DUT.LATENCY), the output data (out) remains zeroed ('0). This assertion is checked at posedge of clock and disabled if rst is high.
+This assertion ensures that while the count is less than the pipeline's latency (count < DUT.LATENCY), the output data (out) remains zeroed ('0) in the current clock cycle. This assertion is checked at posedge of clock and disabled if rst is high.
 This assertion should be with the format:
 ```
 assert property (@(posedge clk) disable iff (rst) xxxx)

@@ -5,11 +5,11 @@ from langchain_openai import OpenAIEmbeddings
 from langchain_community.vectorstores import FAISS
 import yaml
 
-PDF_Name = "CernyDudani-SVA- The Power of Assertions in SystemVerilog"
-Folder_Name = f"Book1-{PDF_Name}"
-
 with open("Src/Config.yml") as file:
     config = yaml.safe_load(file)
+
+PDF_Name = config["PDF_Name"]
+Folder_Name = f"Book1-{PDF_Name}"
 
 OpenAI_API_Key = config["Openai_API_Key"]
 # Initialize embeddings
@@ -31,7 +31,7 @@ qa_chain = RetrievalQA.from_chain_type(llm, retriever=retriever)
 
 df = pd.read_csv('Evaluation/prompted-assertion-generation-dataset.csv')
 # Run a query
-with open('Results/RAG-Openai-4o-mini-Prompted-Assertion-Generation-Results.csv', 'w', newline='') as csv_file:
+with open(f'Results/RAG-Openai-4o-mini-Prompted-Assertion-Generation-Results-{PDF_Name}.csv', 'w', newline='') as csv_file:
     csv_writer = csv.writer(csv_file)
     csv_writer.writerow(['code','HumanExplanation','pure code','prompt','llm_response'])
     for id in range(len(df)):

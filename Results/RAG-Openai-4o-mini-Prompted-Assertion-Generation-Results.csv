@@ -2483,7 +2483,7 @@ module register_tb2;
 endmodule
 ```
 
-Please note that there may be some syntax errors in the assertions â€” ensure you verify and correct them according to the specific syntax rules of the Verilog/SystemVerilog version you are using."
+Please note that there may be some syntax errors in the assertions â€?ensure you verify and correct them according to the specific syntax rules of the Verilog/SystemVerilog version you are using."
 "module simple_pipeline_tb;
 
    localparam int NUM_TESTS = 1000;

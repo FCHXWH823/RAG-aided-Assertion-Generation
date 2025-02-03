@@ -1,0 +1,140 @@
+#!/usr/bin/perl                                                       
+
+#######################################################################
+# Obtained by modifying perl/master.pl                                # 
+# Author: Himanshu Jain                                               # 
+#######################################################################
+
+$time = 3600; #in seconds, timeout
+
+$iterations = 1;
+
+$filename = "DATABASE.TXT";
+open (READ_DATA, $filename);
+
+$line = <READ_DATA>;
+$save = " ";
+
+$command= " ";
+
+while ($line ne "") {
+    chop ($line);
+    $term_index = index($line, ";"); 
+
+    if ( $term_index != -1) {
+   	$line = substr($line,0,$term_index);
+    }
+    
+    $command = $command." ".$line; 
+    
+    $line = <READ_DATA>;
+
+    if ($term_index != -1) {
+	print "Command is ".$command. "\n";
+	$command = "";
+
+	@args = split(/ +/, $command);
+
+	# Let us generate the command
+
+	if (.scalar(@args) < 3)
+	    die "Each line should have a directory name, verilog file name, property name \n";
+	
+	$dir = $arg[0];
+	$vfile = $dir."/".$arg[1]; 
+	$propfile = $dir."/".$arg[2]; 
+	
+	# some sanity checks
+
+	if (index($vfile, ".v") == -1)
+	    throw "Expected ".$vfile." with .v extension \n";
+
+	if (index($propfile, ".v") == -1)
+	    throw "Expected ".$propfile." with .prop extension \n";
+	
+	$command = "vcegar ".$vfile." --p ".$propfile; 
+
+	# add remaining command line options
+
+	
+
+
+    }
+}
+
+close(READ_DATA);
+
+#
+#$filename = $ARGV[0]; #gcd.c
+#$index1 = index($filename, ".c"); 
+#$file = substr($filename,0,$index1); #gcd
+#$tmpstr = $file."_*.cnf";
+#@dirname = `ls -a $tmpstr`;
+#
+#$writefile= $file.".chaff";
+#open (WRITEFILE, ">".$writefile);
+#
+#$successfile = ">"."$file."."chaff.success"; 
+#open (SUCCESS, $successfile);
+#
+#$killed = ">"."$file."."chaff.killed"; 
+#open (KILLED, $killed);
+#
+#foreach $file1 (@dirname) {
+#    print "Handling $file1\n";
+#    print "zchaff $file1\n";
+#
+#    $procid = fork();
+#    if ($procid == 0) { #The kid
+#	#@out = exec("zchaff $file1>tmp");
+#	@out = `zchaff $file1`;
+#	#print @out;
+#	#print $out[-3];
+#	#print $out[-1];
+#	print WRITEFILE "zchaff $file1...\n";
+#	print WRITEFILE $out[-3];
+#	print WRITEFILE $out[-1];
+#	print WRITEFILE "\n------------------\n";
+#	print SUCCESS   "$file1 \n";
+#	exit;
+#    }
+#    else { #I am a parent.
+#	$SIG{ALRM} = sub { 
+#	    print "...$file1 exceeded alotted time\n";
+#	    print KILLED ("...$file1 exceeded alotted time\n");
+#	    	  
+#	    print WRITEFILE "zchaff $file1 killed...\n";
+#	    kill (9, $procid);
+#	    print ("procid is $procid");
+#	};
+#	alarm ($time);
+#	wait;
+#	#print @out[-1];
+#	#print @out[-3];
+#    }
+#    
+#    
+#    @list = `ps -fu hjain`; 
+#    foreach $line (@list) 
+#    { 
+#	if($line =~ /zchaff/) 
+#	{ 
+#	    print "Killing $line";
+#	    #  if($line =~ /^\s*(\d+)\s+/) 
+#	    #  { 
+#	    #	$pid_ = $1; 
+#	    #	print "Detected $pid is \n";
+#		    #	kill 9, $pid_; 
+#	    #    }
+#	    chop($line);
+#	    @b = split(/ +/, $line);
+#	    print "killing $b[1]\n";
+#	    kill 9, $b[1];
+#	}
+#    } 
+#}
+#
+#close(WRITEFILE);
+#close(SUCCESS);
+#close(KILLED);
+

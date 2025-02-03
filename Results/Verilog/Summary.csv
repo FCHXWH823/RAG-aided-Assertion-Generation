@@ -1,0 +1,12 @@
+Verilog,Testbench,#SVA,LLM Assertions (#sva/#sc_sva/#fc_sva),RAG LLM Assertions (#sva/#sc_sva/#fc_sva)
+delay.sv,delay_tb2.sv,1,3/1/1,1/1/1
+delay.sv,delay_tb3.sv,2,2/2/1,2/2/1
+ff.sv,ff_tb1.sv,2,2/2/0,2/2/0
+ff.sv,ff_tb2.sv,4,4/4/1,4/4/3
+fifo.sv,fifo_tb1.sv,6,6/6/2,6/6/6
+fifo.sv,fifo_tb2.sv,3,3/3/0,3/3/2
+register.sv,register_tb1.sv,4,4/4/4,4/4/2
+register.sv,register_tb2.sv,5,5/5/3,5/2/1
+simple_pipeline.sv,simple_pipeline_tb.sv,4,4/4/2,4/4/2
+simple_pipeline_with_en.sv,simple_pipeline_with_en_tb.sv,4,4/4/2,4/4/2
+,,35,37/35/16,35/32/20

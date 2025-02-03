@@ -1,9 +1,0 @@
-1. wrong syntax in delay_tb2_llm.sv:
-assert property ((@(posedge clk) out == reference_queue[0]) and (@(posedge clk) out == reference_queue[0])
-     else $fatal("Assertion failed: Output does not match expected value!");
-
-assert property (@(posedge rst) reference_queue == {RESET_VALUE, RESET_VALUE, RESET_VALUE, RESET_VALUE, RESET_VALUE, RESET_VALUE, RESET_VALUE, RESET_VALUE, RESET_VALUE, RESET_VALUE, RESET_VALUE, RESET_VALUE, RESET_VALUE, RESET_VALUE, RESET_VALUE, RESET_VALUE, RESET_VALUE, RESET_VALUE, RESET_VALUE, RESET_VALUE, RESET_VALUE, RESET_VALUE, RESET_VALUE, RESET_VALUE, RESET_VALUE, RESET_VALUE, RESET_VALUE, RESET_VALUE, RESET_VALUE, RESET_VALUE, RESET_VALUE, RESET_VALUE, RESET_VALUE, RESET_VALUE, RESET_VALUE, RESET_VALUE, RESET_VALUE, RESET_VALUE});
-
-assert property (always @(posedge clk) $count(reference_queue) <= CYCLES);
-
-2. wrong syntax in delay 

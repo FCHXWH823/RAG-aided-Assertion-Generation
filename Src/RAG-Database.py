@@ -4,8 +4,12 @@ import csv
 import os
 import yaml
 
+with open("Src/Config.yml") as file:
+    config = yaml.safe_load(file)
 # Load your PDFs
-PDF_Name = "CernyDudani-SVA- The Power of Assertions in SystemVerilog"
+# PDF_Name = "CernyDudani-SVA- The Power of Assertions in SystemVerilog"
+PDF_Name = config["PDF_Name"]
+
 Folder_Name = f"Book1-{PDF_Name}"
 pdf_loader = PyMuPDFLoader(f"VerilogTextBooks/{PDF_Name}.pdf")
 documents = pdf_loader.load()
@@ -28,8 +32,8 @@ from langchain_openai import OpenAIEmbeddings
 from langchain_community.vectorstores import FAISS
 
 # Initialize embeddings
-with open("Src/Config.yml") as file:
-    config = yaml.safe_load(file)
+# with open("Src/Config.yml") as file:
+#     config = yaml.safe_load(file)
 
 OpenAI_API_Key = config["Openai_API_Key"]
 embeddings = OpenAIEmbeddings(openai_api_key=OpenAI_API_Key)
