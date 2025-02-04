@@ -37,8 +37,6 @@ model_name = "o3-mini"
 eval_num = 100
 
 
-df = pd.read_excel('Evaluation/asserted-verilog-evaluation-dataset-new-2.xlsx')
-
 example_code = '''
 module ff
   (
@@ -160,6 +158,42 @@ example_assertions_explanations = '''
 }
 '''
 
+def assertion_transform_prompt(verilog_code):
+    return f'''
+    Please transform the assertions in the given verilog code \n{verilog_code}\n into the following format:
+    assert property (@(clock_signal_expression) disable iff(reset_signal_expression) logic_signal_expression);
+    Among the format, the first two parts `@(clock_signal_expression` and `disable iff(reset_signal_expression` are optional. 
+
+    For example, given the following example verilog code:
+    module ff_sva(
+    input logic clk,
+    input logic rst, 
+    input logic en,
+    input logic in,
+    input logic out
+    );
+
+        default clocking cb @(posedge clk);
+        endclocking
+        default disable iff (rst);
+
+        assert proprty(!en |-> out == $past(in,1));
+
+        assert proprty(en || out == $past(in,1));
+
+        property p;
+            @(posedge clk) disable iff (rst) en || out == $past(in,1);
+        endproperty
+        assert property(en |=> out == $past(in,1));
+
+    endmodule
+
+    the transformed assertions and output are STRICTLY as follows:
+    assert proprty(@(posedge clk) disable iff (rst) !en |-> out == $past(in,1));
+    assert proprty(@(posedge clk) disable iff (rst) en || out == $past(in,1));
+    assert property(@(posedge clk) disable iff (rst) en |=> out == $past(in,1));
+    '''
+
 # completion = client.chat.completions.create(
 #         model=model_name,
 #         messages=[
@@ -176,6 +210,7 @@ def parse_assertion_explanation(assertion_explanations):
           return explanations
 
 def generate_assertions_explanation_dataset():
+    df = pd.read_excel('Evaluation/asserted-verilog-evaluation-dataset-new-2.xlsx')
     with open('Evaluation/asserted-verilog-evaluation-dataset-new-2.csv', 'w', newline='') as csv_file:
         csv_writer = csv.writer(csv_file)
         csv_writer.writerow(['code','assertion','link','HumanExplanation'])
@@ -200,19 +235,42 @@ def generate_assertions_explanation_dataset():
 
             csv_writer.writerow([code,assertion,link,assertion_explanations])
 
-
-generate_assertions_explanation_dataset()
-
-with open('Evaluation/asserted-verilog-evaluation-dataset-new-2.csv', 'r', newline='') as csv_file:
-        df_csv = pd.read_csv('Evaluation/asserted-verilog-evaluation-dataset-new-2.csv')
-        for id in range(len(df_csv)):
-                code = df_csv.iloc[id]['code']
-                link = df_csv.iloc[id]['link']
-                assertion = df_csv.iloc[id]['assertion']
-                human_explanation = df_csv.iloc[id]['HumanExplanation']
-                explanations = parse_assertion_explanation(human_explanation)
-                print(explanations)
+def assertion_transform():
+    df = pd.read_excel('Evaluation/asserted-verilog-evaluation-dataset-new-2.xlsx')
+    with open('Evaluation/asserted-verilog-evaluation-dataset-transform.csv', 'w', newline='') as csv_file:
+        csv_writer = csv.writer(csv_file)
+        csv_writer.writerow(['code','assertion','transformed_assertion','link'])
+        for id in range(len(df)):
+            code = df.iloc[id]['code']
+            link = df.iloc[id]['link']
+            assertion = df.iloc[id]['assertion']
 
 
+            #print("1---------------------------------------------------------------")
+            completion = client.chat.completions.create(
+            model=model_name,
+            messages=[
+                {"role": "system", "content": "You are a helpful bot that transform assertions into a given format."},
+                {"role": "user", "content": assertion_transform_prompt(assertion)}
+            ]
+            )
+
+            transformed_assertion = completion.choices[0].message.content
+
+            csv_writer.writerow([code,assertion,transformed_assertion,link])
+
+assertion_transform()
+
+# generate_assertions_explanation_dataset()
+
+# with open('Evaluation/asserted-verilog-evaluation-dataset-new-2.csv', 'r', newline='') as csv_file:
+#         df_csv = pd.read_csv('Evaluation/asserted-verilog-evaluation-dataset-new-2.csv')
+#         for id in range(len(df_csv)):
+#                 code = df_csv.iloc[id]['code']
+#                 link = df_csv.iloc[id]['link']
+#                 assertion = df_csv.iloc[id]['assertion']
+#                 human_explanation = df_csv.iloc[id]['HumanExplanation']
+#                 explanations = parse_assertion_explanation(human_explanation)
+#                 print(explanations)
 
 
