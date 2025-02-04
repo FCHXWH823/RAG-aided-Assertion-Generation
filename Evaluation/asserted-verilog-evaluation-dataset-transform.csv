@@ -164,7 +164,11 @@ endmodule","module delay_sva
 
    assert property(!en |=> $stable(out));
          
-endmodule // delay_tb4","assert property(@(posedge clk) disable iff (rst) count < CYCLES || out == $past(in, CYCLES, en));
+endmodule // delay_tb4","int count;    
+always_ff @(posedge clk or posedge rst)
+if (rst) count = 0;
+else if (en == 1'b1 && count < CYCLES) count ++;
+ assert property(@(posedge clk) disable iff (rst) count < CYCLES || out == $past(in, CYCLES, en));
 
 assert property(@(posedge clk) disable iff (rst) count == CYCLES || out == RESET_VALUE);
 
@@ -294,8 +298,7 @@ assert property(@(posedge clk) disable iff (rst) !en |=> out == $past(out,1));",
 
    assign empty = rd_addr_r == wr_addr_r;
       
-endmodule
-","module fifo_sva  #(
+endmodule","module fifo_sva  #(
     parameter WIDTH=8,
     parameter DEPTH=16
     )
@@ -467,8 +470,7 @@ module simple_pipeline_sva   #(
       
 endmodule","assert property(@(posedge clk) disable iff (rst) count < LATENCY |-> valid_out == 1'b0);
 assert property(@(posedge clk) disable iff (rst) count == LATENCY |-> valid_out == $past(valid_in, LATENCY));",https://github.com/ARC-Lab-UF/sv-tutorial/blob/main/testbenches/assertions/fifo_tb.sv
-"
-// AHB to APG Bridge | Maven Silicon
+"// AHB to APG Bridge | Maven Silicon
 //
 //
 //
@@ -914,10 +916,7 @@ endproperty
 assert_WENABLEP_to_READ: assert property (p_WENABLEP_to_READ);
 
 
-endmodule
-
-
-","assert property(@(posedge Hclk) disable iff (!Hresetn) 1 |-> ##2 PRESENT_STATE == $past(NEXT_STATE));
+endmodule","assert property(@(posedge Hclk) disable iff (!Hresetn) 1 |-> ##2 PRESENT_STATE == $past(NEXT_STATE));
 assert property(@(posedge Hclk) disable iff (!Hresetn) (PRESENT_STATE == ST_IDLE && valid && Hwrite) |-> (NEXT_STATE == ST_WWAIT));
 assert property(@(posedge Hclk) disable iff (!Hresetn) PRESENT_STATE == ST_IDLE && valid && !Hwrite |-> NEXT_STATE == ST_READ);
 assert property(@(posedge Hclk) disable iff (!Hresetn) PRESENT_STATE == ST_IDLE && !valid |-> NEXT_STATE == ST_IDLE);
@@ -1200,8 +1199,7 @@ default disable iff (~resetn);
 
 sva_max_greater_max2: assert property ( (max_q == 0) | ( max_q > max2_q )); 
 
-endmodule
-",assert property(@(posedge clk) disable iff (~resetn) (max_q == 0) | (max_q > max2_q));,https://github.com/Essenceia/formal_experiements/blob/master/2_Second_Largest/model.v
+endmodule",assert property(@(posedge clk) disable iff (~resetn) (max_q == 0) | (max_q > max2_q));,https://github.com/Essenceia/formal_experiements/blob/master/2_Second_Largest/model.v
 "module Gray_Code_Counter #(parameter
   DATA_WIDTH = 4
 ) (
@@ -1682,8 +1680,7 @@ endmodule","module PWM_sva #(parameter CBITS = 10)
 
 p1: assert property (@(posedge clk) (1 |-> s_eventually(~pulse)));
 
-endmodule
-",assert property(@(posedge clk) 1 |-> s_eventually(~pulse));,https://github.com/diffblue/hw-cbmc/blob/main/examples/Benchmarks/PWM_1.sv
+endmodule",assert property(@(posedge clk) 1 |-> s_eventually(~pulse));,https://github.com/diffblue/hw-cbmc/blob/main/examples/Benchmarks/PWM_1.sv
 "module Delay 
 #(
           parameter N = 750, 
@@ -2708,8 +2705,7 @@ assign round = rd_count;
 assign first_round = (rd_count == INITIAL_ROUND);
 assign last_round  = (rd_count == NUMBER_ROUND || rd_count == NUMBER_ROUND_INC);
 
-endmodule","
-module control_unit_sva(
+endmodule","module control_unit_sva(
         input  [2:0] sbox_sel,
         input  [1:0] rk_sel,
         input  [1:0] key_out_sel,
@@ -3006,8 +3002,7 @@ assign crc_poly_size = crc_cr_ff[1:0];
 assign rev_in_type   = crc_cr_ff[3:2];
 assign rev_out_type  = crc_cr_ff[4];
 
-endmodule","
-module host_interface_sva(
+endmodule","module host_interface_sva(
 	input HSElx,
 	input buffer_write_en,
 	input HREADYOUT,
@@ -4190,8 +4185,7 @@ should be impleneted as a 4-state FSM : idle, start, data, stop;
 		
 		assign tx = txReg;
 
-endmodule","
-////////////////////////////////////////////////////////////////////////////////////////////////
+endmodule","////////////////////////////////////////////////////////////////////////////////////////////////
 ////                                                              							////
 ////                                                              							////
 ////  	This file is part of the project                 									////
@@ -6584,8 +6578,7 @@ begin
 				end
 				else if(count_send_data >= DATA_CONFIG_REG[13:2]/12'd4 && count_send_data < (DATA_CONFIG_REG[13:2]-(DATA_CONFIG_REG[13:2]/12'd4))-12'd1)
 				begin
-					BR_CLK","
-module module_i2c_sva(PCLK,PRESETn,fifo_tx_f_full,fifo_tx_f_empty,fifo_tx_data_out,fifo_rx_data_in,fifo_rx_f_full,fifo_rx_f_empty,fifo_rx_wr_en,
+					BR_CLK","module module_i2c_sva(PCLK,PRESETn,fifo_tx_f_full,fifo_tx_f_empty,fifo_tx_data_out,fifo_rx_data_in,fifo_rx_f_full,fifo_rx_f_empty,fifo_rx_wr_en,
 fifo_tx_rd_en,RX_EMPTY,TX_EMPTY,ERROR,ENABLE_SCL,ENABLE_SDA,SDA,SCL,DATA_CONFIG_REG,TIMEOUT_TX,state_tx,count_receive_data,RESPONSE,SDA_OUT,count_timeout,count_send_data,next_state_rx,BR_CLK_O,next_state_tx, count_tx,count_rx,BR_CLK_O_RX,SDA_OUT_RX,state_rx);
 
 input PCLK;
@@ -6864,8 +6857,7 @@ end
 
 assign StateData[1:0] = {StateData1, StateData0};
 
-endmodule","
-module eth_rxstate_sva(
+endmodule","module eth_rxstate_sva(
 input         MRxDV,
 input        StateDrop,
 input         MRxDEqD,
@@ -7096,5 +7088,4 @@ assert property(@(posedge MRxClk) disable iff (Reset) (StartDrop == 1) |=> (Stat
 assert property(@(posedge MRxClk) disable iff (Reset) (StartSFD == 1) |=> (StateIdle == 0));  
 assert property(@(posedge MRxClk) disable iff (Reset) (StartPreamble == 1) |=> (StateIdle == 0));  
 assert property(@(posedge MRxClk) disable iff (Reset) (MRxDV == 1) |=> (StateIdle == 0));  
-assert property(@(posedge MRxClk) disable iff (Reset) (MRxDV == 0) |=> (StateIdle == 1));  
-",https://github.com/achieve-lab/assertion_data_for_LLM/blob/66da64e4274e8571ffcdd9d6645ed898a1a23f83/Jasper_results/communication_controller_100_mb-s_ethernet_mac_layer_switch/eth_rxstatem/FPV_eth_rxstatem.tcl
+assert property(@(posedge MRxClk) disable iff (Reset) (MRxDV == 0) |=> (StateIdle == 1));",https://github.com/achieve-lab/assertion_data_for_LLM/blob/66da64e4274e8571ffcdd9d6645ed898a1a23f83/Jasper_results/communication_controller_100_mb-s_ethernet_mac_layer_switch/eth_rxstatem/FPV_eth_rxstatem.tcl
