@@ -1,7 +1,5 @@
 analyze -clear
-analyze -sv12 ./control_unit.sv
-analyze -sv12 ./control_unit_sva.sv
-analyze -sv12 ./control_unit_bind.svh
+analyze -sv12 ./control_unit_assertion.sv
 
 elaborate -top control_unit
 

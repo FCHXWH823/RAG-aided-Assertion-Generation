@@ -1,11 +1,9 @@
 analyze -clear
-analyze -sv ./ff.sv
-analyze -sv ./ff_sva.sv
-analyze -sv ./ff_bind.svh
+analyze -sv ./ff_assertion.sv
 
 elaborate -top ff
 
 clock clk
 reset -expression rst
 prove -all
-report -summary -force -result -file ff.fpv.rpt
+report -summary -force -result -file fpv.rpt

@@ -1,7 +1,5 @@
 analyze -clear
-analyze -sv ./Parallel_In_Serial_Out_Shift_Reg.sv
-analyze -sv ./Parallel_In_Serial_Out_Shift_Reg_sva.sv
-analyze -sv ./Parallel_In_Serial_Out_Shift_Reg_bind.svh
+analyze -sv ./Parallel_In_Serial_Out_Shift_Reg_assertion.sv
 
 elaborate -top Parallel_In_Serial_Out_Shift_Reg
 

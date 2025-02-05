@@ -1,7 +1,5 @@
 analyze -clear
-analyze -sv12 ./i2c.sv
-analyze -sv12 ./i2c_sva.sv
-analyze -sv12 ./i2c_bind.svh
+analyze -sv12 ./i2c_assertion.sv
 
 elaborate -top i2c
 

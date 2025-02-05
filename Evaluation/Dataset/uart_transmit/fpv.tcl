@@ -1,7 +1,5 @@
 analyze -clear
-analyze -sv12 ./uart_transmit.sv
-analyze -sv12 ./uart_transmit_sva.sv
-analyze -sv12 ./uart_transmit_bind.svh
+analyze -sv12 ./uart_transmit_assertion.sv
 
 elaborate -top uart_transmit
 

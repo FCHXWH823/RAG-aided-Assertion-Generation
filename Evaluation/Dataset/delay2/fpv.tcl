@@ -1,10 +1,11 @@
 analyze -clear
-analyze -sv ./simple_pipeline_assertion.sv
+analyze -sv ./delay2_assertion.sv
 
-elaborate -top simple_pipeline
+elaborate -top delay2
 
 clock clk
 reset -expression rst
 prove -all
 report -summary -force -result -file fpv.rpt
 exit
+

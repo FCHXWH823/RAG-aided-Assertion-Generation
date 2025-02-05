@@ -1,1 +1,0 @@
-bind Edge_Detector Edge_Detector_sva u_Edge_Detector (.*);

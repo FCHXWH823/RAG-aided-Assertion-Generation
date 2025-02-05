@@ -1,5 +1,5 @@
 analyze -clear
-analyze -sv12 ./a25_wishbone.sv
+analyze -sv12 ./a25_wishbone_assertion.sv
 
 elaborate -top a25_wishbone
 

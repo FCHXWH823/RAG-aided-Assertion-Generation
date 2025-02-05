@@ -1,7 +1,5 @@
 analyze -clear
-analyze -sv ./Programmable_Sequence_Detector.sv
-analyze -sv ./Programmable_Sequence_Detector_sva.sv
-analyze -sv ./Programmable_Sequence_Detector_bind.svh
+analyze -sv ./Programmable_Sequence_Detector_assertion.sv
 
 elaborate -top Programmable_Sequence_Detector
 

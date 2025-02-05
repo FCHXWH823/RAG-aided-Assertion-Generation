@@ -1,7 +1,5 @@
 analyze -clear
-analyze -sv12 ./lcd.sv
-analyze -sv12 ./lcd_sva.sv
-analyze -sv12 ./lcd_bind.svh
+analyze -sv12 ./lcd_assertion.sv
 
 elaborate -top lcd
 

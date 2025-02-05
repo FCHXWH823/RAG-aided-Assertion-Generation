@@ -1,7 +1,5 @@
 analyze -clear
-analyze -sv12 ./SEVEN.sv
-analyze -sv12 ./SEVEN_sva.sv
-analyze -sv12 ./SEVEN_bind.svh
+analyze -sv12 ./SEVEN_assertion.sv
 
 elaborate -top SEVEN
 

@@ -1,7 +1,5 @@
 analyze -clear
-analyze -sv12 ./uartTrans.sv
-analyze -sv12 ./uartTrans_sva.sv
-analyze -sv12 ./uartTrans_bind.svh
+analyze -sv12 ./uartTrans_assertion.sv
 
 elaborate -top uartTrans
 

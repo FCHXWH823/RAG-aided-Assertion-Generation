@@ -191,16 +191,4 @@ always @(posedge clk or `OR1200_RST_EVENT rst)
 		err_saved <=  3'b000;
 
 
-assert property ( @(posedge clk) no_more_dslot |-> (except_itlbmiss == 0 && except_immufault == 0 && except_ibuserr == 0) );
-assert property (@(posedge clk) disable iff (rst) (!if_flushpipe && save_insn) |-> ##1 saved == 1);
-assert property (@(posedge clk) disable iff (rst) (if_flushpipe | (!save_insn && !if_freeze)) |-> ##1 saved == 0);
-assert property (@(posedge clk) disable iff (rst) (!if_flushpipe && save_insn && !icpu_err_i) |-> ##1 (insn_saved == $past(icpu_dat_i)));
-assert property (@(posedge clk) disable iff (rst) (if_flushpipe | (!save_insn && !if_freeze) && !icpu_err_i) |-> ##1 (insn_saved == {6'b000101, 26'h041_0000}));
-assert property (@(posedge clk) disable iff (rst) (!if_flushpipe && (save_insn | !if_freeze)) |-> ##1 (addr_saved == {$past(icpu_adr_i[31:2]), 2'b00}));
-assert property (@(posedge clk) disable iff (rst) (if_flushpipe) |-> ##1 (addr_saved == 32'h00000000));
-assert property (@(posedge clk) disable iff (rst) (!if_flushpipe && save_insn) |-> ##1 (err_saved[0] == ($past(icpu_err_i) & ($past(icpu_tag_i) == 4'hd)) ));
-assert property (@(posedge clk) disable iff (rst) (!if_flushpipe && save_insn) |-> ##1 (err_saved[1] == ($past(icpu_err_i) & ($past(icpu_tag_i) == 4'hc))));
-assert property (@(posedge clk) disable iff (rst) (!if_flushpipe && save_insn) |-> ##1 (err_saved[2] == ($past(icpu_err_i) & ($past(icpu_tag_i) == 4'hb)) ));
-assert property (@(posedge clk) disable iff (rst) (if_flushpipe | (!save_insn && !if_freeze)) |-> ##1 (err_saved == 3'b000));
-
 endmodule

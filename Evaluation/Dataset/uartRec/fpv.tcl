@@ -1,7 +1,5 @@
 analyze -clear
-analyze -sv12 ./uartRec.sv
-analyze -sv12 ./uartRec_sva.sv
-analyze -sv12 ./uartRec_bind.svh
+analyze -sv12 ./uartRec_assertion.sv
 
 elaborate -top uartRec
 

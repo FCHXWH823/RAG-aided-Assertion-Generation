@@ -1,7 +1,5 @@
 analyze -clear
-analyze -sv12 ./PWM.sv
-analyze -sv12 ./PWM_sva.sv
-analyze -sv12 ./PWM_bind.svh
+analyze -sv12 ./PWM_assertion.sv
 
 elaborate -top PWM
 

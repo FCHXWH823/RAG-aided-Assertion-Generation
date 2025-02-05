@@ -1,7 +1,5 @@
 analyze -clear
-analyze -sv12 ./host_interface.sv
-analyze -sv12 ./host_interface_sva.sv
-analyze -sv12 ./host_interface_bind.svh
+analyze -sv12 ./host_interface_assertion.sv
 
 elaborate -top host_interface
 

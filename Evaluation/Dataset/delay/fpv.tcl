@@ -1,7 +1,5 @@
 analyze -clear
-analyze -sv ./delay.sv
-#analyze -sv ./delay_sva.sv
-#analyze -sv ./delay_bind.svh
+analyze -sv ./delay_assertion.sv
 
 elaborate -top delay
 

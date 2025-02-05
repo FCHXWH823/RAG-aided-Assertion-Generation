@@ -1,7 +1,5 @@
 analyze -clear
-analyze -sv12 ./PSGBusArb.sv
-analyze -sv12 ./PSGBusArb_sva.sv
-analyze -sv12 ./PSGBusArb_bind.svh
+analyze -sv12 ./PSGBusArb_assertion.sv
 
 elaborate -top PSGBusArb
 

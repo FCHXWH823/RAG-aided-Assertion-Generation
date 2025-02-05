@@ -1,7 +1,5 @@
 analyze -clear
-analyze -sv ./second_largest.sv
-analyze -sv ./second_largest_sva.sv
-analyze -sv ./second_largest_bind.svh
+analyze -sv ./second_largest_assertion.sv
 
 elaborate -top second_largest
 

@@ -1,7 +1,5 @@
 analyze -clear
-analyze -sv ./register.sv
-analyze -sv ./register_sva.sv
-analyze -sv ./register_bind.svh
+analyze -sv ./register_assertion.sv
 
 elaborate -top register
 

@@ -168,11 +168,22 @@ endmodule // delay_tb4","int count;
 always_ff @(posedge clk or posedge rst)
 if (rst) count = 0;
 else if (en == 1'b1 && count < CYCLES) count ++;
- assert property(@(posedge clk) disable iff (rst) count < CYCLES || out == $past(in, CYCLES, en));
+assert property(@(posedge clk) disable iff (rst) count < CYCLES || out == $past(in, CYCLES, en));
 
 assert property(@(posedge clk) disable iff (rst) count == CYCLES || out == RESET_VALUE);
 
-assert property(@(posedge clk) disable iff (rst) !en |=> $stable(out));",,https://github.com/ARC-Lab-UF/sv-tutorial/blob/main/testbenches/assertions/delay_tb.sv
+assert property(@(posedge clk) disable iff (rst) !en |=> $stable(out));","analyze -clear
+analyze -sv ./delay_assertion.sv
+
+elaborate -top delay
+
+clock clk
+reset -expression rst
+prove -all
+report -summary -force -result -file fpv.rpt
+exit
+
+",https://github.com/ARC-Lab-UF/sv-tutorial/blob/main/testbenches/assertions/delay_tb.sv
 "module ff
   (
    input logic clk, rst, en, in,
@@ -200,7 +211,16 @@ input logic out
    // assert property(@(posedge clk) disable iff (rst) !en |=> $stable(out));
 
 endmodule","assert property(@(posedge clk) disable iff (rst) en |=> out == $past(in,1));
-assert property(@(posedge clk) disable iff (rst) !en |=> out == $past(out,1));",,https://github.com/ARC-Lab-UF/sv-tutorial/blob/main/testbenches/assertions/ff_tb.sv 
+assert property(@(posedge clk) disable iff (rst) !en |=> out == $past(out,1));","analyze -clear
+analyze -sv ./ff_assertion.sv
+
+elaborate -top ff
+
+clock clk
+reset -expression rst
+prove -all
+report -summary -force -result -file fpv.rpt
+",https://github.com/ARC-Lab-UF/sv-tutorial/blob/main/testbenches/assertions/ff_tb.sv 
 "// Greg Stitt
 // University of Florida
 
@@ -250,7 +270,16 @@ endmodule",register,"module register_sva  #(
    assert property(!en |=> out == $past(out,1));
 
 endmodule","assert property(@(posedge clk) disable iff (rst) en |=> out == $past(in,1));
-assert property(@(posedge clk) disable iff (rst) !en |=> out == $past(out,1));",,https://github.com/ARC-Lab-UF/sv-tutorial/blob/main/testbenches/assertions/register_tb.sv
+assert property(@(posedge clk) disable iff (rst) !en |=> out == $past(out,1));","analyze -clear
+analyze -sv ./register_assertion.sv
+
+elaborate -top register
+
+clock clk
+reset -expression rst
+prove -all
+report -summary -force -result -file fpv.rpt
+",https://github.com/ARC-Lab-UF/sv-tutorial/blob/main/testbenches/assertions/register_tb.sv
 "module fifo
   #(
     parameter WIDTH=8,
@@ -323,7 +352,17 @@ endmodule",fifo,"module fifo_sva  #(
 
 endmodule","assert property(@(posedge clk) disable iff (rst) valid_wr |-> !full);
 
-assert property(@(posedge clk) disable iff (rst) valid_rd |-> !empty);",,https://github.com/ARC-Lab-UF/sv-tutorial/blob/main/testbenches/assertions/fifo_tb.sv
+assert property(@(posedge clk) disable iff (rst) valid_rd |-> !empty);","analyze -clear
+analyze -sv ./fifo_assertion.sv
+
+elaborate -top fifo
+
+clock clk
+reset -expression rst
+prove -all
+report -summary -force -result -file fpv.rpt
+exit
+",https://github.com/ARC-Lab-UF/sv-tutorial/blob/main/testbenches/assertions/fifo_tb.sv
 "// Greg Stitt
 // University of Florida
 
@@ -471,8 +510,18 @@ module simple_pipeline_sva   #(
 endmodule","int count;    
 always_ff @(posedge clk or posedge rst)
 if (rst) count = 0;
-else if (count < LATENCY) count ++; assert property(@(posedge clk) disable iff (rst) count < LATENCY |-> valid_out == 1'b0);
-assert property(@(posedge clk) disable iff (rst) count == LATENCY |-> valid_out == $past(valid_in, LATENCY));",,https://github.com/ARC-Lab-UF/sv-tutorial/blob/main/testbenches/assertions/fifo_tb.sv
+else if (count < LATENCY) count ++;â€¨assert property(@(posedge clk) disable iff (rst) count < LATENCY |-> valid_out == 1'b0);
+assert property(@(posedge clk) disable iff (rst) count == LATENCY |-> valid_out == $past(valid_in, LATENCY));","analyze -clear
+analyze -sv ./simple_pipeline_assertion.sv
+
+elaborate -top simple_pipeline
+
+clock clk
+reset -expression rst
+prove -all
+report -summary -force -result -file fpv.rpt
+exit
+",https://github.com/ARC-Lab-UF/sv-tutorial/blob/main/testbenches/assertions/fifo_tb.sv
 "// AHB to APG Bridge | Maven Silicon
 //
 //
@@ -937,7 +986,17 @@ assert property(@(posedge Hclk) disable iff (!Hresetn) PRESENT_STATE == ST_WENAB
 assert property(@(posedge Hclk) disable iff (!Hresetn) PRESENT_STATE == ST_WENABLE && valid && !Hwrite |-> NEXT_STATE == ST_READ);
 assert property(@(posedge Hclk) disable iff (!Hresetn) PRESENT_STATE == ST_WENABLEP && !valid && Hwritereg |-> NEXT_STATE == ST_WRITE);
 assert property(@(posedge Hclk) disable iff (!Hresetn) PRESENT_STATE == ST_WENABLEP && valid && Hwritereg |-> NEXT_STATE == ST_WRITEP);
-assert property(@(posedge Hclk) disable iff (!Hresetn) PRESENT_STATE == ST_WENABLEP && !Hwritereg |-> NEXT_STATE == ST_READ);",,https://github.com/Ghonimo/Formal-Verification-of-an-AHB2APB-Bridge/tree/main
+assert property(@(posedge Hclk) disable iff (!Hresetn) PRESENT_STATE == ST_WENABLEP && !Hwritereg |-> NEXT_STATE == ST_READ);","analyze -clear
+analyze -sv ./APB_FSM_Controller_assertion.sv
+
+elaborate -top APB_FSM_Controller
+
+clock Hclk
+reset -expression ~Hresetn
+prove -all
+report -summary -force -result -file fpv.rpt
+exit
+",https://github.com/Ghonimo/Formal-Verification-of-an-AHB2APB-Bridge/tree/main
 "parameter N_MASTERS = 3;
 typedef bit [N_MASTERS-1:0] arb_vector;
 parameter arb_vector NO_REQUEST = '{default: '0};
@@ -1078,7 +1137,17 @@ assert property(@(posedge clk)  bus_grant != NO_GRANT && bus_ack != 1 |=> $stabl
 assert property(@(posedge clk)  (bus_req[0] && bus_grant== NO_GRANT)|| (bus_ack && bus_req[0]) |=>  (bus_grant[0] && !bus_grant[1] && !bus_grant[2]));
 assert property(@(posedge clk)  (bus_req[1] && !bus_req[0] && bus_grant== NO_GRANT) || (bus_ack && bus_req[1]&& !bus_req[0])|=>  (!bus_grant[0] && bus_grant[1] && !bus_grant[2]));
 assert property(@(posedge clk)  (bus_req[2] && !bus_req[1] && !bus_req[0] && bus_grant== NO_GRANT) || (bus_ack && bus_req[2]&& !bus_req[0] &&  !bus_req[1]) |=>  (!bus_grant[0] && !bus_grant[1] && bus_grant[2]));
-assert property(@(posedge clk)  $rose(bus_grant[1]) |-> ($past(bus_req[1]) && !$past(bus_req[0]))); assert property(@(posedge clk)  $rose(bus_grant[2]) |-> ($past(bus_req[2]) && !$past(bus_req[1]) && !$past(bus_req[0])));",,https://github.com/ahmedsherif99/Bus-Arbiter-Systemverilog-module-with-Formal-Verification-SVA-on-OneSpin/tree/main
+assert property(@(posedge clk)  $rose(bus_grant[1]) |-> ($past(bus_req[1]) && !$past(bus_req[0])));â€¨assert property(@(posedge clk)  $rose(bus_grant[2]) |-> ($past(bus_req[2]) && !$past(bus_req[1]) && !$past(bus_req[0])));","analyze -clear
+analyze -sv ./busarbiter_assertion.sv
+
+elaborate -top busarbiter
+
+clock clk
+reset -expression reset
+prove -all
+report -summary -force -result -file fpv.rpt
+exit
+",https://github.com/ahmedsherif99/Bus-Arbiter-Systemverilog-module-with-Formal-Verification-SVA-on-OneSpin/tree/main
 "module simple_router #(
 	parameter DATA_WIDTH = 32
 ) (
@@ -1124,7 +1193,17 @@ endmodule","assert property(din_en | ((dout0 == 0) & (dout1 == 0) & (dout2 == 0)
 assert property(~(din_en & (addr == 2'd0)) | ((dout0 == din) & (dout1 == 0) & (dout2 == 0) & (dout3 == 0)));
 assert property(~(din_en & (addr == 2'd1)) | ((dout1 == din) & (dout0 == 0) & (dout2 == 0) & (dout3 == 0)));
 assert property(~(din_en & (addr == 2'd2)) | ((dout2 == din) & (dout0 == 0) & (dout1 == 0) & (dout3 == 0)));
-assert property(~(din_en & (addr == 2'd3)) | ((dout3 == din) & (dout0 == 0) & (dout1 == 0) & (dout2 == 0)));",,https://github.com/Essenceia/formal_experiements/blob/master/1_Simple_Router/router.v
+assert property(~(din_en & (addr == 2'd3)) | ((dout3 == din) & (dout0 == 0) & (dout1 == 0) & (dout2 == 0)));","analyze -clear
+analyze -sv ./simple_router_assertion.sv
+
+elaborate -top simple_router
+
+clock clk
+reset -expression rst
+prove -all
+report -summary -force -result -file fpv.rpt
+exit
+",https://github.com/Essenceia/formal_experiements/blob/master/1_Simple_Router/router.v
 "module second_largest #(parameter
   DATA_WIDTH = 32
 ) (
@@ -1201,7 +1280,18 @@ default disable iff (~resetn);
 
 sva_max_greater_max2: assert property ( (max_q == 0) | ( max_q > max2_q )); 
 
-endmodule",assert property(@(posedge clk) disable iff (~resetn) (max_q == 0) | (max_q > max2_q));,,https://github.com/Essenceia/formal_experiements/blob/master/2_Second_Largest/model.v
+endmodule",assert property(@(posedge clk) disable iff (~resetn) (max_q == 0) | (max_q > max2_q));,"analyze -clear
+analyze -sv ./second_largest_assertion.sv
+
+elaborate -top second_largest
+
+clock clk
+reset -expression ~resetn
+prove -all
+report -summary -force -result -file fpv.rpt
+exit
+
+",https://github.com/Essenceia/formal_experiements/blob/master/2_Second_Largest/model.v
 "module Gray_Code_Counter #(parameter
   DATA_WIDTH = 4
 ) (
@@ -1250,7 +1340,18 @@ default disable iff (~resetn);
 sva_gray_1_bit_diff : assert property ( unused_bin_inc |  $onehot( gray_next ^ gray_q ) );
 
 
-endmodule",assert property(@(posedge clk) disable iff (~resetn) unused_bin_inc | $onehot(gray_next ^ gray_q));,,https://github.com/Essenceia/formal_experiements/blob/master/4_Gray_Code_Counter/model.v
+endmodule",assert property(@(posedge clk) disable iff (~resetn) unused_bin_inc | $onehot(gray_next ^ gray_q));,"analyze -clear
+analyze -sv ./Gray_Code_Counter_assertion.sv
+
+elaborate -top Gray_Code_Counter
+
+clock clk
+reset -expression ~resetn
+prove -all
+report -summary -force -result -file fpv.rpt
+exit
+
+",https://github.com/Essenceia/formal_experiements/blob/master/4_Gray_Code_Counter/model.v
 "module reversing_bits #(
 	parameter DATA_WIDTH=3
 ) 
@@ -1284,7 +1385,18 @@ default disable iff (~rst);
 
 sva_rev : assert property ( dout[0]  == din[DATA_WIDTH-1]);
 
-endmodule",assert property(@(posedge clk) disable iff (~rst) dout[0] == din[DATA_WIDTH-1]);,,https://github.com/Essenceia/formal_experiements/blob/master/5_Reversing_Bits/model.v
+endmodule",assert property(@(posedge clk) disable iff (~rst) dout[0] == din[DATA_WIDTH-1]);,"analyze -clear
+analyze -sv ./reversing_bits_assertion.sv
+
+elaborate -top reversing_bits
+
+clock clk
+reset -expression rst
+prove -all
+report -summary -force -result -file fpv.rpt
+exit
+
+",https://github.com/Essenceia/formal_experiements/blob/master/5_Reversing_Bits/model.v
 "module Edge_Detector (
 	input  clk,
 	input  resetn,
@@ -1348,7 +1460,18 @@ begin
 		din_f_q <= din;
 	end
 end
-assert property(@(posedge clk) disable iff (~resetn) $rose(din_f_q) == dout);",,https://github.com/Essenceia/formal_experiements/blob/master/6_Edge_Detector/model.v
+assert property(@(posedge clk) disable iff (~resetn) $rose(din_f_q) == dout);","analyze -clear
+analyze -sv ./Edge_Detector_assertion.sv
+
+elaborate -top Edge_Detector
+
+clock clk
+reset -expression ~resetn
+prove -all
+report -summary -force -result -file fpv.rpt
+exit
+
+",https://github.com/Essenceia/formal_experiements/blob/master/6_Edge_Detector/model.v
 "module Parallel_In_Serial_Out_Shift_Reg #(
 	parameter DATA_WIDTH = 16
 ) 
@@ -1420,7 +1543,18 @@ begin
 	din_f_q <= ~resetn ? {DATA_WIDTH{1'bx}} : 
 					din_en ? din : din_f_next; 
 	v_f_q   <= v_f_next;
-end assert property(@(posedge clk) disable iff (~resetn) ~v_f_q | (v_f_q & din_f_q[0] == dout));",,https://github.com/Essenceia/formal_experiements/blob/master/7_Parallel_In_Serial_Out_Shift_Reg/model.v
+endâ€¨assert property(@(posedge clk) disable iff (~resetn) ~v_f_q | (v_f_q & din_f_q[0] == dout));","analyze -clear
+analyze -sv ./Parallel_In_Serial_Out_Shift_Reg_assertion.sv
+
+elaborate -top Parallel_In_Serial_Out_Shift_Reg
+
+clock clk
+reset -expression ~resetn
+prove -all
+report -summary -force -result -file fpv.rpt
+exit
+
+",https://github.com/Essenceia/formal_experiements/blob/master/7_Parallel_In_Serial_Out_Shift_Reg/model.v
 "module Gray_To_Binary #(
 	parameter DATA_WIDTH = 3
 ) 
@@ -1467,7 +1601,18 @@ assign gray_f = bin ^ ( bin >> 1 );
 sva_inv_bin : assert property ( gray_f == gray );
 
 endmodule","wire [DATA_WIDTH-1:0] gray_f;
-assign gray_f = bin ^ ( bin >> 1 ); assert property(@(posedge clk) disable iff (~rst) gray_f == gray);",,https://github.com/Essenceia/formal_experiements/tree/master/11_Gray_To_Binary
+assign gray_f = bin ^ ( bin >> 1 );â€¨assert property(@(posedge clk) disable iff (~rst) gray_f == gray);","analyze -clear
+analyze -sv ./Gray_To_Binary_assertion.sv
+
+elaborate -top Gray_To_Binary
+
+clock clk
+reset -expression ~rst
+prove -all
+report -summary -force -result -file fpv.rpt
+exit
+
+",https://github.com/Essenceia/formal_experiements/tree/master/11_Gray_To_Binary
 "module Programmable_Sequence_Detector 
 #(
 	parameter SEQ_W = 5
@@ -1515,7 +1660,18 @@ default disable iff (~resetn);
 
 sva_seen : assert property ( seen == ( seq_q == init ));
 
-endmodule",assert property(@(posedge clk) disable iff(~resetn) seen == (seq_q == init));,,https://github.com/Essenceia/formal_experiements/tree/master/19_Programmable_Sequence_Detector
+endmodule",assert property(@(posedge clk) disable iff(~resetn) seen == (seq_q == init));,"analyze -clear
+analyze -sv ./Programmable_Sequence_Detector_assertion.sv
+
+elaborate -top Programmable_Sequence_Detector
+
+clock clk
+reset -expression ~resetn
+prove -all
+report -summary -force -result -file fpv.rpt
+exit
+
+",https://github.com/Essenceia/formal_experiements/tree/master/19_Programmable_Sequence_Detector
 "module full_adder 
 (
     input a,
@@ -1584,7 +1740,18 @@ assign res = a + b;
 sva_adder : assert property ( res == sum );
 
 endmodule","logic [DATA_WIDTH:0] res;
-assign res = a + b; assert property(@(posedge clk) disable iff (~rst) res == sum);",,https://github.com/Essenceia/formal_experiements/tree/master/24_Ripple_Carry_Adder
+assign res = a + b;â€¨assert property(@(posedge clk) disable iff (~rst) res == sum);","analyze -clear
+analyze -sv ./Ripple_Carry_Adder_assertion.sv
+
+elaborate -top Ripple_Carry_Adder
+
+clock clk
+reset -expression ~rst
+prove -all
+report -summary -force -result -file fpv.rpt
+exit
+
+",https://github.com/Essenceia/formal_experiements/tree/master/24_Ripple_Carry_Adder
 "module Flip_Flop_Array #(
 	parameter DATA_W = 8,
 	parameter ADDR_W = 3,
@@ -1677,7 +1844,18 @@ sva_sel_onehot0 : assert property (@(posedge clk) $onehot0(rd_v));
 
 endmodule","assert property(@(posedge clk) ~(rd & wr) | (rd & wr & error));
 assert property(@(posedge clk) ~(~data_v_q & rd_en) | (~data_v_q & rd_en & (dout == '0)));
-assert property(@(posedge clk) $onehot0(rd_v));",,https://github.com/Essenceia/formal_experiements/tree/master/25_Flip-Flop_Array
+assert property(@(posedge clk) $onehot0(rd_v));","analyze -clear
+analyze -sv ./Flip_Flop_Array_assertion.sv
+
+elaborate -top Flip_Flop_Array
+
+clock clk
+reset -expression ~resetn
+prove -all
+report -summary -force -result -file fpv.rpt
+exit
+
+",https://github.com/Essenceia/formal_experiements/tree/master/25_Flip-Flop_Array
 "module PWM #(parameter CBITS = 10) 
 (input clk, input rst, input [3:0] sw, output reg pulse);
   
@@ -1705,8 +1883,19 @@ endmodule",PWM,"module PWM_sva #(parameter CBITS = 10)
 
 p1: assert property (@(posedge clk) (1 |-> s_eventually(~pulse)));
 
-endmodule",assert property(@(posedge clk) 1 |-> s_eventually(~pulse));,,https://github.com/diffblue/hw-cbmc/blob/main/examples/Benchmarks/PWM_1.sv
-"module Delay 
+endmodule",assert property(@(posedge clk) 1 |-> s_eventually(~pulse));,"analyze -clear
+analyze -sv12 ./PWM_assertion.sv
+
+elaborate -top PWM
+
+clock clk
+reset -expression rst
+prove -all
+report -summary -force -result -file fpv.rpt
+exit
+
+",https://github.com/diffblue/hw-cbmc/blob/main/examples/Benchmarks/PWM_1.sv
+"module delay2 
 #(
           parameter N = 750, 
           parameter CBITS = 10
@@ -1721,7 +1910,7 @@ endmodule",assert property(@(posedge clk) 1 |-> s_eventually(~pulse));,,https://
     else sig = 0;
   end
 
-endmodule",Delay,"module Delay_sva
+endmodule",delay2,"module delay2_sva
 #(
           parameter N = 750, 
           parameter CBITS = 10
@@ -1729,7 +1918,18 @@ endmodule",Delay,"module Delay_sva
 (input clk, input rst, input logic sig);
 
 p1: assert property (@(posedge clk) s_eventually (rst || sig == 1)) ;
-endmodule",assert property(@(posedge clk) s_eventually (rst || sig == 1));,,https://github.com/diffblue/hw-cbmc/blob/main/examples/Benchmarks/delay_1.sv
+endmodule",assert property(@(posedge clk) s_eventually (rst || sig == 1));,"analyze -clear
+analyze -sv ./delay2_assertion.sv
+
+elaborate -top delay2
+
+clock clk
+reset -expression rst
+prove -all
+report -summary -force -result -file fpv.rpt
+exit
+
+",https://github.com/diffblue/hw-cbmc/blob/main/examples/Benchmarks/delay_1.sv
 "module gray #(parameter CBITS = 8) (input clk, input rst, output reg [CBITS-1:0] gray_cnt, output reg sig);
   reg [CBITS-1:0] cnt;
   always@(posedge clk, posedge rst) begin
@@ -1750,7 +1950,18 @@ endmodule",gray,"module gray_sva #(parameter CBITS = 8) (input clk, input rst, i
 
   p1: assert property (@(posedge clk) s_eventually (rst || sig == 1));
   // F G (rst = F) -> G F (sig = T)
-endmodule",assert property(@(posedge clk) s_eventually (rst || sig == 1));,,https://github.com/diffblue/hw-cbmc/blob/main/examples/Benchmarks/gray_1.sv
+endmodule",assert property(@(posedge clk) s_eventually (rst || sig == 1));,"analyze -clear
+analyze -sv12 ./gray_assertion.sv
+
+elaborate -top gray
+
+clock clk
+reset -expression rst
+prove -all
+report -summary -force -result -file fpv.rpt
+exit
+
+",https://github.com/diffblue/hw-cbmc/blob/main/examples/Benchmarks/gray_1.sv
 "module i2c #(parameter divider = 125, parameter CBITS = 9) (input clk, input rst, input scl_not_ena, output reg data_clk);
 	reg [CBITS - 1:0] cnt;	//0 to 4*divider
 	reg scl_clk;
@@ -1791,7 +2002,18 @@ endmodule",i2c,"module i2c_sva #(parameter divider = 125, parameter CBITS = 9) (
 
 	p1: assert property (@(posedge clk) s_eventually rst == 1 || scl_not_ena == 1 || stretch == 1);
 
-endmodule",assert property(@(posedge clk) s_eventually rst == 1 || scl_not_ena == 1 || stretch == 1);,,https://github.com/diffblue/hw-cbmc/blob/main/examples/Benchmarks/i2c_1.sv
+endmodule",assert property(@(posedge clk) s_eventually rst == 1 || scl_not_ena == 1 || stretch == 1);,"analyze -clear
+analyze -sv12 ./i2c_assertion.sv
+
+elaborate -top i2c
+
+clock clk
+reset -expression rst
+prove -all
+report -summary -force -result -file fpv.rpt
+exit
+
+",https://github.com/diffblue/hw-cbmc/blob/main/examples/Benchmarks/i2c_1.sv
 "module lcd #(parameter clk_freq = 1, parameter CBITS = 9) (input rst, input clk, input [6:0] in_data, input lcd_enable, input [9:0] lcd_bus, output reg e, output reg[7:0] lcd_data, output reg rw, output reg rs, output reg busy);
 	reg [CBITS - 1:0] cnt;			// 0 to 500*clk_freg
 	reg [1:0] state;
@@ -1891,7 +2113,18 @@ endmodule",assert property(@(posedge clk) s_eventually rst == 1 || scl_not_ena =
 
 endmodule",lcd,"module lcd_sva #(parameter clk_freq = 1, parameter CBITS = 9) (input clk, input [6:0] in_data, input lcd_enable, input [9:0] lcd_bus, input logic e, input logic[7:0] lcd_data, input logic rw, input logic rs, input logic busy, input logic [1:0] state);
 	p1: assert property (@(posedge clk) s_eventually (lcd_enable == 0 || state == 2));
-endmodule",assert property (@(posedge clk) s_eventually (lcd_enable == 0 || state == 2));,,https://github.com/diffblue/hw-cbmc/blob/main/examples/Benchmarks/lcd_1.sv
+endmodule",assert property (@(posedge clk) s_eventually (lcd_enable == 0 || state == 2));,"analyze -clear
+analyze -sv12 ./lcd_assertion.sv
+
+elaborate -top lcd
+
+clock clk
+reset -expression ~(state[0])
+prove -all
+report -summary -force -result -file fpv.rpt
+exit
+
+",https://github.com/diffblue/hw-cbmc/blob/main/examples/Benchmarks/lcd_1.sv
 "module SEVEN #(parameter freq = 250, parameter CBITS = 8) (input clk, input rst, input [13:0] both7seg, output reg[6:0] segment);
 	reg [CBITS-1:0] cnt;
 	reg digit_select;
@@ -1920,7 +2153,18 @@ endmodule",SEVEN,"module SEVEN_sva #(parameter freq = 250, parameter CBITS = 8) 
 	p1: assert property (@(posedge clk) s_eventually rst == 1 || digit_select == 1);
 	p2: assert property (@(posedge clk) s_eventually rst == 1 || digit_select == 0);
 endmodule","assert property(@(posedge clk) s_eventually rst == 1 || digit_select == 1);
-assert property(@(posedge clk) s_eventually rst == 1 || digit_select == 0);",,https://github.com/diffblue/hw-cbmc/blob/main/examples/Benchmarks/seven_seg_1.sv
+assert property(@(posedge clk) s_eventually rst == 1 || digit_select == 0);","analyze -clear
+analyze -sv12 ./SEVEN_assertion.sv
+
+elaborate -top SEVEN
+
+clock clk
+reset -expression rst
+prove -all
+report -summary -force -result -file fpv.rpt
+exit
+
+",https://github.com/diffblue/hw-cbmc/blob/main/examples/Benchmarks/seven_seg_1.sv
 "module uart_transmit #(localparam d_width = 4, localparam c_width = 3) (input clk, input rst, input tx_ena, input [d_width - 1: 0] tx_data, output reg tx, output reg tx_busy);
 	reg [c_width-1:0] tx_cnt;
 	reg tx_state;
@@ -1960,7 +2204,18 @@ endmodule",uart_transmit,"module uart_transmit_sva #(localparam d_width = 4, loc
 	
 	p1: assert property (@(posedge clk) s_eventually rst == 1 ||  tx_state == 0);
   	// F G (rst = FALSE) -> G F (tx_state = FALSE)
-endmodule",assert property(@(posedge clk) s_eventually rst == 1 || tx_state == 0);,,https://github.com/diffblue/hw-cbmc/blob/main/examples/Benchmarks/uart_transmit_1.sv
+endmodule",assert property(@(posedge clk) s_eventually rst == 1 || tx_state == 0);,"analyze -clear
+analyze -sv12 ./uart_transmit_assertion.sv
+
+elaborate -top uart_transmit
+
+clock clk
+reset -expression rst
+prove -all
+report -summary -force -result -file fpv.rpt
+exit
+
+",https://github.com/diffblue/hw-cbmc/blob/main/examples/Benchmarks/uart_transmit_1.sv
 "module VGA #(localparam  size = 1, localparam h_bits = 7, localparam v_bits = 5) (input clk, input rst, output reg disp_ena, output reg n_blank, output reg n_sync, output reg [h_bits-1:0] col, output reg [v_bits-1:0] row);
 
 	localparam h_pixels = 50*size;
@@ -2029,7 +2284,18 @@ endmodule",VGA,"module VGA_sva #(localparam  size = 1, localparam h_bits = 7, lo
 	
 	p1: assert property  (@(posedge clk) s_eventually rst == 1 || disp_ena == 1);
   	// F G !rst -> G F disp_ena
-endmodule",assert property (@(posedge clk) s_eventually (rst == 1 || disp_ena == 1));,,https://github.com/diffblue/hw-cbmc/blob/main/examples/Benchmarks/vga_1.sv
+endmodule",assert property (@(posedge clk) s_eventually (rst == 1 || disp_ena == 1));,"analyze -clear
+analyze -sv12 ./VGA_assertion.sv
+
+elaborate -top VGA
+
+clock clk
+reset -expression rst
+prove -all
+report -summary -force -result -file fpv.rpt
+exit
+
+",https://github.com/diffblue/hw-cbmc/blob/main/examples/Benchmarks/vga_1.sv
 "module arb2(clk, rst, req1, req2, gnt1, gnt2);
 
 input clk, rst;
@@ -2113,7 +2379,18 @@ assert property(@(posedge clk) (req1 == 1 & req2 == 0) |-> (gnt1 == 1));
 assert property(@(posedge clk) (req1 == 1 & state == 0) |-> (gnt2 == 0));
 assert property(@(posedge clk) (req2 == 1 & state == 1) |-> (gnt2 == 1));
 assert property(@(posedge clk) (req2 == 0) |-> (gnt2 == 0));
-assert property(@(posedge clk) (req2 == 1 & req1 == 0) |-> (gnt2 == 1));",,https://github.com/achieve-lab/assertion_data_for_LLM/tree/NIPS_2024/Jasper_results/Arbiter
+assert property(@(posedge clk) (req2 == 1 & req1 == 0) |-> (gnt2 == 1));","analyze -clear
+analyze -sv12 ./arb2_assertion.sv
+
+elaborate -top arb2
+
+clock clk
+reset -expression rst
+prove -all
+report -summary -force -result -file fpv.rpt
+exit
+
+",https://github.com/achieve-lab/assertion_data_for_LLM/tree/NIPS_2024/Jasper_results/Arbiter
 "//////////////////////////////////////////////////////////////////
 ////
 ////
@@ -2774,7 +3051,18 @@ assert_a0: assert property(a0);
 endmodule","assert property(@(posedge clk) (aes_mode[0] == 1) |-> (mode_ctr == 0));
 assert property(@(posedge clk) (aes_mode[0] == 0) |-> (mode_cbc == 0));
 assert property(@(posedge clk) (start == 0) |-> (key_init == 0));
-assert property(@(posedge clk) (start == 1) |-> (key_init == 1));",,https://github.com/achieve-lab/assertion_data_for_LLM/blob/NIPS_2024/Jasper_results/arithmetic_core_aes128/control_unit/FPV_control_unit.tcl
+assert property(@(posedge clk) (start == 1) |-> (key_init == 1));","analyze -clear
+analyze -sv12 ./control_unit_assertion.sv
+
+elaborate -top control_unit
+
+clock clk
+reset -expression rst_n
+prove -all
+report -summary -force -result -file fpv.rpt
+exit
+
+",https://github.com/achieve-lab/assertion_data_for_LLM/blob/NIPS_2024/Jasper_results/arithmetic_core_aes128/control_unit/FPV_control_unit.tcl
 "//////////////////////////////////////////////////////////////////
 ////
 ////
@@ -3162,7 +3450,18 @@ assert property(@(posedge DEFAULT_CLOCK) (hwrite_pp == 0) |-> (crc_idr_en == 0))
 assert property(@(posedge DEFAULT_CLOCK) (write_en == 0) |-> (crc_poly_en == 0));
 assert property(@(posedge DEFAULT_CLOCK) (hselx_pp == 0) |-> (crc_poly_en == 0));
 assert property(@(posedge DEFAULT_CLOCK) (hwrite_pp == 0) |-> (crc_poly_en == 0));
-assert property(@(posedge DEFAULT_CLOCK) (haddr_pp[1] == 1) |-> (crc_poly_en == 0));",,https://github.com/achieve-lab/assertion_data_for_LLM/blob/NIPS_2024/Jasper_results/arithmetic_core_crcahb/host_interface/property_goldmine.sva
+assert property(@(posedge DEFAULT_CLOCK) (haddr_pp[1] == 1) |-> (crc_poly_en == 0));","analyze -clear
+analyze -sv12 ./host_interface_assertion.sv
+
+elaborate -top host_interface
+
+clock HCLK
+reset -expression !HRESETn
+prove -all
+report -summary -force -result -file fpv.rpt
+exit
+
+",https://github.com/achieve-lab/assertion_data_for_LLM/blob/NIPS_2024/Jasper_results/arithmetic_core_crcahb/host_interface/property_goldmine.sva
 "`timescale 1ns / 1ps
 //=============================================================================
 //	(C) 2007,2012  Robert Finch
@@ -3555,7 +3854,18 @@ assert property(@(posedge clk) (sel4 == 0 & ce == 0) |=> (sel4 == 0));
 assert property(@(posedge clk) (sel4 == 1 & ce == 0) |=> (sel4 == 1));
 assert property(@(posedge clk) (sel4 == 0 & req2 == 1) |=> (sel4 == 0));
 assert property(@(posedge clk) (sel4 == 0 & req3 == 1) |=> (sel4 == 0));
-assert property(@(posedge clk) (sel4 == 0 & req4 == 0) |=> (sel4 == 0));",,https://github.com/achieve-lab/assertion_data_for_LLM/tree/NIPS_2024/Jasper_results/arithmetic_core_common_files/PSGBusArb
+assert property(@(posedge clk) (sel4 == 0 & req4 == 0) |=> (sel4 == 0));","analyze -clear
+analyze -sv12 ./PSGBusArb_assertion.sv
+
+elaborate -top PSGBusArb
+
+clock clk
+reset -expression rst
+prove -all
+report -summary -force -result -file fpv.rpt
+exit
+
+",https://github.com/achieve-lab/assertion_data_for_LLM/tree/NIPS_2024/Jasper_results/arithmetic_core_common_files/PSGBusArb
 "module simple_req_ack (
 	input  clk,
 	input  rst_n,
@@ -3616,7 +3926,18 @@ endmodule",simple_req_ack,"module simple_req_ack_sva (input clk, rst_n, req, ack
 	// assert_sva_req_ack3 : assert property( sva_req_ack3(clk, rst_n, req, ack) );
 	// assert_sva_req_ack4 : assert property( sva_req_ack4(clk, rst_n, req, ack) );
 
-endmodule",assert property(@(posedge clk) disable iff(!rst_n) $rose(req) |-> ##2 $rose(ack));,,https://github.com/hassyy/systemverilog-assertion/blob/master/simple-req-ack/sva_req_ack.sv
+endmodule",assert property(@(posedge clk) disable iff(!rst_n) $rose(req) |-> ##2 $rose(ack));,"analyze -clear
+analyze -sv12 ./simple_req_ack_assertion.sv
+
+elaborate -top simple_req_ack
+
+clock clk
+reset -expression !rst_n
+prove -all
+report -summary -force -result -file fpv.rpt
+exit
+
+",https://github.com/hassyy/systemverilog-assertion/blob/master/simple-req-ack/sva_req_ack.sv
 "//////////////////////////////////////////////////////////////////
 ////
 ////
@@ -3845,7 +4166,18 @@ assert property(@(posedge PCLK) (ERROR == 1) |-> (PSLVERR == 1));
 assert property(@(posedge PCLK) (TX_EMPTY == 1) |-> (INT_TX == 1));  
 assert property(@(posedge PCLK) (TX_EMPTY == 0) |-> (INT_TX == 0));  
 assert property(@(posedge PCLK) (RX_EMPTY == 0) |-> (INT_RX == 0));  
-assert property(@(posedge PCLK) (RX_EMPTY == 1) |-> (INT_RX == 1));",,https://github.com/achieve-lab/assertion_data_for_LLM/blob/NIPS_2024/Jasper_results/communication_controller_apb_to_i2c/apb/FPV_apb.tcl
+assert property(@(posedge PCLK) (RX_EMPTY == 1) |-> (INT_RX == 1));","analyze -clear
+analyze -sv12 ./apb_assertion.sv
+
+elaborate -top apb
+
+clock PCLK
+reset PRESETn
+prove -all
+report -summary -force -result -file fpv.rpt
+exit
+
+",https://github.com/achieve-lab/assertion_data_for_LLM/blob/NIPS_2024/Jasper_results/communication_controller_apb_to_i2c/apb/FPV_apb.tcl
 "////////////////////////////////////////////////////////////////////////////////////////////////
 ////                                                              							////
 ////                                                              							////
@@ -4393,7 +4725,18 @@ assert_a0: assert property(a0);
 endmodule","assert property(@(posedge clk) (txNext == 0) |=> (tx == 0));  
 assert property(@(posedge clk) (txNext == 1) |=> (tx == 1));  
 assert property(@(posedge clk) (stateReg[0] == 1) |-> (txDoneTick == 0));  
-assert property(@(posedge clk) (txStart == 0) |-> (txDoneTick == 0));",,https://github.com/achieve-lab/assertion_data_for_LLM/blob/NIPS_2024/Jasper_results/arithmetic_core_8-bit_piepelined_processor/uartTrans/FPV_uartTrans.tcl
+assert property(@(posedge clk) (txStart == 0) |-> (txDoneTick == 0));","analyze -clear
+analyze -sv12 ./uartTrans_assertion.sv
+
+elaborate -top uartTrans
+
+clock clk
+reset reset
+prove -all
+report -summary -force -result -file fpv.rpt
+exit
+
+",https://github.com/achieve-lab/assertion_data_for_LLM/blob/NIPS_2024/Jasper_results/arithmetic_core_8-bit_piepelined_processor/uartTrans/FPV_uartTrans.tcl
 "////////////////////////////////////////////////////////////////////////////////////////////////
 ////                                                              							////
 ////                                                              							////
@@ -4933,7 +5276,18 @@ assert property(@(posedge clk) (sReg[1] == 0) |=> (rxDoneTick == 0));
 assert property(@(posedge clk) (nReg[1] == 0) |=> (rxDoneTick == 0));  
 assert property(@(posedge clk) (nReg[0] == 0) |=> (rxDoneTick == 0));  
 assert property(@(posedge clk) (sTick == 0) |-> (rxDoneTick == 0));  
-assert property(@(posedge clk) (sNext[0] == 0) |=> (rxDoneTick == 0));",,https://github.com/achieve-lab/assertion_data_for_LLM/blob/NIPS_2024/Jasper_llama_results/arithmetic_core_8-bit_piepelined_processor/uartRec/FPV_uartRec.tcl
+assert property(@(posedge clk) (sNext[0] == 0) |=> (rxDoneTick == 0));","analyze -clear
+analyze -sv12 ./uartRec_assertion.sv
+
+elaborate -top uartRec
+
+clock clk
+reset reset
+prove -all
+report -summary -force -result -file fpv.rpt
+exit
+
+",https://github.com/achieve-lab/assertion_data_for_LLM/blob/NIPS_2024/Jasper_llama_results/arithmetic_core_8-bit_piepelined_processor/uartRec/FPV_uartRec.tcl
 "//////////////////////////////////////////////////////////////////
 ////
 ////
@@ -6583,8 +6937,1740 @@ begin
 				end
 				else if(count_send_data >= DATA_CONFIG_REG[13:2]/12'd4 && count_send_data < (DATA_CONFIG_REG[13:2]-(DATA_CONFIG_REG[13:2]/12'd4))-12'd1)
 				begin
-			",,,,,
-"	BR_CLK""",module_i2c,"module module_i2c_sva(PCLK,PRESETn,fifo_tx_f_full,fifo_tx_f_empty,fifo_tx_data_out,fifo_rx_data_in,fifo_rx_f_full,fifo_rx_f_empty,fifo_rx_wr_en,
+					BR_CLK_O <= 1'b1;
+				end
+				else
+				begin
+					BR_CLK_O <= 1'b0;
+				end	
+			end
+			else
+			begin
+				count_send_data <= 12'd0;
+				SDA_OUT<=fifo_tx_data_out[26:26];
+			end	
+
+		end
+		DATA1_3:
+		begin
+
+			if(count_send_data < DATA_CONFIG_REG[13:2])
+			begin
+				count_send_data <= count_send_data + 12'd1;
+				SDA_OUT<=fifo_tx_data_out[26:26];
+
+				if(count_send_data < DATA_CONFIG_REG[13:2]/12'd4)
+				begin
+					BR_CLK_O <= 1'b0;
+				end
+				else if(count_send_data >= DATA_CONFIG_REG[13:2]/12'd4 && count_send_data < (DATA_CONFIG_REG[13:2]-(DATA_CONFIG_REG[13:2]/12'd4))-12'd1)
+				begin
+					BR_CLK_O <= 1'b1;
+				end
+				else
+				begin
+					BR_CLK_O <= 1'b0;
+				end			
+
+			end
+			else
+			begin
+				count_send_data <= 12'd0;
+				SDA_OUT<=fifo_tx_data_out[27:27];
+			end	
+				
+		end
+		DATA1_4:
+		begin
+
+			if(count_send_data < DATA_CONFIG_REG[13:2])
+			begin
+				count_send_data <= count_send_data + 12'd1;
+				SDA_OUT<=fifo_tx_data_out[27:27];
+
+				if(count_send_data < DATA_CONFIG_REG[13:2]/12'd4)
+				begin
+					BR_CLK_O <= 1'b0;
+				end
+				else if(count_send_data >= DATA_CONFIG_REG[13:2]/12'd4 && count_send_data < (DATA_CONFIG_REG[13:2]-(DATA_CONFIG_REG[13:2]/12'd4))-12'd1)
+				begin
+					BR_CLK_O <= 1'b1;
+				end
+				else
+				begin
+					BR_CLK_O <= 1'b0;
+				end			
+
+			end
+			else
+			begin
+				count_send_data <= 12'd0;
+				SDA_OUT<=fifo_tx_data_out[28:28];
+			end	
+				
+		end
+		DATA1_5:
+		begin
+
+			if(count_send_data < DATA_CONFIG_REG[13:2])
+			begin
+				count_send_data <= count_send_data + 12'd1;
+				SDA_OUT<=fifo_tx_data_out[28:28];
+
+				if(count_send_data < DATA_CONFIG_REG[13:2]/12'd4)
+				begin
+					BR_CLK_O <= 1'b0;
+				end
+				else if(count_send_data >= DATA_CONFIG_REG[13:2]/12'd4 && count_send_data < (DATA_CONFIG_REG[13:2]-(DATA_CONFIG_REG[13:2]/12'd4))-12'd1)
+				begin
+					BR_CLK_O <= 1'b1;
+				end
+				else
+				begin
+					BR_CLK_O <= 1'b0;
+				end		
+
+			end
+			else
+			begin
+				count_send_data <= 12'd0;
+				SDA_OUT<=fifo_tx_data_out[29:29];
+			end	
+				
+		end
+		DATA1_6:
+		begin
+
+			if(count_send_data < DATA_CONFIG_REG[13:2])
+			begin
+				count_send_data <= count_send_data + 12'd1;
+				SDA_OUT<=fifo_tx_data_out[29:29];
+
+				if(count_send_data < DATA_CONFIG_REG[13:2]/12'd4)
+				begin
+					BR_CLK_O <= 1'b0;
+				end
+				else if(count_send_data >= DATA_CONFIG_REG[13:2]/12'd4 && count_send_data < (DATA_CONFIG_REG[13:2]-(DATA_CONFIG_REG[13:2]/12'd4))-12'd1)
+				begin
+					BR_CLK_O <= 1'b1;
+				end
+				else
+				begin
+					BR_CLK_O <= 1'b0;
+				end		
+
+			end
+			else
+			begin
+				count_send_data <= 12'd0;
+				SDA_OUT<=fifo_tx_data_out[30:30];
+			end	
+				
+		end
+		DATA1_7:
+		begin
+
+			if(count_send_data < DATA_CONFIG_REG[13:2])
+			begin
+				count_send_data <= count_send_data + 12'd1;
+				SDA_OUT<=fifo_tx_data_out[30:30];
+
+				if(count_send_data < DATA_CONFIG_REG[13:2]/12'd4)
+				begin
+					BR_CLK_O <= 1'b0;
+				end
+				else if(count_send_data >= DATA_CONFIG_REG[13:2]/12'd4 && count_send_data < (DATA_CONFIG_REG[13:2]-(DATA_CONFIG_REG[13:2]/12'd4))-12'd1)
+				begin
+					BR_CLK_O <= 1'b1;
+				end
+				else
+				begin
+					BR_CLK_O <= 1'b0;
+				end		
+
+			end
+			else
+			begin
+				count_send_data <= 12'd0;
+				SDA_OUT<=fifo_tx_data_out[31:31];
+			end	
+
+				
+		end
+		DATA1_8:
+		begin
+
+			if(count_send_data < DATA_CONFIG_REG[13:2])
+			begin
+				count_send_data <= count_send_data + 12'd1;
+				SDA_OUT<=fifo_tx_data_out[31:31];
+
+				if(count_send_data < DATA_CONFIG_REG[13:2]/12'd4)
+				begin
+					BR_CLK_O <= 1'b0;
+				end
+				else if(count_send_data >= DATA_CONFIG_REG[13:2]/12'd4 && count_send_data < (DATA_CONFIG_REG[13:2]-(DATA_CONFIG_REG[13:2]/12'd4))-12'd1)
+				begin
+					BR_CLK_O <= 1'b1;
+				end
+				else
+				begin
+					BR_CLK_O <= 1'b0;
+				end		
+
+			end
+			else
+			begin
+				count_send_data <= 12'd0;
+				SDA_OUT<=1'b0;
+			end	
+				
+		end
+		RESPONSE_DATA1_1:
+		begin
+			//fifo_  _rd_en <= 1'b1;
+
+			if(count_send_data < DATA_CONFIG_REG[13:2])
+			begin
+				count_send_data <= count_send_data + 12'd1;
+
+				//LETS TRY USE THIS BUT I DONT THINK IF WORKS  
+				RESPONSE<= SDA;
+
+				if(count_send_data < DATA_CONFIG_REG[13:2]/12'd4)
+				begin
+					BR_CLK_O <= 1'b0;
+				end
+				else if(count_send_data >= DATA_CONFIG_REG[13:2]/12'd4 && count_send_data < (DATA_CONFIG_REG[13:2]-(DATA_CONFIG_REG[13:2]/12'd4))-12'd1)
+				begin
+					BR_CLK_O <= 1'b1;
+				end
+				else
+				begin
+					BR_CLK_O <= 1'b0;
+				end		
+			end
+			else
+			begin
+				count_send_data <= 12'd0;
+				fifo_tx_rd_en <= 1'b1;
+			end	
+
+		end
+		DELAY_BYTES:
+		begin
+			
+			fifo_tx_rd_en <= 1'b0;
+		
+			if(count_send_data < DATA_CONFIG_REG[13:2])
+			begin
+				
+				count_send_data <= count_send_data + 12'd1;	
+				BR_CLK_O <= 1'b0;
+				SDA_OUT<=1'b0;		
+			end
+			else
+			begin
+
+
+				if(count_tx == 2'd0)
+				begin
+					count_tx <= count_tx + 2'd1;
+					SDA_OUT<=fifo_tx_data_out[8:8];
+				end
+				else if(count_tx   == 2'd1)
+				begin
+					count_tx <= count_tx + 2'd1;
+					SDA_OUT<=fifo_tx_data_out[16:16];
+				end
+				else if(count_tx == 2'd2)
+				begin
+					count_tx <= count_tx + 2'd1;
+					SDA_OUT<=fifo_tx_data_out[24:24];
+				end
+				else if(count_tx == 2'd3)
+				begin
+					count_tx <= 2'd0;
+				end
+
+				count_send_data <= 12'd0;
+			
+			end
+
+		end
+		//THIS BLOCK MUST BE CHECKED WITH CARE
+		NACK:// MORE A RESTART 
+		begin
+			fifo_tx_rd_en <= 1'b0;
+		
+			if(count_send_data < DATA_CONFIG_REG[13:2]*2'd3)
+			begin		
+				count_send_data <= count_send_data + 12'd1;
+	
+				if(count_receive_data < DATA_CONFIG_REG[13:2]/12'd2)
+				begin
+					SDA_OUT<=1'b0;
+				end
+				else if(count_send_data > DATA_CONFIG_REG[13:2]/12'd2-12'd1 && count_send_data < DATA_CONFIG_REG[13:2])
+				begin
+					SDA_OUT<=1'b1;
+				end
+				else if(count_send_data  == DATA_CONFIG_REG[13:2]*2'd2)
+				begin
+					SDA_OUT<=1'b0;
+				end
+
+				if(count_send_data < DATA_CONFIG_REG[13:2]/12'd2)
+				begin
+					BR_CLK_O <= 1'b1;
+				end
+				else if(count_send_data > DATA_CONFIG_REG[13:2]/12'd2-12'd1 && count_send_data < DATA_CONFIG_REG[13:2])
+				begin
+					BR_CLK_O <= 1'b0;
+				end
+				else if(count_send_data < DATA_CONFIG_REG[13:2]*2'd2)
+				begin
+					BR_CLK_O <= 1'b1;
+				end
+		
+			end
+			else
+			begin
+				count_send_data <= 12'd0;
+
+				if(count_tx == 2'd0)
+				begin
+					count_tx <= 2'd0;
+					SDA_OUT<=fifo_tx_data_out[0:0];
+				end
+				else if(count_tx == 2'd1)
+				begin
+					count_tx <= 2'd1;
+					SDA_OUT<=fifo_tx_data_out[8:8];
+				end
+				else if(count_tx == 2'd2)
+				begin
+					count_tx <= 2'd2;
+					SDA_OUT<=fifo_tx_data_out[16:16];
+				end
+				else if(count_tx == 2'd3)
+				begin
+					count_tx <= 2'd3;
+					SDA_OUT<=fifo_tx_data_out[24:24];
+				end
+
+			
+			end
+		end
+		STOP:
+		begin
+
+			BR_CLK_O <= 1'b1;
+
+			if(count_send_data < DATA_CONFIG_REG[13:2])
+			begin
+				count_send_data <= count_send_data + 12'd1;
+
+				if(count_send_data < DATA_CONFIG_REG[13:2]/12'd2-12'd2)
+				begin
+					SDA_OUT<=1'b0;
+				end
+				else if(count_send_data > DATA_CONFIG_REG[13:2]/12'd2-12'd1 && count_send_data < DATA_CONFIG_REG[13:2])
+				begin
+					SDA_OUT<=1'b1;
+				end	
+			end
+			else
+			begin
+				count_send_data <= 12'd0;
+			end
+		end
+		default:
+		begin
+			fifo_tx_rd_en <= 1'b0;
+			count_send_data <= 12'd4095;
+		end
+		endcase
+		
+	end
+
+
+end 
+
+
+	//STATE CONTROL 
+	reg [5:0] state_rx;
+	reg [5:0] next_state_rx;
+
+assign ENABLE_SDA = (state_rx ==  RESPONSE_CIN|| 
+		     state_rx ==  RESPONSE_ADDRESS|| 
+		     state_rx == RESPONSE_DATA0_1|| 
+		     state_rx == RESPONSE_DATA1_1)?1'b1:
+		    (state_tx ==  RESPONSE_CIN|| 
+		     state_tx ==  RESPONSE_ADDRESS|| 
+		     state_tx == RESPONSE_DATA0_1|| 
+		     state_tx == RESPONSE_DATA1_1)?1'b0:1'b1;
+
+
+assign ENABLE_SCL = (state_rx ==  RESPONSE_CIN|| 
+		     state_rx ==  RESPONSE_ADDRESS|| 
+		     state_rx == RESPONSE_DATA0_1|| 
+		     state_rx == RESPONSE_DATA1_1)?1'b1:
+		    (state_tx ==  RESPONSE_CIN|| 
+		     state_tx ==  RESPONSE_ADDRESS|| 
+		     state_tx == RESPONSE_DATA0_1|| 
+		     state_tx == RESPONSE_DATA1_1)?1'b1:1'b0;
+
+
+//COMBINATIONAL BLOCK TO RX
+always@(*)
+begin
+
+	//THE FUN START HERE :-)
+	//COMBINATIONAL UPDATE STATE BE CAREFUL WITH WHAT YOU MAKE HERE
+	next_state_rx = state_rx;
+
+	case(state_rx)//state_rx IS MORE SECURE CHANGE ONLY IF YOU KNOW WHAT ARE YOU DOING 
+	IDLE:
+	begin
+		//OBEYING SPEC
+		if(DATA_CONFIG_REG[0] == 1'b0 && DATA_CONFIG_REG[1] == 1'b0)
+		begin
+			next_state_rx =   IDLE;
+		end
+		else if(DATA_CONFIG_REG[0] == 1'b1 && DATA_CONFIG_REG[1] == 1'b1)
+		begin
+			next_state_rx =   IDLE;
+		end
+		else if(DATA_CONFIG_REG[0] == 1'b0 && DATA_CONFIG_REG[1] == 1'b1 && SDA_OUT_RX == 1'b0 && BR_CLK_O_RX == 1'b0)
+		begin
+			next_state_rx =   START;
+		end
+
+
+	end
+	START://THIS IS USED TOO ALL STATE MACHINES THE COUNTER_SEND_DATA
+	begin
+
+		if(  count_receive_data != DATA_CONFIG_REG[13:2])
+		begin
+			next_state_rx =   START;
+		end
+		else if(fifo_rx_data_in[0] == 1'b0 && fifo_rx_data_in[1] == 1'b0)
+		begin
+			next_state_rx =   CONTROLIN_1;
+		end
+		else 
+		begin
+			next_state_rx =   IDLE;
+		end
+		
+	end
+	  CONTROLIN_1:
+	begin
+		if(  count_receive_data != DATA_CONFIG_REG[13:2])
+		begin
+			next_state_rx =   CONTROLIN_1;
+		end
+		else
+		begin
+			next_state_rx =   CONTROLIN_2;
+		end
+
+	end
+	  CONTROLIN_2:
+	begin
+
+		if(  count_receive_data != DATA_CONFIG_REG[13:2])
+		begin
+			next_state_rx =   CONTROLIN_2;
+		end
+		else
+		begin
+			next_state_rx =   CONTROLIN_3;
+		end
+
+	end
+	  CONTROLIN_3:
+	begin
+
+		if(  count_receive_data != DATA_CONFIG_REG[13:2])
+		begin
+			next_state_rx =   CONTROLIN_3;
+		end
+		else
+		begin
+			next_state_rx =   CONTROLIN_4;
+		end		
+	end
+	  CONTROLIN_4:
+	begin
+
+		if(  count_receive_data != DATA_CONFIG_REG[13:2])
+		begin
+			next_state_rx =   CONTROLIN_4;
+		end
+		else
+		begin
+			next_state_rx =   CONTROLIN_5;
+		end		
+	end
+	  CONTROLIN_5:
+	begin
+
+		if(  count_receive_data != DATA_CONFIG_REG[13:2])
+		begin
+			next_state_rx =   CONTROLIN_5;
+		end
+		else
+		begin
+			next_state_rx =   CONTROLIN_6;
+		end		
+	end
+	  CONTROLIN_6:
+	begin
+
+		if(  count_receive_data != DATA_CONFIG_REG[13:2])
+		begin
+			next_state_rx =   CONTROLIN_6;
+		end
+		else
+		begin
+			next_state_rx =   CONTROLIN_7;
+		end		
+	end
+	  CONTROLIN_7:
+	begin
+
+		if(  count_receive_data != DATA_CONFIG_REG[13:2])
+		begin
+			next_state_rx =   CONTROLIN_7;
+		end
+		else
+		begin
+			next_state_rx =   CONTROLIN_8;
+		end		
+	end
+	  CONTROLIN_8:
+	begin
+
+		if(  count_receive_data != DATA_CONFIG_REG[13:2])
+		begin
+			next_state_rx =   CONTROLIN_8;
+		end
+		else 
+		begin
+			next_state_rx =   RESPONSE_CIN;
+		end		
+	end
+	RESPONSE_CIN:
+	begin
+
+		if(count_receive_data != DATA_CONFIG_REG[13:2])
+		begin
+			next_state_rx =   RESPONSE_CIN;
+		end
+		else if(RESPONSE == 1'b0)//ACK
+		begin 
+			next_state_rx  =   DELAY_BYTES;
+		end
+		else if(RESPONSE == 1'b1)//NACK
+		begin
+			next_state_rx  =   NACK;
+		end
+		
+	end
+	//NOW SENDING ADDRESS
+	ADDRESS_1:
+	begin
+		if(  count_receive_data != DATA_CONFIG_REG[13:2])
+		begin
+			next_state_rx =   ADDRESS_1;
+		end
+		else
+		begin
+			next_state_rx =   ADDRESS_2;
+		end	
+	end
+	ADDRESS_2:
+	begin
+		if(  count_receive_data != DATA_CONFIG_REG[13:2])
+		begin
+			next_state_rx =   ADDRESS_2;
+		end
+		else
+		begin
+			next_state_rx =   ADDRESS_3;
+		end	
+	end
+	ADDRESS_3:
+	begin
+		if(  count_receive_data != DATA_CONFIG_REG[13:2])
+		begin
+			next_state_rx =   ADDRESS_3;
+		end
+		else
+		begin
+			next_state_rx =   ADDRESS_4;
+		end	
+	end
+	ADDRESS_4:
+	begin
+		if(  count_receive_data != DATA_CONFIG_REG[13:2])
+		begin
+			next_state_rx =   ADDRESS_4;
+		end
+		else
+		begin
+			next_state_rx =   ADDRESS_5;
+		end	
+	end
+	ADDRESS_5:
+	begin
+		if(  count_receive_data != DATA_CONFIG_REG[13:2])
+		begin
+			next_state_rx =   ADDRESS_5;
+		end
+		else
+		begin
+			next_state_rx =   ADDRESS_6;
+		end	
+	end
+	ADDRESS_6:
+	begin
+		if(  count_receive_data != DATA_CONFIG_REG[13:2])
+		begin
+			next_state_rx =   ADDRESS_6;
+		end
+		else
+		begin
+			next_state_rx =   ADDRESS_7;
+		end	
+	end
+	ADDRESS_7:
+	begin
+		if(  count_receive_data != DATA_CONFIG_REG[13:2])
+		begin
+			next_state_rx =   ADDRESS_7;
+		end
+		else
+		begin
+			next_state_rx =   ADDRESS_8;
+		end	
+	end
+	ADDRESS_8:
+	begin
+		if(  count_receive_data != DATA_CONFIG_REG[13:2])
+		begin
+			next_state_rx =   ADDRESS_8;
+		end
+		else
+		begin
+			next_state_rx =   RESPONSE_ADDRESS;
+		end	
+	end
+	RESPONSE_ADDRESS:
+	begin
+		if(count_receive_data != DATA_CONFIG_REG[13:2])
+		begin
+			next_state_rx =   RESPONSE_ADDRESS;
+		end
+		else if(RESPONSE == 1'b0)//ACK
+		begin 
+			next_state_rx  =   DELAY_BYTES;
+		end
+		else if(RESPONSE == 1'b1)//NACK
+		begin
+			next_state_rx  =   NACK;
+		end
+	end
+	//data in
+	DATA0_1:
+	begin
+		if(  count_receive_data != DATA_CONFIG_REG[13:2])
+		begin
+			next_state_rx =   DATA0_1;
+		end
+		else
+		begin
+			next_state_rx =   DATA0_2;
+		end
+	end
+	  DATA0_2:
+	begin
+		if(  count_receive_data != DATA_CONFIG_REG[13:2])
+		begin
+			next_state_rx =   DATA0_2;
+		end
+		else
+		begin
+			next_state_rx =   DATA0_3;
+		end
+	end
+	  DATA0_3:
+	begin
+		if(  count_receive_data != DATA_CONFIG_REG[13:2])
+		begin
+			next_state_rx =   DATA0_3;
+		end
+		else
+		begin
+			next_state_rx =   DATA0_4;
+		end
+	end
+	  DATA0_4:
+	begin
+		if(  count_receive_data != DATA_CONFIG_REG[13:2])
+		begin
+			next_state_rx =   DATA0_4;
+		end
+		else
+		begin
+			next_state_rx =   DATA0_5;
+		end
+	end
+	  DATA0_5:
+	begin
+		if(  count_receive_data != DATA_CONFIG_REG[13:2])
+		begin
+			next_state_rx =   DATA0_5;
+		end
+		else
+		begin
+			next_state_rx =   DATA0_6;
+		end
+	end
+	  DATA0_6:
+	begin
+		if(  count_receive_data != DATA_CONFIG_REG[13:2])
+		begin
+			next_state_rx =   DATA0_6;
+		end
+		else
+		begin
+			next_state_rx =   DATA0_7;
+		end
+	end
+	  DATA0_7:
+	begin
+		if(  count_receive_data != DATA_CONFIG_REG[13:2])
+		begin
+			next_state_rx =   DATA0_7;
+		end
+		else
+		begin
+			next_state_rx =   DATA0_8;
+		end
+	end
+	  DATA0_8:
+	begin
+		if(  count_receive_data != DATA_CONFIG_REG[13:2])
+		begin
+			next_state_rx =   DATA0_8;
+		end
+		else
+		begin
+			next_state_rx =   RESPONSE_DATA0_1;
+		end
+	end
+	RESPONSE_DATA0_1:
+	begin
+
+		if(count_receive_data != DATA_CONFIG_REG[13:2])
+		begin
+			next_state_rx =   RESPONSE_DATA0_1;
+		end
+		else if(RESPONSE == 1'b0)//ACK
+		begin 
+			next_state_rx  =   DELAY_BYTES;
+		end
+		else if(RESPONSE == 1'b1)//NACK
+		begin
+			next_state_rx  =   NACK;
+		end	
+	end
+	//second byte
+	DATA1_1:
+	begin
+		if(  count_receive_data != DATA_CONFIG_REG[13:2])
+		begin
+			next_state_rx =   DATA1_1;
+		end
+		else
+		begin
+			next_state_rx =   DATA1_2;
+		end
+	end
+	DATA1_2:
+	begin
+		if(  count_receive_data != DATA_CONFIG_REG[13:2])
+		begin
+			next_state_rx =   DATA1_2;
+		end
+		else
+		begin
+			next_state_rx =   DATA1_3;
+		end
+	end
+	DATA1_3:
+	begin
+		if(  count_receive_data != DATA_CONFIG_REG[13:2])
+		begin
+			next_state_rx =   DATA1_3;
+		end
+		else
+		begin
+			next_state_rx =   DATA1_4;
+		end
+	end
+	  DATA1_4:
+	begin
+		if(  count_receive_data != DATA_CONFIG_REG[13:2])
+		begin
+			next_state_rx =   DATA1_4;
+		end
+		else
+		begin
+			next_state_rx =   DATA1_5;
+		end
+	end
+	  DATA1_5:
+	begin
+		if(  count_receive_data != DATA_CONFIG_REG[13:2])
+		begin
+			next_state_rx =   DATA1_5;
+		end
+		else
+		begin
+			next_state_rx =   DATA1_6;
+		end
+	end
+	  DATA1_6:
+	begin
+		if(  count_receive_data != DATA_CONFIG_REG[13:2])
+		begin
+			next_state_rx =   DATA1_6;
+		end
+		else
+		begin
+			next_state_rx =   DATA1_7;
+		end
+	end
+	  DATA1_7:
+	begin
+		if(  count_receive_data != DATA_CONFIG_REG[13:2])
+		begin
+			next_state_rx =   DATA1_7;
+		end
+		else
+		begin
+			next_state_rx =   DATA1_8;
+		end
+	end
+	  DATA1_8:
+	begin
+		if(  count_receive_data != DATA_CONFIG_REG[13:2])
+		begin
+			next_state_rx =   DATA1_8;
+		end
+		else
+		begin
+			next_state_rx =   RESPONSE_DATA1_1;
+		end
+	end
+	RESPONSE_DATA1_1:
+	begin
+		if(count_receive_data != DATA_CONFIG_REG[13:2])
+		begin
+			next_state_rx =   RESPONSE_DATA0_1;
+		end
+		else if(RESPONSE == 1'b0)//ACK
+		begin 
+			next_state_rx  =   DELAY_BYTES;
+		end
+		else if(RESPONSE == 1'b1)//NACK
+		begin
+			next_state_rx  =   NACK;
+		end	
+	
+	end
+	DELAY_BYTES://THIS FORM WORKS 
+	begin
+
+		
+		if(  count_receive_data != DATA_CONFIG_REG[13:2])
+		begin
+			next_state_rx =   DELAY_BYTES;
+		end
+		else
+		begin
+
+			if(count_rx == 2'd0)
+			begin
+				next_state_rx =   ADDRESS_1;
+			end
+			else if(count_rx == 2'd1)
+			begin
+				next_state_rx =   DATA0_1;
+			end
+			else if(count_rx == 2'd2)
+			begin
+				next_state_rx =   DATA1_1;
+			end
+			else if(count_rx == 2'd3)
+			begin
+				next_state_rx =   STOP;
+			end
+			
+		end
+
+	end
+	  STOP://THIS WORK
+	begin
+		if(  count_receive_data != DATA_CONFIG_REG[13:2])
+		begin
+			next_state_rx =   STOP;
+		end
+		else
+		begin
+			next_state_rx =   IDLE;
+		end
+	end
+	default:
+	begin
+			next_state_rx =   IDLE;
+	end
+	endcase
+
+
+end
+
+
+
+//SEQUENTIAL   
+always@(posedge PCLK)
+begin
+
+	//RESET SYNC
+	if(!PRESETn)
+	begin
+		//SIGNALS MUST BE RESETED
+		  count_receive_data <= 12'd0;
+		state_rx <=   IDLE;	
+		SDA_OUT_RX<= 1'b0;
+		fifo_rx_wr_en <= 1'b0;
+		count_rx <= 2'd0;
+		BR_CLK_O_RX <= 1'b0;	
+	end
+	else 
+	begin
+		
+		// SEQUENTIAL FUN START
+		state_rx <= next_state_rx;
+
+		case(state_rx)
+		  IDLE:
+		begin
+
+
+
+			if(((fifo_rx_f_full == 1'b0 && fifo_rx_f_empty == 1'b0) || (fifo_rx_f_full == 1'b0 && fifo_rx_f_empty == 1'b1)) && DATA_CONFIG_REG[1] == 1'b1)
+			begin
+
+				  SDA_OUT_RX<= SDA;
+				  BR_CLK_O_RX<=SCL;
+				  count_receive_data <=   count_receive_data + 12'd1;
+			end
+			else
+			begin
+				  SDA_OUT_RX<= SDA_OUT_RX;
+				  BR_CLK_O_RX<=BR_CLK_O_RX;
+				  count_receive_data <=   count_receive_data;		
+			end
+	
+		end
+		  START:
+		begin
+
+			if(  count_receive_data < DATA_CONFIG_REG[13:2])
+			begin
+				  count_receive_data <=   count_receive_data + 12'd1;
+			end
+			else
+			begin
+				  count_receive_data <= 12'd0;
+			end
+
+			if(  count_receive_data >= DATA_CONFIG_REG[13:2]/12'd4 &&   count_receive_data < (DATA_CONFIG_REG[13:2]-(DATA_CONFIG_REG[13:2]/12'd4))-12'd1)
+			begin
+				fifo_rx_data_in[0]<= SDA;
+				fifo_rx_data_in[1]<= SCL;			
+			end
+
+		end
+		  CONTROLIN_1:
+		begin
+
+			if(  count_receive_data < DATA_CONFIG_REG[13:2])
+			begin
+				  count_receive_data <=   count_receive_data + 12'd1;
+			end
+			else
+			begin
+				  count_receive_data <= 12'd0;
+			end
+
+			if(SCL == 1'b1 &&   count_receive_data >= DATA_CONFIG_REG[13:2]/12'd4 &&   count_receive_data < (DATA_CONFIG_REG[13:2]-(DATA_CONFIG_REG[13:2]/12'd4))-12'd1)
+			begin
+				fifo_rx_data_in[0]<= SDA;			
+			end
+
+		end		
+		  CONTROLIN_2:
+		begin
+	
+			if(  count_receive_data < DATA_CONFIG_REG[13:2])
+			begin
+				  count_receive_data <=   count_receive_data + 12'd1;
+			end
+			else
+			begin
+				  count_receive_data <= 12'd0;
+			end
+
+			if(SCL == 1'b1 &&   count_receive_data >= DATA_CONFIG_REG[13:2]/12'd4 &&   count_receive_data < (DATA_CONFIG_REG[13:2]-(DATA_CONFIG_REG[13:2]/12'd4))-12'd1)
+			begin
+				fifo_rx_data_in[1]<= SDA;			
+			end
+				
+		end
+		  CONTROLIN_3:
+		begin
+
+			if(  count_receive_data < DATA_CONFIG_REG[13:2])
+			begin
+				  count_receive_data <=   count_receive_data + 12'd1;
+			end
+			else
+			begin
+				  count_receive_data <= 12'd0;
+			end
+
+
+			if(SCL == 1'b1 &&   count_receive_data >= DATA_CONFIG_REG[13:2]/12'd4 &&   count_receive_data < (DATA_CONFIG_REG[13:2]-(DATA_CONFIG_REG[13:2]/12'd4))-12'd1)
+			begin
+				fifo_rx_data_in[2]<= SDA;			
+			end
+
+		
+		end
+		  CONTROLIN_4:
+		begin
+	
+			if(  count_receive_data < DATA_CONFIG_REG[13:2])
+			begin
+				  count_receive_data <=   count_receive_data + 12'd1;
+			end
+			else
+			begin
+				  count_receive_data <= 12'd0;
+			end
+
+			if(SCL == 1'b1 &&   count_receive_data >= DATA_CONFIG_REG[13:2]/12'd4 &&   count_receive_data < (DATA_CONFIG_REG[13:2]-(DATA_CONFIG_REG[13:2]/12'd4))-12'd1)
+			begin
+				fifo_rx_data_in[3]<= SDA;			
+			end
+				
+		end
+		  CONTROLIN_5:
+		begin
+
+			
+			if(  count_receive_data < DATA_CONFIG_REG[13:2])
+			begin
+				  count_receive_data <=   count_receive_data + 12'd1;
+			end
+			else
+			begin
+				  count_receive_data <= 12'd0;
+			end
+
+			if(SCL == 1'b1 &&   count_receive_data >= DATA_CONFIG_REG[13:2]/12'd4 &&   count_receive_data < (DATA_CONFIG_REG[13:2]-(DATA_CONFIG_REG[13:2]/12'd4))-12'd1)
+			begin
+					fifo_rx_data_in[4]<= SDA;			
+			end
+		
+
+		end
+		  CONTROLIN_6:
+		begin
+				if(  count_receive_data < DATA_CONFIG_REG[13:2])
+				begin
+					  count_receive_data <=   count_receive_data + 12'd1;
+				end
+				else
+				begin
+					  count_receive_data <= 12'd0;
+				end
+
+				if(SCL == 1'b1 &&   count_receive_data >= DATA_CONFIG_REG[13:2]/12'd4 &&   count_receive_data < (DATA_CONFIG_REG[13:2]-(DATA_CONFIG_REG[13:2]/12'd4))-12'd1)
+				begin
+					fifo_rx_data_in[5]<= SDA;			
+				end		
+		end
+
+		  CONTROLIN_7:
+		begin
+
+			if(  count_receive_data < DATA_CONFIG_REG[13:2])
+			begin
+				  count_receive_data <=   count_receive_data + 12'd1;
+			end
+			else
+			begin
+				  count_receive_data <= 12'd0;
+			end
+
+			if(SCL == 1'b1 &&   count_receive_data >= DATA_CONFIG_REG[13:2]/12'd4 &&   count_receive_data < (DATA_CONFIG_REG[13:2]-(DATA_CONFIG_REG[13:2]/12'd4))-12'd1)
+			begin
+				fifo_rx_data_in[6]<= SDA;			
+			end
+		end
+		  CONTROLIN_8:
+		begin
+
+
+			if(  count_receive_data < DATA_CONFIG_REG[13:2])
+			begin
+				  count_receive_data <=   count_receive_data + 12'd1;
+			end
+			else
+			begin
+				  count_receive_data <= 12'd0;
+			end
+
+			if(SCL == 1'b1 &&   count_receive_data >= DATA_CONFIG_REG[13:2]/12'd4 &&   count_receive_data < (DATA_CONFIG_REG[13:2]-(DATA_CONFIG_REG[13:2]/12'd4))-12'd1)
+			begin
+				fifo_rx_data_in[7]<= SDA;			
+			end
+	
+
+				
+		end
+		  RESPONSE_CIN:
+		begin
+
+			if(  count_receive_data < DATA_CONFIG_REG[13:2])
+			begin
+				  count_receive_data <=   count_receive_data + 12'd1;
+			end
+			else
+			begin
+				  count_receive_data <= 12'd0;
+			end
+
+		end
+		  ADDRESS_1:
+		begin
+
+
+			if(  count_receive_data < DATA_CONFIG_REG[13:2])
+			begin
+				  count_receive_data <=   count_receive_data + 12'd1;
+			end
+			else
+			begin
+				  count_receive_data <= 12'd0;
+			end
+
+			if(SCL == 1'b1 &&   count_receive_data >= DATA_CONFIG_REG[13:2]/12'd4 &&   count_receive_data < (DATA_CONFIG_REG[13:2]-(DATA_CONFIG_REG[13:2]/12'd4))-12'd1)
+			begin
+				fifo_rx_data_in[8]<= SDA;			
+			end
+	
+				
+		end		
+		  ADDRESS_2:
+		begin
+
+
+			if(  count_receive_data < DATA_CONFIG_REG[13:2])
+			begin
+				  count_receive_data <=   count_receive_data + 12'd1;
+			end
+			else
+			begin
+				  count_receive_data <= 12'd0;
+			end
+
+			if(SCL == 1'b1 &&   count_receive_data >= DATA_CONFIG_REG[13:2]/12'd4 &&   count_receive_data < (DATA_CONFIG_REG[13:2]-(DATA_CONFIG_REG[13:2]/12'd4))-12'd1)
+			begin
+				fifo_rx_data_in[9]<= SDA;			
+			end
+	
+
+		end
+		  ADDRESS_3:
+		begin
+
+
+			if(  count_receive_data < DATA_CONFIG_REG[13:2])
+			begin
+				  count_receive_data <=   count_receive_data + 12'd1;
+			end
+			else
+			begin
+				  count_receive_data <= 12'd0;
+			end
+
+			if(SCL == 1'b1 &&   count_receive_data >= DATA_CONFIG_REG[13:2]/12'd4 &&   count_receive_data < (DATA_CONFIG_REG[13:2]-(DATA_CONFIG_REG[13:2]/12'd4))-12'd1)
+			begin
+				fifo_rx_data_in[10]<= SDA;			
+			end
+	
+	
+
+		end
+		  ADDRESS_4:
+		begin
+
+
+			if(  count_receive_data < DATA_CONFIG_REG[13:2])
+			begin
+				  count_receive_data <=   count_receive_data + 12'd1;
+			end
+			else
+			begin
+				  count_receive_data <= 12'd0;
+			end
+
+			if(SCL == 1'b1 &&   count_receive_data >= DATA_CONFIG_REG[13:2]/12'd4 &&   count_receive_data < (DATA_CONFIG_REG[13:2]-(DATA_CONFIG_REG[13:2]/12'd4))-12'd1)
+			begin
+				fifo_rx_data_in[11]<= SDA;			
+			end
+	
+		end
+		  ADDRESS_5:
+		begin
+
+
+				
+			if(  count_receive_data < DATA_CONFIG_REG[13:2])
+			begin
+				  count_receive_data <=   count_receive_data + 12'd1;
+			end
+			else
+			begin
+				  count_receive_data <= 12'd0;
+			end
+
+			if(SCL == 1'b1 &&   count_receive_data >= DATA_CONFIG_REG[13:2]/12'd4 &&   count_receive_data < (DATA_CONFIG_REG[13:2]-(DATA_CONFIG_REG[13:2]/12'd4))-12'd1)
+			begin
+				fifo_rx_data_in[12]<= SDA;			
+			end
+
+					
+		end
+		  ADDRESS_6:
+		begin
+
+			if(  count_receive_data < DATA_CONFIG_REG[13:2])
+			begin
+				  count_receive_data <=   count_receive_data + 12'd1;
+			end
+			else
+			begin
+				  count_receive_data <= 12'd0;
+			end
+
+			if(SCL == 1'b1 &&   count_receive_data >= DATA_CONFIG_REG[13:2]/12'd4 &&   count_receive_data < (DATA_CONFIG_REG[13:2]-(DATA_CONFIG_REG[13:2]/12'd4))-12'd1)
+			begin
+				fifo_rx_data_in[13]<= SDA;			
+			end
+	
+		end
+		  ADDRESS_7:
+		begin
+
+
+			if(  count_receive_data < DATA_CONFIG_REG[13:2])
+			begin
+				  count_receive_data <=   count_receive_data + 12'd1;
+			end
+			else
+			begin
+				  count_receive_data <= 12'd0;
+			end
+
+			if(SCL == 1'b1 &&   count_receive_data >= DATA_CONFIG_REG[13:2]/12'd4 &&   count_receive_data < (DATA_CONFIG_REG[13:2]-(DATA_CONFIG_REG[13:2]/12'd4))-12'd1)
+			begin
+				fifo_rx_data_in[14]<= SDA;			
+			end
+				
+		end
+		  ADDRESS_8:
+		begin
+
+
+			if(  count_receive_data < DATA_CONFIG_REG[13:2])
+			begin
+				  count_receive_data <=   count_receive_data + 12'd1;
+			end
+			else
+			begin
+				  count_receive_data <= 12'd0;
+			end
+
+			if(SCL == 1'b1 &&   count_receive_data >= DATA_CONFIG_REG[13:2]/12'd4 &&   count_receive_data < (DATA_CONFIG_REG[13:2]-(DATA_CONFIG_REG[13:2]/12'd4))-12'd1)
+			begin
+				fifo_rx_data_in[15]<= SDA;			
+			end
+
+				
+		end
+		  RESPONSE_ADDRESS:
+		begin
+
+			if(  count_receive_data < DATA_CONFIG_REG[13:2])
+			begin
+				  count_receive_data <=   count_receive_data + 12'd1;
+			end
+			else
+			begin
+				  count_receive_data <= 12'd0;
+			end
+
+
+		end
+		  DATA0_1:
+		begin
+
+
+			if(  count_receive_data < DATA_CONFIG_REG[13:2])
+			begin
+				  count_receive_data <=   count_receive_data + 12'd1;
+			end
+			else
+			begin
+				  count_receive_data <= 12'd0;
+			end
+
+			if(SCL == 1'b1 &&   count_receive_data >= DATA_CONFIG_REG[13:2]/12'd4 &&   count_receive_data < (DATA_CONFIG_REG[13:2]-(DATA_CONFIG_REG[13:2]/12'd4))-12'd1)
+			begin
+				fifo_rx_data_in[16]<= SDA;			
+			end
+	
+
+				
+		end
+		  DATA0_2:
+		begin
+
+
+			if(  count_receive_data < DATA_CONFIG_REG[13:2])
+			begin
+				  count_receive_data <=   count_receive_data + 12'd1;
+			end
+			else
+			begin
+				  count_receive_data <= 12'd0;
+			end
+
+			if(SCL == 1'b1 &&   count_receive_data >= DATA_CONFIG_REG[13:2]/12'd4 &&   count_receive_data < (DATA_CONFIG_REG[13:2]-(DATA_CONFIG_REG[13:2]/12'd4))-12'd1)
+			begin
+				fifo_rx_data_in[17]<= SDA;			
+			end
+	
+				
+		end		
+		  DATA0_3:
+		begin
+
+			if(  count_receive_data < DATA_CONFIG_REG[13:2])
+			begin
+				  count_receive_data <=   count_receive_data + 12'd1;
+			end
+			else
+			begin
+				  count_receive_data <= 12'd0;
+			end
+
+			if(SCL == 1'b1 &&   count_receive_data >= DATA_CONFIG_REG[13:2]/12'd4 &&   count_receive_data < (DATA_CONFIG_REG[13:2]-(DATA_CONFIG_REG[13:2]/12'd4))-12'd1)
+			begin
+				fifo_rx_data_in[18]<= SDA;			
+			end
+				
+		end
+		  DATA0_4:
+		begin
+
+
+
+			if(  count_receive_data < DATA_CONFIG_REG[13:2])
+			begin
+				  count_receive_data <=   count_receive_data + 12'd1;
+			end
+			else
+			begin
+				  count_receive_data <= 12'd0;
+			end
+
+			if(SCL == 1'b1 &&   count_receive_data >= DATA_CONFIG_REG[13:2]/12'd4 &&   count_receive_data < (DATA_CONFIG_REG[13:2]-(DATA_CONFIG_REG[13:2]/12'd4))-12'd1)
+			begin
+				fifo_rx_data_in[19]<= SDA;			
+			end
+	
+		end
+		  DATA0_5:
+		begin
+
+
+			if(  count_receive_data < DATA_CONFIG_REG[13:2])
+			begin
+				  count_receive_data <=   count_receive_data + 12'd1;
+			end
+			else
+			begin
+				  count_receive_data <= 12'd0;
+			end
+
+			if(SCL == 1'b1 &&   count_receive_data >= DATA_CONFIG_REG[13:2]/12'd4 &&   count_receive_data < (DATA_CONFIG_REG[13:2]-(DATA_CONFIG_REG[13:2]/12'd4))-12'd1)
+			begin
+				fifo_rx_data_in[20]<= SDA;			
+			end
+
+
+		end
+		  DATA0_6:
+		begin
+
+			if(  count_receive_data < DATA_CONFIG_REG[13:2])
+			begin
+				  count_receive_data <=   count_receive_data + 12'd1;
+			end
+			else
+			begin
+				  count_receive_data <= 12'd0;
+			end
+
+			if(SCL == 1'b1 &&   count_receive_data >= DATA_CONFIG_REG[13:2]/12'd4 &&   count_receive_data < (DATA_CONFIG_REG[13:2]-(DATA_CONFIG_REG[13:2]/12'd4))-12'd1)
+			begin
+				fifo_rx_data_in[21]<= SDA;			
+			end
+	
+		end
+		  DATA0_7:
+		begin
+
+			if(  count_receive_data < DATA_CONFIG_REG[13:2])
+			begin
+				  count_receive_data <=   count_receive_data + 12'd1;
+			end
+			else
+			begin
+				  count_receive_data <= 12'd0;
+			end
+
+			if(SCL == 1'b1 &&   count_receive_data >= DATA_CONFIG_REG[13:2]/12'd4 &&   count_receive_data < (DATA_CONFIG_REG[13:2]-(DATA_CONFIG_REG[13:2]/12'd4))-12'd1)
+			begin
+				fifo_rx_data_in[22]<= SDA;			
+			end
+				
+		end
+		  DATA0_8:
+		begin
+
+			if(  count_receive_data < DATA_CONFIG_REG[13:2])
+			begin
+				  count_receive_data <=   count_receive_data + 12'd1;
+			end
+			else
+			begin
+				  count_receive_data <= 12'd0;
+			end
+
+			if(SCL == 1'b1 &&   count_receive_data >= DATA_CONFIG_REG[13:2]/12'd4 &&   count_receive_data < (DATA_CONFIG_REG[13:2]-(DATA_CONFIG_REG[13:2]/12'd4))-12'd1)
+			begin
+				fifo_rx_data_in[23]<= SDA;			
+			end
+		
+		end
+		  RESPONSE_DATA0_1:
+		begin
+
+			if(  count_receive_data < DATA_CONFIG_REG[13:2])
+			begin
+				  count_receive_data <=   count_receive_data + 12'd1;
+			end
+			else
+			begin
+				  count_receive_data <= 12'd0;
+			end
+
+		end
+		  DATA1_1:
+		begin
+
+
+			if(  count_receive_data < DATA_CONFIG_REG[13:2])
+			begin
+				  count_receive_data <=   count_receive_data + 12'd1;
+			end
+			else
+			begin
+				  count_receive_data <= 12'd0;
+			end
+
+			if(SCL == 1'b1 &&   count_receive_data >= DATA_CONFIG_REG[13:2]/12'd4 &&   count_receive_data < (DATA_CONFIG_REG[13:2]-(DATA_CONFIG_REG[13:2]/12'd4))-12'd1)
+			begin
+				fifo_rx_data_in[24]<= SDA;			
+			end
+				
+		end
+		  DATA1_2:
+		begin
+
+			if(  count_receive_data < DATA_CONFIG_REG[13:2])
+			begin
+				  count_receive_data <=   count_receive_data + 12'd1;
+			end
+			else
+			begin
+				  count_receive_data <= 12'd0;
+			end
+
+			if(SCL == 1'b1 &&   count_receive_data >= DATA_CONFIG_REG[13:2]/12'd4 &&   count_receive_data < (DATA_CONFIG_REG[13:2]-(DATA_CONFIG_REG[13:2]/12'd4))-12'd1)
+			begin
+				fifo_rx_data_in[25]<= SDA;			
+			end
+
+
+		end
+		  DATA1_3:
+		begin
+
+
+			if(  count_receive_data < DATA_CONFIG_REG[13:2])
+			begin
+				  count_receive_data <=   count_receive_data + 12'd1;
+			end
+			else
+			begin
+				  count_receive_data <= 12'd0;
+			end
+
+			if(SCL == 1'b1 &&   count_receive_data >= DATA_CONFIG_REG[13:2]/12'd4 &&   count_receive_data < (DATA_CONFIG_REG[13:2]-(DATA_CONFIG_REG[13:2]/12'd4))-12'd1)
+			begin
+				fifo_rx_data_in[26]<= SDA;			
+			end
+
+				
+		end
+		  DATA1_4:
+		begin
+
+
+			if(  count_receive_data < DATA_CONFIG_REG[13:2])
+			begin
+				  count_receive_data <=   count_receive_data + 12'd1;
+			end
+			else
+			begin
+				  count_receive_data <= 12'd0;
+			end
+
+			if(SCL == 1'b1 &&   count_receive_data >= DATA_CONFIG_REG[13:2]/12'd4 &&   count_receive_data < (DATA_CONFIG_REG[13:2]-(DATA_CONFIG_REG[13:2]/12'd4))-12'd1)
+			begin
+				fifo_rx_data_in[27]<= SDA;			
+			end
+	
+				
+		end
+		  DATA1_5:
+		begin
+
+
+
+			if(  count_receive_data < DATA_CONFIG_REG[13:2])
+			begin
+				  count_receive_data <=   count_receive_data + 12'd1;
+			end
+			else
+			begin
+				  count_receive_data <= 12'd0;
+			end
+
+			if(SCL == 1'b1 &&   count_receive_data >= DATA_CONFIG_REG[13:2]/12'd4 &&   count_receive_data < (DATA_CONFIG_REG[13:2]-(DATA_CONFIG_REG[13:2]/12'd4))-12'd1)
+			begin
+				fifo_rx_data_in[28]<= SDA;			
+			end
+	
+				
+		end
+		  DATA1_6:
+		begin
+
+
+			if(  count_receive_data < DATA_CONFIG_REG[13:2])
+			begin
+				  count_receive_data <=   count_receive_data + 12'd1;
+			end
+			else
+			begin
+				  count_receive_data <= 12'd0;
+			end
+
+			if(SCL == 1'b1 &&   count_receive_data >= DATA_CONFIG_REG[13:2]/12'd4 &&   count_receive_data < (DATA_CONFIG_REG[13:2]-(DATA_CONFIG_REG[13:2]/12'd4))-12'd1)
+			begin
+				fifo_rx_data_in[29]<= SDA;			
+			end
+
+
+				
+		end
+		  DATA1_7:
+		begin
+
+
+			if(  count_receive_data < DATA_CONFIG_REG[13:2])
+			begin
+				  count_receive_data <=   count_receive_data + 12'd1;
+			end
+			else
+			begin
+				  count_receive_data <= 12'd0;
+			end
+
+			if(SCL == 1'b1 &&   count_receive_data >= DATA_CONFIG_REG[13:2]/12'd4 &&   count_receive_data < (DATA_CONFIG_REG[13:2]-(DATA_CONFIG_REG[13:2]/12'd4))-12'd1)
+			begin
+				fifo_rx_data_in[30]<= SDA;			
+			end
+
+
+				
+		end
+		  DATA1_8:
+		begin
+
+
+			if(  count_receive_data < DATA_CONFIG_REG[13:2])
+			begin
+				  count_receive_data <=   count_receive_data + 12'd1;
+			end
+			else
+			begin
+				  count_receive_data <= 12'd0;
+			end
+
+			if(SCL == 1'b1 &&   count_receive_data >= DATA_CONFIG_REG[13:2]/12'd4 &&   count_receive_data < (DATA_CONFIG_REG[13:2]-(DATA_CONFIG_REG[13:2]/12'd4))-12'd1)
+			begin
+				fifo_rx_data_in[31]<= SDA;			
+			end
+				
+		end
+		RESPONSE_DATA1_1:
+		begin
+
+			if(  count_receive_data < DATA_CONFIG_REG[13:2])
+			begin
+				  count_receive_data <=   count_receive_data + 12'd1;
+			end
+			else
+			begin
+				  count_receive_data <= 12'd0;
+			end
+			//fifo_  _rd_en <= 1'b1;
+
+		end
+		DELAY_BYTES:
+		begin
+
+			if(  count_receive_data < DATA_CONFIG_REG[13:2])
+			begin
+				  count_receive_data <=   count_receive_data + 12'd1;
+			end
+			else
+			begin
+
+
+				if(count_rx == 2'd0)
+				begin
+					count_rx <= count_rx + 2'd1;
+					//SDA_OUT<=fifo_tx_data_out[8:8];
+				end
+				else if(count_rx   == 2'd1)
+				begin
+					count_rx <= count_tx + 2'd1;
+					//SDA_OUT<=fifo_tx_data_out[16:16];
+				end
+				else if(count_rx == 2'd2)
+				begin
+					count_rx <= count_rx + 2'd1;
+					//SDA_OUT<=fifo_tx_data_out[24:24];
+				end
+				else if(count_rx == 2'd3)
+				begin
+					count_rx <= 2'd0;
+				end
+
+				count_receive_data <= 12'd0;
+			
+			end
+
+
+		end
+		STOP:
+		begin
+			if(  count_receive_data < DATA_CONFIG_REG[13:2])
+			begin
+				  count_receive_data <=   count_receive_data + 12'd1;
+			end
+			else
+			begin
+				  count_receive_data <= 12'd0;
+			end
+			fifo_rx_wr_en <= 1'b0;
+		end
+		default:
+		begin
+			fifo_rx_wr_en <= 1'b0;
+			  count_receive_data <= 12'd4095;
+		end
+		endcase
+		
+	end
+
+
+end 
+
+//USED ONLY TO COUNTER TIME
+always@(posedge PCLK)
+begin
+
+	//RESET SYNC
+	if(!PRESETn)
+	begin
+		count_timeout <= 12'd0;
+	end
+	else
+	begin
+		if(count_timeout <= TIMEOUT_TX && state_tx == IDLE)
+		begin
+			if(SDA == 1'b0 && SCL == 1'b0)
+			count_timeout <= count_timeout + 12'd1;
+		end
+		else
+		begin
+			count_timeout <= 12'd0;
+		end
+
+	end
+
+end
+
+
+endmodule
+",module_i2c,"module module_i2c_sva(PCLK,PRESETn,fifo_tx_f_full,fifo_tx_f_empty,fifo_tx_data_out,fifo_rx_data_in,fifo_rx_f_full,fifo_rx_f_empty,fifo_rx_wr_en,
 fifo_tx_rd_en,RX_EMPTY,TX_EMPTY,ERROR,ENABLE_SCL,ENABLE_SDA,SDA,SCL,DATA_CONFIG_REG,TIMEOUT_TX,state_tx,count_receive_data,RESPONSE,SDA_OUT,count_timeout,count_send_data,next_state_rx,BR_CLK_O,next_state_tx, count_tx,count_rx,BR_CLK_O_RX,SDA_OUT_RX,state_rx);
 
 input PCLK;
@@ -6674,7 +8760,18 @@ assert property(@(posedge PCLK) (fifo_rx_f_empty == 1) |-> (RX_EMPTY == 1));
 assert property(@(posedge PCLK) (fifo_rx_f_empty == 0) |-> (RX_EMPTY == 0));
 assert property(@(posedge PCLK) (DATA_CONFIG_REG[1] == 0) |-> (ERROR == 0));
 assert property(@(posedge PCLK) (DATA_CONFIG_REG[0] == 0) |-> (ERROR == 0));
-assert property(@(posedge PCLK) (DATA_CONFIG_REG[0] == 1 & DATA_CONFIG_REG[1] == 1) |-> (ERROR == 1));",,https://github.com/achieve-lab/assertion_data_for_LLM/blob/NIPS_2024/Jasper_llama_results/communication_controller_apb_to_i2c/module_i2c/FPV_module_i2c.tcl
+assert property(@(posedge PCLK) (DATA_CONFIG_REG[0] == 1 & DATA_CONFIG_REG[1] == 1) |-> (ERROR == 1));","analyze -clear
+analyze -sv12 ./module_i2c_assertion.sv
+
+elaborate -top module_i2c
+
+clock PCLK
+reset PRESETn
+prove -all
+report -summary -force -result -file fpv.rpt
+exit
+
+",https://github.com/achieve-lab/assertion_data_for_LLM/blob/NIPS_2024/Jasper_llama_results/communication_controller_apb_to_i2c/module_i2c/FPV_module_i2c.tcl
 "//////////////////////////////////////////////////////////////////////
 ////                                                              ////
 ////  eth_rxstatem.v                                              ////
@@ -7094,7 +9191,18 @@ assert property(@(posedge MRxClk)  (StartDrop == 1) |=> (StateIdle == 0));
 assert property(@(posedge MRxClk)  (StartSFD == 1) |=> (StateIdle == 0));  
 assert property(@(posedge MRxClk)  (StartPreamble == 1) |=> (StateIdle == 0));  
 assert property(@(posedge MRxClk)  (MRxDV == 1) |=> (StateIdle == 0));  
-assert property(@(posedge MRxClk)  (MRxDV == 0) |=> (StateIdle == 1));",,https://github.com/achieve-lab/assertion_data_for_LLM/blob/66da64e4274e8571ffcdd9d6645ed898a1a23f83/Jasper_results/communication_controller_100_mb-s_ethernet_mac_layer_switch/eth_rxstatem/FPV_eth_rxstatem.tcl
+assert property(@(posedge MRxClk)  (MRxDV == 0) |=> (StateIdle == 1));","analyze -clear
+analyze -sv12 ./eth_rxstatem_assertion.sv
+
+elaborate -top eth_rxstatem
+
+clock MRxClk
+reset Reset
+prove -all
+report -summary -force -result -file fpv.rpt
+exit
+
+",https://github.com/achieve-lab/assertion_data_for_LLM/blob/66da64e4274e8571ffcdd9d6645ed898a1a23f83/Jasper_results/communication_controller_100_mb-s_ethernet_mac_layer_switch/eth_rxstatem/FPV_eth_rxstatem.tcl
 "//////////////////////////////////////////////////////////////////
 //                                                              //
 //  Wishbone master interface for the Amber 25 core             //
@@ -7541,8 +9649,7 @@ assign xWB_STATE  = wishbone_st == WB_IDLE       ? ""WB_IDLE""       :
 
 //synopsys translate_on
     
-endmodule
-",a25_wishbone,"module module4SVA (
+endmodule",a25_wishbone,"module module4SVA (
   input t_clk, t_i_wb_ack, t_extra_write_r,
   input [2:0] t_wishbone_st
 );
@@ -7589,7 +9696,7 @@ assert property (@(posedge i_clk) (wishbone_st == WB_BURST2)&i_wb_ack |->##1 (wi
 assert property (@(posedge i_clk) (wishbone_st == WB_BURST3)&i_wb_ack |->##1 ( wishbone_st == WB_WAIT_ACK));
 assert property (@(posedge i_clk) (wishbone_st == WB_WAIT_ACK)&(extra_write_r || !i_wb_ack) |->##1 (wishbone_st == WB_WAIT_ACK));
 assert property (@(posedge i_clk) (wishbone_st == WB_WAIT_ACK)&(!extra_write_r && i_wb_ack) |->##1 (wishbone_st == WB_IDLE));","analyze -clear
-analyze -sv12 ./a25_wishbone.sv
+analyze -sv12 ./a25_wishbone_assertion.sv
 
 elaborate -top a25_wishbone
 
@@ -7598,6 +9705,7 @@ reset -expression ~quick_n_reset
 prove -all
 report -summary -force -result -file fpv.rpt
 exit
+
 ",https://github.com/saqibkh/Verification_Digital_Systems/blob/master/Lab2/SVA/module4SVA.sv
 "//EE382M-Verification of Digital Systems
 //Lab 4 - Formal Property Verification
@@ -7631,7 +9739,7 @@ end
 
 assign rand = {s3,s2};
 
-endmodule  �?/EE382M-Verification of Digital Systems
+endmoduleâ€¨â€¨â€?/EE382M-Verification of Digital Systems
 //Lab 4 - Formal Property Verification
 //
 //
@@ -7834,8 +9942,7 @@ begin
     endcase
 end
 
-endmodule
-",arbiter,"module arb_props (
+endmodule",arbiter,"module arb_props (
   clk,
   rst_n,
   req,
@@ -7921,7 +10028,7 @@ assert property (@(posedge clk) disable iff (~rst_n) (gnt[0] && $past(arb_type =
 assert property (@(posedge clk) disable iff (~rst_n) (gnt[1] && $past(arb_type == 3'd3)) |-> $past(req[1] & ~req[3] & ~req[0]));
 assert property (@(posedge clk) disable iff (~rst_n) (gnt[2] && $past(arb_type == 3'd3)) |-> $past(req[2] & ~req[3] & ~req[0] & ~req[1]));
 assert property (@(posedge clk) disable iff (~rst_n) (gnt[3] && $past(arb_type == 3'd3)) |-> $past(req[3]));","analyze -clear
-analyze -sv12 ./arbiter.sv
+analyze -sv12 ./arbiter_assertion.sv
 
 elaborate -top arbiter
 
@@ -7930,6 +10037,7 @@ reset -expression ~rst_n
 prove -all
 report -summary -force -result -file fpv.rpt
 exit
+
 ",https://github.com/saqibkh/Verification_Digital_Systems/blob/master/Lab4/lab4_parta/bind_wrapper.sv
 "//////////////////////////////////////////////////////////////////////
 ////                                                              ////
@@ -9405,7 +11513,7 @@ assert property (@(posedge clk) disable iff (rst) (!id_freeze && if_insn[31:26] 
 assert property (@(posedge clk) disable iff (rst) (!id_freeze && if_insn[31:26] == `OR1200_OR32_ALU) |-> ##1 (sel_imm ==  1'b0));
 assert property (@(posedge clk) disable iff (rst) (!id_freeze && if_insn[31:26] == `OR1200_OR32_SFXX) |-> ##1 (sel_imm ==  1'b0));","analyze -clear
 analyze -sv12 ./or1200_defines.v
-analyze -sv12 ./or1200_ctrl.sv
+analyze -sv12 ./or1200_ctrl_assertion.sv
 
 elaborate -top or1200_ctrl
 
@@ -9414,6 +11522,7 @@ reset -expression rst
 prove -all
 report -summary -force -result -file fpv.rpt
 exit
+
 ",https://github.com/saqibkh/OR1200_Formal_Verification/blob/master/tb/SVA_ctrl.sv
 "//////////////////////////////////////////////////////////////////////
 ////                                                              ////
@@ -9728,7 +11837,7 @@ assert property (@(posedge clk) disable iff (rst) (!if_flushpipe && save_insn) |
 assert property (@(posedge clk) disable iff (rst) (!if_flushpipe && save_insn) |-> ##1 (err_saved[1] == ($past(icpu_err_i) & ($past(icpu_tag_i) == 4'hc))));
 assert property (@(posedge clk) disable iff (rst) (!if_flushpipe && save_insn) |-> ##1 (err_saved[2] == ($past(icpu_err_i) & ($past(icpu_tag_i) == 4'hb)) ));
 assert property (@(posedge clk) disable iff (rst) (if_flushpipe | (!save_insn && !if_freeze)) |-> ##1 (err_saved == 3'b000));","analyze -clear
-analyze -sv12 ./or1200_if.sv
+analyze -sv12 ./or1200_if_assertion.sv
 analyze -sv12 ./or1200_defines.v
 
 elaborate -top or1200_if
@@ -9738,6 +11847,7 @@ reset -expression rst
 prove -all
 report -summary -force -result -file fpv.rpt
 exit
+
 ",https://github.com/saqibkh/OR1200_Formal_Verification/blob/master/tb/SVA_if.sv
 "//////////////////////////////////////////////////////////////////////
 ////                                                              ////
@@ -9999,7 +12109,7 @@ assert property (@(posedge clk) disable iff(reset) $rose(!ex_freeze && !id_freez
 assert property (@(posedge clk) disable iff(reset) $rose(!ex_freeze && !id_freeze) ##1 (!ex_freeze && !id_freeze && sel_b == 2'd2 && $stable(ex_forw) && $stable(sel_b)) |-> muxed_b == ex_forw);
 assert property (@(posedge clk) disable iff(reset) $rose(!ex_freeze && !id_freeze) ##1 (!ex_freeze && !id_freeze && sel_b == 2'd3 && $stable(wb_forw) && $stable(sel_b)) |-> muxed_b == wb_forw);
 assert property (@(posedge clk) disable iff(reset) $rose(!ex_freeze && !id_freeze) ##1 (!ex_freeze && !id_freeze && !(sel_b == 2'd1 || sel_b == 2'd2 || sel_b == 2'd3) && $stable(rf_datab) && $stable(sel_b)) |-> muxed_b == rf_datab);","analyze -clear
-analyze -sv12 ./or1200_operandmuxes.sv
+analyze -sv12 ./or1200_operandmuxes_assertion.sv
 analyze -sv12 ./or1200_defines.v
 
 elaborate -top or1200_operandmuxes
@@ -10009,4 +12119,5 @@ reset -expression rst
 prove -all
 report -summary -force -result -file fpv.rpt
 exit
+
 ",https://github.com/saqibkh/OR1200_Formal_Verification/blob/master/rtl/verilog/or1200_operandmuxes.v

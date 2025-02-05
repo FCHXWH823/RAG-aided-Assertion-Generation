@@ -1,6 +1,6 @@
 analyze -clear
 analyze -sv12 ./or1200_defines.v
-analyze -sv12 ./or1200_ctrl.sv
+analyze -sv12 ./or1200_ctrl_assertion.sv
 
 elaborate -top or1200_ctrl
 

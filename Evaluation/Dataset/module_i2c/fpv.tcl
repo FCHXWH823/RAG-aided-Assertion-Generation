@@ -1,7 +1,5 @@
 analyze -clear
-analyze -sv12 ./module_i2c.sv
-analyze -sv12 ./module_i2c_sva.sv
-analyze -sv12 ./module_i2c_bind.svh
+analyze -sv12 ./module_i2c_assertion.sv
 
 elaborate -top module_i2c
 

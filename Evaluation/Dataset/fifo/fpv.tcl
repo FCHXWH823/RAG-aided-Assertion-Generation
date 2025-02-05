@@ -1,7 +1,5 @@
 analyze -clear
-analyze -sv ./fifo.sv
-analyze -sv ./fifo_sva.sv
-analyze -sv ./fifo_bind.svh
+analyze -sv ./fifo_assertion.sv
 
 elaborate -top fifo
 

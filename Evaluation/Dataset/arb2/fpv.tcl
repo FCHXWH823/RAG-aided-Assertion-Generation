@@ -1,7 +1,5 @@
 analyze -clear
-analyze -sv12 ./arb2.sv
-analyze -sv12 ./arb2_sva.sv
-analyze -sv12 ./arb2_bind.svh
+analyze -sv12 ./arb2_assertion.sv
 
 elaborate -top arb2
 

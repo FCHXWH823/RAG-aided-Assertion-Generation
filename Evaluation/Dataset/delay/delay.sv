@@ -140,14 +140,5 @@ module delay
       
    end       
 
-   int count;    
-   always_ff @(posedge clk or posedge rst)
-   if (rst) count = 0;
-   else if (en == 1'b1 && count < CYCLES) count ++;
-   assert property(@(posedge clk) disable iff (rst) count < CYCLES || out == $past(in, CYCLES, en));
-
-   assert property(@(posedge clk) disable iff (rst) count == CYCLES || out == RESET_VALUE);
-
-   assert property(@(posedge clk) disable iff (rst) !en |=> $stable(out));
 endmodule
 

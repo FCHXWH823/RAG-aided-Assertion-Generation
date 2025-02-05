@@ -1,5 +1,5 @@
 analyze -clear
-analyze -sv12 ./or1200_operandmuxes.sv
+analyze -sv12 ./or1200_operandmuxes_assertion.sv
 analyze -sv12 ./or1200_defines.v
 
 elaborate -top or1200_operandmuxes

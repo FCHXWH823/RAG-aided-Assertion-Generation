@@ -1,7 +1,7 @@
 analyze -clear
-analyze -sv ./Edge_Detector_assertion.sv
+analyze -sv ./Flip_Flop_Array_assertion.sv
 
-elaborate -top Edge_Detector
+elaborate -top Flip_Flop_Array
 
 clock clk
 reset -expression ~resetn

@@ -1,1 +1,0 @@
-bind APB_FSM_Controller APB_FSM_Controller_sva APB_FSM_Controller_chk(.*);

@@ -443,15 +443,5 @@ assign xWB_STATE  = wishbone_st == WB_IDLE       ? ""WB_IDLE""       :
                                                    ""UNKNOWN""       ;
 
 //synopsys translate_on
-
-
-assert property (@(posedge i_clk) (wishbone_st == WB_IDLE) |-> ##1 (wishbone_st == WB_IDLE) | (wishbone_st == WB_BURST1) | (wishbone_st == WB_WAIT_ACK));
-assert property (@(posedge i_clk)  (wishbone_st == WB_BURST1)& i_wb_ack |-> ##1 (wishbone_st == WB_BURST2));
-assert property (@(posedge i_clk) (wishbone_st == WB_BURST2)&i_wb_ack |->##1 (wishbone_st == WB_BURST3));
-assert property (@(posedge i_clk) (wishbone_st == WB_BURST3)&i_wb_ack |->##1 ( wishbone_st == WB_WAIT_ACK));
-assert property (@(posedge i_clk) (wishbone_st == WB_WAIT_ACK)&(extra_write_r || !i_wb_ack) |->##1 (wishbone_st == WB_WAIT_ACK));
-assert property (@(posedge i_clk) (wishbone_st == WB_WAIT_ACK)&(!extra_write_r && i_wb_ack) |->##1 (wishbone_st == WB_IDLE));
-// assert property (@(posedge i_clk) disable iff (wishbone_st == WB_IDLE) not($stable(wishbone_st)[*1000:$]));
-
     
 endmodule

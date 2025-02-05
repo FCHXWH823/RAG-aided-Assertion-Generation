@@ -1,7 +1,5 @@
 analyze -clear
-analyze -sv12 ./simple_req_ack.sv
-analyze -sv12 ./simple_req_ack_sva.sv
-analyze -sv12 ./simple_req_ack_bind.svh
+analyze -sv12 ./simple_req_ack_assertion.sv
 
 elaborate -top simple_req_ack
 

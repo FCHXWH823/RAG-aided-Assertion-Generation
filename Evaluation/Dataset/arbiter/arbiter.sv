@@ -228,21 +228,4 @@ begin
     endcase
 end
 
-assert property (@(posedge clk) disable iff (~rst_n) (gnt[0] && $past(arb_type == 3'd0)) |-> $past(req[0]));
-assert property (@(posedge clk) disable iff (~rst_n) (gnt[1] && $past(arb_type == 3'd0)) |-> $past(req[1] & ~req[0]));
-assert property (@(posedge clk) disable iff (~rst_n) (gnt[2] && $past(arb_type == 3'd0)) |-> $past(req[2] & ~req[1] & ~req[0]));
-assert property (@(posedge clk) disable iff (~rst_n) (gnt[3] && $past(arb_type == 3'd0)) |-> $past(req[3] & ~req[2] & ~req[1] & ~req[0]));
-assert property (@(posedge clk) disable iff (~rst_n) (gnt[0] && $past(arb_type == 3'd1)) |-> $past(req[0] & ~req[1]));
-assert property (@(posedge clk) disable iff (~rst_n) (gnt[1] && $past(arb_type == 3'd1)) |-> $past(req[1]));
-assert property (@(posedge clk) disable iff (~rst_n) (gnt[2] && $past(arb_type == 3'd1)) |-> $past(req[2] & ~req[1] & ~req[0]));
-assert property (@(posedge clk) disable iff (~rst_n) (gnt[3] && $past(arb_type == 3'd1)) |-> $past(req[3] & ~req[2] & ~req[1] & ~req[0]));
-assert property (@(posedge clk) disable iff (~rst_n) (gnt[0] && $past(arb_type == 3'd2)) |-> $past(req[0] & ~req[2]));
-assert property (@(posedge clk) disable iff (~rst_n) (gnt[1] && $past(arb_type == 3'd2)) |-> $past(req[1] & ~req[2] & ~req[0]));
-assert property (@(posedge clk) disable iff (~rst_n) (gnt[2] && $past(arb_type == 3'd2)) |-> $past(req[2]));
-assert property (@(posedge clk) disable iff (~rst_n) (gnt[3] && $past(arb_type == 3'd2)) |-> $past(req[3] & ~req[2] & ~req[1] & ~req[0]));
-assert property (@(posedge clk) disable iff (~rst_n) (gnt[0] && $past(arb_type == 3'd3)) |-> $past(req[0] & ~req[3]));
-assert property (@(posedge clk) disable iff (~rst_n) (gnt[1] && $past(arb_type == 3'd3)) |-> $past(req[1] & ~req[3] & ~req[0]));
-assert property (@(posedge clk) disable iff (~rst_n) (gnt[2] && $past(arb_type == 3'd3)) |-> $past(req[2] & ~req[3] & ~req[0] & ~req[1]));
-assert property (@(posedge clk) disable iff (~rst_n) (gnt[3] && $past(arb_type == 3'd3)) |-> $past(req[3]));
-
 endmodule

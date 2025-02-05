@@ -1,5 +1,5 @@
 analyze -clear
-analyze -sv12 ./arbiter.sv
+analyze -sv12 ./arbiter_assertion.sv
 
 elaborate -top arbiter
 

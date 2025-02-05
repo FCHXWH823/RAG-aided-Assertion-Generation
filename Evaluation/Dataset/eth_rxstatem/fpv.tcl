@@ -1,7 +1,5 @@
 analyze -clear
-analyze -sv12 ./eth_rxstatem.sv
-analyze -sv12 ./eth_rxstatem_sva.sv
-analyze -sv12 ./eth_rxstatem_bind.svh
+analyze -sv12 ./eth_rxstatem_assertion.sv
 
 elaborate -top eth_rxstatem
 

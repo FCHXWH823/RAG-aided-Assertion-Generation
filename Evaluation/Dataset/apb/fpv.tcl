@@ -1,7 +1,5 @@
 analyze -clear
-analyze -sv12 ./apb.sv
-analyze -sv12 ./apb_sva.sv
-analyze -sv12 ./apb_bind.svh
+analyze -sv12 ./apb_assertion.sv
 
 elaborate -top apb
 

@@ -1,7 +1,5 @@
 analyze -clear
-analyze -sv12 ./VGA.sv
-analyze -sv12 ./VGA_sva.sv
-analyze -sv12 ./VGA_bind.svh
+analyze -sv12 ./VGA_assertion.sv
 
 elaborate -top VGA
 

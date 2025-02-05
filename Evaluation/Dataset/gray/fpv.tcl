@@ -1,7 +1,5 @@
 analyze -clear
-analyze -sv12 ./gray.sv
-analyze -sv12 ./gray_sva.sv
-analyze -sv12 ./gray_bind.svh
+analyze -sv12 ./gray_assertion.sv
 
 elaborate -top gray
 

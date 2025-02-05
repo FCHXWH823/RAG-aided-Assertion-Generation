@@ -1,7 +1,5 @@
 analyze -clear
-analyze -sv ./Gray_Code_Counter.sv
-analyze -sv ./Gray_Code_Counter_sva.sv
-analyze -sv ./Gray_Code_Counter_bind.svh
+analyze -sv ./Gray_Code_Counter_assertion.sv
 
 elaborate -top Gray_Code_Counter
 

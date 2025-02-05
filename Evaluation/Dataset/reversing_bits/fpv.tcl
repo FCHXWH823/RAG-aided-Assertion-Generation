@@ -1,7 +1,5 @@
 analyze -clear
-analyze -sv ./reversing_bits.sv
-analyze -sv ./reversing_bits_sva.sv
-analyze -sv ./reversing_bits_bind.svh
+analyze -sv ./reversing_bits_assertion.sv
 
 elaborate -top reversing_bits
 

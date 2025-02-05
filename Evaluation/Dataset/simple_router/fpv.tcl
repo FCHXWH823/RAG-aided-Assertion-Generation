@@ -1,7 +1,5 @@
 analyze -clear
-analyze -sv ./simple_router.sv
-analyze -sv ./simple_router_sva.sv
-analyze -sv ./simple_router_bind.svh
+analyze -sv ./simple_router_assertion.sv
 
 elaborate -top simple_router
 
