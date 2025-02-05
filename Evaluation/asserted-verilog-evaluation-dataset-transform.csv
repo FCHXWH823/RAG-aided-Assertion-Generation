@@ -6583,7 +6583,8 @@ begin
 				end
 				else if(count_send_data >= DATA_CONFIG_REG[13:2]/12'd4 && count_send_data < (DATA_CONFIG_REG[13:2]-(DATA_CONFIG_REG[13:2]/12'd4))-12'd1)
 				begin
-					BR_CLK",module_i2c,"module module_i2c_sva(PCLK,PRESETn,fifo_tx_f_full,fifo_tx_f_empty,fifo_tx_data_out,fifo_rx_data_in,fifo_rx_f_full,fifo_rx_f_empty,fifo_rx_wr_en,
+			",,,,,
+"	BR_CLK""",module_i2c,"module module_i2c_sva(PCLK,PRESETn,fifo_tx_f_full,fifo_tx_f_empty,fifo_tx_data_out,fifo_rx_data_in,fifo_rx_f_full,fifo_rx_f_empty,fifo_rx_wr_en,
 fifo_tx_rd_en,RX_EMPTY,TX_EMPTY,ERROR,ENABLE_SCL,ENABLE_SDA,SDA,SCL,DATA_CONFIG_REG,TIMEOUT_TX,state_tx,count_receive_data,RESPONSE,SDA_OUT,count_timeout,count_send_data,next_state_rx,BR_CLK_O,next_state_tx, count_tx,count_rx,BR_CLK_O_RX,SDA_OUT_RX,state_rx);
 
 input PCLK;
@@ -7582,12 +7583,22 @@ bind a25_wishbone module4SVA wrp2 (
   .t_wishbone_st(wishbone_st)
 );
 
-endmodule","assert property (@(posedge t_clk) (t_wishbone_st == WB_IDLE) |-> ##1 (t_wishbone_st == WB_IDLE) | (t_wishbone_st == WB_BURST1) | (t_wishbone_st == WB_WAIT_ACK)); assert property (@(posedge t_clk)  (t_wishbone_st == WB_BURST1)& t_i_wb_ack |-> ##1 (t_wishbone_st == WB_BURST2)); assert property (@(posedge t_clk) (t_wishbone_st == WB_BURST2)&t_i_wb_ack |->##1 (t_wishbone_st == WB_BURST3));
-assert property (@(posedge t_clk) (t_wishbone_st == WB_BURST3)&t_i_wb_ack |->##1 ( t_wishbone_st == WB_WAIT_ACK));
-assert property (@(posedge t_clk) (t_wishbone_st == WB_WAIT_ACK)&(t_extra_write_r || !t_i_wb_ack) |->##1 (t_wishbone_st == WB_WAIT_ACK));
-assert property (@(posedge t_clk) (t_wishbone_st == WB_WAIT_ACK)&(!t_extra_write_r && t_i_wb_ack) |->##1 (t_wishbone_st == WB_IDLE));
-assert property (@(posedge t_clk) disable iff (t_wishbone_st == WB_IDLE) not($stable(t_wishbone_st)[*1000:$]));
-",,https://github.com/saqibkh/Verification_Digital_Systems/blob/master/Lab2/SVA/module4SVA.sv
+endmodule","assert property (@(posedge i_clk) (wishbone_st == WB_IDLE) |-> ##1 (wishbone_st == WB_IDLE) | (wishbone_st == WB_BURST1) | (wishbone_st == WB_WAIT_ACK));
+assert property (@(posedge i_clk)  (wishbone_st == WB_BURST1)& i_wb_ack |-> ##1 (wishbone_st == WB_BURST2));
+assert property (@(posedge i_clk) (wishbone_st == WB_BURST2)&i_wb_ack |->##1 (wishbone_st == WB_BURST3));
+assert property (@(posedge i_clk) (wishbone_st == WB_BURST3)&i_wb_ack |->##1 ( wishbone_st == WB_WAIT_ACK));
+assert property (@(posedge i_clk) (wishbone_st == WB_WAIT_ACK)&(extra_write_r || !i_wb_ack) |->##1 (wishbone_st == WB_WAIT_ACK));
+assert property (@(posedge i_clk) (wishbone_st == WB_WAIT_ACK)&(!extra_write_r && i_wb_ack) |->##1 (wishbone_st == WB_IDLE));","analyze -clear
+analyze -sv12 ./a25_wishbone.sv
+
+elaborate -top a25_wishbone
+
+clock i_clk
+reset -expression ~quick_n_reset
+prove -all
+report -summary -force -result -file fpv.rpt
+exit
+",https://github.com/saqibkh/Verification_Digital_Systems/blob/master/Lab2/SVA/module4SVA.sv
 "//EE382M-Verification of Digital Systems
 //Lab 4 - Formal Property Verification
 //
@@ -7620,7 +7631,7 @@ end
 
 assign rand = {s3,s2};
 
-endmodule   //EE382M-Verification of Digital Systems
+endmodule  �?/EE382M-Verification of Digital Systems
 //Lab 4 - Formal Property Verification
 //
 //
@@ -7909,12 +7920,17 @@ assert property (@(posedge clk) disable iff (~rst_n) (gnt[3] && $past(arb_type =
 assert property (@(posedge clk) disable iff (~rst_n) (gnt[0] && $past(arb_type == 3'd3)) |-> $past(req[0] & ~req[3]));
 assert property (@(posedge clk) disable iff (~rst_n) (gnt[1] && $past(arb_type == 3'd3)) |-> $past(req[1] & ~req[3] & ~req[0]));
 assert property (@(posedge clk) disable iff (~rst_n) (gnt[2] && $past(arb_type == 3'd3)) |-> $past(req[2] & ~req[3] & ~req[0] & ~req[1]));
-assert property (@(posedge clk) disable iff (~rst_n) (gnt[3] && $past(arb_type == 3'd3)) |-> $past(req[3]));
-assert property( @(posedge clk) disable iff(arb_type != 3'b100) $rose(req[0]) |-> ##[1:4] $rose(gnt[0]));
-assert property( @(posedge clk) disable iff(arb_type != 3'b101) $rose(req[0]) |-> ##[1:7] $rose(gnt[0])); assert property (@(posedge clk) $past(req[0]==1'b0) |-> (gnt[0]==1’b0)); assert property( @(posedge clk) disable iff(arb_type != 3'b100) $rose(req[1]) |-> ##[1:4] $rose(gnt[1]));
-assert property( @(posedge clk) disable iff(arb_type != 3'b101) $rose(req[1]) |-> ##[1:7] $rose(gnt[1])); assert property (@(posedge clk) $past(req[1]==1'b0) |-> (gnt[1]==1’b0)); assert property( @(posedge clk) disable iff(arb_type != 3'b100) $rose(req[2]) |-> ##[1:4] $rose(gnt[2]));
-assert property( @(posedge clk) disable iff(arb_type != 3'b101) $rose(req[2]) |-> ##[1:7] $rose(gnt[2])); assert property (@(posedge clk) $past(req[2]==1'b0) |-> (gnt[2]==1'b0)); assert property( @(posedge clk) disable iff(arb_type != 3'b100) $rose(req[3]) |-> ##[1:4] $rose(gnt[3]));
-assert property( @(posedge clk) disable iff(arb_type != 3'b101) $rose(req[3]) |-> ##[1:7] $rose(gnt[3])); assert property (@(posedge clk) $past(req[3]==1'b0) |-> (gnt[3]==1'b0));",,https://github.com/saqibkh/Verification_Digital_Systems/blob/master/Lab4/lab4_parta/bind_wrapper.sv
+assert property (@(posedge clk) disable iff (~rst_n) (gnt[3] && $past(arb_type == 3'd3)) |-> $past(req[3]));","analyze -clear
+analyze -sv12 ./arbiter.sv
+
+elaborate -top arbiter
+
+clock clk
+reset -expression ~rst_n
+prove -all
+report -summary -force -result -file fpv.rpt
+exit
+",https://github.com/saqibkh/Verification_Digital_Systems/blob/master/Lab4/lab4_parta/bind_wrapper.sv
 "//////////////////////////////////////////////////////////////////////
 ////                                                              ////
 ////  OR1200's Instruction decode                                 ////
@@ -9373,7 +9389,32 @@ bind or1200_ctrl SVA_ctrl wrp (
   .ex_delayslot_nop(ex_delayslot_nop)
 );
 
-endmodule","assert property (@(posedge clk) disable iff (rst) (!ex_freeze & ex_delayslot_dsi & !ex_delayslot_nop) |-> ##1 (ex_delayslot_nop == 0 && ex_delayslot_dsi == 0)); assert property (@(posedge clk) disable iff (rst) (!ex_freeze & id_freeze | ex_flushpipe) |-> ##1 (ex_macrc_op == 0)); assert property (@(posedge clk) disable iff (rst) (!ex_freeze & id_freeze) |-> ##1 (rf_addrw == 5'd00)); assert property (@(posedge clk) disable iff (rst) (id_flushpipe) |-> ##1 (id_insn == {`OR1200_OR32_NOP, 26’h041_0000})); assert property (@(posedge clk) disable iff (rst) (!ex_freeze & id_freeze | ex_flushpipe) |-> ##1 (ex_insn == {`OR1200_OR32_NOP, 26'h041_0000})); assert property (@(posedge clk) disable iff (rst) (!id_freeze && if_insn[31:26] == `OR1200_OR32_JALR) |-> ##1 (sel_imm ==  1'b0)); assert property (@(posedge clk) disable iff (rst) (!id_freeze && if_insn[31:26] == `OR1200_OR32_JR) |-> ##1 (sel_imm ==  1’b0)); assert property (@(posedge clk) disable iff (rst) (!id_freeze && if_insn[31:26] == `OR1200_OR32_RFE) |-> ##1 (sel_imm ==  1’b0)); assert property (@(posedge clk) disable iff (rst) (!id_freeze && if_insn[31:26] == `OR1200_OR32_MFSPR) |-> ##1 (sel_imm ==  1’b0)); assert property (@(posedge clk) disable iff (rst) (!id_freeze && if_insn[31:26] == `OR1200_OR32_MTSPR) |-> ##1 (sel_imm ==  1’b0)); assert property (@(posedge clk) disable iff (rst) (!id_freeze && if_insn[31:26] == `OR1200_OR32_XSYNC) |-> ##1 (sel_imm ==  1'b0)); assert property (@(posedge clk) disable iff (rst) (!id_freeze && if_insn[31:26] == `OR1200_OR32_SW) |-> ##1 (sel_imm ==  1'b0)); assert property (@(posedge clk) disable iff (rst) (!id_freeze && if_insn[31:26] == `OR1200_OR32_SB) |-> ##1 (sel_imm ==  1'b0)); assert property (@(posedge clk) disable iff (rst) (!id_freeze && if_insn[31:26] == `OR1200_OR32_ALU) |-> ##1 (sel_imm ==  1'b0)); assert property (@(posedge clk) disable iff (rst) (!id_freeze && if_insn[31:26] == `OR1200_OR32_SFXX) |-> ##1 (sel_imm ==  1'b0));",,https://github.com/saqibkh/OR1200_Formal_Verification/blob/master/tb/SVA_ctrl.sv
+endmodule","assert property (@(posedge clk) disable iff (rst) (!ex_freeze & ex_delayslot_dsi & !ex_delayslot_nop) |-> ##1 (ex_delayslot_nop == 0 && ex_delayslot_dsi == 0));
+assert property (@(posedge clk) disable iff (rst) (!ex_freeze & id_freeze | ex_flushpipe) |-> ##1 (ex_macrc_op == 0));
+assert property (@(posedge clk) disable iff (rst) (!ex_freeze & id_freeze) |-> ##1 (rf_addrw == 5'd00));
+assert property (@(posedge clk) disable iff (rst) (id_flushpipe) |-> ##1 (id_insn == {`OR1200_OR32_NOP, 26'h041_0000}));
+assert property (@(posedge clk) disable iff (rst) (!ex_freeze & id_freeze | ex_flushpipe) |-> ##1 (ex_insn == {`OR1200_OR32_NOP, 26'h041_0000}));
+assert property (@(posedge clk) disable iff (rst) (!id_freeze && if_insn[31:26] == `OR1200_OR32_JALR) |-> ##1 (sel_imm ==  1'b0));
+assert property (@(posedge clk) disable iff (rst) (!id_freeze && if_insn[31:26] == `OR1200_OR32_JR) |-> ##1 (sel_imm ==  1'b0));
+assert property (@(posedge clk) disable iff (rst) (!id_freeze && if_insn[31:26] == `OR1200_OR32_RFE) |-> ##1 (sel_imm ==  1'b0));
+assert property (@(posedge clk) disable iff (rst) (!id_freeze && if_insn[31:26] == `OR1200_OR32_MFSPR) |-> ##1 (sel_imm ==  1'b0));
+assert property (@(posedge clk) disable iff (rst) (!id_freeze && if_insn[31:26] == `OR1200_OR32_MTSPR) |-> ##1 (sel_imm ==  1'b0));
+assert property (@(posedge clk) disable iff (rst) (!id_freeze && if_insn[31:26] == `OR1200_OR32_XSYNC) |-> ##1 (sel_imm ==  1'b0));
+assert property (@(posedge clk) disable iff (rst) (!id_freeze && if_insn[31:26] == `OR1200_OR32_SW) |-> ##1 (sel_imm ==  1'b0));
+assert property (@(posedge clk) disable iff (rst) (!id_freeze && if_insn[31:26] == `OR1200_OR32_SB) |-> ##1 (sel_imm ==  1'b0));
+assert property (@(posedge clk) disable iff (rst) (!id_freeze && if_insn[31:26] == `OR1200_OR32_ALU) |-> ##1 (sel_imm ==  1'b0));
+assert property (@(posedge clk) disable iff (rst) (!id_freeze && if_insn[31:26] == `OR1200_OR32_SFXX) |-> ##1 (sel_imm ==  1'b0));","analyze -clear
+analyze -sv12 ./or1200_defines.v
+analyze -sv12 ./or1200_ctrl.sv
+
+elaborate -top or1200_ctrl
+
+clock clk
+reset -expression rst
+prove -all
+report -summary -force -result -file fpv.rpt
+exit
+",https://github.com/saqibkh/OR1200_Formal_Verification/blob/master/tb/SVA_ctrl.sv
 "//////////////////////////////////////////////////////////////////////
 ////                                                              ////
 ////  OR1200's instruction fetch                                  ////
@@ -9676,7 +9717,28 @@ bind or1200_if SVA_if wrp (
   .if_freeze(if_freeze)
 );
 
-endmodule","assert property ( @(posedge clk) no_more_dslot |-> (except_itlbmiss == 0 && except_immufault == 0 && except_ibuserr == 0) ); assert property (@(posedge clk) disable iff (rst) (!if_flushpipe && save_insn) |-> ##1 saved == 1); assert property (@(posedge clk) disable iff (rst) (if_flushpipe | (!save_insn && !if_freeze)) |-> ##1 saved == 0); assert property (@(posedge clk) disable iff (rst) (!if_flushpipe && save_insn && !icpu_err_i) |-> ##1 (insn_saved == $past(icpu_dat_i))); assert property (@(posedge clk) disable iff (rst) (if_flushpipe | (!save_insn && !if_freeze) && !icpu_err_i) |-> ##1 (insn_saved == {6'b000101, 26'h041_0000})); assert property (@(posedge clk) disable iff (rst) (!if_flushpipe && (save_insn | !if_freeze)) |-> ##1 (addr_saved == {$past(icpu_adr_i[31:2]), 2'b00})); assert property (@(posedge clk) disable iff (rst) (if_flushpipe) |-> ##1 (addr_saved == 32'h00000000)); assert property (@(posedge clk) disable iff (rst) (!if_flushpipe && save_insn) |-> ##1 (err_saved[0] == ($past(icpu_err_i) & ($past(icpu_tag_i) == 4'hd)) )); assert property (@(posedge clk) disable iff (rst) (!if_flushpipe && save_insn) |-> ##1 (err_saved[1] == ($past(icpu_err_i) & ($past(icpu_tag_i) == 4'hc)))); assert property (@(posedge clk) disable iff (rst) (!if_flushpipe && save_insn) |-> ##1 (err_saved[2] == ($past(icpu_err_i) & ($past(icpu_tag_i) == 4'hb)) )); assert property (@(posedge clk) disable iff (rst) (if_flushpipe | (!save_insn && !if_freeze)) |-> ##1 (err_saved == 3'b000));",,https://github.com/saqibkh/OR1200_Formal_Verification/blob/master/tb/SVA_if.sv
+endmodule","assert property ( @(posedge clk) no_more_dslot |-> (except_itlbmiss == 0 && except_immufault == 0 && except_ibuserr == 0) );
+assert property (@(posedge clk) disable iff (rst) (!if_flushpipe && save_insn) |-> ##1 saved == 1);
+assert property (@(posedge clk) disable iff (rst) (if_flushpipe | (!save_insn && !if_freeze)) |-> ##1 saved == 0);
+assert property (@(posedge clk) disable iff (rst) (!if_flushpipe && save_insn && !icpu_err_i) |-> ##1 (insn_saved == $past(icpu_dat_i)));
+assert property (@(posedge clk) disable iff (rst) (if_flushpipe | (!save_insn && !if_freeze) && !icpu_err_i) |-> ##1 (insn_saved == {6'b000101, 26'h041_0000}));
+assert property (@(posedge clk) disable iff (rst) (!if_flushpipe && (save_insn | !if_freeze)) |-> ##1 (addr_saved == {$past(icpu_adr_i[31:2]), 2'b00}));
+assert property (@(posedge clk) disable iff (rst) (if_flushpipe) |-> ##1 (addr_saved == 32'h00000000));
+assert property (@(posedge clk) disable iff (rst) (!if_flushpipe && save_insn) |-> ##1 (err_saved[0] == ($past(icpu_err_i) & ($past(icpu_tag_i) == 4'hd)) ));
+assert property (@(posedge clk) disable iff (rst) (!if_flushpipe && save_insn) |-> ##1 (err_saved[1] == ($past(icpu_err_i) & ($past(icpu_tag_i) == 4'hc))));
+assert property (@(posedge clk) disable iff (rst) (!if_flushpipe && save_insn) |-> ##1 (err_saved[2] == ($past(icpu_err_i) & ($past(icpu_tag_i) == 4'hb)) ));
+assert property (@(posedge clk) disable iff (rst) (if_flushpipe | (!save_insn && !if_freeze)) |-> ##1 (err_saved == 3'b000));","analyze -clear
+analyze -sv12 ./or1200_if.sv
+analyze -sv12 ./or1200_defines.v
+
+elaborate -top or1200_if
+
+clock clk
+reset -expression rst
+prove -all
+report -summary -force -result -file fpv.rpt
+exit
+",https://github.com/saqibkh/OR1200_Formal_Verification/blob/master/tb/SVA_if.sv
 "//////////////////////////////////////////////////////////////////////
 ////                                                              ////
 ////  OR1200's register file read operands mux                    ////
@@ -9936,4 +9998,15 @@ assert property (@(posedge clk) disable iff(reset) $rose(!ex_freeze && !id_freez
 assert property (@(posedge clk) disable iff(reset) $rose(!ex_freeze && !id_freeze) ##1 (!ex_freeze && !id_freeze && sel_b == 2'd1 && $stable(simm) && $stable(sel_b)) |->  muxed_b == simm);
 assert property (@(posedge clk) disable iff(reset) $rose(!ex_freeze && !id_freeze) ##1 (!ex_freeze && !id_freeze && sel_b == 2'd2 && $stable(ex_forw) && $stable(sel_b)) |-> muxed_b == ex_forw);
 assert property (@(posedge clk) disable iff(reset) $rose(!ex_freeze && !id_freeze) ##1 (!ex_freeze && !id_freeze && sel_b == 2'd3 && $stable(wb_forw) && $stable(sel_b)) |-> muxed_b == wb_forw);
-assert property (@(posedge clk) disable iff(reset) $rose(!ex_freeze && !id_freeze) ##1 (!ex_freeze && !id_freeze && !(sel_b == 2'd1 || sel_b == 2'd2 || sel_b == 2'd3) && $stable(rf_datab) && $stable(sel_b)) |-> muxed_b == rf_datab);",,https://github.com/saqibkh/OR1200_Formal_Verification/blob/master/rtl/verilog/or1200_operandmuxes.v
+assert property (@(posedge clk) disable iff(reset) $rose(!ex_freeze && !id_freeze) ##1 (!ex_freeze && !id_freeze && !(sel_b == 2'd1 || sel_b == 2'd2 || sel_b == 2'd3) && $stable(rf_datab) && $stable(sel_b)) |-> muxed_b == rf_datab);","analyze -clear
+analyze -sv12 ./or1200_operandmuxes.sv
+analyze -sv12 ./or1200_defines.v
+
+elaborate -top or1200_operandmuxes
+
+clock clk
+reset -expression rst
+prove -all
+report -summary -force -result -file fpv.rpt
+exit
+",https://github.com/saqibkh/OR1200_Formal_Verification/blob/master/rtl/verilog/or1200_operandmuxes.v
