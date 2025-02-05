@@ -1,0 +1,65 @@
+2025-01-29 01:43:05.893812 (19662) main____ INFO    ----------------------------------------
+2025-01-29 01:43:05.893882 (19662) main____ INFO    Jasper version info
+2025-01-29 01:43:05.893888 (19662) main____ INFO      tool      : Jasper 2022.09
+2025-01-29 01:43:05.893893 (19662) main____ INFO      version   : 2022.09p001 64 bits
+2025-01-29 01:43:05.893897 (19662) main____ INFO      build date: 2022.10.25 11:32:28 UTC
+2025-01-29 01:43:05.893900 (19662) main____ INFO    ----------------------------------------
+2025-01-29 01:43:05.893903 (19662) main____ INFO    Runtime info:
+2025-01-29 01:43:05.893907 (19662) main____ INFO      platform  : Linux 3.10.0-1160.el7.x86_64 x86_64
+2025-01-29 01:43:05.893911 (19662) main____ INFO      hostname  : icpc
+2025-01-29 01:43:05.893915 (19662) main____ INFO      pid       : 19662
+2025-01-29 01:43:05.893918 (19662) main____ INFO      arguments : '-style' 'windows' '-no_gui' 'fpv.tcl'
+2025-01-29 01:43:05.893922 (19662) main____ INFO      locale    : UTF-8
+2025-01-29 01:43:05.893925 (19662) main____ INFO    ----------------------------------------
+2025-01-29 01:43:05.893928 (19662) main____ INFO    System resource limits info:
+2025-01-29 01:43:05.893931 (19662) main____ INFO      virtual memory: unlimited
+2025-01-29 01:43:05.893934 (19662) main____ INFO      cpu time      : unlimited
+2025-01-29 01:43:05.894034 (19662) main____ INFO      processes     : 4096
+2025-01-29 01:43:05.894054 (19662) main____ INFO      stack size    : 8388608 B
+2025-01-29 01:43:05.894059 (19662) main____ INFO      core file size: 0 B
+2025-01-29 01:43:05.894063 (19662) main____ INFO      open files    : 4096
+2025-01-29 01:43:05.894066 (19662) main____ INFO      file size     : unlimited
+2025-01-29 01:43:05.894069 (19662) main____ INFO    ----------------------------------------
+2025-01-29 01:43:05.894072 (19662) main____ INFO    Memory statistics:
+2025-01-29 01:43:05.894075 (19662) main____ INFO      total physical memory  : 7990068 kB
+2025-01-29 01:43:05.894078 (19662) main____ INFO      free physical memory   : 4830456 kB
+2025-01-29 01:43:05.894081 (19662) main____ INFO      committed address space: 5523180 kB
+2025-01-29 01:43:05.894083 (19662) main____ INFO    ----------------------------------------
+2025-01-29 01:43:05.894479 (19662) main____ INFO    Important environment variables:
+2025-01-29 01:43:05.894489 (19662) main____ INFO      CDS_LIC_FILE          : '/export/SoftWare/Cadence/license/license.dat'
+2025-01-29 01:43:05.894496 (19662) main____ INFO      CDS_LIC_ONLY          : '1'
+2025-01-29 01:43:05.894500 (19662) main____ INFO      JASPERGOLD_HOME       : '/export/SoftWare/Cadence/JASPERGOLD22.09.001'
+2025-01-29 01:43:05.894503 (19662) main____ INFO      JASPER_INSTALL_DIR    : '/export/SoftWare/Cadence/JASPERGOLD22.09.001'
+2025-01-29 01:43:05.894506 (19662) main____ INFO      JASPER_KERNEL_CHECK   : '1'
+2025-01-29 01:43:05.894509 (19662) main____ INFO      JASPER_MACRO_LINEFILES: '1'
+2025-01-29 01:43:05.894512 (19662) main____ INFO      JASPER_OS_CHECK       : '1'
+2025-01-29 01:43:05.894515 (19662) main____ INFO      JG_MACRO_LINEFILES    : '1'
+2025-01-29 01:43:05.894518 (19662) main____ INFO      LANG                  : 'en_US.UTF-8'
+2025-01-29 01:43:05.894521 (19662) main____ INFO      LM_LICENSE_FILE       : '27000@icpc'
+2025-01-29 01:43:05.894523 (19662) main____ INFO    ----------------------------------------
+2025-01-29 01:43:05.894813 (19662) lic_core INFO    Initializing license system ...
+2025-01-29 01:43:05.895873 (19662) lic_core INFO    ... license system initialized.
+2025-01-29 01:43:05.898335 (19662) lic__man INFO    Claim 'main' for <ui>.
+2025-01-29 01:43:05.898415 (19662) lic_core INFO    (1) checking out 'jasper_interactive' ...
+2025-01-29 01:43:05.972128 (19662) lic_core INFO    ... (1) checkout succeeded
+2025-01-29 01:43:05.972233 (19662) lic__man INFO    Claim 'fpv' for <ui>.
+2025-01-29 01:43:05.972256 (19662) lic_core INFO    (2) checking out 'jasper_fpv' ...
+2025-01-29 01:43:06.041439 (19662) lic_core INFO    ... (2) checkout succeeded
+2025-01-29 01:43:06.042021 (19683) stdio___ INFO    Starting STDIN reader (tty: yes, tty name: '/dev/pts/0')
+2025-01-29 01:43:06.042111 (19662) main____ INFO    Tool inactivity delay is 480000 ms.
+2025-01-29 01:43:06.052636 (19662) session_ INFO    Starting analysis session with session id 'session_0' (launcher: <local>) ...
+2025-01-29 01:43:06.055024 (19662) session_ INFO    Analysis session with session id 'session_0' started (pid: 19684)
+2025-01-29 01:43:06.617465 (19662) session_ INFO    Analysis session 'session_0' connected to the console (host: 127.0.0.1:59252)
+2025-01-29 01:43:07.120162 (19662) lic__man INFO    Unclaim everything for 'session_0'.
+2025-01-29 01:43:07.163831 (19662) lic__man INFO    Claim 'fpv' for 'session_0'.
+2025-01-29 01:43:07.163946 (19662) lic__man INFO    Claim 'fpv' for 'session_0/prove-0'.
+2025-01-29 01:46:16.482493 (19662) lic__man INFO    Unclaim everything for 'session_0/prove-0'.
+2025-01-29 01:46:16.525142 (19662) main____ INFO    About to exit: request to exit with status 0 received from analysis session 'session_0'
+2025-01-29 01:46:16.572789 (19662) session_ INFO    Analysis session 'session_0' disconnected.
+2025-01-29 01:46:16.572970 (19662) lic__man INFO    Unclaim everything for 'session_0'.
+2025-01-29 01:46:16.573327 (19662) session_ INFO    Process for analysis session 'session_0' has exited with exit status '0'.
+2025-01-29 01:46:18.610908 (19683) stdio___ INFO    STDIN reader requested to stop.
+2025-01-29 01:46:18.610979 (19683) stdio___ INFO    STDIN reader stopped.
+2025-01-29 01:46:18.611206 (19662) lic_core INFO    (1) checkin jasper_interactive
+2025-01-29 01:46:18.623742 (19662) lic_core INFO    (2) checkin jasper_fpv
+2025-01-29 01:46:18.636462 (19662) main____ INFO    Exiting with status 0.

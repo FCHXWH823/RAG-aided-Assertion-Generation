@@ -1,0 +1,48 @@
+
+==============================================================
+    Jasper Verification Results
+==============================================================
+    2022.09p001 64 bits for Linux64 3.10.0-1062.1.2.el7.x86_64
+    Host Name: icpc
+    User Name: master
+    Printed on: Wednesday, Jan29, 2025 06:41:09 AM CST
+    Working Directory: /home/master/Dataset/bit4counter
+
+
+==============================================================
+SUMMARY
+==============================================================
+    Total Tasks           : 1
+    Total Properties      : 4
+          assumptions     : 0                   
+           - approved     : 0                   
+           - temporary    : 0                   
+          assertions      : 2                   
+           - proven       : 0                   ( 0.0% )
+           - marked_proven: 0                   ( 0.0% )
+           - cex          : 2                   ( 100.0% )
+           - ar_cex       : 0                   ( 0.0% )
+           - undetermined : 0                   ( 0.0% )
+           - unprocessed  : 0                   ( 0.0% )
+           - error        : 0                   ( 0.0% )
+          covers          : 2                   
+           - unreachable  : 0                   ( 0.0% )
+           - covered      : 2                   ( 100.0% )
+           - ar_covered   : 0                   ( 0.0% )
+           - undetermined : 0                   ( 0.0% )
+           - unprocessed  : 0                   ( 0.0% )
+           - error        : 0                   ( 0.0% )
+
+==============================================================
+RESULTS
+==============================================================
+
+------------------------------------------------------------------------------------------------------------------
+       Name                                                      |    Result    |  Engine  |  Bound  |  Time    
+------------------------------------------------------------------------------------------------------------------
+
+---[ <embedded> ]-------------------------------------------------------------------------------------------------
+[1]   bit4counter.u_bit4counter_sva._assert_1                         cex             Hp           17    0.010 s      
+[2]   bit4counter.u_bit4counter_sva._assert_1:precondition1           covered         PRE           1    0.000 s      
+[3]   bit4counter.u_bit4counter_sva._assert_2                         cex             Hp           18    0.012 s      
+[4]   bit4counter.u_bit4counter_sva._assert_2:precondition1           covered         Hp           17    0.010 s      

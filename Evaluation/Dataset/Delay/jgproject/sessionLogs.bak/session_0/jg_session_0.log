@@ -1,0 +1,86 @@
+# ----------------------------------------
+# Jasper Version Info
+# tool      : Jasper 2022.09
+# platform  : Linux 3.10.0-1160.el7.x86_64
+# version   : 2022.09p001 64 bits
+# build date: 2022.10.25 11:32:28 UTC
+# ----------------------------------------
+# started   : 2025-01-28 09:31:29 CST
+# hostname  : icpc.(none)
+# pid       : 81613
+# arguments : '-label' 'session_0' '-console' '//127.0.0.1:45592' '-nowindow' '-style' 'windows' '-data' 'AAAA5nicbY7BCoJQFETPS9xGP6L9gDtpZ0QF1U7ENALRSItoU5/an7zGF0JBA/fOzGXuu88A0cNai4N3V5uQMGfFTH3BRgw7phTcONFwppNbS5VSWzJNCk1iqb1UTe58xdGpmvaPD5XNtO9gXh8mMnzDLJ8/DP4QVI1UYwI92JBy4KID/aTUN6860Olc1YffgRsgGg==' '-proj' '/home/master/Dataset/Delay/jgproject/sessionLogs/session_0' '-init' '-hidden' '/home/master/Dataset/Delay/jgproject/.tmp/.initCmds.tcl' 'fpv.tcl'
+
+Any disclosure about the Cadence Design Systems software or its use
+model to any third party violates the written Non-Disclosure Agreement
+between Cadence Design Systems, Inc. and the customer.
+
+THIS SOFTWARE CONTAINS CONFIDENTIAL INFORMATION AND TRADE SECRETS OF
+CADENCE DESIGN SYSTEMS, INC. USE, DISCLOSURE, OR REPRODUCTION IS
+PROHIBITED WITHOUT THE PRIOR EXPRESS WRITTEN PERMISSION OF CADENCE
+DESIGN SYSTEMS, INC.
+
+Copyright (C) 2000-2022 Cadence Design Systems, Inc. All Rights
+Reserved.  Unpublished -- rights reserved under the copyright laws of
+the United States.
+
+This product includes software developed by others and redistributed
+according to license agreement. See doc/third_party_readme.txt for
+further details.
+
+RESTRICTED RIGHTS LEGEND
+
+Use, duplication, or disclosure by the Government is subject to
+restrictions as set forth in subparagraph (c) (1) (ii) of the Rights in
+Technical Data and Computer Software clause at DFARS 252.227-7013 or
+subparagraphs (c) (1) and (2) of Commercial Computer Software -- Restricted
+Rights at 48 CFR 52.227-19, as applicable.
+
+
+                          Cadence Design Systems, Inc.
+                          2655 Seely Avenue
+                          San Jose, CA 95134
+                          Phone: 408.943.1234
+
+For technical assistance visit http://support.cadence.com.
+
+Jasper Apps Analysis Session - /home/master/Dataset/Delay/jgproject/sessionLogs/session_0
+
+INFO: successfully checked out licenses "jasper_interactive" and "jasper_fpv".
+INFO: reading configuration file "/home/master/.config/cadence/jasper.conf".
+% analyze -clear
+% analyze -sv ./Delay.sv
+[-- (VERI-1482)] Analyzing Verilog file '/export/SoftWare/Cadence/JASPERGOLD22.09.001/lib/verilog/packages/std/std.sv' into library 'std'
+[-- (VERI-1482)] Analyzing Verilog file './Delay.sv'
+% analyze -sv ./Delay_sva.sv
+[-- (VERI-1482)] Analyzing Verilog file './Delay_sva.sv'
+% analyze -sv ./Delay_bind.svh
+[-- (VERI-1482)] Analyzing Verilog file './Delay_bind.svh'
+% 
+% elaborate -top Delay
+INFO (ISW003): Top module name is "Delay".
+[INFO (VERI-1018)] ./Delay_sva.sv(1): compiling module 'Delay_sva'
+[ERROR (VERI-1172)] ./Delay_sva.sv(8): external reference 's_eventually' remains unresolved
+[INFO (VERI-1073)] ./Delay_sva.sv(1): module 'Delay_sva' remains a black box due to errors in its contents
+[INFO (VERI-1018)] ./Delay.sv(1): compiling module 'Delay'
+[WARN (VERI-1209)] ./Delay.sv(10): expression size 32 truncated to fit in target size 10
+[INFO (VERI-8005)] ./Delay.sv(7): Unintentional Sequential element inferred for cnt read before write using blocking assignment
+[INFO (VERI-8005)] ./Delay.sv(6): Unintentional Sequential element inferred for sig read before write using blocking assignment
+ERROR (ENL058): Unable to elaborate module/entity "Delay_sva" because this module/entity is missing or it contains errors.
+    Re-analyze it or use "-bbox_m Delay_sva" if you want to black box this module/entity.
+WARNING (WNL059): If you are analyzing with "-mfcu" or "-sfcu" and "-L", try using "elaborate -L libname", "set_analyze_libunboundsearch" or "analyze +libunboundsearch"
+[ERROR (VDB-9017)] Module Delay could not be elaborated
+Summary of errors detected:
+	[ERROR (VERI-1172)] ./Delay_sva.sv(8): external reference 's_eventually' remains unresolved
+	ERROR (ENL058): Unable to elaborate module/entity "Delay_sva" because this module/entity is missing or it contains errors.
+    Re-analyze it or use "-bbox_m Delay_sva" if you want to black box this module/entity.
+	[ERROR (VDB-9017)] Module Delay could not be elaborated
+ERROR (ENL034): 3 errors detected in the design file(s).
+
+ERROR: problem encountered at line 6 in file fpv.tcl
+
+% exit
+INFO (IPL005): Received request to exit from the console.
+INFO (IPL018): The peak resident set memory use for this session was 0.357 GB.
+INFO (IPL014): Waiting for the Tcl-thread to exit.
+INFO (IPL015): The Tcl-thread exited with status 0.
+INFO (IPL016): Exiting the analysis session with status 0.

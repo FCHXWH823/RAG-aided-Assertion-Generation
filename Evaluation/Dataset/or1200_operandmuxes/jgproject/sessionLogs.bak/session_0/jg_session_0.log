@@ -1,0 +1,93 @@
+# ----------------------------------------
+# Jasper Version Info
+# tool      : Jasper 2022.09
+# platform  : Linux 3.10.0-1160.el7.x86_64
+# version   : 2022.09p001 64 bits
+# build date: 2022.10.25 11:32:28 UTC
+# ----------------------------------------
+# started   : 2025-02-06 01:57:44 CST
+# hostname  : icpc.(none)
+# pid       : 116301
+# arguments : '-label' 'session_0' '-console' '//127.0.0.1:33876' '-nowindow' '-style' 'windows' '-data' 'AAAA5nicbY7BCoJQFETPS9xGP6L9gDtpZ0QF1U7ENALRSItoU5/an7zGF0JBA/fOzGXuu88A0cNai4N3V5uQMGfFTH3BRgw7phTcONFwppNbS5VSWzJNCk1iqb1UTe58xdGpmvaPD5XNtO9gXh8mMnzDLJ8/DP4QVI1UYwI92JBy4KID/aTUN6860Olc1YffgRsgGg==' '-proj' '/home/master/Dataset/or1200_operandmuxes/jgproject/sessionLogs/session_0' '-init' '-hidden' '/home/master/Dataset/or1200_operandmuxes/jgproject/.tmp/.initCmds.tcl' 'fpv.tcl'
+
+Any disclosure about the Cadence Design Systems software or its use
+model to any third party violates the written Non-Disclosure Agreement
+between Cadence Design Systems, Inc. and the customer.
+
+THIS SOFTWARE CONTAINS CONFIDENTIAL INFORMATION AND TRADE SECRETS OF
+CADENCE DESIGN SYSTEMS, INC. USE, DISCLOSURE, OR REPRODUCTION IS
+PROHIBITED WITHOUT THE PRIOR EXPRESS WRITTEN PERMISSION OF CADENCE
+DESIGN SYSTEMS, INC.
+
+Copyright (C) 2000-2022 Cadence Design Systems, Inc. All Rights
+Reserved.  Unpublished -- rights reserved under the copyright laws of
+the United States.
+
+This product includes software developed by others and redistributed
+according to license agreement. See doc/third_party_readme.txt for
+further details.
+
+RESTRICTED RIGHTS LEGEND
+
+Use, duplication, or disclosure by the Government is subject to
+restrictions as set forth in subparagraph (c) (1) (ii) of the Rights in
+Technical Data and Computer Software clause at DFARS 252.227-7013 or
+subparagraphs (c) (1) and (2) of Commercial Computer Software -- Restricted
+Rights at 48 CFR 52.227-19, as applicable.
+
+
+                          Cadence Design Systems, Inc.
+                          2655 Seely Avenue
+                          San Jose, CA 95134
+                          Phone: 408.943.1234
+
+For technical assistance visit http://support.cadence.com.
+
+Jasper Apps Analysis Session - /home/master/Dataset/or1200_operandmuxes/jgproject/sessionLogs/session_0
+
+INFO: successfully checked out licenses "jasper_interactive" and "jasper_fpv".
+INFO: reading configuration file "/home/master/.config/cadence/jasper.conf".
+% analyze -clear
+% analyze -sv12 ./or1200_operandmuxes.sv
+[-- (VERI-1482)] Analyzing Verilog file '/export/SoftWare/Cadence/JASPERGOLD22.09.001/lib/verilog/packages/std/std.sv' into library 'std'
+[-- (VERI-1482)] Analyzing Verilog file './or1200_operandmuxes.sv'
+[INFO (VERI-1328)] ./or1200_operandmuxes.sv(52): analyzing included file './or1200_defines.v'
+[ERROR (VERI-1128)] ./or1200_operandmuxes.sv(165): 'reset' is not declared
+[ERROR (VERI-1128)] ./or1200_operandmuxes.sv(166): 'reset' is not declared
+[ERROR (VERI-1128)] ./or1200_operandmuxes.sv(167): 'reset' is not declared
+[ERROR (VERI-1128)] ./or1200_operandmuxes.sv(168): 'reset' is not declared
+[ERROR (VERI-1128)] ./or1200_operandmuxes.sv(169): 'reset' is not declared
+[ERROR (VERI-1128)] ./or1200_operandmuxes.sv(170): 'reset' is not declared
+[ERROR (VERI-1128)] ./or1200_operandmuxes.sv(171): 'reset' is not declared
+[ERROR (VERI-1072)] ./or1200_operandmuxes.sv(173): module 'or1200_operandmuxes' is ignored due to previous errors
+Summary of errors detected:
+	[ERROR (VERI-1128)] ./or1200_operandmuxes.sv(165): 'reset' is not declared
+	[ERROR (VERI-1128)] ./or1200_operandmuxes.sv(166): 'reset' is not declared
+	[ERROR (VERI-1128)] ./or1200_operandmuxes.sv(167): 'reset' is not declared
+	[ERROR (VERI-1128)] ./or1200_operandmuxes.sv(168): 'reset' is not declared
+	[ERROR (VERI-1128)] ./or1200_operandmuxes.sv(169): 'reset' is not declared
+	[ERROR (VERI-1128)] ./or1200_operandmuxes.sv(170): 'reset' is not declared
+	[ERROR (VERI-1128)] ./or1200_operandmuxes.sv(171): 'reset' is not declared
+	[ERROR (VERI-1072)] ./or1200_operandmuxes.sv(173): module 'or1200_operandmuxes' is ignored due to previous errors
+ERROR (ENL034): 8 errors detected in the design file(s).
+
+ERROR: problem encountered at line 2 in file fpv.tcl
+
+INFO (IPL017): The host machine is running out of memory.
+    This message was triggered because the system reached 10% memory.
+    System memory use information:
+    [Process]
+        Memory In Use: 352728 kB (4%)
+        Peak Memory Usage: 352728 kB (4%)
+    [Host]
+        Available Memory: 661252 kB (8%)
+        Total Memory: 7990060 kB
+        Free Swap: 5874684 kB (71%)
+        Total Swap: 8257532 kB
+% 
+% exit
+INFO (IPL005): Received request to exit from the console.
+INFO (IPL018): The peak resident set memory use for this session was 0.337 GB.
+INFO (IPL014): Waiting for the Tcl-thread to exit.
+INFO (IPL015): The Tcl-thread exited with status 0.
+INFO (IPL016): Exiting the analysis session with status 0.

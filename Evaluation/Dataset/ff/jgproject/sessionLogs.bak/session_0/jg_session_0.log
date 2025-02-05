@@ -1,0 +1,69 @@
+# ----------------------------------------
+# Jasper Version Info
+# tool      : Jasper 2022.09
+# platform  : Linux 3.10.0-1160.el7.x86_64
+# version   : 2022.09p001 64 bits
+# build date: 2022.10.25 11:32:28 UTC
+# ----------------------------------------
+# started   : 2025-01-23 06:04:45 CST
+# hostname  : icpc.(none)
+# pid       : 25730
+# arguments : '-label' 'session_0' '-console' '//127.0.0.1:42346' '-style' 'windows' '-data' 'AAAA1HicbY7dCoJAEIW/JboNn6ReYO+iu0QsyG6lDITFxESkm3pU32Q7rgQJHZg5Pzs7jAHsy3tPwOKpFrEn5sBOPeEkhjMbCnpq7jS0ckepm1RGrqRQspW6SlVcgneUQVU8/vi1ZnP9DzDDxFjDL0z6njEsv4NjqlrpiJpO61otd+PTB1RIHV0=' '-proj' '/home/master/Dataset/ff/jgproject/sessionLogs/session_0' '-init' '-hidden' '/home/master/Dataset/ff/jgproject/.tmp/.initCmds.tcl' 'fpv.tcl'
+
+Any disclosure about the Cadence Design Systems software or its use
+model to any third party violates the written Non-Disclosure Agreement
+between Cadence Design Systems, Inc. and the customer.
+
+THIS SOFTWARE CONTAINS CONFIDENTIAL INFORMATION AND TRADE SECRETS OF
+CADENCE DESIGN SYSTEMS, INC. USE, DISCLOSURE, OR REPRODUCTION IS
+PROHIBITED WITHOUT THE PRIOR EXPRESS WRITTEN PERMISSION OF CADENCE
+DESIGN SYSTEMS, INC.
+
+Copyright (C) 2000-2022 Cadence Design Systems, Inc. All Rights
+Reserved.  Unpublished -- rights reserved under the copyright laws of
+the United States.
+
+This product includes software developed by others and redistributed
+according to license agreement. See doc/third_party_readme.txt for
+further details.
+
+RESTRICTED RIGHTS LEGEND
+
+Use, duplication, or disclosure by the Government is subject to
+restrictions as set forth in subparagraph (c) (1) (ii) of the Rights in
+Technical Data and Computer Software clause at DFARS 252.227-7013 or
+subparagraphs (c) (1) and (2) of Commercial Computer Software -- Restricted
+Rights at 48 CFR 52.227-19, as applicable.
+
+
+                          Cadence Design Systems, Inc.
+                          2655 Seely Avenue
+                          San Jose, CA 95134
+                          Phone: 408.943.1234
+
+For technical assistance visit http://support.cadence.com.
+
+Jasper Apps Analysis Session - /home/master/Dataset/ff/jgproject/sessionLogs/session_0
+
+INFO: successfully checked out licenses "jasper_interactive" and "jasper_fpv".
+INFO: reading configuration file "/home/master/.config/cadence/jasper.conf".
+% analyze -clear
+% analyze -sv ./ff.sv
+[-- (VERI-1482)] Analyzing Verilog file '/export/SoftWare/Cadence/JASPERGOLD22.09.001/lib/verilog/packages/std/std.sv' into library 'std'
+[-- (VERI-1482)] Analyzing Verilog file './ff.sv'
+% analyze -sv ./ff_sva.sv
+[-- (VERI-1482)] Analyzing Verilog file './ff_sva.sv'
+% analyze -sv ./ff_bind.svh
+[-- (VERI-1482)] Analyzing Verilog file './ff_bind.svh'
+[ERROR (VERI-1137)] ./ff_bind.svh(1): syntax error near 'u_ff_sva'
+Summary of errors detected:
+	[ERROR (VERI-1137)] ./ff_bind.svh(1): syntax error near 'u_ff_sva'
+ERROR (ENL034): 1 errors detected in the design file(s).
+
+ERROR: problem encountered at line 4 in file fpv.tcl
+
+INFO (IPL005): Received request to exit from the console.
+INFO (IPL014): Waiting for the Tcl-thread to exit.
+INFO (IPL018): The peak resident set memory use for this session was 0.394 GB.
+INFO (IPL015): The Tcl-thread exited with status 0.
+INFO (IPL016): Exiting the analysis session with status 0.

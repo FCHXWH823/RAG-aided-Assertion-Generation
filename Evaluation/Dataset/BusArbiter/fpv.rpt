@@ -1,0 +1,63 @@
+
+==============================================================
+    Jasper Verification Results
+==============================================================
+    2022.09p001 64 bits for Linux64 3.10.0-1062.1.2.el7.x86_64
+    Host Name: icpc
+    User Name: master
+    Printed on: Sunday, Jan26, 2025 07:11:16 AM CST
+    Working Directory: /home/master/Dataset/BusArbiter
+
+
+==============================================================
+SUMMARY
+==============================================================
+    Total Tasks           : 1
+    Total Properties      : 19
+          assumptions     : 0                   
+           - approved     : 0                   
+           - temporary    : 0                   
+          assertions      : 10                  
+           - proven       : 10                  ( 100.0% )
+           - marked_proven: 0                   ( 0.0% )
+           - cex          : 0                   ( 0.0% )
+           - ar_cex       : 0                   ( 0.0% )
+           - undetermined : 0                   ( 0.0% )
+           - unprocessed  : 0                   ( 0.0% )
+           - error        : 0                   ( 0.0% )
+          covers          : 9                   
+           - unreachable  : 0                   ( 0.0% )
+           - covered      : 9                   ( 100.0% )
+           - ar_covered   : 0                   ( 0.0% )
+           - undetermined : 0                   ( 0.0% )
+           - unprocessed  : 0                   ( 0.0% )
+           - error        : 0                   ( 0.0% )
+
+==============================================================
+RESULTS
+==============================================================
+
+------------------------------------------------------------------------------------------------------------------------
+       Name                                                            |    Result    |  Engine  |  Bound  |  Time    
+------------------------------------------------------------------------------------------------------------------------
+
+---[ <embedded> ]-------------------------------------------------------------------------------------------------------
+[1]   busarbiter.inst_busarbitersuit.a_atmostone                            proven          N      Infinite    0.000 s      
+[2]   busarbiter.inst_busarbitersuit.a_atmostone_1                          proven          Hp     Infinite    0.003 s      
+[3]   busarbiter.inst_busarbitersuit.a_atmostone_1:precondition1            covered         PRE           2    0.000 s      
+[4]   busarbiter.inst_busarbitersuit.a_atmostone_2                          proven          Hp     Infinite    0.003 s      
+[5]   busarbiter.inst_busarbitersuit.a_atmostone_2:precondition1            covered         Hp            2    0.004 s      
+[6]   busarbiter.inst_busarbitersuit.a_atmostone_3                          proven          Hp     Infinite    0.003 s      
+[7]   busarbiter.inst_busarbitersuit.a_atmostone_3:precondition1            covered         Hp            2    0.005 s      
+[8]   busarbiter.inst_busarbitersuit.a_grantstable                          proven          Hp     Infinite    0.006 s      
+[9]   busarbiter.inst_busarbitersuit.a_grantstable:precondition1            covered         Hp            2    0.005 s      
+[10]  busarbiter.inst_busarbitersuit.a_arbmaster0                           proven          Hp     Infinite    0.006 s      
+[11]  busarbiter.inst_busarbitersuit.a_arbmaster0:precondition1             covered         PRE           1    0.000 s      
+[12]  busarbiter.inst_busarbitersuit.a_arbmaster1                           proven          Hp     Infinite    0.006 s      
+[13]  busarbiter.inst_busarbitersuit.a_arbmaster1:precondition1             covered         Hp            1    0.001 s      
+[14]  busarbiter.inst_busarbitersuit.a_arbmaster2                           proven          Hp     Infinite    0.006 s      
+[15]  busarbiter.inst_busarbitersuit.a_arbmaster2:precondition1             covered         Hp            1    0.002 s      
+[16]  busarbiter.inst_busarbitersuit.a_grantmaster1                         proven          Hp     Infinite    0.003 s      
+[17]  busarbiter.inst_busarbitersuit.a_grantmaster1:precondition1           covered         Hp            2    0.004 s      
+[18]  busarbiter.inst_busarbitersuit.a_grantmaster2                         proven          Hp     Infinite    0.004 s      
+[19]  busarbiter.inst_busarbitersuit.a_grantmaster2:precondition1           covered         Hp            2    0.005 s      

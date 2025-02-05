@@ -1,0 +1,81 @@
+
+==============================================================
+    Jasper Verification Results
+==============================================================
+    2022.09p001 64 bits for Linux64 3.10.0-1062.1.2.el7.x86_64
+    Host Name: icpc
+    User Name: master
+    Printed on: Sunday, Jan26, 2025 03:35:39 AM CST
+    Working Directory: /home/master/Dataset/APB_Controller
+
+
+==============================================================
+SUMMARY
+==============================================================
+    Total Tasks           : 1
+    Total Properties      : 37
+          assumptions     : 0                   
+           - approved     : 0                   
+           - temporary    : 0                   
+          assertions      : 19                  
+           - proven       : 19                  ( 100.0% )
+           - marked_proven: 0                   ( 0.0% )
+           - cex          : 0                   ( 0.0% )
+           - ar_cex       : 0                   ( 0.0% )
+           - undetermined : 0                   ( 0.0% )
+           - unprocessed  : 0                   ( 0.0% )
+           - error        : 0                   ( 0.0% )
+          covers          : 18                  
+           - unreachable  : 0                   ( 0.0% )
+           - covered      : 18                  ( 100.0% )
+           - ar_covered   : 0                   ( 0.0% )
+           - undetermined : 0                   ( 0.0% )
+           - unprocessed  : 0                   ( 0.0% )
+           - error        : 0                   ( 0.0% )
+
+==============================================================
+RESULTS
+==============================================================
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+       Name                                                                                  |    Result    |  Engine  |  Bound  |  Time    
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+---[ <embedded> ]-----------------------------------------------------------------------------------------------------------------------------
+[1]   APB_FSM_Controller.APB_FSM_Controller_chk.assert_state_transition                           proven          N      Infinite    0.003 s      
+[2]   APB_FSM_Controller.APB_FSM_Controller_chk.assert_IDLE_to_WWAIT                              proven          Hp     Infinite    0.003 s      
+[3]   APB_FSM_Controller.APB_FSM_Controller_chk.assert_IDLE_to_WWAIT:precondition1                covered         PRE           1    0.000 s      
+[4]   APB_FSM_Controller.APB_FSM_Controller_chk.assert_IDLE_to_READ                               proven          Hp     Infinite    0.004 s      
+[5]   APB_FSM_Controller.APB_FSM_Controller_chk.assert_IDLE_to_READ:precondition1                 covered         Hp            1    0.008 s      
+[6]   APB_FSM_Controller.APB_FSM_Controller_chk.assert_IDLE_to_IDL                                proven          Hp     Infinite    0.004 s      
+[7]   APB_FSM_Controller.APB_FSM_Controller_chk.assert_IDLE_to_IDL:precondition1                  covered         PRE           1    0.000 s      
+[8]   APB_FSM_Controller.APB_FSM_Controller_chk.assert_WWAIT_to_WRITE                             proven          Hp     Infinite    0.004 s      
+[9]   APB_FSM_Controller.APB_FSM_Controller_chk.assert_WWAIT_to_WRITE:precondition1               covered         Hp            2    0.012 s      
+[10]  APB_FSM_Controller.APB_FSM_Controller_chk.assert_WWAIT_to_WRITEP                            proven          Hp     Infinite    0.004 s      
+[11]  APB_FSM_Controller.APB_FSM_Controller_chk.assert_WWAIT_to_WRITEP:precondition1              covered         Hp            2    0.013 s      
+[12]  APB_FSM_Controller.APB_FSM_Controller_chk.assert_READ_to_RENABLE                            proven          Hp     Infinite    0.004 s      
+[13]  APB_FSM_Controller.APB_FSM_Controller_chk.assert_READ_to_RENABLE:precondition1              covered         Hp            2    0.013 s      
+[14]  APB_FSM_Controller.APB_FSM_Controller_chk.assert_WRITE_to_WENABLE                           proven          Hp     Infinite    0.004 s      
+[15]  APB_FSM_Controller.APB_FSM_Controller_chk.assert_WRITE_to_WENABLE:precondition1             covered         Hp            3    0.014 s      
+[16]  APB_FSM_Controller.APB_FSM_Controller_chk.assert_WRITE_to_WENABLEP                          proven          Hp     Infinite    0.004 s      
+[17]  APB_FSM_Controller.APB_FSM_Controller_chk.assert_WRITE_to_WENABLEP:precondition1            covered         Hp            3    0.015 s      
+[18]  APB_FSM_Controller.APB_FSM_Controller_chk.assert_WRITEP_to_WENABLEP                         proven          Hp     Infinite    0.004 s      
+[19]  APB_FSM_Controller.APB_FSM_Controller_chk.assert_WRITEP_to_WENABLEP:precondition1           covered         Hp            3    0.016 s      
+[20]  APB_FSM_Controller.APB_FSM_Controller_chk.assert_RENABLE_to_IDLE                            proven          Hp     Infinite    0.005 s      
+[21]  APB_FSM_Controller.APB_FSM_Controller_chk.assert_RENABLE_to_IDLE:precondition1              covered         Hp            3    0.016 s      
+[22]  APB_FSM_Controller.APB_FSM_Controller_chk.assert_RENABLE_to_WWAIT                           proven          Hp     Infinite    0.005 s      
+[23]  APB_FSM_Controller.APB_FSM_Controller_chk.assert_RENABLE_to_WWAIT:precondition1             covered         Hp            3    0.017 s      
+[24]  APB_FSM_Controller.APB_FSM_Controller_chk.assert_RENABLE_to_READ                            proven          Hp     Infinite    0.005 s      
+[25]  APB_FSM_Controller.APB_FSM_Controller_chk.assert_RENABLE_to_READ:precondition1              covered         Hp            3    0.017 s      
+[26]  APB_FSM_Controller.APB_FSM_Controller_chk.assert_WENABLE_to_IDLE                            proven          Hp     Infinite    0.005 s      
+[27]  APB_FSM_Controller.APB_FSM_Controller_chk.assert_WENABLE_to_IDLE:precondition1              covered         Hp            4    0.018 s      
+[28]  APB_FSM_Controller.APB_FSM_Controller_chk.assert_WENABLE_to_WWAIT                           proven          Hp     Infinite    0.005 s      
+[29]  APB_FSM_Controller.APB_FSM_Controller_chk.assert_WENABLE_to_WWAIT:precondition1             covered         Hp            4    0.027 s      
+[30]  APB_FSM_Controller.APB_FSM_Controller_chk.assert_WENABLE_to_READ                            proven          Hp     Infinite    0.005 s      
+[31]  APB_FSM_Controller.APB_FSM_Controller_chk.assert_WENABLE_to_READ:precondition1              covered         Hp            4    0.028 s      
+[32]  APB_FSM_Controller.APB_FSM_Controller_chk.assert_WENABLEP_to_WRITE                          proven          Hp     Infinite    0.005 s      
+[33]  APB_FSM_Controller.APB_FSM_Controller_chk.assert_WENABLEP_to_WRITE:precondition1            covered         Hp            4    0.028 s      
+[34]  APB_FSM_Controller.APB_FSM_Controller_chk.assert_WENABLEP_to_WRITEP                         proven          Hp     Infinite    0.005 s      
+[35]  APB_FSM_Controller.APB_FSM_Controller_chk.assert_WENABLEP_to_WRITEP:precondition1           covered         Hp            4    0.028 s      
+[36]  APB_FSM_Controller.APB_FSM_Controller_chk.assert_WENABLEP_to_READ                           proven          Hp     Infinite    0.005 s      
+[37]  APB_FSM_Controller.APB_FSM_Controller_chk.assert_WENABLEP_to_READ:precondition1             covered         Hp            4    0.029 s      

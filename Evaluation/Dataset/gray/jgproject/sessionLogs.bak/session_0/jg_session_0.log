@@ -1,0 +1,83 @@
+# ----------------------------------------
+# Jasper Version Info
+# tool      : Jasper 2022.09
+# platform  : Linux 3.10.0-1160.el7.x86_64
+# version   : 2022.09p001 64 bits
+# build date: 2022.10.25 11:32:28 UTC
+# ----------------------------------------
+# started   : 2025-01-28 09:39:52 CST
+# hostname  : icpc.(none)
+# pid       : 85170
+# arguments : '-label' 'session_0' '-console' '//127.0.0.1:43648' '-nowindow' '-style' 'windows' '-data' 'AAAA5nicbY7BCoJQFETPS9xGP6L9gDtpZ0QF1U7ENALRSItoU5/an7zGF0JBA/fOzGXuu88A0cNai4N3V5uQMGfFTH3BRgw7phTcONFwppNbS5VSWzJNCk1iqb1UTe58xdGpmvaPD5XNtO9gXh8mMnzDLJ8/DP4QVI1UYwI92JBy4KID/aTUN6860Olc1YffgRsgGg==' '-proj' '/home/master/Dataset/gray/jgproject/sessionLogs/session_0' '-init' '-hidden' '/home/master/Dataset/gray/jgproject/.tmp/.initCmds.tcl' 'fpv.tcl'
+
+Any disclosure about the Cadence Design Systems software or its use
+model to any third party violates the written Non-Disclosure Agreement
+between Cadence Design Systems, Inc. and the customer.
+
+THIS SOFTWARE CONTAINS CONFIDENTIAL INFORMATION AND TRADE SECRETS OF
+CADENCE DESIGN SYSTEMS, INC. USE, DISCLOSURE, OR REPRODUCTION IS
+PROHIBITED WITHOUT THE PRIOR EXPRESS WRITTEN PERMISSION OF CADENCE
+DESIGN SYSTEMS, INC.
+
+Copyright (C) 2000-2022 Cadence Design Systems, Inc. All Rights
+Reserved.  Unpublished -- rights reserved under the copyright laws of
+the United States.
+
+This product includes software developed by others and redistributed
+according to license agreement. See doc/third_party_readme.txt for
+further details.
+
+RESTRICTED RIGHTS LEGEND
+
+Use, duplication, or disclosure by the Government is subject to
+restrictions as set forth in subparagraph (c) (1) (ii) of the Rights in
+Technical Data and Computer Software clause at DFARS 252.227-7013 or
+subparagraphs (c) (1) and (2) of Commercial Computer Software -- Restricted
+Rights at 48 CFR 52.227-19, as applicable.
+
+
+                          Cadence Design Systems, Inc.
+                          2655 Seely Avenue
+                          San Jose, CA 95134
+                          Phone: 408.943.1234
+
+For technical assistance visit http://support.cadence.com.
+
+Jasper Apps Analysis Session - /home/master/Dataset/gray/jgproject/sessionLogs/session_0
+
+INFO: successfully checked out licenses "jasper_interactive" and "jasper_fpv".
+INFO: reading configuration file "/home/master/.config/cadence/jasper.conf".
+% analyze -clear
+% analyze -sv12 ./gray.sv
+[-- (VERI-1482)] Analyzing Verilog file '/export/SoftWare/Cadence/JASPERGOLD22.09.001/lib/verilog/packages/std/std.sv' into library 'std'
+[-- (VERI-1482)] Analyzing Verilog file './gray.sv'
+% analyze -sv12 ./gray_sva.sv
+[-- (VERI-1482)] Analyzing Verilog file './gray_sva.sv'
+[WARN (VERI-1206)] ./gray_sva.sv(5): overwriting previous definition of module 'gray'
+[INFO (VERI-2142)] ./gray.sv(17): previous definition of design element 'gray' is here
+% analyze -sv12 ./gray_bind.svh
+[-- (VERI-1482)] Analyzing Verilog file './gray_bind.svh'
+% 
+% elaborate -top gray
+INFO (ISW003): Top module name is "gray".
+[INFO (HIER-8002)] ./gray_sva.sv(5): Disabling old hierarchical reference handler
+[INFO (VERI-1018)] ./gray_sva.sv(1): compiling module 'gray'
+[WARN (VERI-1063)] ./gray_bind.svh(1): instantiating unknown module 'gray_sva'
+ERROR (ENL058): Unable to elaborate module/entity "gray_sva" because this module/entity is missing or it contains errors.
+    Re-analyze it or use "-bbox_m gray_sva" if you want to black box this module/entity.
+WARNING (WNL059): If you are analyzing with "-mfcu" or "-sfcu" and "-L", try using "elaborate -L libname", "set_analyze_libunboundsearch" or "analyze +libunboundsearch"
+[ERROR (VDB-9017)] Module gray could not be elaborated
+Summary of errors detected:
+	ERROR (ENL058): Unable to elaborate module/entity "gray_sva" because this module/entity is missing or it contains errors.
+    Re-analyze it or use "-bbox_m gray_sva" if you want to black box this module/entity.
+	[ERROR (VDB-9017)] Module gray could not be elaborated
+ERROR (ENL034): 2 errors detected in the design file(s).
+
+ERROR: problem encountered at line 6 in file fpv.tcl
+
+% exit
+INFO (IPL005): Received request to exit from the console.
+INFO (IPL018): The peak resident set memory use for this session was 0.356 GB.
+INFO (IPL014): Waiting for the Tcl-thread to exit.
+INFO (IPL015): The Tcl-thread exited with status 0.
+INFO (IPL016): Exiting the analysis session with status 0.

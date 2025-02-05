@@ -1,0 +1,26 @@
+bind eth_rxstatem
+ eth_rxstate_sva u_eth_rxstatem_sva(
+.StartData1(StartData1),
+.ByteCntEq0(ByteCntEq0),
+.StateDrop(StateDrop),
+.StateSFD(StateSFD),
+.ByteCntMaxFrame(ByteCntMaxFrame),
+.StartIdle(StartIdle),
+.Transmitting(Transmitting),
+.StartPreamble(StartPreamble),
+.Reset(Reset),
+.MRxClk(MRxClk),
+.StateIdle(StateIdle),
+.MRxDEqD(MRxDEqD),
+.StateData(StateData),
+.StartDrop(StartDrop),
+.StateData1(StateData1),
+.MRxDEq5(MRxDEq5),
+.MRxDV(MRxDV),
+.StatePreamble(StatePreamble),
+.StartSFD(StartSFD),
+.StartData0(StartData0),
+.ByteCntGreat2(ByteCntGreat2),
+.IFGCounterEq24(IFGCounterEq24),
+.StateData0(StateData0)
+);
