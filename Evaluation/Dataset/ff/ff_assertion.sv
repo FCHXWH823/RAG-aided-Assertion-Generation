@@ -6,9 +6,8 @@ module ff
 
    always_ff @(posedge clk or posedge rst)
       if (rst) out = 1'b0;
-      else if (en) out = in;   
+      else if (en) out = in;         
 
-    assert property(@(posedge clk) disable iff (rst) en |=> out == $past(in,1));
-    assert property(@(posedge clk) disable iff (rst) !en |=> out == $past(out,1));      
+assert property(@(posedge clk) disable iff (rst) en |=> out == $past(in,1));
+assert property(@(posedge clk) disable iff (rst) !en |=> out == $past(out,1));
 endmodule
-
