@@ -7,7 +7,7 @@ EXECUTABLE="fpv.tcl"
 for dir in */; do
     if [[ -d "$dir" && -x "$dir/$EXECUTABLE" ]]; then
         echo "Executing $EXECUTABLE in $dir"
-        (cd "$dir" && jg -no_gui "$EXECUTABLE" && cd ..)
+        (cd "$dir" && jg -no_gui "$EXECUTABLE")
     else
         echo "Skipping $dir (executable not found or not executable)"
     fi
