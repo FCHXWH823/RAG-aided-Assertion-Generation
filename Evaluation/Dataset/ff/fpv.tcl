@@ -1,5 +1,5 @@
 analyze -clear
-analyze -sv ./ff_assertion.sv
+analyze -sv12 ./ff_assertion.sv
 
 elaborate -top ff
 

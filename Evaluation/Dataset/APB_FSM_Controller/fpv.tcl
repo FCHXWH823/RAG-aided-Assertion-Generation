@@ -1,5 +1,5 @@
 analyze -clear
-analyze -sv ./APB_FSM_Controller_assertion.sv
+analyze -sv12 ./APB_FSM_Controller_assertion.sv
 
 elaborate -top APB_FSM_Controller
 

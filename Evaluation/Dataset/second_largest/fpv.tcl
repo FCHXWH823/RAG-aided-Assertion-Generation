@@ -1,5 +1,5 @@
 analyze -clear
-analyze -sv ./second_largest_assertion.sv
+analyze -sv12 ./second_largest_assertion.sv
 
 elaborate -top second_largest
 

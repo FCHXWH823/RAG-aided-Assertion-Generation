@@ -1,5 +1,5 @@
 analyze -clear
-analyze -sv ./Programmable_Sequence_Detector_assertion.sv
+analyze -sv12 ./Programmable_Sequence_Detector_assertion.sv
 
 elaborate -top Programmable_Sequence_Detector
 

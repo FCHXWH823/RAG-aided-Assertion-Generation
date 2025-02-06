@@ -1,5 +1,5 @@
 analyze -clear
-analyze -sv ./Gray_Code_Counter_assertion.sv
+analyze -sv12 ./Gray_Code_Counter_assertion.sv
 
 elaborate -top Gray_Code_Counter
 

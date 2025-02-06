@@ -1,5 +1,5 @@
 analyze -clear
-analyze -sv ./reversing_bits_assertion.sv
+analyze -sv12 ./reversing_bits_assertion.sv
 
 elaborate -top reversing_bits
 

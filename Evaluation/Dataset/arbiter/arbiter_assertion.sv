@@ -30,7 +30,7 @@ end
 
 assign rand = {s3,s2};
 
-endmoduleâ€¨â€¨â€?/EE382M-Verification of Digital Systems
+endmodule
 //Lab 4 - Formal Property Verification
 //
 //

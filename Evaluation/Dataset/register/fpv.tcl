@@ -1,5 +1,5 @@
 analyze -clear
-analyze -sv ./register_assertion.sv
+analyze -sv12 ./register_assertion.sv
 
 elaborate -top register
 

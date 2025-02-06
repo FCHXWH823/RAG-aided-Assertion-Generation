@@ -1,5 +1,5 @@
 analyze -clear
-analyze -sv ./Edge_Detector_assertion.sv
+analyze -sv12 ./Edge_Detector_assertion.sv
 
 elaborate -top Edge_Detector
 

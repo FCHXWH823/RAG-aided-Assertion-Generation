@@ -1,5 +1,5 @@
 analyze -clear
-analyze -sv ./simple_router_assertion.sv
+analyze -sv12 ./simple_router_assertion.sv
 
 elaborate -top simple_router
 

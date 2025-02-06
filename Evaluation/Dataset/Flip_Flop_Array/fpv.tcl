@@ -1,5 +1,5 @@
 analyze -clear
-analyze -sv ./Flip_Flop_Array_assertion.sv
+analyze -sv12 ./Flip_Flop_Array_assertion.sv
 
 elaborate -top Flip_Flop_Array
 

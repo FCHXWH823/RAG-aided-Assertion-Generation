@@ -1,5 +1,5 @@
 analyze -clear
-analyze -sv ./busarbiter_assertion.sv
+analyze -sv12 ./busarbiter_assertion.sv
 
 elaborate -top busarbiter
 

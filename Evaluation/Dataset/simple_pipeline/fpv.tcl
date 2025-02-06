@@ -1,5 +1,5 @@
 analyze -clear
-analyze -sv ./simple_pipeline_assertion.sv
+analyze -sv12 ./simple_pipeline_assertion.sv
 
 elaborate -top simple_pipeline
 

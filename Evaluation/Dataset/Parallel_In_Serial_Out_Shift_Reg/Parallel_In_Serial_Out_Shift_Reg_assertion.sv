@@ -39,5 +39,5 @@ begin
 	din_f_q <= ~resetn ? {DATA_WIDTH{1'bx}} : 
 					din_en ? din : din_f_next; 
 	v_f_q   <= v_f_next;
-endâ€¨assert property(@(posedge clk) disable iff (~resetn) ~v_f_q | (v_f_q & din_f_q[0] == dout));
+endassert property(@(posedge clk) disable iff (~resetn) ~v_f_q | (v_f_q & din_f_q[0] == dout));
 endmodule

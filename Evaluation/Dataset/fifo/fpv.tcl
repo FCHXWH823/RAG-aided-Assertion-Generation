@@ -1,5 +1,5 @@
 analyze -clear
-analyze -sv ./fifo_assertion.sv
+analyze -sv12 ./fifo_assertion.sv
 
 elaborate -top fifo
 
