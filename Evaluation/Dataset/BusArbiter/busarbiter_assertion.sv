@@ -63,5 +63,6 @@ assert property(@(posedge clk)  bus_grant != NO_GRANT && bus_ack != 1 |=> $stabl
 assert property(@(posedge clk)  (bus_req[0] && bus_grant== NO_GRANT)|| (bus_ack && bus_req[0]) |=>  (bus_grant[0] && !bus_grant[1] && !bus_grant[2]));
 assert property(@(posedge clk)  (bus_req[1] && !bus_req[0] && bus_grant== NO_GRANT) || (bus_ack && bus_req[1]&& !bus_req[0])|=>  (!bus_grant[0] && bus_grant[1] && !bus_grant[2]));
 assert property(@(posedge clk)  (bus_req[2] && !bus_req[1] && !bus_req[0] && bus_grant== NO_GRANT) || (bus_ack && bus_req[2]&& !bus_req[0] &&  !bus_req[1]) |=>  (!bus_grant[0] && !bus_grant[1] && bus_grant[2]));
-assert property(@(posedge clk)  $rose(bus_grant[1]) |-> ($past(bus_req[1]) && !$past(bus_req[0])));assert property(@(posedge clk)  $rose(bus_grant[2]) |-> ($past(bus_req[2]) && !$past(bus_req[1]) && !$past(bus_req[0])));
+assert property(@(posedge clk)  $rose(bus_grant[1]) |-> ($past(bus_req[1]) && !$past(bus_req[0])));
+assert property(@(posedge clk)  $rose(bus_grant[2]) |-> ($past(bus_req[2]) && !$past(bus_req[1]) && !$past(bus_req[0])));
 endmodule
