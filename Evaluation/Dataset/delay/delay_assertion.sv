@@ -1,3 +1,13 @@
+// Greg Stitt
+// University of Florida
+//
+// This file illustrates how to implement a versatile delay module structurally
+// as a sequence of registers. It introduces the unpacked array construct.
+
+
+// Module: register
+// Description: Register with flexible parameters.
+
 module register
   #(
     parameter WIDTH,

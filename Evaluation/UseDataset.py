@@ -1,8 +1,29 @@
 import pandas as pd
 import os
-import regex
+import re
 
-dataset_dir = "Evaluation/Dataset/"
+def extract_last_module(verilog_code: str) -> str:
+    """
+    Extract the last Verilog module from the given Verilog code string.
+    
+    Parameters:
+        verilog_code (str): A string containing the Verilog code.
+    
+    Returns:
+        str: The last module found in the code, or an empty string if no module is found.
+    """
+    # Use a regex pattern with non-greedy matching to capture each module block.
+    # The pattern looks for a word boundary followed by 'module', then matches until
+    # the first occurrence of 'endmodule' (also at a word boundary).
+    pattern = r'\b(module\b.*?\bendmodule\b)'
+    
+    # Use DOTALL so that the dot (.) matches newline characters.
+    modules = re.findall(pattern, verilog_code, flags=re.DOTALL)
+    
+    if modules:
+        return modules[-1].strip()
+    else:
+        return ""
 
 def remove_last_endmodule(verilog_code):
     lines = verilog_code.strip().split("\n")
@@ -15,33 +36,79 @@ def remove_last_endmodule(verilog_code):
 
     return "\n".join(lines)
 
+def extract_verilog_code(verilog_code_w_assertions:str, verilog_code_wo_assertions:str):
+    lines_w_assertions = extract_last_module(verilog_code_w_assertions).strip().split("\n")
 
+    lines_wo_assertions = extract_last_module(verilog_code_wo_assertions).strip().split("\n")
 
+    lines_assertions = lines_w_assertions[len(lines_wo_assertions):len(lines_w_assertions)-1]
 
-df = pd.read_csv("Evaluation/asserted-verilog-evaluation-dataset-transform.csv")
-
-for i in range(len(df)):
-    code = df.iloc[i]['code']
-    master_module = df.iloc[i]['Master Module']
-    fpv_dir = dataset_dir+master_module+"/"
-
-    processed_code = remove_last_endmodule(code)
-    processed_code += "\n\n"
-    transformed_assertion = df.iloc[i]['transformed_assertion']
-    processed_code += transformed_assertion
-    processed_code += "\nendmodule\n"
+    assertions = ""
+    for assertion in lines_assertions:
+        assertions += assertion + "\n"
     
-    with open(fpv_dir+master_module+"_assertion.sv","w") as file:
-        file.write(processed_code)
-    
-    os.system(f"rm {fpv_dir}fpv.rpt")
-    with open(fpv_dir+"fpv.tcl","r") as file:
-        fpv_tcl = file.read()
+    return assertions
 
-    with open(fpv_dir+"fpv.tcl","w") as file:
-        file.write(fpv_tcl.replace("-sv ","-sv12 "))
 
+
+
+if __name__ == '__main__':
+
+    dataset_dir = "Evaluation/Dataset/"
+
+    df = pd.read_csv("Evaluation/asserted-verilog-evaluation-dataset-transform.csv")
+
+    df_new = df.copy()
+
+    for i in range(len(df)):
+        master_module = df.iloc[i]['Master Module']
+        fpv_dir = dataset_dir+master_module+"/"
+
+        with open(fpv_dir+master_module+"_assertion.sv","r") as file:
+            verilog_code_w_assertions = file.read()
+        
+        with open(fpv_dir+master_module+".sv","r") as file:
+            verilog_code_wo_assertions = file.read()
+
+        with open(fpv_dir+"fpv.tcl","r") as file:
+            fpv_tcl = file.read()
+        
+        assertions = extract_verilog_code(verilog_code_w_assertions,verilog_code_wo_assertions)
+        
+        df_new.iloc[i]["code"] = verilog_code_wo_assertions
+        df_new.iloc[i]["transformed_assertion"] = assertions
+        df_new.iloc[i]["FPV Script"] = fpv_tcl
     
+    df_new.to_csv("Evaluation/asserted-verilog-evaluation-dataset-transform-new.csv")
+
+
+
+
+
+
+
+    # for i in range(len(df)):
+    #     code = df.iloc[i]['code']
+    #     master_module = df.iloc[i]['Master Module']
+    #     fpv_dir = dataset_dir+master_module+"/"
+
+    #     processed_code = remove_last_endmodule(code)
+    #     processed_code += "\n\n"
+    #     transformed_assertion = df.iloc[i]['transformed_assertion']
+    #     processed_code += transformed_assertion
+    #     processed_code += "\nendmodule\n"
+        
+    #     with open(fpv_dir+master_module+"_assertion.sv","w") as file:
+    #         file.write(processed_code)
+        
+    #     os.system(f"rm {fpv_dir}fpv.rpt")
+    #     with open(fpv_dir+"fpv.tcl","r") as file:
+    #         fpv_tcl = file.read()
+
+    #     with open(fpv_dir+"fpv.tcl","w") as file:
+    #         file.write(fpv_tcl.replace("-sv ","-sv12 "))
+
+
 
 
     
