@@ -5,8 +5,8 @@
     2022.09p001 64 bits for Linux64 3.10.0-1062.1.2.el7.x86_64
     Host Name: icpc
     User Name: master
-    Printed on: Wednesday, Jan29, 2025 07:23:49 AM CST
-    Working Directory: /home/master/Dataset/simple_req_ack
+    Printed on: Friday, Feb 7, 2025 02:20:10 AM CST
+    Working Directory: /home/master/RAG-aided-Assertion-Generation/Evaluation/Dataset/simple_req_ack
 
 
 ==============================================================
@@ -37,10 +37,10 @@ SUMMARY
 RESULTS
 ==============================================================
 
-----------------------------------------------------------------------------------------------------------------------------------
-       Name                                                                      |    Result    |  Engine  |  Bound  |  Time    
-----------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------
+       Name                                       |    Result    |  Engine  |  Bound  |  Time    
+---------------------------------------------------------------------------------------------------
 
----[ <embedded> ]-----------------------------------------------------------------------------------------------------------------
-[1]   simple_req_ack.u_simple_req_ack_sva.assert_sva_req_ack2                         proven          Hp     Infinite    0.001 s      
-[2]   simple_req_ack.u_simple_req_ack_sva.assert_sva_req_ack2:precondition1           covered         PRE           1    0.000 s      
+---[ <embedded> ]----------------------------------------------------------------------------------
+[1]   simple_req_ack._assert_1                         proven          N      Infinite    0.013 s      
+[2]   simple_req_ack._assert_1:precondition1           covered         PRE           1    0.000 s      

@@ -8,7 +8,7 @@
 module PNSeqGen(
   input        clk,
   input        rst_n,
-  output [1:0] rand
+  output [1:0] rand_n
   );
 
 reg s1, s2, s3;
@@ -28,9 +28,9 @@ always @ (posedge clk or negedge rst_n) begin
   end
 end
 
-assign rand = {s3,s2};
+assign rand_n = {s3,s2};
 
-endmoduleâ€¨â€¨â€?/EE382M-Verification of Digital Systems
+endmodule
 //Lab 4 - Formal Property Verification
 //
 //
@@ -64,7 +64,7 @@ reg  [3:0] r_gnt_rr; // Prr: Round robin arbitration scheme output
 reg  [3:0] r_gnt_px; // Prand: Random arbitration scheme output
 reg  [3:0] r_gnt;
 
-wire [1:0] rand;
+wire [1:0] rand_n;
 wire [1:0] r_gnt_rr_encoded;
 
 assign gnt   = r_gnt;
@@ -156,10 +156,10 @@ end
 assign r_gnt_rr_encoded = {r_gnt[3] | r_gnt[2], r_gnt[3] | r_gnt[1]};
 
 // Prand: Random arbitration
-PNSeqGen u_PNSeqGen ( .clk(clk), .rst_n(rst_n), .rand(rand) );
+PNSeqGen u_PNSeqGen ( .clk(clk), .rst_n(rst_n), .rand_n(rand_n) );
 
 always @(*) begin
-  case(rand)
+  case(rand_n)
 
   2'b00: begin
     if(req[0])

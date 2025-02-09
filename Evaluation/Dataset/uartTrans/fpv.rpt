@@ -5,8 +5,8 @@
     2022.09p001 64 bits for Linux64 3.10.0-1062.1.2.el7.x86_64
     Host Name: icpc
     User Name: master
-    Printed on: Wednesday, Jan29, 2025 08:08:14 AM CST
-    Working Directory: /home/master/Dataset/uartTrans
+    Printed on: Friday, Feb 7, 2025 02:20:04 AM CST
+    Working Directory: /home/master/RAG-aided-Assertion-Generation/Evaluation/Dataset/uartTrans
 
 
 ==============================================================
@@ -37,16 +37,16 @@ SUMMARY
 RESULTS
 ==============================================================
 
----------------------------------------------------------------------------------------------------------------
-       Name                                                   |    Result    |  Engine  |  Bound  |  Time    
----------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------
+       Name                                  |    Result    |  Engine  |  Bound  |  Time    
+----------------------------------------------------------------------------------------------
 
----[ <embedded> ]----------------------------------------------------------------------------------------------
-[1]   uartTrans.u_uartTrans_sva.assert_a10                         proven          PRE    Infinite    0.000 s      
-[2]   uartTrans.u_uartTrans_sva.assert_a10:precondition1           covered         N             2    0.001 s      
-[3]   uartTrans.u_uartTrans_sva.assert_a9                          proven          PRE    Infinite    0.000 s      
-[4]   uartTrans.u_uartTrans_sva.assert_a9:precondition1            covered         PRE           1    0.000 s      
-[5]   uartTrans.u_uartTrans_sva.assert_a6                          proven          Hp     Infinite    0.005 s      
-[6]   uartTrans.u_uartTrans_sva.assert_a6:precondition1            covered         PRE           2    0.000 s      
-[7]   uartTrans.u_uartTrans_sva.assert_a0                          proven          PRE    Infinite    0.000 s      
-[8]   uartTrans.u_uartTrans_sva.assert_a0:precondition1            covered         PRE           1    0.000 s      
+---[ <embedded> ]-----------------------------------------------------------------------------
+[1]   uartTrans._assert_1                         proven          PRE    Infinite    0.000 s      
+[2]   uartTrans._assert_1:precondition1           covered         Hp            2    0.007 s      
+[3]   uartTrans._assert_2                         proven          PRE    Infinite    0.000 s      
+[4]   uartTrans._assert_2:precondition1           covered         PRE           1    0.000 s      
+[5]   uartTrans._assert_3                         proven          Hp     Infinite    0.003 s      
+[6]   uartTrans._assert_3:precondition1           covered         PRE           2    0.000 s      
+[7]   uartTrans._assert_4                         proven          PRE    Infinite    0.000 s      
+[8]   uartTrans._assert_4:precondition1           covered         PRE           1    0.000 s      

@@ -1,5 +1,5 @@
 analyze -clear
-analyze -sv ./Gray_To_Binary_assertion.sv
+analyze -sv12 ./Gray_To_Binary_assertion.sv
 
 elaborate -top Gray_To_Binary
 

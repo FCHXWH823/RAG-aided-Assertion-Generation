@@ -144,7 +144,7 @@ always @(posedge clk) begin
 			end
 			else if (req6) begin
 				sel6 <= 1'b1;
-				sel0 <= 1'b0;+A29
+				sel0 <= 1'b0;
 				sel1 <= 1'b0;
 				sel2 <= 1'b0;
 				sel3 <= 1'b0;

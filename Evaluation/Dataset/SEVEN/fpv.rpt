@@ -5,8 +5,8 @@
     2022.09p001 64 bits for Linux64 3.10.0-1062.1.2.el7.x86_64
     Host Name: icpc
     User Name: master
-    Printed on: Wednesday, Jan29, 2025 01:46:16 AM CST
-    Working Directory: /home/master/Dataset/SEVEN
+    Printed on: Friday, Feb 7, 2025 01:11:53 AM CST
+    Working Directory: /home/master/RAG-aided-Assertion-Generation/Evaluation/Dataset/SEVEN
 
 
 ==============================================================
@@ -37,10 +37,10 @@ SUMMARY
 RESULTS
 ==============================================================
 
----------------------------------------------------------------------------------
-       Name                     |    Result    |  Engine  |  Bound  |  Time    
----------------------------------------------------------------------------------
+----------------------------------------------------------------------------
+       Name                |    Result    |  Engine  |  Bound  |  Time    
+----------------------------------------------------------------------------
 
----[ <embedded> ]----------------------------------------------------------------
-[1]   SEVEN.u_SEVEN_sva.p1           proven          Tri         (0)    1.005 s      
-[2]   SEVEN.u_SEVEN_sva.p2           proven          Tri         (0)    1.153 s      
+---[ <embedded> ]-----------------------------------------------------------
+[1]   SEVEN._assert_1           proven          Tri         (0)    1.225 s      
+[2]   SEVEN._assert_2           proven          Tri         (0)    1.163 s      

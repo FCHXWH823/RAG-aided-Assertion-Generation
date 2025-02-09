@@ -45,5 +45,5 @@ assign cout_int        = carry[DATA_WIDTH-1:0];
 
 
 logic [DATA_WIDTH:0] res;
-assign res = a + b;â€¨assert property(@(posedge clk) disable iff (~rst) res == sum);
+assign res = a + b;assert property(@(posedge clk) disable iff (~rst) res == sum);
 endmodule

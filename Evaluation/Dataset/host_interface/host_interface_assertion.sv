@@ -236,16 +236,16 @@ assign rev_in_type   = crc_cr_ff[3:2];
 assign rev_out_type  = crc_cr_ff[4];
 
 
-assert property(@(posedge DEFAULT_CLOCK) (sample_bus == 1) |-> (HREADYOUT == 1));
-assert property(@(posedge DEFAULT_CLOCK) (buffer_read_en == 1 & read_wait == 1) |-> (HREADYOUT == 0));
-assert property(@(posedge DEFAULT_CLOCK) (ahb_enable == 0) |-> (HREADYOUT == 1));
-assert property(@(posedge DEFAULT_CLOCK) (write_en == 0) |-> (crc_idr_en == 0));
-assert property(@(posedge DEFAULT_CLOCK) (write_en == 1 & crc_idr_sel == 1) |-> (crc_idr_en == 1));
-assert property(@(posedge DEFAULT_CLOCK) (crc_idr_sel == 0) |-> (crc_idr_en == 0));
-assert property(@(posedge DEFAULT_CLOCK) (hselx_pp == 0) |-> (crc_idr_en == 0));
-assert property(@(posedge DEFAULT_CLOCK) (hwrite_pp == 0) |-> (crc_idr_en == 0));
-assert property(@(posedge DEFAULT_CLOCK) (write_en == 0) |-> (crc_poly_en == 0));
-assert property(@(posedge DEFAULT_CLOCK) (hselx_pp == 0) |-> (crc_poly_en == 0));
-assert property(@(posedge DEFAULT_CLOCK) (hwrite_pp == 0) |-> (crc_poly_en == 0));
-assert property(@(posedge DEFAULT_CLOCK) (haddr_pp[1] == 1) |-> (crc_poly_en == 0));
+assert property(@(posedge HCLK) (sample_bus == 1) |-> (HREADYOUT == 1));
+assert property(@(posedge HCLK) (buffer_read_en == 1 & read_wait == 1) |-> (HREADYOUT == 0));
+assert property(@(posedge HCLK) (ahb_enable == 0) |-> (HREADYOUT == 1));
+assert property(@(posedge HCLK) (write_en == 0) |-> (crc_idr_en == 0));
+assert property(@(posedge HCLK) (write_en == 1 & crc_idr_sel == 1) |-> (crc_idr_en == 1));
+assert property(@(posedge HCLK) (crc_idr_sel == 0) |-> (crc_idr_en == 0));
+assert property(@(posedge HCLK) (hselx_pp == 0) |-> (crc_idr_en == 0));
+assert property(@(posedge HCLK) (hwrite_pp == 0) |-> (crc_idr_en == 0));
+assert property(@(posedge HCLK) (write_en == 0) |-> (crc_poly_en == 0));
+assert property(@(posedge HCLK) (hselx_pp == 0) |-> (crc_poly_en == 0));
+assert property(@(posedge HCLK) (hwrite_pp == 0) |-> (crc_poly_en == 0));
+assert property(@(posedge HCLK) (haddr_pp[1] == 1) |-> (crc_poly_en == 0));
 endmodule

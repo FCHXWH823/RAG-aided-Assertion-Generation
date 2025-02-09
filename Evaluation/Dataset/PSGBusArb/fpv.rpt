@@ -5,8 +5,8 @@
     2022.09p001 64 bits for Linux64 3.10.0-1062.1.2.el7.x86_64
     Host Name: icpc
     User Name: master
-    Printed on: Wednesday, Jan29, 2025 07:38:55 AM CST
-    Working Directory: /home/master/Dataset/PSGBusArb
+    Printed on: Friday, Feb 7, 2025 02:12:57 AM CST
+    Working Directory: /home/master/RAG-aided-Assertion-Generation/Evaluation/Dataset/PSGBusArb
 
 
 ==============================================================
@@ -37,62 +37,62 @@ SUMMARY
 RESULTS
 ==============================================================
 
----------------------------------------------------------------------------------------------------------------
-       Name                                                   |    Result    |  Engine  |  Bound  |  Time    
----------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------
+       Name                                   |    Result    |  Engine  |  Bound  |  Time    
+-----------------------------------------------------------------------------------------------
 
----[ <embedded> ]----------------------------------------------------------------------------------------------
-[1]   PSGBusArb.u_PSGBusArb_sva.assert_a7                          proven          Hp     Infinite    0.002 s      
-[2]   PSGBusArb.u_PSGBusArb_sva.assert_a7:precondition1            covered         PRE           1    0.000 s      
-[3]   PSGBusArb.u_PSGBusArb_sva.assert_a1                          proven          Hp     Infinite    0.002 s      
-[4]   PSGBusArb.u_PSGBusArb_sva.assert_a1:precondition1            covered         PRE           1    0.000 s      
-[5]   PSGBusArb.u_PSGBusArb_sva.assert_a13                         proven          Hp     Infinite    0.003 s      
-[6]   PSGBusArb.u_PSGBusArb_sva.assert_a13:precondition1           covered         Hp            2    0.007 s      
-[7]   PSGBusArb.u_PSGBusArb_sva.assert_a12                         proven          Hp     Infinite    0.003 s      
-[8]   PSGBusArb.u_PSGBusArb_sva.assert_a12:precondition1           covered         Hp            2    0.007 s      
-[9]   PSGBusArb.u_PSGBusArb_sva.assert_a3                          proven          Hp     Infinite    0.003 s      
-[10]  PSGBusArb.u_PSGBusArb_sva.assert_a3:precondition1            covered         PRE           1    0.000 s      
-[11]  PSGBusArb.u_PSGBusArb_sva.assert_a4                          proven          Hp     Infinite    0.003 s      
-[12]  PSGBusArb.u_PSGBusArb_sva.assert_a4:precondition1            covered         PRE           1    0.000 s      
-[13]  PSGBusArb.u_PSGBusArb_sva.assert_a6                          proven          Hp     Infinite    0.003 s      
-[14]  PSGBusArb.u_PSGBusArb_sva.assert_a6:precondition1            covered         PRE           1    0.000 s      
-[15]  PSGBusArb.u_PSGBusArb_sva.assert_a11                         proven          Hp     Infinite    0.003 s      
-[16]  PSGBusArb.u_PSGBusArb_sva.assert_a11:precondition1           covered         PRE           1    0.000 s      
-[17]  PSGBusArb.u_PSGBusArb_sva.assert_a8                          proven          Hp     Infinite    0.003 s      
-[18]  PSGBusArb.u_PSGBusArb_sva.assert_a8:precondition1            covered         PRE           1    0.000 s      
-[19]  PSGBusArb.u_PSGBusArb_sva.assert_a19                         proven          Hp     Infinite    0.003 s      
-[20]  PSGBusArb.u_PSGBusArb_sva.assert_a19:precondition1           covered         PRE           1    0.000 s      
-[21]  PSGBusArb.u_PSGBusArb_sva.assert_a20                         proven          Hp     Infinite    0.004 s      
-[22]  PSGBusArb.u_PSGBusArb_sva.assert_a20:precondition1           covered         PRE           1    0.000 s      
-[23]  PSGBusArb.u_PSGBusArb_sva.assert_a26                         proven          Hp     Infinite    0.004 s      
-[24]  PSGBusArb.u_PSGBusArb_sva.assert_a26:precondition1           covered         Hp            2    0.008 s      
-[25]  PSGBusArb.u_PSGBusArb_sva.assert_a27                         proven          Hp     Infinite    0.004 s      
-[26]  PSGBusArb.u_PSGBusArb_sva.assert_a27:precondition1           covered         Hp            2    0.008 s      
-[27]  PSGBusArb.u_PSGBusArb_sva.assert_a16                         proven          Hp     Infinite    0.004 s      
-[28]  PSGBusArb.u_PSGBusArb_sva.assert_a16:precondition1           covered         PRE           1    0.000 s      
-[29]  PSGBusArb.u_PSGBusArb_sva.assert_a15                         proven          Hp     Infinite    0.004 s      
-[30]  PSGBusArb.u_PSGBusArb_sva.assert_a15:precondition1           covered         PRE           1    0.000 s      
-[31]  PSGBusArb.u_PSGBusArb_sva.assert_a18                         proven          Hp     Infinite    0.004 s      
-[32]  PSGBusArb.u_PSGBusArb_sva.assert_a18:precondition1           covered         PRE           1    0.000 s      
-[33]  PSGBusArb.u_PSGBusArb_sva.assert_a17                         proven          Hp     Infinite    0.004 s      
-[34]  PSGBusArb.u_PSGBusArb_sva.assert_a17:precondition1           covered         PRE           1    0.000 s      
-[35]  PSGBusArb.u_PSGBusArb_sva.assert_a21                         proven          Hp     Infinite    0.005 s      
-[36]  PSGBusArb.u_PSGBusArb_sva.assert_a21:precondition1           covered         PRE           1    0.000 s      
-[37]  PSGBusArb.u_PSGBusArb_sva.assert_a23                         proven          Hp     Infinite    0.005 s      
-[38]  PSGBusArb.u_PSGBusArb_sva.assert_a23:precondition1           covered         PRE           1    0.000 s      
-[39]  PSGBusArb.u_PSGBusArb_sva.assert_a35                         proven          Hp     Infinite    0.005 s      
-[40]  PSGBusArb.u_PSGBusArb_sva.assert_a35:precondition1           covered         PRE           1    0.000 s      
-[41]  PSGBusArb.u_PSGBusArb_sva.assert_a40                         proven          Hp     Infinite    0.005 s      
-[42]  PSGBusArb.u_PSGBusArb_sva.assert_a40:precondition1           covered         Hp            2    0.008 s      
-[43]  PSGBusArb.u_PSGBusArb_sva.assert_a31                         proven          Hp     Infinite    0.005 s      
-[44]  PSGBusArb.u_PSGBusArb_sva.assert_a31:precondition1           covered         PRE           1    0.000 s      
-[45]  PSGBusArb.u_PSGBusArb_sva.assert_a30                         proven          Hp     Infinite    0.005 s      
-[46]  PSGBusArb.u_PSGBusArb_sva.assert_a30:precondition1           covered         PRE           1    0.000 s      
-[47]  PSGBusArb.u_PSGBusArb_sva.assert_a39                         proven          Hp     Infinite    0.005 s      
-[48]  PSGBusArb.u_PSGBusArb_sva.assert_a39:precondition1           covered         Hp            2    0.008 s      
-[49]  PSGBusArb.u_PSGBusArb_sva.assert_a32                         proven          Hp     Infinite    0.006 s      
-[50]  PSGBusArb.u_PSGBusArb_sva.assert_a32:precondition1           covered         PRE           1    0.000 s      
-[51]  PSGBusArb.u_PSGBusArb_sva.assert_a33                         proven          Hp     Infinite    0.006 s      
-[52]  PSGBusArb.u_PSGBusArb_sva.assert_a33:precondition1           covered         PRE           1    0.000 s      
-[53]  PSGBusArb.u_PSGBusArb_sva.assert_a37                         proven          Hp     Infinite    0.006 s      
-[54]  PSGBusArb.u_PSGBusArb_sva.assert_a37:precondition1           covered         PRE           1    0.000 s      
+---[ <embedded> ]------------------------------------------------------------------------------
+[1]   PSGBusArb._assert_1                          proven          N      Infinite    0.002 s      
+[2]   PSGBusArb._assert_1:precondition1            covered         PRE           1    0.000 s      
+[3]   PSGBusArb._assert_2                          proven          Hp     Infinite    0.005 s      
+[4]   PSGBusArb._assert_2:precondition1            covered         PRE           1    0.000 s      
+[5]   PSGBusArb._assert_3                          proven          Hp     Infinite    0.006 s      
+[6]   PSGBusArb._assert_3:precondition1            covered         Hp            2    0.020 s      
+[7]   PSGBusArb._assert_4                          proven          Hp     Infinite    0.006 s      
+[8]   PSGBusArb._assert_4:precondition1            covered         Hp            2    0.022 s      
+[9]   PSGBusArb._assert_5                          proven          Hp     Infinite    0.008 s      
+[10]  PSGBusArb._assert_5:precondition1            covered         PRE           1    0.000 s      
+[11]  PSGBusArb._assert_6                          proven          Hp     Infinite    0.008 s      
+[12]  PSGBusArb._assert_6:precondition1            covered         PRE           1    0.000 s      
+[13]  PSGBusArb._assert_7                          proven          Hp     Infinite    0.009 s      
+[14]  PSGBusArb._assert_7:precondition1            covered         PRE           1    0.000 s      
+[15]  PSGBusArb._assert_8                          proven          Hp     Infinite    0.009 s      
+[16]  PSGBusArb._assert_8:precondition1            covered         PRE           1    0.000 s      
+[17]  PSGBusArb._assert_9                          proven          Hp     Infinite    0.010 s      
+[18]  PSGBusArb._assert_9:precondition1            covered         PRE           1    0.000 s      
+[19]  PSGBusArb._assert_10                         proven          Hp     Infinite    0.010 s      
+[20]  PSGBusArb._assert_10:precondition1           covered         PRE           1    0.000 s      
+[21]  PSGBusArb._assert_11                         proven          Hp     Infinite    0.010 s      
+[22]  PSGBusArb._assert_11:precondition1           covered         PRE           1    0.000 s      
+[23]  PSGBusArb._assert_12                         proven          Hp     Infinite    0.011 s      
+[24]  PSGBusArb._assert_12:precondition1           covered         Hp            2    0.023 s      
+[25]  PSGBusArb._assert_13                         proven          Hp     Infinite    0.011 s      
+[26]  PSGBusArb._assert_13:precondition1           covered         Hp            2    0.023 s      
+[27]  PSGBusArb._assert_14                         proven          Hp     Infinite    0.011 s      
+[28]  PSGBusArb._assert_14:precondition1           covered         PRE           1    0.000 s      
+[29]  PSGBusArb._assert_15                         proven          Hp     Infinite    0.012 s      
+[30]  PSGBusArb._assert_15:precondition1           covered         PRE           1    0.000 s      
+[31]  PSGBusArb._assert_16                         proven          Hp     Infinite    0.012 s      
+[32]  PSGBusArb._assert_16:precondition1           covered         PRE           1    0.000 s      
+[33]  PSGBusArb._assert_17                         proven          Hp     Infinite    0.013 s      
+[34]  PSGBusArb._assert_17:precondition1           covered         PRE           1    0.000 s      
+[35]  PSGBusArb._assert_18                         proven          Hp     Infinite    0.013 s      
+[36]  PSGBusArb._assert_18:precondition1           covered         PRE           1    0.000 s      
+[37]  PSGBusArb._assert_19                         proven          Hp     Infinite    0.013 s      
+[38]  PSGBusArb._assert_19:precondition1           covered         PRE           1    0.000 s      
+[39]  PSGBusArb._assert_20                         proven          Hp     Infinite    0.014 s      
+[40]  PSGBusArb._assert_20:precondition1           covered         PRE           1    0.000 s      
+[41]  PSGBusArb._assert_21                         proven          Hp     Infinite    0.014 s      
+[42]  PSGBusArb._assert_21:precondition1           covered         Hp            2    0.027 s      
+[43]  PSGBusArb._assert_22                         proven          Hp     Infinite    0.014 s      
+[44]  PSGBusArb._assert_22:precondition1           covered         PRE           1    0.000 s      
+[45]  PSGBusArb._assert_23                         proven          Hp     Infinite    0.015 s      
+[46]  PSGBusArb._assert_23:precondition1           covered         PRE           1    0.000 s      
+[47]  PSGBusArb._assert_24                         proven          Hp     Infinite    0.015 s      
+[48]  PSGBusArb._assert_24:precondition1           covered         Hp            2    0.027 s      
+[49]  PSGBusArb._assert_25                         proven          Hp     Infinite    0.015 s      
+[50]  PSGBusArb._assert_25:precondition1           covered         PRE           1    0.000 s      
+[51]  PSGBusArb._assert_26                         proven          Hp     Infinite    0.016 s      
+[52]  PSGBusArb._assert_26:precondition1           covered         PRE           1    0.000 s      
+[53]  PSGBusArb._assert_27                         proven          Hp     Infinite    0.017 s      
+[54]  PSGBusArb._assert_27:precondition1           covered         PRE           1    0.000 s      

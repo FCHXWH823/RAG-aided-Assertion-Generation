@@ -5,8 +5,8 @@
     2022.09p001 64 bits for Linux64 3.10.0-1062.1.2.el7.x86_64
     Host Name: icpc
     User Name: master
-    Printed on: Monday, Jan27, 2025 02:36:09 PM CST
-    Working Directory: /home/master/Dataset/Gray_Code_Counter
+    Printed on: Friday, Feb 7, 2025 02:19:53 AM CST
+    Working Directory: /home/master/RAG-aided-Assertion-Generation/Evaluation/Dataset/Gray_Code_Counter
 
 
 ==============================================================
@@ -37,9 +37,9 @@ SUMMARY
 RESULTS
 ==============================================================
 
---------------------------------------------------------------------------------------------------------------------------
-       Name                                                              |    Result    |  Engine  |  Bound  |  Time    
---------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------
+       Name                            |    Result    |  Engine  |  Bound  |  Time    
+----------------------------------------------------------------------------------------
 
----[ <embedded> ]---------------------------------------------------------------------------------------------------------
-[1]   Gray_Code_Counter.u_Gray_Code_Counter_sva.sva_gray_1_bit_diff           proven          Hp     Infinite    0.007 s      
+---[ <embedded> ]-----------------------------------------------------------------------
+[1]   Gray_Code_Counter._assert_1           proven          Hp     Infinite    0.001 s      

@@ -5,8 +5,8 @@
     2022.09p001 64 bits for Linux64 3.10.0-1062.1.2.el7.x86_64
     Host Name: icpc
     User Name: master
-    Printed on: Thursday, Feb 6, 2025 01:35:57 AM CST
-    Working Directory: /home/master/Dataset/or1200_ctrl
+    Printed on: Friday, Feb 7, 2025 02:26:16 AM CST
+    Working Directory: /home/master/RAG-aided-Assertion-Generation/Evaluation/Dataset/or1200_ctrl
 
 
 ==============================================================
@@ -43,32 +43,32 @@ RESULTS
 
 ---[ <embedded> ]--------------------------------------------------------------------------------
 [1]   or1200_ctrl._assert_1                          proven          N      Infinite    0.006 s      
-[2]   or1200_ctrl._assert_1:precondition1            covered         N             4    0.017 s      
+[2]   or1200_ctrl._assert_1:precondition1            covered         N             4    0.003 s      
 [3]   or1200_ctrl._assert_2                          proven          PRE    Infinite    0.000 s      
 [4]   or1200_ctrl._assert_2:precondition1            covered         PRE           1    0.000 s      
-[5]   or1200_ctrl._assert_3                          proven          N      Infinite    0.001 s      
-[6]   or1200_ctrl._assert_3:precondition1            covered         N             1    0.001 s      
-[7]   or1200_ctrl._assert_4                          proven          Hp     Infinite    0.035 s      
+[5]   or1200_ctrl._assert_3                          proven          Hp     Infinite    0.048 s      
+[6]   or1200_ctrl._assert_3:precondition1            covered         Hp            1    0.025 s      
+[7]   or1200_ctrl._assert_4                          proven          Hp     Infinite    0.049 s      
 [8]   or1200_ctrl._assert_4:precondition1            covered         PRE           1    0.000 s      
-[9]   or1200_ctrl._assert_5                          proven          Hp     Infinite    0.036 s      
+[9]   or1200_ctrl._assert_5                          proven          Hp     Infinite    0.049 s      
 [10]  or1200_ctrl._assert_5:precondition1            covered         PRE           1    0.000 s      
 [11]  or1200_ctrl._assert_6                          proven          PRE    Infinite    0.000 s      
-[12]  or1200_ctrl._assert_6:precondition1            covered         Hp            1    0.002 s      
-[13]  or1200_ctrl._assert_7                          proven          Hp     Infinite    0.036 s      
-[14]  or1200_ctrl._assert_7:precondition1            covered         Hp            1    0.004 s      
-[15]  or1200_ctrl._assert_8                          proven          Hp     Infinite    0.037 s      
-[16]  or1200_ctrl._assert_8:precondition1            covered         N         1 - 2    0.017 s      
-[17]  or1200_ctrl._assert_9                          proven          Hp     Infinite    0.037 s      
-[18]  or1200_ctrl._assert_9:precondition1            covered         Hp            1    0.006 s      
-[19]  or1200_ctrl._assert_10                         proven          Hp     Infinite    0.037 s      
-[20]  or1200_ctrl._assert_10:precondition1           covered         Hp            1    0.007 s      
-[21]  or1200_ctrl._assert_11                         proven          Hp     Infinite    0.037 s      
-[22]  or1200_ctrl._assert_11:precondition1           covered         Hp            1    0.008 s      
-[23]  or1200_ctrl._assert_12                         proven          Hp     Infinite    0.037 s      
-[24]  or1200_ctrl._assert_12:precondition1           covered         Hp            1    0.012 s      
-[25]  or1200_ctrl._assert_13                         proven          Hp     Infinite    0.038 s      
-[26]  or1200_ctrl._assert_13:precondition1           covered         Hp            1    0.014 s      
-[27]  or1200_ctrl._assert_14                         proven          Hp     Infinite    0.038 s      
-[28]  or1200_ctrl._assert_14:precondition1           covered         Hp            1    0.016 s      
-[29]  or1200_ctrl._assert_15                         proven          Hp     Infinite    0.038 s      
-[30]  or1200_ctrl._assert_15:precondition1           covered         Hp            1    0.017 s      
+[12]  or1200_ctrl._assert_6:precondition1            covered         Hp            1    0.026 s      
+[13]  or1200_ctrl._assert_7                          proven          Hp     Infinite    0.050 s      
+[14]  or1200_ctrl._assert_7:precondition1            covered         Hp            1    0.028 s      
+[15]  or1200_ctrl._assert_8                          proven          Hp     Infinite    0.050 s      
+[16]  or1200_ctrl._assert_8:precondition1            covered         N             1    0.003 s      
+[17]  or1200_ctrl._assert_9                          proven          Hp     Infinite    0.050 s      
+[18]  or1200_ctrl._assert_9:precondition1            covered         Hp            1    0.033 s      
+[19]  or1200_ctrl._assert_10                         proven          Hp     Infinite    0.051 s      
+[20]  or1200_ctrl._assert_10:precondition1           covered         Hp            1    0.034 s      
+[21]  or1200_ctrl._assert_11                         proven          Hp     Infinite    0.051 s      
+[22]  or1200_ctrl._assert_11:precondition1           covered         Hp            1    0.036 s      
+[23]  or1200_ctrl._assert_12                         proven          Hp     Infinite    0.052 s      
+[24]  or1200_ctrl._assert_12:precondition1           covered         Hp            1    0.037 s      
+[25]  or1200_ctrl._assert_13                         proven          Hp     Infinite    0.052 s      
+[26]  or1200_ctrl._assert_13:precondition1           covered         Hp            1    0.043 s      
+[27]  or1200_ctrl._assert_14                         proven          Hp     Infinite    0.053 s      
+[28]  or1200_ctrl._assert_14:precondition1           covered         Hp            1    0.045 s      
+[29]  or1200_ctrl._assert_15                         proven          Hp     Infinite    0.053 s      
+[30]  or1200_ctrl._assert_15:precondition1           covered         Hp            1    0.047 s      

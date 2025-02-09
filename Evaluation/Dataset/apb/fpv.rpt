@@ -5,8 +5,8 @@
     2022.09p001 64 bits for Linux64 3.10.0-1062.1.2.el7.x86_64
     Host Name: icpc
     User Name: master
-    Printed on: Wednesday, Jan29, 2025 07:44:30 AM CST
-    Working Directory: /home/master/Dataset/apb
+    Printed on: Friday, Feb 7, 2025 02:13:30 AM CST
+    Working Directory: /home/master/RAG-aided-Assertion-Generation/Evaluation/Dataset/apb
 
 
 ==============================================================
@@ -37,20 +37,20 @@ SUMMARY
 RESULTS
 ==============================================================
 
---------------------------------------------------------------------------------------------------
-       Name                                      |    Result    |  Engine  |  Bound  |  Time    
---------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------
+       Name                            |    Result    |  Engine  |  Bound  |  Time    
+----------------------------------------------------------------------------------------
 
----[ <embedded> ]---------------------------------------------------------------------------------
-[1]   apb.u_apb_sva.assert_a5                         proven          PRE    Infinite    0.000 s      
-[2]   apb.u_apb_sva.assert_a5:precondition1           covered         PRE           1    0.000 s      
-[3]   apb.u_apb_sva.assert_a4                         proven          PRE    Infinite    0.000 s      
-[4]   apb.u_apb_sva.assert_a4:precondition1           covered         PRE           1    0.000 s      
-[5]   apb.u_apb_sva.assert_a3                         proven          PRE    Infinite    0.000 s      
-[6]   apb.u_apb_sva.assert_a3:precondition1           covered         PRE           1    0.000 s      
-[7]   apb.u_apb_sva.assert_a2                         proven          PRE    Infinite    0.000 s      
-[8]   apb.u_apb_sva.assert_a2:precondition1           covered         PRE           1    0.000 s      
-[9]   apb.u_apb_sva.assert_a1                         proven          PRE    Infinite    0.000 s      
-[10]  apb.u_apb_sva.assert_a1:precondition1           covered         PRE           1    0.000 s      
-[11]  apb.u_apb_sva.assert_a0                         proven          PRE    Infinite    0.000 s      
-[12]  apb.u_apb_sva.assert_a0:precondition1           covered         PRE           1    0.000 s      
+---[ <embedded> ]-----------------------------------------------------------------------
+[1]   apb._assert_1                         proven          PRE    Infinite    0.000 s      
+[2]   apb._assert_1:precondition1           covered         PRE           1    0.000 s      
+[3]   apb._assert_2                         proven          PRE    Infinite    0.000 s      
+[4]   apb._assert_2:precondition1           covered         PRE           1    0.000 s      
+[5]   apb._assert_3                         proven          PRE    Infinite    0.000 s      
+[6]   apb._assert_3:precondition1           covered         PRE           1    0.000 s      
+[7]   apb._assert_4                         proven          PRE    Infinite    0.000 s      
+[8]   apb._assert_4:precondition1           covered         PRE           1    0.000 s      
+[9]   apb._assert_5                         proven          PRE    Infinite    0.000 s      
+[10]  apb._assert_5:precondition1           covered         PRE           1    0.000 s      
+[11]  apb._assert_6                         proven          PRE    Infinite    0.000 s      
+[12]  apb._assert_6:precondition1           covered         PRE           1    0.000 s      

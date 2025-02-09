@@ -81,6 +81,6 @@ module simple_pipeline
 int count;    
 always_ff @(posedge clk or posedge rst)
 if (rst) count = 0;
-else if (count < LATENCY) count ++;â€¨assert property(@(posedge clk) disable iff (rst) count < LATENCY |-> valid_out == 1'b0);
+else if (count < LATENCY) count ++;assert property(@(posedge clk) disable iff (rst) count < LATENCY |-> valid_out == 1'b0);
 assert property(@(posedge clk) disable iff (rst) count == LATENCY |-> valid_out == $past(valid_in, LATENCY));
 endmodule

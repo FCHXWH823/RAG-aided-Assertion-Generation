@@ -5,8 +5,8 @@
     2022.09p001 64 bits for Linux64 3.10.0-1062.1.2.el7.x86_64
     Host Name: icpc
     User Name: master
-    Printed on: Thursday, Feb 6, 2025 01:59:45 AM CST
-    Working Directory: /home/master/Dataset/or1200_operandmuxes
+    Printed on: Friday, Feb 7, 2025 02:08:00 AM CST
+    Working Directory: /home/master/RAG-aided-Assertion-Generation/Evaluation/Dataset/or1200_operandmuxes
 
 
 ==============================================================
@@ -42,17 +42,17 @@ RESULTS
 --------------------------------------------------------------------------------------------------------
 
 ---[ <embedded> ]---------------------------------------------------------------------------------------
-[1]   or1200_operandmuxes._assert_1                         proven          Hp     Infinite    0.007 s      
-[2]   or1200_operandmuxes._assert_1:precondition1           covered         N             2    0.016 s      
-[3]   or1200_operandmuxes._assert_2                         proven          Hp     Infinite    0.007 s      
-[4]   or1200_operandmuxes._assert_2:precondition1           covered         N             2    0.001 s      
-[5]   or1200_operandmuxes._assert_3                         proven          Hp     Infinite    0.008 s      
+[1]   or1200_operandmuxes._assert_1                         proven          N      Infinite    0.008 s      
+[2]   or1200_operandmuxes._assert_1:precondition1           covered         N             2    0.018 s      
+[3]   or1200_operandmuxes._assert_2                         proven          Hp     Infinite    0.008 s      
+[4]   or1200_operandmuxes._assert_2:precondition1           covered         N             2    0.002 s      
+[5]   or1200_operandmuxes._assert_3                         proven          Hp     Infinite    0.009 s      
 [6]   or1200_operandmuxes._assert_3:precondition1           covered         N             2    0.001 s      
-[7]   or1200_operandmuxes._assert_4                         proven          Hp     Infinite    0.009 s      
-[8]   or1200_operandmuxes._assert_4:precondition1           covered         N             2    0.001 s      
-[9]   or1200_operandmuxes._assert_5                         proven          Hp     Infinite    0.029 s      
-[10]  or1200_operandmuxes._assert_5:precondition1           covered         N             2    0.001 s      
-[11]  or1200_operandmuxes._assert_6                         proven          Hp     Infinite    0.032 s      
-[12]  or1200_operandmuxes._assert_6:precondition1           covered         N             2    0.001 s      
-[13]  or1200_operandmuxes._assert_7                         proven          Hp     Infinite    0.032 s      
-[14]  or1200_operandmuxes._assert_7:precondition1           covered         N             2    0.001 s      
+[7]   or1200_operandmuxes._assert_4                         proven          Hp     Infinite    0.011 s      
+[8]   or1200_operandmuxes._assert_4:precondition1           covered         N             2    0.002 s      
+[9]   or1200_operandmuxes._assert_5                         proven          Hp     Infinite    0.034 s      
+[10]  or1200_operandmuxes._assert_5:precondition1           covered         Hp            2    0.055 s      
+[11]  or1200_operandmuxes._assert_6                         proven          Hp     Infinite    0.035 s      
+[12]  or1200_operandmuxes._assert_6:precondition1           covered         Hp            2    0.059 s      
+[13]  or1200_operandmuxes._assert_7                         proven          Hp     Infinite    0.036 s      
+[14]  or1200_operandmuxes._assert_7:precondition1           covered         Hp            2    0.066 s      

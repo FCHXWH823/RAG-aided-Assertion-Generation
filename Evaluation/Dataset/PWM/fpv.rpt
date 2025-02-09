@@ -5,8 +5,8 @@
     2022.09p001 64 bits for Linux64 3.10.0-1062.1.2.el7.x86_64
     Host Name: icpc
     User Name: master
-    Printed on: Tuesday, Jan28, 2025 09:14:49 AM CST
-    Working Directory: /home/master/Dataset/PWM
+    Printed on: Friday, Feb 7, 2025 01:22:04 AM CST
+    Working Directory: /home/master/RAG-aided-Assertion-Generation/Evaluation/Dataset/PWM
 
 
 ==============================================================
@@ -37,9 +37,9 @@ SUMMARY
 RESULTS
 ==============================================================
 
------------------------------------------------------------------------------
-       Name                 |    Result    |  Engine  |  Bound  |  Time    
------------------------------------------------------------------------------
+--------------------------------------------------------------------------
+       Name              |    Result    |  Engine  |  Bound  |  Time    
+--------------------------------------------------------------------------
 
----[ <embedded> ]------------------------------------------------------------
-[1]   PWM.u_PWM_sva.p1           proven          Tri         (0)    1.280 s      
+---[ <embedded> ]---------------------------------------------------------
+[1]   PWM._assert_1           proven          Tri         (0)    2.589 s      

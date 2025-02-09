@@ -5,8 +5,8 @@
     2022.09p001 64 bits for Linux64 3.10.0-1062.1.2.el7.x86_64
     Host Name: icpc
     User Name: master
-    Printed on: Wednesday, Feb 5, 2025 05:21:45 PM CST
-    Working Directory: /home/master/Dataset/a25_wishbone
+    Printed on: Friday, Feb 7, 2025 02:08:30 AM CST
+    Working Directory: /home/master/RAG-aided-Assertion-Generation/Evaluation/Dataset/a25_wishbone
 
 
 ==============================================================
@@ -42,15 +42,15 @@ RESULTS
 -------------------------------------------------------------------------------------------------
 
 ---[ <embedded> ]--------------------------------------------------------------------------------
-[1]   a25_wishbone._assert_1                         proven          N      Infinite    0.001 s      
+[1]   a25_wishbone._assert_1                         proven          N      Infinite    0.002 s      
 [2]   a25_wishbone._assert_1:precondition1           covered         PRE           1    0.000 s      
-[3]   a25_wishbone._assert_2                         proven          Hp     Infinite    0.001 s      
-[4]   a25_wishbone._assert_2:precondition1           covered         Hp            2    0.012 s      
-[5]   a25_wishbone._assert_3                         proven          Hp     Infinite    0.001 s      
-[6]   a25_wishbone._assert_3:precondition1           covered         Hp            3    0.015 s      
-[7]   a25_wishbone._assert_4                         proven          Hp     Infinite    0.001 s      
-[8]   a25_wishbone._assert_4:precondition1           covered         N             4    0.028 s      
-[9]   a25_wishbone._assert_5                         proven          Hp     Infinite    0.001 s      
+[3]   a25_wishbone._assert_2                         proven          Hp     Infinite    0.006 s      
+[4]   a25_wishbone._assert_2:precondition1           covered         Hp            2    0.009 s      
+[5]   a25_wishbone._assert_3                         proven          Hp     Infinite    0.006 s      
+[6]   a25_wishbone._assert_3:precondition1           covered         N             3    0.005 s      
+[7]   a25_wishbone._assert_4                         proven          Hp     Infinite    0.006 s      
+[8]   a25_wishbone._assert_4:precondition1           covered         Hp            4    0.020 s      
+[9]   a25_wishbone._assert_5                         proven          Hp     Infinite    0.007 s      
 [10]  a25_wishbone._assert_5:precondition1           covered         Hp            2    0.013 s      
-[11]  a25_wishbone._assert_6                         proven          Hp     Infinite    0.001 s      
-[12]  a25_wishbone._assert_6:precondition1           covered         Hp            2    0.014 s      
+[11]  a25_wishbone._assert_6                         proven          Hp     Infinite    0.007 s      
+[12]  a25_wishbone._assert_6:precondition1           covered         Hp            2    0.015 s      

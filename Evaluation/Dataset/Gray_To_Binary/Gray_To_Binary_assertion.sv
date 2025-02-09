@@ -22,5 +22,5 @@ assign bin = tmp[DATA_WIDTH-1];
 
 
 wire [DATA_WIDTH-1:0] gray_f;
-assign gray_f = bin ^ ( bin >> 1 );â€¨assert property(@(posedge clk) disable iff (~rst) gray_f == gray);
+assign gray_f = bin ^ ( bin >> 1 );assert property(@(posedge clk) disable iff (~rst) gray_f == gray);
 endmodule

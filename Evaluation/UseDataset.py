@@ -34,6 +34,14 @@ for i in range(len(df)):
     with open(fpv_dir+master_module+"_assertion.sv","w") as file:
         file.write(processed_code)
     
+    os.system(f"rm {fpv_dir}fpv.rpt")
+    with open(fpv_dir+"fpv.tcl","r") as file:
+        fpv_tcl = file.read()
+
+    with open(fpv_dir+"fpv.tcl","w") as file:
+        file.write(fpv_tcl.replace("-sv ","-sv12 "))
+
+    
 
 
     

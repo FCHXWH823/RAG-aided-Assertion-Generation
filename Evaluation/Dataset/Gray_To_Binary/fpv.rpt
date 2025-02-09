@@ -5,8 +5,8 @@
     2022.09p001 64 bits for Linux64 3.10.0-1062.1.2.el7.x86_64
     Host Name: icpc
     User Name: master
-    Printed on: Tuesday, Jan28, 2025 02:03:32 AM CST
-    Working Directory: /home/master/Dataset/Gray_To_Binary
+    Printed on: Friday, Feb 7, 2025 01:08:33 AM CST
+    Working Directory: /home/master/RAG-aided-Assertion-Generation/Evaluation/Dataset/Gray_To_Binary
 
 
 ==============================================================
@@ -37,9 +37,9 @@ SUMMARY
 RESULTS
 ==============================================================
 
-------------------------------------------------------------------------------------------------------------
-       Name                                                |    Result    |  Engine  |  Bound  |  Time    
-------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------
+       Name                         |    Result    |  Engine  |  Bound  |  Time    
+-------------------------------------------------------------------------------------
 
----[ <embedded> ]-------------------------------------------------------------------------------------------
-[1]   Gray_To_Binary.u_Gray_To_Binary_sva.sva_inv_bin           proven          PRE    Infinite    0.000 s      
+---[ <embedded> ]--------------------------------------------------------------------
+[1]   Gray_To_Binary._assert_1           proven          PRE    Infinite    0.000 s      

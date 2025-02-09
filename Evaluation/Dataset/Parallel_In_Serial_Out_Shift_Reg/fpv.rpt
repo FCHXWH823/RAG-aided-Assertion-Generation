@@ -5,8 +5,8 @@
     2022.09p001 64 bits for Linux64 3.10.0-1062.1.2.el7.x86_64
     Host Name: icpc
     User Name: master
-    Printed on: Monday, Jan27, 2025 03:53:27 PM CST
-    Working Directory: /home/master/Dataset/Parallel_In_Serial_Out_Shift_Reg
+    Printed on: Friday, Feb 7, 2025 01:08:40 AM CST
+    Working Directory: /home/master/RAG-aided-Assertion-Generation/Evaluation/Dataset/Parallel_In_Serial_Out_Shift_Reg
 
 
 ==============================================================
@@ -37,9 +37,9 @@ SUMMARY
 RESULTS
 ==============================================================
 
---------------------------------------------------------------------------------------------------------------------------------------------------
-       Name                                                                                      |    Result    |  Engine  |  Bound  |  Time    
---------------------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------
+       Name                                           |    Result    |  Engine  |  Bound  |  Time    
+-------------------------------------------------------------------------------------------------------
 
----[ <embedded> ]---------------------------------------------------------------------------------------------------------------------------------
-[1]   Parallel_In_Serial_Out_Shift_Reg.u_Parallel_In_Serial_Out_Shift_Reg_sva.sva_shift_reg           proven          N      Infinite    0.002 s      
+---[ <embedded> ]--------------------------------------------------------------------------------------
+[1]   Parallel_In_Serial_Out_Shift_Reg._assert_1           proven          N      Infinite    0.002 s      

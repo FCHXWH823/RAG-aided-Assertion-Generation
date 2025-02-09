@@ -5,8 +5,8 @@
     2022.09p001 64 bits for Linux64 3.10.0-1062.1.2.el7.x86_64
     Host Name: icpc
     User Name: master
-    Printed on: Wednesday, Jan29, 2025 01:03:25 AM CST
-    Working Directory: /home/master/Dataset/lcd
+    Printed on: Friday, Feb 7, 2025 02:15:33 AM CST
+    Working Directory: /home/master/RAG-aided-Assertion-Generation/Evaluation/Dataset/lcd
 
 
 ==============================================================
@@ -37,9 +37,9 @@ SUMMARY
 RESULTS
 ==============================================================
 
------------------------------------------------------------------------------
-       Name                 |    Result    |  Engine  |  Bound  |  Time    
------------------------------------------------------------------------------
+--------------------------------------------------------------------------
+       Name              |    Result    |  Engine  |  Bound  |  Time    
+--------------------------------------------------------------------------
 
----[ <embedded> ]------------------------------------------------------------
-[1]   lcd.u_lcd_sva.p1           proven          N          (95)    13.964 s     
+---[ <embedded> ]---------------------------------------------------------
+[1]   lcd._assert_1           proven          N          (95)    16.884 s     

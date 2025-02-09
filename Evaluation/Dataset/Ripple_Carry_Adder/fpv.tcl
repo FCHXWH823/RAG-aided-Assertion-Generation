@@ -1,5 +1,5 @@
 analyze -clear
-analyze -sv ./Ripple_Carry_Adder_assertion.sv
+analyze -sv12 ./Ripple_Carry_Adder_assertion.sv
 
 elaborate -top Ripple_Carry_Adder
 

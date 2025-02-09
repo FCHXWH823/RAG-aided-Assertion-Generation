@@ -7,7 +7,7 @@
 
 module register
   #(
-    parameter WIDTH
+    parameter WIDTH = 8
     )
    (
     input logic              clk,
