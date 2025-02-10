@@ -5,7 +5,7 @@
     2022.09p001 64 bits for Linux64 3.10.0-1062.1.2.el7.x86_64
     Host Name: icpc
     User Name: master
-    Printed on: Thursday, Feb 6, 2025 04:37:20 PM CST
+    Printed on: Monday, Feb10, 2025 08:32:55 AM CST
     Working Directory: /home/master/RAG-aided-Assertion-Generation/Evaluation/Dataset/simple_router
 
 
@@ -45,5 +45,5 @@ RESULTS
 [1]   simple_router._assert_1           proven          Hp     Infinite    0.001 s      
 [2]   simple_router._assert_2           proven          Hp     Infinite    0.001 s      
 [3]   simple_router._assert_3           proven          Hp     Infinite    0.001 s      
-[4]   simple_router._assert_4           proven          Hp     Infinite    0.002 s      
-[5]   simple_router._assert_5           proven          Hp     Infinite    0.002 s      
+[4]   simple_router._assert_4           proven          Hp     Infinite    0.001 s      
+[5]   simple_router._assert_5           proven          Hp     Infinite    0.001 s      

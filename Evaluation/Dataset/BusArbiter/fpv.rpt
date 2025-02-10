@@ -5,7 +5,7 @@
     2022.09p001 64 bits for Linux64 3.10.0-1062.1.2.el7.x86_64
     Host Name: icpc
     User Name: master
-    Printed on: Friday, Feb 7, 2025 01:18:52 AM CST
+    Printed on: Monday, Feb10, 2025 08:39:37 AM CST
     Working Directory: /home/master/RAG-aided-Assertion-Generation/Evaluation/Dataset/BusArbiter
 
 
@@ -42,22 +42,22 @@ RESULTS
 ------------------------------------------------------------------------------------------------
 
 ---[ <embedded> ]-------------------------------------------------------------------------------
-[1]   busarbiter._assert_1                          proven          N      Infinite    0.003 s      
-[2]   busarbiter._assert_2                          proven          Hp     Infinite    0.005 s      
+[1]   busarbiter._assert_1                          proven          Hp     Infinite    0.004 s      
+[2]   busarbiter._assert_2                          proven          Hp     Infinite    0.004 s      
 [3]   busarbiter._assert_2:precondition1            covered         PRE           2    0.000 s      
-[4]   busarbiter._assert_3                          proven          Hp     Infinite    0.006 s      
-[5]   busarbiter._assert_3:precondition1            covered         Hp            2    0.007 s      
-[6]   busarbiter._assert_4                          proven          Hp     Infinite    0.006 s      
-[7]   busarbiter._assert_4:precondition1            covered         Hp            2    0.009 s      
-[8]   busarbiter._assert_5                          proven          Hp     Infinite    0.013 s      
-[9]   busarbiter._assert_5:precondition1            covered         Hp            2    0.011 s      
-[10]  busarbiter._assert_6                          proven          Hp     Infinite    0.014 s      
+[4]   busarbiter._assert_3                          proven          Hp     Infinite    0.004 s      
+[5]   busarbiter._assert_3:precondition1            covered         Hp            2    0.005 s      
+[6]   busarbiter._assert_4                          proven          Hp     Infinite    0.004 s      
+[7]   busarbiter._assert_4:precondition1            covered         Hp            2    0.006 s      
+[8]   busarbiter._assert_5                          proven          Hp     Infinite    0.007 s      
+[9]   busarbiter._assert_5:precondition1            covered         Hp            2    0.007 s      
+[10]  busarbiter._assert_6                          proven          Hp     Infinite    0.007 s      
 [11]  busarbiter._assert_6:precondition1            covered         PRE           1    0.000 s      
-[12]  busarbiter._assert_7                          proven          Hp     Infinite    0.014 s      
+[12]  busarbiter._assert_7                          proven          Hp     Infinite    0.008 s      
 [13]  busarbiter._assert_7:precondition1            covered         Hp            1    0.003 s      
-[14]  busarbiter._assert_8                          proven          Hp     Infinite    0.014 s      
+[14]  busarbiter._assert_8                          proven          Hp     Infinite    0.008 s      
 [15]  busarbiter._assert_8:precondition1            covered         Hp            1    0.004 s      
-[16]  busarbiter._assert_9                          proven          Hp     Infinite    0.006 s      
-[17]  busarbiter._assert_9:precondition1            covered         Hp            2    0.007 s      
-[18]  busarbiter._assert_10                         proven          Hp     Infinite    0.006 s      
-[19]  busarbiter._assert_10:precondition1           covered         Hp            2    0.009 s      
+[16]  busarbiter._assert_9                          proven          Hp     Infinite    0.004 s      
+[17]  busarbiter._assert_9:precondition1            covered         Hp            2    0.005 s      
+[18]  busarbiter._assert_10                         proven          Hp     Infinite    0.004 s      
+[19]  busarbiter._assert_10:precondition1           covered         Hp            2    0.006 s      

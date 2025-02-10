@@ -5,7 +5,7 @@
     2022.09p001 64 bits for Linux64 3.10.0-1062.1.2.el7.x86_64
     Host Name: icpc
     User Name: master
-    Printed on: Friday, Feb 7, 2025 01:09:06 AM CST
+    Printed on: Monday, Feb10, 2025 08:33:08 AM CST
     Working Directory: /home/master/RAG-aided-Assertion-Generation/Evaluation/Dataset/host_interface
 
 
@@ -44,25 +44,25 @@ RESULTS
 ---[ <embedded> ]-----------------------------------------------------------------------------------
 [1]   host_interface._assert_1                          proven          PRE    Infinite    0.000 s      
 [2]   host_interface._assert_1:precondition1            covered         PRE           1    0.000 s      
-[3]   host_interface._assert_2                          proven          N      Infinite    0.001 s      
-[4]   host_interface._assert_2:precondition1            covered         Hp            2    0.009 s      
+[3]   host_interface._assert_2                          proven          Hp     Infinite    0.001 s      
+[4]   host_interface._assert_2:precondition1            covered         Hp            2    0.003 s      
 [5]   host_interface._assert_3                          proven          Hp     Infinite    0.001 s      
 [6]   host_interface._assert_3:precondition1            covered         PRE           1    0.000 s      
 [7]   host_interface._assert_4                          proven          PRE    Infinite    0.000 s      
 [8]   host_interface._assert_4:precondition1            covered         PRE           1    0.000 s      
 [9]   host_interface._assert_5                          proven          PRE    Infinite    0.000 s      
-[10]  host_interface._assert_5:precondition1            covered         Hp            2    0.012 s      
+[10]  host_interface._assert_5:precondition1            covered         Hp            2    0.004 s      
 [11]  host_interface._assert_6                          proven          PRE    Infinite    0.000 s      
 [12]  host_interface._assert_6:precondition1            covered         PRE           1    0.000 s      
-[13]  host_interface._assert_7                          proven          Hp     Infinite    0.002 s      
+[13]  host_interface._assert_7                          proven          Hp     Infinite    0.001 s      
 [14]  host_interface._assert_7:precondition1            covered         PRE           1    0.000 s      
-[15]  host_interface._assert_8                          proven          Hp     Infinite    0.002 s      
+[15]  host_interface._assert_8                          proven          Hp     Infinite    0.001 s      
 [16]  host_interface._assert_8:precondition1            covered         PRE           1    0.000 s      
 [17]  host_interface._assert_9                          proven          PRE    Infinite    0.000 s      
 [18]  host_interface._assert_9:precondition1            covered         PRE           1    0.000 s      
 [19]  host_interface._assert_10                         proven          Hp     Infinite    0.002 s      
 [20]  host_interface._assert_10:precondition1           covered         PRE           1    0.000 s      
-[21]  host_interface._assert_11                         proven          Hp     Infinite    0.003 s      
+[21]  host_interface._assert_11                         proven          Hp     Infinite    0.002 s      
 [22]  host_interface._assert_11:precondition1           covered         PRE           1    0.000 s      
-[23]  host_interface._assert_12                         proven          Hp     Infinite    0.003 s      
+[23]  host_interface._assert_12                         proven          Hp     Infinite    0.002 s      
 [24]  host_interface._assert_12:precondition1           covered         PRE           1    0.000 s      

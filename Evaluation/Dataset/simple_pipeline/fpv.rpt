@@ -5,7 +5,7 @@
     2022.09p001 64 bits for Linux64 3.10.0-1062.1.2.el7.x86_64
     Host Name: icpc
     User Name: master
-    Printed on: Thursday, Feb 6, 2025 04:37:23 PM CST
+    Printed on: Monday, Feb10, 2025 08:32:58 AM CST
     Working Directory: /home/master/RAG-aided-Assertion-Generation/Evaluation/Dataset/simple_pipeline
 
 
@@ -44,5 +44,5 @@ RESULTS
 ---[ <embedded> ]-----------------------------------------------------------------------------------
 [1]   simple_pipeline._assert_1                         proven          N      Infinite    0.001 s      
 [2]   simple_pipeline._assert_1:precondition1           covered         PRE           1    0.000 s      
-[3]   simple_pipeline._assert_2                         proven          Hp     Infinite    0.025 s      
-[4]   simple_pipeline._assert_2:precondition1           covered         Hp            5    0.026 s      
+[3]   simple_pipeline._assert_2                         proven          Hp     Infinite    0.000 s      
+[4]   simple_pipeline._assert_2:precondition1           covered         Hp            5    0.001 s      

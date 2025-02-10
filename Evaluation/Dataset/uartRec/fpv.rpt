@@ -5,7 +5,7 @@
     2022.09p001 64 bits for Linux64 3.10.0-1062.1.2.el7.x86_64
     Host Name: icpc
     User Name: master
-    Printed on: Friday, Feb 7, 2025 02:22:58 AM CST
+    Printed on: Monday, Feb10, 2025 08:46:06 AM CST
     Working Directory: /home/master/RAG-aided-Assertion-Generation/Evaluation/Dataset/uartRec
 
 
@@ -44,15 +44,15 @@ RESULTS
 ---[ <embedded> ]---------------------------------------------------------------------------
 [1]   uartRec._assert_1                         proven          N      Infinite    0.002 s      
 [2]   uartRec._assert_1:precondition1           covered         PRE           1    0.000 s      
-[3]   uartRec._assert_2                         proven          Hp     Infinite    0.003 s      
+[3]   uartRec._assert_2                         proven          Hp     Infinite    0.001 s      
 [4]   uartRec._assert_2:precondition1           covered         PRE           1    0.000 s      
-[5]   uartRec._assert_3                         proven          Hp     Infinite    0.003 s      
+[5]   uartRec._assert_3                         proven          Hp     Infinite    0.001 s      
 [6]   uartRec._assert_3:precondition1           covered         PRE           1    0.000 s      
-[7]   uartRec._assert_4                         proven          Hp     Infinite    0.175 s      
+[7]   uartRec._assert_4                         proven          Hp     Infinite    0.062 s      
 [8]   uartRec._assert_4:precondition1           covered         PRE           1    0.000 s      
-[9]   uartRec._assert_5                         proven          Hp     Infinite    0.176 s      
+[9]   uartRec._assert_5                         proven          Hp     Infinite    0.063 s      
 [10]  uartRec._assert_5:precondition1           covered         PRE           1    0.000 s      
 [11]  uartRec._assert_6                         proven          Hp     Infinite    0.001 s      
 [12]  uartRec._assert_6:precondition1           covered         PRE           1    0.000 s      
-[13]  uartRec._assert_7                         proven          Hp     Infinite    0.004 s      
+[13]  uartRec._assert_7                         proven          Hp     Infinite    0.001 s      
 [14]  uartRec._assert_7:precondition1           covered         PRE           1    0.000 s      
