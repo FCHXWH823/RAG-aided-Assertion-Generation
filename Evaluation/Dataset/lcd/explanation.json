@@ -1,0 +1,18 @@
+{
+"Assertion 1": {
+"clock signal condition": "@(posedge clk)",
+"disable condition": "",
+"logical expression": "lcd_enable == 0 || state == 2",
+"Signals": ["lcd_enable", "state"],
+"Signal Explanations": {
+  "lcd_enable": "the control signal that determines whether the lcd bus command sequence is activated",
+  "state": "the variable representing the current phase of initialization or command execution within the lcd control state machine"
+},
+"Logical Operators": ["==", "||"],
+"Logical Operators Explanation": {
+  "==": "checks if two values are equal",
+  "||": "logical OR that evaluates to true if at least one of its operands is true"
+},
+"Assertion Explaination": "on every positive clock edge, eventually either the control signal for the lcd bus operation is deactivated or the state machine reaches its idle phase that denotes the completion of the initialization sequence"
+}
+}

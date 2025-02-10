@@ -1,0 +1,169 @@
+{
+"Assertion 1": {
+"clock signal condition": "@(posedge clk)",
+"disable condition": "disable iff (rst)",
+"logical expression": "$rose(!ex_freeze && !id_freeze) ##1 (!ex_freeze && !id_freeze && sel_a == 2'd2 && $stable(ex_forw) && $stable(sel_a)) |-> muxed_a == ex_forw",
+"Signals": ["ex_freeze", "id_freeze", "sel_a", "ex_forw", "muxed_a"],
+"Signal Explanations": {
+  "ex_freeze": "a signal indicating that the execution stage is frozen",
+  "id_freeze": "a signal indicating that the instruction decode stage is frozen",
+  "sel_a": "the selection signal that determines which source will drive operand A",
+  "ex_forw": "the data forwarded from the execution stage for operand A",
+  "muxed_a": "the output of the multiplexer logic for operand A"
+},
+"Logical Operators": ["$rose", "&&", "##1", "$stable", "==", "|->"],
+"Logical Operators Explanation": {
+  "$rose": "detects a rising edge transition (from 0 to 1) of the condition",
+  "&&": "logical AND, meaning all connected conditions must be true",
+  "##1": "delays the evaluation by one clock cycle",
+  "$stable": "ensures that a value remains constant during the evaluated interval",
+  "==": "checks equality between values",
+  "|->": "implication operator indicating that if the antecedent is true then the consequent must be true"
+},
+"Assertion Explaination": "when a rising edge is detected on the condition that neither the execution stage nor the instruction decode stage is frozen, then one clock cycle later if both stages remain unfrozen, the control selection indicates that the execution forwarding path for the first operand is chosen and both the execution forwarding data and its selection remain constant, it follows that the multiplexer output for the first operand must equal the execution forwarding data"
+},
+"Assertion 2": {
+"clock signal condition": "@(posedge clk)",
+"disable condition": "disable iff (rst)",
+"logical expression": "$rose(!ex_freeze && !id_freeze) ##1 (!ex_freeze && !id_freeze && sel_a == 2'd3 && $stable(wb_forw) && $stable(sel_a)) |-> muxed_a == wb_forw",
+"Signals": ["ex_freeze", "id_freeze", "sel_a", "wb_forw", "muxed_a"],
+"Signal Explanations": {
+  "ex_freeze": "a signal indicating that the execution stage is frozen",
+  "id_freeze": "a signal indicating that the instruction decode stage is frozen",
+  "sel_a": "the selection signal that determines which source will drive operand A",
+  "wb_forw": "the data forwarded from the write-back stage for operand A",
+  "muxed_a": "the output of the multiplexer logic for operand A"
+},
+"Logical Operators": ["$rose", "&&", "##1", "$stable", "==", "|->"],
+"Logical Operators Explanation": {
+  "$rose": "detects a rising edge transition (from 0 to 1) of the condition",
+  "&&": "logical AND, meaning all connected conditions must be true",
+  "##1": "delays the evaluation by one clock cycle",
+  "$stable": "ensures that a value remains constant during the evaluated interval",
+  "==": "checks equality between values",
+  "|->": "implication operator indicating that if the antecedent is true then the consequent must be true"
+},
+"Assertion Explaination": "when a rising edge is detected on the non-frozen condition for both the execution and instruction decode stages, then one clock cycle later if these stages are still unfrozen, the control selection indicates that the write-back forwarding path for the first operand is selected and both the write-back forwarding data and its selection remain constant, it follows that the multiplexer output for the first operand must equal the write-back forwarding data"
+},
+"Assertion 3": {
+"clock signal condition": "@(posedge clk)",
+"disable condition": "disable iff (rst)",
+"logical expression": "$rose(!ex_freeze && !id_freeze) ##1 (!ex_freeze && !id_freeze && !(sel_a == 2'd2 || sel_a == 2'd3) && $stable(rf_dataa) && $stable(sel_a) && !$isunknown(operand_a)) |-> muxed_a == rf_dataa",
+"Signals": ["ex_freeze", "id_freeze", "sel_a", "rf_dataa", "operand_a", "muxed_a"],
+"Signal Explanations": {
+  "ex_freeze": "a signal indicating that the execution stage is frozen",
+  "id_freeze": "a signal indicating that the instruction decode stage is frozen",
+  "sel_a": "the selection signal that determines which source will drive operand A",
+  "rf_dataa": "the data read from the register file for operand A",
+  "operand_a": "the internal register holding the value for operand A",
+  "muxed_a": "the output of the multiplexer logic for operand A"
+},
+"Logical Operators": ["$rose", "&&", "||", "!", "##1", "$stable", "!$isunknown", "==", "|->"],
+"Logical Operators Explanation": {
+  "$rose": "detects a rising edge transition (from 0 to 1) of the condition",
+  "&&": "logical AND, meaning all connected conditions must be true",
+  "||": "logical OR, meaning at least one connected condition must be true",
+  "!": "logical NOT, inverting the truth value of the condition",
+  "##1": "delays the evaluation by one clock cycle",
+  "$stable": "ensures that a value remains constant during the evaluated interval",
+  "!$isunknown": "checks that the evaluated value is known (not in an unknown state)",
+  "==": "checks equality between values",
+  "|->": "implication operator indicating that if the antecedent is true then the consequent must be true"
+},
+"Assertion Explaination": "when a rising edge is detected on the condition that both the execution and instruction decode stages are not frozen, then one clock cycle later if these stages remain unfrozen, the control selection does not indicate use of either the execution forwarding or the write-back forwarding paths, and if the data read from the register file for the first operand and its selection remain constant while the stored operand is known, it follows that the multiplexer output for the first operand must equal the register file read data"
+},
+"Assertion 4": {
+"clock signal condition": "@(posedge clk)",
+"disable condition": "disable iff (rst)",
+"logical expression": "$rose(!ex_freeze && !id_freeze) ##1 (!ex_freeze && !id_freeze && sel_b == 2'd1 && $stable(simm) && $stable(sel_b)) |-> muxed_b == simm",
+"Signals": ["ex_freeze", "id_freeze", "sel_b", "simm", "muxed_b"],
+"Signal Explanations": {
+  "ex_freeze": "a signal indicating that the execution stage is frozen",
+  "id_freeze": "a signal indicating that the instruction decode stage is frozen",
+  "sel_b": "the selection signal that determines which source will drive operand B",
+  "simm": "the immediate value operand provided as an input",
+  "muxed_b": "the output of the multiplexer logic for operand B"
+},
+"Logical Operators": ["$rose", "&&", "##1", "$stable", "==", "|->"],
+"Logical Operators Explanation": {
+  "$rose": "detects a rising edge transition (from 0 to 1) of the condition",
+  "&&": "logical AND, meaning all connected conditions must be true",
+  "##1": "delays the evaluation by one clock cycle",
+  "$stable": "ensures that a value remains constant during the evaluated interval",
+  "==": "checks equality between values",
+  "|->": "implication operator indicating that if the antecedent is true then the consequent must be true"
+},
+"Assertion Explaination": "when a rising edge is detected on the condition that both the execution and instruction decode stages are not frozen, then one clock cycle later if these stages remain unfrozen, the control selection indicates that the immediate value should be used for the second operand and both the immediate value and its selection remain constant, it follows that the multiplexer output for the second operand must equal the immediate value"
+},
+"Assertion 5": {
+"clock signal condition": "@(posedge clk)",
+"disable condition": "disable iff (rst)",
+"logical expression": "$rose(!ex_freeze && !id_freeze) ##1 (!ex_freeze && !id_freeze && sel_b == 2'd2 && $stable(ex_forw) && $stable(sel_b)) |-> muxed_b == ex_forw",
+"Signals": ["ex_freeze", "id_freeze", "sel_b", "ex_forw", "muxed_b"],
+"Signal Explanations": {
+  "ex_freeze": "a signal indicating that the execution stage is frozen",
+  "id_freeze": "a signal indicating that the instruction decode stage is frozen",
+  "sel_b": "the selection signal that determines which source will drive operand B",
+  "ex_forw": "the data forwarded from the execution stage for operand B",
+  "muxed_b": "the output of the multiplexer logic for operand B"
+},
+"Logical Operators": ["$rose", "&&", "##1", "$stable", "==", "|->"],
+"Logical Operators Explanation": {
+  "$rose": "detects a rising edge transition (from 0 to 1) of the condition",
+  "&&": "logical AND, meaning all connected conditions must be true",
+  "##1": "delays the evaluation by one clock cycle",
+  "$stable": "ensures that a value remains constant during the evaluated interval",
+  "==": "checks equality between values",
+  "|->": "implication operator indicating that if the antecedent is true then the consequent must be true"
+},
+"Assertion Explaination": "when a rising edge is detected on the condition that both the execution and instruction decode stages are not frozen, then one clock cycle later if these stages remain unfrozen, the control selection indicates that the execution forwarding path for the second operand is chosen and both the execution forwarding data and its selection remain constant, it follows that the multiplexer output for the second operand must equal the execution forwarding data"
+},
+"Assertion 6": {
+"clock signal condition": "@(posedge clk)",
+"disable condition": "disable iff (rst)",
+"logical expression": "$rose(!ex_freeze && !id_freeze) ##1 (!ex_freeze && !id_freeze && sel_b == 2'd3 && $stable(wb_forw) && $stable(sel_b)) |-> muxed_b == wb_forw",
+"Signals": ["ex_freeze", "id_freeze", "sel_b", "wb_forw", "muxed_b"],
+"Signal Explanations": {
+  "ex_freeze": "a signal indicating that the execution stage is frozen",
+  "id_freeze": "a signal indicating that the instruction decode stage is frozen",
+  "sel_b": "the selection signal that determines which source will drive operand B",
+  "wb_forw": "the data forwarded from the write-back stage for operand B",
+  "muxed_b": "the output of the multiplexer logic for operand B"
+},
+"Logical Operators": ["$rose", "&&", "##1", "$stable", "==", "|->"],
+"Logical Operators Explanation": {
+  "$rose": "detects a rising edge transition (from 0 to 1) of the condition",
+  "&&": "logical AND, meaning all connected conditions must be true",
+  "##1": "delays the evaluation by one clock cycle",
+  "$stable": "ensures that a value remains constant during the evaluated interval",
+  "==": "checks equality between values",
+  "|->": "implication operator indicating that if the antecedent is true then the consequent must be true"
+},
+"Assertion Explaination": "when a rising edge is detected on the condition that both the execution and instruction decode stages are not frozen, then one clock cycle later if these stages remain unfrozen, the control selection indicates that the write-back forwarding path for the second operand is chosen and both the write-back forwarding data and its selection remain constant, it follows that the multiplexer output for the second operand must equal the write-back forwarding data"
+},
+"Assertion 7": {
+"clock signal condition": "@(posedge clk)",
+"disable condition": "disable iff (rst)",
+"logical expression": "$rose(!ex_freeze && !id_freeze) ##1 (!ex_freeze && !id_freeze && !(sel_b == 2'd1 || sel_b == 2'd2 || sel_b == 2'd3) && $stable(rf_datab) && $stable(sel_b)) |-> muxed_b == rf_datab",
+"Signals": ["ex_freeze", "id_freeze", "sel_b", "rf_datab", "muxed_b"],
+"Signal Explanations": {
+  "ex_freeze": "a signal indicating that the execution stage is frozen",
+  "id_freeze": "a signal indicating that the instruction decode stage is frozen",
+  "sel_b": "the selection signal that determines which source will drive operand B",
+  "rf_datab": "the data read from the register file for operand B",
+  "muxed_b": "the output of the multiplexer logic for operand B"
+},
+"Logical Operators": ["$rose", "&&", "||", "!", "##1", "$stable", "==", "|->"],
+"Logical Operators Explanation": {
+  "$rose": "detects a rising edge transition (from 0 to 1) of the condition",
+  "&&": "logical AND, meaning all connected conditions must be true",
+  "||": "logical OR, meaning at least one connected condition must be true",
+  "!": "logical NOT, inverting the truth value of the condition",
+  "##1": "delays the evaluation by one clock cycle",
+  "$stable": "ensures that a value remains constant during the evaluated interval",
+  "==": "checks equality between values",
+  "|->": "implication operator indicating that if the antecedent is true then the consequent must be true"
+},
+"Assertion Explaination": "when a rising edge is detected on the condition that both the execution and instruction decode stages are not frozen, then one clock cycle later if these stages remain unfrozen, and if the control selection for the second operand does not indicate use of the immediate value, execution forwarding, or write-back forwarding while ensuring that the register file data for the second operand and its selection remain constant, it follows that the multiplexer output for the second operand must equal the register file read data"
+}
+}

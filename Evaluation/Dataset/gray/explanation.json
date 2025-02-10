@@ -1,0 +1,24 @@
+{
+  "Assertion 1": {
+    "clock signal condition": "@(posedge clk)",
+    "disable condition": "",
+    "logical expression": "rst || sig == 1",
+    "Signals": [
+      "rst",
+      "sig"
+    ],
+    "Signal Explanations": {
+      "rst": "the asynchronous reset input that initializes the counter",
+      "sig": "the indicator that is set when the Gray-coded counter equals zero"
+    },
+    "Logical Operators": [
+      "||",
+      "=="
+    ],
+    "Logical Operators Explanation": {
+      "||": "logical OR operator, meaning at least one of the operands must be true",
+      "==": "equality comparison operator, which checks if the two operands are equal"
+    },
+    "Assertion Explaination": "the property requires that either the module’s reset control is active or the indicator that reflects a zero Gray counter value is equal to one"
+  }
+}

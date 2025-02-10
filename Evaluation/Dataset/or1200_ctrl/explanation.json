@@ -1,0 +1,426 @@
+{
+  "Assertion 1": {
+    "clock signal condition": "@(posedge clk)",
+    "disable condition": "disable iff (rst)",
+    "logical expression": "(!ex_freeze & ex_delayslot_dsi & !ex_delayslot_nop) |-> ##1 (ex_delayslot_nop == 0 && ex_delayslot_dsi == 0)",
+    "Signals": [
+      "ex_freeze",
+      "ex_delayslot_dsi",
+      "ex_delayslot_nop"
+    ],
+    "Signal Explanations": {
+      "ex_freeze": "a signal indicating whether the execution stage is frozen",
+      "ex_delayslot_dsi": "a flag that signifies a delay slot instruction is present in the execution stage",
+      "ex_delayslot_nop": "a flag that indicates a filler no‐operation instruction is present in the execution stage"
+    },
+    "Logical Operators": [
+      "!",
+      "&",
+      "|->",
+      "##1",
+      "==",
+      "&&"
+    ],
+    "Logical Operators Explanation": {
+      "!": "logical negation, meaning the signal is deactivated (0)",
+      "&": "logical AND, combining conditions",
+      "|->": "non-overlapping implication, meaning if the left condition holds then the right condition must hold in the specified future cycle",
+      "##1": "a delay of one clock cycle",
+      "==": "equality comparison",
+      "&&": "logical AND, combining boolean expressions"
+    },
+    "Assertion Explaination": "if the execution stage is not frozen and a delay slot instruction is active while a filler nop is not active, then one clock cycle later both the filler nop flag and the delay slot instruction flag are deactivated"
+  },
+  "Assertion 2": {
+    "clock signal condition": "@(posedge clk)",
+    "disable condition": "disable iff (rst)",
+    "logical expression": "(!ex_freeze & id_freeze | ex_flushpipe) |-> ##1 (ex_macrc_op == 0)",
+    "Signals": [
+      "ex_freeze",
+      "id_freeze",
+      "ex_flushpipe",
+      "ex_macrc_op"
+    ],
+    "Signal Explanations": {
+      "ex_freeze": "a signal indicating whether the execution stage is frozen",
+      "id_freeze": "a signal indicating whether the instruction decode stage is frozen",
+      "ex_flushpipe": "a signal that flushes the pipeline in the execution stage",
+      "ex_macrc_op": "a signal representing the MAC read configuration operation in the execution stage"
+    },
+    "Logical Operators": [
+      "!",
+      "&",
+      "|",
+      "|->",
+      "##1",
+      "=="
+    ],
+    "Logical Operators Explanation": {
+      "!": "logical negation, meaning the signal is deactivated",
+      "&": "logical AND, combining conditions",
+      "|": "logical OR, meaning at least one of the conditions must be true",
+      "|->": "non-overlapping implication, meaning if the left-hand condition holds then the right-hand condition must hold after the specified delay",
+      "##1": "a delay of one clock cycle",
+      "==": "equality comparison"
+    },
+    "Assertion Explaination": "if the execution stage is not frozen and the decode stage is frozen or the execution flush signal is active, then one clock cycle later the MAC read configuration operation signal is deactivated"
+  },
+  "Assertion 3": {
+    "clock signal condition": "@(posedge clk)",
+    "disable condition": "disable iff (rst)",
+    "logical expression": "(id_flushpipe) |-> ##1 (id_insn == {`OR1200_OR32_NOP, 26'h041_0000})",
+    "Signals": [
+      "id_flushpipe",
+      "id_insn"
+    ],
+    "Signal Explanations": {
+      "id_flushpipe": "a signal that flushes the instruction decode pipeline",
+      "id_insn": "the instruction latched in the decode stage, which should represent a no‐operation when flushed"
+    },
+    "Logical Operators": [
+      "|->",
+      "##1",
+      "=="
+    ],
+    "Logical Operators Explanation": {
+      "|->": "non-overlapping implication, meaning if the left-hand condition is true then the right-hand condition must become true in the next cycle",
+      "##1": "a delay of one clock cycle",
+      "==": "equality comparison"
+    },
+    "Assertion Explaination": "if the decode pipeline flush signal is active, then one clock cycle later the instruction in the decode stage is set to the no‐operation instruction"
+  },
+  "Assertion 4": {
+    "clock signal condition": "@(posedge clk)",
+    "disable condition": "disable iff (rst)",
+    "logical expression": "(!ex_freeze & id_freeze | ex_flushpipe) |-> ##1 (ex_insn == {`OR1200_OR32_NOP, 26'h041_0000})",
+    "Signals": [
+      "ex_freeze",
+      "id_freeze",
+      "ex_flushpipe",
+      "ex_insn"
+    ],
+    "Signal Explanations": {
+      "ex_freeze": "a signal indicating whether the execution stage is frozen",
+      "id_freeze": "a signal indicating whether the instruction decode stage is frozen",
+      "ex_flushpipe": "a signal that flushes the execution stage pipeline",
+      "ex_insn": "the instruction latched in the execution stage, expected to be a no‐operation when flushed"
+    },
+    "Logical Operators": [
+      "!",
+      "&",
+      "|",
+      "|->",
+      "##1",
+      "=="
+    ],
+    "Logical Operators Explanation": {
+      "!": "logical negation, meaning the signal is deactivated",
+      "&": "logical AND, combining conditions",
+      "|": "logical OR, indicating that if any of the grouped conditions are true",
+      "|->": "non-overlapping implication, enforcing that when the left-hand condition holds, the right-hand condition follows after the delay",
+      "##1": "a delay of one clock cycle",
+      "==": "equality comparison"
+    },
+    "Assertion Explaination": "if the execution stage is not frozen and the decode stage is frozen or the execution flush signal is active, then one clock cycle later the instruction in the execution stage is set to the no‐operation instruction"
+  },
+  "Assertion 5": {
+    "clock signal condition": "@(posedge clk)",
+    "disable condition": "disable iff (rst)",
+    "logical expression": "(!id_freeze && if_insn[31:26] == `OR1200_OR32_JALR) |-> ##1 (sel_imm ==  1'b0)",
+    "Signals": [
+      "id_freeze",
+      "if_insn[31:26]",
+      "sel_imm"
+    ],
+    "Signal Explanations": {
+      "id_freeze": "a signal indicating whether the instruction decode stage is frozen",
+      "if_insn[31:26]": "the opcode field from the instruction fetched in the instruction fetch stage",
+      "sel_imm": "a signal that selects whether an immediate operand is used"
+    },
+    "Logical Operators": [
+      "!",
+      "&&",
+      "==",
+      "|->",
+      "##1"
+    ],
+    "Logical Operators Explanation": {
+      "!": "logical negation, indicating the signal is not active",
+      "&&": "logical AND, requiring both conditions to be true",
+      "==": "equality comparison",
+      "|->": "non-overlapping implication, meaning if the left condition holds then the right condition must hold after the delay",
+      "##1": "a delay of one clock cycle"
+    },
+    "Assertion Explaination": "if the decode stage is active and the opcode in the instruction fetch stage matches the jump-and-link register instruction, then one clock cycle later the signal for selecting an immediate operand is deactivated"
+  },
+  "Assertion 6": {
+    "clock signal condition": "@(posedge clk)",
+    "disable condition": "disable iff (rst)",
+    "logical expression": "(!id_freeze && if_insn[31:26] == `OR1200_OR32_JR) |-> ##1 (sel_imm ==  1'b0)",
+    "Signals": [
+      "id_freeze",
+      "if_insn[31:26]",
+      "sel_imm"
+    ],
+    "Signal Explanations": {
+      "id_freeze": "a signal indicating whether the instruction decode stage is frozen",
+      "if_insn[31:26]": "the opcode field from the fetched instruction in the instruction fetch stage",
+      "sel_imm": "a signal determining whether an immediate operand is selected"
+    },
+    "Logical Operators": [
+      "!",
+      "&&",
+      "==",
+      "|->",
+      "##1"
+    ],
+    "Logical Operators Explanation": {
+      "!": "logical negation, meaning the signal is inactive",
+      "&&": "logical AND, combining the conditions",
+      "==": "equality check",
+      "|->": "non-overlapping implication, meaning when the condition on the left holds, the condition on the right must hold after the delay",
+      "##1": "a one clock cycle delay"
+    },
+    "Assertion Explaination": "if the decode stage is not frozen and the opcode from the instruction fetch stage matches the jump register instruction, then one clock cycle later the immediate selection signal is deactivated"
+  },
+  "Assertion 7": {
+    "clock signal condition": "@(posedge clk)",
+    "disable condition": "disable iff (rst)",
+    "logical expression": "(!id_freeze && if_insn[31:26] == `OR1200_OR32_RFE) |-> ##1 (sel_imm ==  1'b0)",
+    "Signals": [
+      "id_freeze",
+      "if_insn[31:26]",
+      "sel_imm"
+    ],
+    "Signal Explanations": {
+      "id_freeze": "a signal indicating whether the instruction decode stage is frozen",
+      "if_insn[31:26]": "the opcode field from the instruction fetched in the instruction fetch stage",
+      "sel_imm": "a signal that selects the use of an immediate operand"
+    },
+    "Logical Operators": [
+      "!",
+      "&&",
+      "==",
+      "|->",
+      "##1"
+    ],
+    "Logical Operators Explanation": {
+      "!": "logical negation, signifying a signal is inactive",
+      "&&": "logical AND, requiring both conditions to be met",
+      "==": "equality comparison",
+      "|->": "non-overlapping implication, enforcing that if the left condition holds then the right condition must follow after the delay",
+      "##1": "a delay of one clock cycle"
+    },
+    "Assertion Explaination": "if the decode stage is active and the opcode in the instruction fetch stage equals the return-from-exception instruction, then one clock cycle later the signal for selecting an immediate operand is deactivated"
+  },
+  "Assertion 8": {
+    "clock signal condition": "@(posedge clk)",
+    "disable condition": "disable iff (rst)",
+    "logical expression": "(!id_freeze && if_insn[31:26] == `OR1200_OR32_MFSPR) |-> ##1 (sel_imm ==  1'b0)",
+    "Signals": [
+      "id_freeze",
+      "if_insn[31:26]",
+      "sel_imm"
+    ],
+    "Signal Explanations": {
+      "id_freeze": "a signal indicating whether the instruction decode stage is frozen",
+      "if_insn[31:26]": "the opcode field extracted from the fetched instruction in the instruction fetch stage",
+      "sel_imm": "a control signal that determines whether an immediate operand is used"
+    },
+    "Logical Operators": [
+      "!",
+      "&&",
+      "==",
+      "|->",
+      "##1"
+    ],
+    "Logical Operators Explanation": {
+      "!": "logical negation, indicating a signal is not active",
+      "&&": "logical AND, combining multiple conditions",
+      "==": "equality comparison",
+      "|->": "non-overlapping implication, meaning if the left condition holds then the right must hold after the delay",
+      "##1": "a delay of one clock cycle"
+    },
+    "Assertion Explaination": "if the decode stage is active and the opcode from the instruction fetch stage matches the move from special-purpose register instruction, then one clock cycle later the immediate selection signal is deactivated"
+  },
+  "Assertion 9": {
+    "clock signal condition": "@(posedge clk)",
+    "disable condition": "disable iff (rst)",
+    "logical expression": "(!id_freeze && if_insn[31:26] == `OR1200_OR32_MTSPR) |-> ##1 (sel_imm ==  1'b0)",
+    "Signals": [
+      "id_freeze",
+      "if_insn[31:26]",
+      "sel_imm"
+    ],
+    "Signal Explanations": {
+      "id_freeze": "a signal indicating whether the instruction decode stage is frozen",
+      "if_insn[31:26]": "the opcode field from the fetched instruction in the instruction fetch stage",
+      "sel_imm": "a control signal for selecting an immediate operand"
+    },
+    "Logical Operators": [
+      "!",
+      "&&",
+      "==",
+      "|->",
+      "##1"
+    ],
+    "Logical Operators Explanation": {
+      "!": "logical negation, meaning the signal is inactive",
+      "&&": "logical AND, combining the condition checks",
+      "==": "equality comparison",
+      "|->": "non-overlapping implication, meaning if the left-hand condition is met then the right-hand condition must follow after a delay",
+      "##1": "a delay of one clock cycle"
+    },
+    "Assertion Explaination": "if the decode stage is not frozen and the opcode from the instruction fetch stage equals the move to special-purpose register instruction, then one clock cycle later the immediate selection signal is deactivated"
+  },
+  "Assertion 10": {
+    "clock signal condition": "@(posedge clk)",
+    "disable condition": "disable iff (rst)",
+    "logical expression": "(!id_freeze && if_insn[31:26] == `OR1200_OR32_XSYNC) |-> ##1 (sel_imm ==  1'b0)",
+    "Signals": [
+      "id_freeze",
+      "if_insn[31:26]",
+      "sel_imm"
+    ],
+    "Signal Explanations": {
+      "id_freeze": "a signal indicating whether the instruction decode stage is frozen",
+      "if_insn[31:26]": "the opcode field from the instruction fetched in the instruction fetch stage",
+      "sel_imm": "a control signal for selecting the immediate operand"
+    },
+    "Logical Operators": [
+      "!",
+      "&&",
+      "==",
+      "|->",
+      "##1"
+    ],
+    "Logical Operators Explanation": {
+      "!": "logical negation, indicating that the signal is inactive",
+      "&&": "logical AND, requiring both conditions to be true",
+      "==": "equality check",
+      "|->": "non-overlapping implication, ensuring that if the left condition holds then the right condition must hold after the delay",
+      "##1": "a delay of one clock cycle"
+    },
+    "Assertion Explaination": "if the decode stage is active and the opcode from the instruction fetch stage corresponds to the system synchronization instruction, then one clock cycle later the immediate selection signal is deactivated"
+  },
+  "Assertion 11": {
+    "clock signal condition": "@(posedge clk)",
+    "disable condition": "disable iff (rst)",
+    "logical expression": "(!id_freeze && if_insn[31:26] == `OR1200_OR32_SW) |-> ##1 (sel_imm ==  1'b0)",
+    "Signals": [
+      "id_freeze",
+      "if_insn[31:26]",
+      "sel_imm"
+    ],
+    "Signal Explanations": {
+      "id_freeze": "a signal indicating whether the instruction decode stage is frozen",
+      "if_insn[31:26]": "the opcode field from the fetched instruction in the instruction fetch stage",
+      "sel_imm": "a control signal that determines whether an immediate operand is used"
+    },
+    "Logical Operators": [
+      "!",
+      "&&",
+      "==",
+      "|->",
+      "##1"
+    ],
+    "Logical Operators Explanation": {
+      "!": "logical negation, meaning the signal is not active",
+      "&&": "logical AND, combining conditions together",
+      "==": "equality comparison",
+      "|->": "non-overlapping implication, which specifies that if the left condition is true then the right condition must be true after a delay",
+      "##1": "a one clock cycle delay"
+    },
+    "Assertion Explaination": "if the decode stage is active and the opcode from the instruction fetch stage equals the store word instruction, then one clock cycle later the immediate selection signal is deactivated"
+  },
+  "Assertion 12": {
+    "clock signal condition": "@(posedge clk)",
+    "disable condition": "disable iff (rst)",
+    "logical expression": "(!id_freeze && if_insn[31:26] == `OR1200_OR32_SB) |-> ##1 (sel_imm ==  1'b0)",
+    "Signals": [
+      "id_freeze",
+      "if_insn[31:26]",
+      "sel_imm"
+    ],
+    "Signal Explanations": {
+      "id_freeze": "a signal indicating whether the instruction decode stage is frozen",
+      "if_insn[31:26]": "the opcode field from the fetched instruction in the instruction fetch stage",
+      "sel_imm": "a control signal for selecting an immediate operand"
+    },
+    "Logical Operators": [
+      "!",
+      "&&",
+      "==",
+      "|->",
+      "##1"
+    ],
+    "Logical Operators Explanation": {
+      "!": "logical negation, indicating that the signal is inactive",
+      "&&": "logical AND, which combines the conditions",
+      "==": "equality comparison",
+      "|->": "non-overlapping implication, meaning that if the left-hand condition is satisfied then the right-hand condition will hold after the specified delay",
+      "##1": "a delay of one clock cycle"
+    },
+    "Assertion Explaination": "if the decode stage is active and the opcode from the instruction fetch stage equals the store byte instruction, then one clock cycle later the immediate selection signal is deactivated"
+  },
+  "Assertion 13": {
+    "clock signal condition": "@(posedge clk)",
+    "disable condition": "disable iff (rst)",
+    "logical expression": "(!id_freeze && if_insn[31:26] == `OR1200_OR32_ALU) |-> ##1 (sel_imm ==  1'b0)",
+    "Signals": [
+      "id_freeze",
+      "if_insn[31:26]",
+      "sel_imm"
+    ],
+    "Signal Explanations": {
+      "id_freeze": "a signal indicating whether the instruction decode stage is frozen",
+      "if_insn[31:26]": "the opcode field from the instruction fetched in the instruction fetch stage",
+      "sel_imm": "a control signal that selects whether to use an immediate operand"
+    },
+    "Logical Operators": [
+      "!",
+      "&&",
+      "==",
+      "|->",
+      "##1"
+    ],
+    "Logical Operators Explanation": {
+      "!": "logical negation, meaning the signal is inactive",
+      "&&": "logical AND, requiring both conditions to be true",
+      "==": "equality comparison",
+      "|->": "non-overlapping implication, which enforces that if the left condition is met then the right condition must follow after the delay",
+      "##1": "a delay of one clock cycle"
+    },
+    "Assertion Explaination": "if the decode stage is active and the opcode from the instruction fetch stage equals an ALU operation instruction, then one clock cycle later the immediate selection signal is deactivated"
+  },
+  "Assertion 14": {
+    "clock signal condition": "@(posedge clk)",
+    "disable condition": "disable iff (rst)",
+    "logical expression": "(!id_freeze && if_insn[31:26] == `OR1200_OR32_SFXX) |-> ##1 (sel_imm ==  1'b0)",
+    "Signals": [
+      "id_freeze",
+      "if_insn[31:26]",
+      "sel_imm"
+    ],
+    "Signal Explanations": {
+      "id_freeze": "a signal indicating whether the instruction decode stage is frozen",
+      "if_insn[31:26]": "the opcode field from the fetched instruction in the instruction fetch stage",
+      "sel_imm": "a signal that determines whether an immediate operand is selected"
+    },
+    "Logical Operators": [
+      "!",
+      "&&",
+      "==",
+      "|->",
+      "##1"
+    ],
+    "Logical Operators Explanation": {
+      "!": "logical negation, indicating the signal is inactive",
+      "&&": "logical AND, combining the required conditions",
+      "==": "equality comparison",
+      "|->": "non-overlapping implication, meaning that if the left-hand condition holds then the right-hand condition will hold after the delay",
+      "##1": "a delay of one clock cycle"
+    },
+    "Assertion Explaination": "if the decode stage is active and the opcode from the instruction fetch stage corresponds to a special function instruction, then one clock cycle later the immediate selection signal is deactivated"
+  }
+}

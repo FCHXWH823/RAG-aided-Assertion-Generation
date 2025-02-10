@@ -1,0 +1,20 @@
+{
+"Assertion 1": {
+"clock signal condition": "@(posedge clk)",
+"disable condition": "disable iff (~resetn)",
+"logical expression": "unused_bin_inc | $onehot(gray_next ^ gray_q)",
+"Signals": ["unused_bin_inc", "gray_next", "gray_q"],
+"Signal Explanations": {
+  "unused_bin_inc": "carry-out bit from the binary counter addition that is not used",
+  "gray_next": "next computed Gray code resulting from the binary-to-Gray conversion",
+  "gray_q": "current Gray code state stored in the register and assigned to the output"
+},
+"Logical Operators": ["|", "$onehot", "^"],
+"Logical Operators Explanation": {
+  "|": "logical OR operator that returns true when at least one operand is true",
+  "$onehot": "built-in function that returns true if exactly one bit in its operand is set",
+  "^": "bitwise XOR operator that yields true for bits that differ"
+},
+"Assertion Explaination": "Either the unutilized carry-out bit from the binary addition is asserted or the condition that verifies exactly one bit difference between the upcoming Gray code (computed from the binary counter) and the current Gray code holds"
+}
+}

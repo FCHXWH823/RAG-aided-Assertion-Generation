@@ -1,0 +1,28 @@
+{
+  "Assertion 1": {
+    "clock signal condition": "@(posedge clk)",
+    "disable condition": "",
+    "logical expression": "s_eventually rst == 1 || scl_not_ena == 1 || stretch == 1",
+    "Signals": [
+      "rst",
+      "scl_not_ena",
+      "stretch"
+    ],
+    "Signal Explanations": {
+      "rst": "reset input signal",
+      "scl_not_ena": "input signal that controls whether the serial clock line is enabled",
+      "stretch": "flag register indicating if clock stretching is active"
+    },
+    "Logical Operators": [
+      "s_eventually",
+      "==",
+      "||"
+    ],
+    "Logical Operators Explanation": {
+      "s_eventually": "asserts that eventually, in the future, the specified condition holds true",
+      "==": "checks if the value is equal to",
+      "||": "logical OR operator combining conditions"
+    },
+    "Assertion Explaination": "Eventually, it is required that either the reset input becomes active (equal to 1) or the control for enabling the serial clock line becomes active (equal to 1) or the flag indicating active clock stretching is set (equal to 1)"
+  }
+}

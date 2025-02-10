@@ -1,0 +1,18 @@
+{
+"Assertion 1": {
+    "clock signal condition": "@(posedge clk)",
+    "disable condition": "",
+    "logical expression": "rst == 1 || disp_ena == 1",
+    "Signals": ["rst", "disp_ena"],
+    "Signal Explanations": {
+        "rst": "reset input signal of the verilog module",
+        "disp_ena": "display enable signal that is active when the current pixel is within the valid display area"
+    },
+    "Logical Operators": ["==", "||", "=="],
+    "Logical Operators Explanation": {
+        "==": "checks if two values are equal",
+        "||": "logical OR; returns true if at least one of the operands is true"
+    },
+    "Assertion Explaination": "it is eventually ensured that either the reset input signal is equal to its active value as determined by an equality check, or the display enable signal is equal to its active value as determined by an equality check; the OR operation combines these conditions so that if one holds, the overall requirement is satisfied"
+}
+}

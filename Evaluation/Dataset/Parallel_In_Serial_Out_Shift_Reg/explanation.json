@@ -1,0 +1,21 @@
+{
+"Assertion 1": {
+"clock signal condition": "@(posedge clk)",
+"disable condition": "disable iff (~resetn)",
+"logical expression": "~v_f_q | (v_f_q & din_f_q[0] == dout)",
+"Signals": ["v_f_q", "din_f_q[0]", "dout"],
+"Signal Explanations": {
+  "v_f_q": "an internal register that holds a flag indicating that a valid data enable has been applied and the input data is considered valid",
+  "din_f_q[0]": "the least significant bit of a registered, pipelined version of the parallel input data that is shifted over time",
+  "dout": "the serialized output derived from the least significant bit of the primary shift register"
+},
+"Logical Operators": ["~", "|", "&", "=="],
+"Logical Operators Explanation": {
+  "~": "a logical negation that inverts the value of the operand",
+  "|": "a logical OR operator that yields true if at least one of the operands is true",
+  "&": "a logical AND operator that yields true only if both operands are true",
+  "==": "an equality operator that compares two values for equivalence"
+},
+"Assertion Explaination": "This assertion means that either the flag indicating valid data is not set (negation of the valid flag) or, if the flag is set, then the condition requires that the least significant bit of the pipelined version of the parallel input data matches the current serialized output bit. In other words, when the data is considered valid, the serialized output must equal the buffered input’s least significant bit."
+}
+}

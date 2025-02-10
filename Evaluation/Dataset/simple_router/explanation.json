@@ -1,0 +1,176 @@
+{
+  "Assertion 1": {
+    "clock signal condition": "",
+    "disable condition": "",
+    "logical expression": "din_en | ((dout0 == 0) & (dout1 == 0) & (dout2 == 0) & (dout3 == 0))",
+    "Signals": [
+      "din_en",
+      "dout0",
+      "dout1",
+      "dout2",
+      "dout3"
+    ],
+    "Signal Explanations": {
+      "din_en": "input data enable signal indicating that input data is active",
+      "dout0": "data output for channel 0 that carries input data when selected, otherwise zero",
+      "dout1": "data output for channel 1 that carries input data when selected, otherwise zero",
+      "dout2": "data output for channel 2 that carries input data when selected, otherwise zero",
+      "dout3": "data output for channel 3 that carries input data when selected, otherwise zero"
+    },
+    "Logical Operators": [
+      "|",
+      "&",
+      "=="
+    ],
+    "Logical Operators Explanation": {
+      "|": "logical OR, condition is true if at least one operand is true",
+      "&": "logical AND, condition is true if both operands are true",
+      "==": "equality operator that checks if two values are the same"
+    },
+    "Assertion Explaination": "Either the input data enable signal is active or all channel outputs are zero."
+  },
+  "Assertion 2": {
+    "clock signal condition": "",
+    "disable condition": "",
+    "logical expression": "~(din_en & (addr == 2'd0)) | ((dout0 == din) & (dout1 == 0) & (dout2 == 0) & (dout3 == 0))",
+    "Signals": [
+      "din_en",
+      "addr",
+      "dout0",
+      "din",
+      "dout1",
+      "dout2",
+      "dout3"
+    ],
+    "Signal Explanations": {
+      "din_en": "input data enable signal indicating that input data is active",
+      "addr": "input address used to select the output channel",
+      "dout0": "data output for channel 0 that should carry the input data when selected",
+      "din": "input data to be routed",
+      "dout1": "data output for channel 1 that remains zero when channel 0 is selected",
+      "dout2": "data output for channel 2 that remains zero when channel 0 is selected",
+      "dout3": "data output for channel 3 that remains zero when channel 0 is selected"
+    },
+    "Logical Operators": [
+      "~",
+      "&",
+      "==",
+      "|"
+    ],
+    "Logical Operators Explanation": {
+      "~": "logical NOT that inverts the condition",
+      "&": "logical AND ensuring both conditions occur simultaneously",
+      "==": "equality operator that checks if two values are the same",
+      "|": "logical OR, condition is true if at least one operand is true"
+    },
+    "Assertion Explaination": "Either the condition for channel 0 to be active is not met, or when it is active the output routing delivers the input data to channel 0 and holds all other channel outputs at zero."
+  },
+  "Assertion 3": {
+    "clock signal condition": "",
+    "disable condition": "",
+    "logical expression": "~(din_en & (addr == 2'd1)) | ((dout1 == din) & (dout0 == 0) & (dout2 == 0) & (dout3 == 0))",
+    "Signals": [
+      "din_en",
+      "addr",
+      "dout1",
+      "din",
+      "dout0",
+      "dout2",
+      "dout3"
+    ],
+    "Signal Explanations": {
+      "din_en": "input data enable signal indicating that input data is active",
+      "addr": "input address used to select the output channel",
+      "dout1": "data output for channel 1 that should carry the input data when selected",
+      "din": "input data to be routed",
+      "dout0": "data output for channel 0 that remains zero when channel 1 is selected",
+      "dout2": "data output for channel 2 that remains zero when channel 1 is selected",
+      "dout3": "data output for channel 3 that remains zero when channel 1 is selected"
+    },
+    "Logical Operators": [
+      "~",
+      "&",
+      "==",
+      "|"
+    ],
+    "Logical Operators Explanation": {
+      "~": "logical NOT that inverts the condition",
+      "&": "logical AND ensuring both conditions occur simultaneously",
+      "==": "equality operator that checks if two values are the same",
+      "|": "logical OR, condition is true if at least one operand is true"
+    },
+    "Assertion Explaination": "Either the condition for channel 1 to be active is not met, or when active the routing ensures that channel 1 carries the input data while all other channel outputs remain zero."
+  },
+  "Assertion 4": {
+    "clock signal condition": "",
+    "disable condition": "",
+    "logical expression": "~(din_en & (addr == 2'd2)) | ((dout2 == din) & (dout0 == 0) & (dout1 == 0) & (dout3 == 0))",
+    "Signals": [
+      "din_en",
+      "addr",
+      "dout2",
+      "din",
+      "dout0",
+      "dout1",
+      "dout3"
+    ],
+    "Signal Explanations": {
+      "din_en": "input data enable signal indicating that input data is active",
+      "addr": "input address used to select the output channel",
+      "dout2": "data output for channel 2 that should carry the input data when selected",
+      "din": "input data to be routed",
+      "dout0": "data output for channel 0 that remains zero when channel 2 is selected",
+      "dout1": "data output for channel 1 that remains zero when channel 2 is selected",
+      "dout3": "data output for channel 3 that remains zero when channel 2 is selected"
+    },
+    "Logical Operators": [
+      "~",
+      "&",
+      "==",
+      "|"
+    ],
+    "Logical Operators Explanation": {
+      "~": "logical NOT that inverts the condition",
+      "&": "logical AND ensuring both conditions occur simultaneously",
+      "==": "equality operator that checks if two values are the same",
+      "|": "logical OR, condition is true if at least one operand is true"
+    },
+    "Assertion Explaination": "Either the condition for channel 2 to be active is not met, or when active the routing ensures that channel 2 carries the input data while all other channel outputs remain zero."
+  },
+  "Assertion 5": {
+    "clock signal condition": "",
+    "disable condition": "",
+    "logical expression": "~(din_en & (addr == 2'd3)) | ((dout3 == din) & (dout0 == 0) & (dout1 == 0) & (dout2 == 0))",
+    "Signals": [
+      "din_en",
+      "addr",
+      "dout3",
+      "din",
+      "dout0",
+      "dout1",
+      "dout2"
+    ],
+    "Signal Explanations": {
+      "din_en": "input data enable signal indicating that input data is active",
+      "addr": "input address used to select the output channel",
+      "dout3": "data output for channel 3 that should carry the input data when selected",
+      "din": "input data to be routed",
+      "dout0": "data output for channel 0 that remains zero when channel 3 is selected",
+      "dout1": "data output for channel 1 that remains zero when channel 3 is selected",
+      "dout2": "data output for channel 2 that remains zero when channel 3 is selected"
+    },
+    "Logical Operators": [
+      "~",
+      "&",
+      "==",
+      "|"
+    ],
+    "Logical Operators Explanation": {
+      "~": "logical NOT that inverts the condition",
+      "&": "logical AND ensuring both conditions occur simultaneously",
+      "==": "equality operator that checks if two values are the same",
+      "|": "logical OR, condition is true if at least one operand is true"
+    },
+    "Assertion Explaination": "Either the condition for channel 3 to be active is not met, or when active the routing ensures that channel 3 carries the input data while all other channel outputs remain zero."
+  }
+}

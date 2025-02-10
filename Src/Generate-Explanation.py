@@ -4,6 +4,7 @@ import csv
 import random
 import yaml
 import json
+import os
 #client = OpenAI()
 
 def init_prompt_template_completion(model_id,code):
@@ -37,7 +38,7 @@ model_name = "o3-mini"
 eval_num = 100
 
 
-example_code = '''
+example_code_with_assertions = '''
 module ff
   (
    input logic clk, rst, en, in,
@@ -46,44 +47,29 @@ module ff
 
    always_ff @(posedge clk or posedge rst)
       if (rst) out = 1'b0;
-      else if (en) out = in;         
-endmodule
-'''
+      else if (en) out = in;  
 
-example_assertions = '''
-module ff_sva(
-input logic clk,
-input logic rst, 
-input logic en,
-input logic in,
-input logic out
-);
-
-    default clocking cb @(posedge clk);
-    endclocking
-    default disable iff (rst);
-
-   assert proprty(!en |-> out == $past(in,1));
-
-   assert proprty(en || out == $past(in,1));
-
-   assert property(en |=> out == $past(in,1));
-
+    assert proprty(@(posedge clk) default disable iff (rst) !en |-> out == $past(in,1));
+    assert proprty(en || out == $past(in,1));
+    assert property(@(posedge clk) default disable iff (rst) en |=> out == $past(in,1));
 endmodule
 '''
 
 assertion_explanation_prompt = '''
-step 1: extract all signals in the assertion; 
+step 0: extract the clock signal condition (optional), the disable condition (optional), the logical expression;
+step 1: extract all signals in the logical expression; 
 step 2: get all signals' explanations in the context of given verilog code;
-step 3: extract all logical operators in the assertion;
+step 3: extract all logical operators in the logical expression;
 step 4: get all logical operators' explanations;
-step 5: STRICTLY use the explanations of signals and logic operators to generate the explanation of the assertion  .
+step 5: generate the explanation ONLY for the logical expression WITHOUT containing initial signal names and STRICTLY using the explanations of signals and logic operators.
 '''
 
 assertion_output_format = '''
 {
 "Assertion 1": {
-"Assertion": ,
+"clock signal condition": ,
+"disable condition": ,
+"logical expression": ,
 "Signals": [],
 "Signal Explanations": {},
 "Logical Operators": [],
@@ -91,7 +77,9 @@ assertion_output_format = '''
 "Assertion Explaination": 
 },
 "Assertion 2": {
-"Assertion": ,
+"clock signal condition": ,
+"disable condition": ,
+"logical expression": ,
 "Signals": [],
 "Signal Explanations": {},
 "Logical Operators": [],
@@ -105,7 +93,9 @@ assertion_output_format = '''
 example_assertions_explanations = '''
 {
 "Assertion 1": {
-"Assertion": "assert proprty(!en |-> out == $past(in,1));",
+"clock signal condition": @(posedge clk),
+"disable condition": default disable iff (rst),
+"logical expression": !en |-> out == $past(in,1),
 "Signals": ["en", "out", "in"],
 "Signal Explanations": {
           "en": "enable signal",
@@ -123,7 +113,9 @@ example_assertions_explanations = '''
 },
 
 "Assertion 2": {
-"Assertion": "assert proprty(en || out == $past(in,1));",
+"clock signal condition": ,
+"disable condition": ,
+"logical expression": en || out == $past(in,1),
 "Signals": ["en", "out", "in"],
 "Signal Explanations": {
           "en": "enable signal",
@@ -140,7 +132,9 @@ example_assertions_explanations = '''
 },
 
 "Assertion 3": {
-"Assertion": "assert property(en |=> out == $past(in,1));",
+"clock signal condition": @(posedge clk),
+"disable condition": default disable iff (rst),
+"logical expression": en |=> out == $past(in,1),
 "Signals": ["en", "out", "in"],
 "Signal Explanations": {
           "en": "enable signal",
@@ -210,19 +204,18 @@ def parse_assertion_explanation(assertion_explanations):
           return explanations
 
 def generate_assertions_explanation_dataset():
-    df = pd.read_excel('Evaluation/asserted-verilog-evaluation-dataset-new-2.xlsx')
-    with open('Evaluation/asserted-verilog-evaluation-dataset-new-2.csv', 'w', newline='') as csv_file:
-        csv_writer = csv.writer(csv_file)
-        csv_writer.writerow(['code','assertion','link','HumanExplanation'])
-        for id in range(len(df)):
-            code = df.iloc[id]['code']
-            link = df.iloc[id]['link']
-            assertion = df.iloc[id]['assertion']
-            prompt = f"Given the following verilog code: \n{code}\n and its corresponding several assertions: \n{assertion}\n. Please explain each of them following {assertion_explanation_prompt} and the final output must follow the format {assertion_output_format} STRICTLY and without other contents\
+    for folder in os.listdir("Evaluation/Dataset"):
+        folder_path = os.path.join("Evaluation/Dataset/",folder)
+        if os.path.isdir(folder_path):    
+            master_module = folder
+            fpv_dir = "Evaluation/Dataset/"+master_module+"/"
+
+            with open(fpv_dir+master_module+"_assertion.sv","r") as file:
+                verilog_code_w_assertions = file.read()
+            
+            prompt = f"Given the following verilog code with several assertions: \n{verilog_code_w_assertions}\n. Please explain each of them following {assertion_explanation_prompt} and the final output must follow the format {assertion_output_format} STRICTLY and WITHOUT other contents \
             Given some assertion explanation examples: \n{example_assertions_explanations}\n"
-
-
-            #print("1---------------------------------------------------------------")
+            
             completion = client.chat.completions.create(
             model=model_name,
             messages=[
@@ -233,7 +226,10 @@ def generate_assertions_explanation_dataset():
 
             assertion_explanations = completion.choices[0].message.content
 
-            csv_writer.writerow([code,assertion,link,assertion_explanations])
+            with open(fpv_dir+"explanation.json","w") as file:
+                file.write(assertion_explanations)
+
+
 
 def assertion_transform():
     df = pd.read_excel('Evaluation/asserted-verilog-evaluation-dataset-new-2.xlsx')
@@ -259,9 +255,9 @@ def assertion_transform():
 
             csv_writer.writerow([code,assertion,transformed_assertion,link])
 
-assertion_transform()
+# assertion_transform()
 
-# generate_assertions_explanation_dataset()
+generate_assertions_explanation_dataset()
 
 # with open('Evaluation/asserted-verilog-evaluation-dataset-new-2.csv', 'r', newline='') as csv_file:
 #         df_csv = pd.read_csv('Evaluation/asserted-verilog-evaluation-dataset-new-2.csv')

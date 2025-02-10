@@ -1,0 +1,18 @@
+{
+"Assertion 1": {
+"clock signal condition": "@(posedge clk)",
+"disable condition": "",
+"logical expression": "1 |-> s_eventually(~pulse)",
+"Signals": ["pulse"],
+"Signal Explanations": {
+  "pulse": "output pulse signal of the PWM module that is driven high while an internal counter is below a computed threshold and low otherwise"
+},
+"Logical Operators": ["|->", "~", "s_eventually"],
+"Logical Operators Explanation": {
+  "|->": "if the left‐side condition holds, then the property on the right must eventually become true in subsequent clock cycles",
+  "~": "logical negation that inverts a Boolean value",
+  "s_eventually": "a temporal operator indicating that the contained condition is required to occur at some future clock cycle"
+},
+"Assertion Explaination": "since a condition that is always true holds, it mandates that eventually the condition where the inversion of the output pulse signal becomes true must be satisfied"
+}
+}

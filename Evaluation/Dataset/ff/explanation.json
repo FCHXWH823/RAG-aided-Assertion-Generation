@@ -1,0 +1,38 @@
+{
+  "Assertion 1": {
+    "clock signal condition": "@(posedge clk)",
+    "disable condition": "disable iff (rst)",
+    "logical expression": "en |=> out == $past(in,1)",
+    "Signals": ["en", "out", "in"],
+    "Signal Explanations": {
+      "en": "enable signal",
+      "out": "output signal of the verilog module",
+      "in": "input signal of the verilog module"
+    },
+    "Logical Operators": ["|=>", "==", "$past"],
+    "Logical Operators Explanation": {
+      "|=>": "non-overlapping implication meaning that if the antecedent is true in the current clock cycle, then the consequent must be true in the following clock cycle",
+      "==": "equality comparison",
+      "$past": "refers to the value of a signal in the previous clock cycle"
+    },
+    "Assertion Explaination": "when the enable signal is active, the output signal must equal the input signal's value from the previous clock cycle"
+  },
+  "Assertion 2": {
+    "clock signal condition": "@(posedge clk)",
+    "disable condition": "disable iff (rst)",
+    "logical expression": "!en |=> out == $past(out,1)",
+    "Signals": ["en", "out"],
+    "Signal Explanations": {
+      "en": "enable signal",
+      "out": "output signal of the verilog module"
+    },
+    "Logical Operators": ["!", "|=>", "==", "$past"],
+    "Logical Operators Explanation": {
+      "!": "logical negation indicating the signal is not active",
+      "|=>": "non-overlapping implication meaning that if the antecedent is true in the current clock cycle, then the consequent must be true in the following clock cycle",
+      "==": "equality comparison",
+      "$past": "refers to the value of a signal in the previous clock cycle"
+    },
+    "Assertion Explaination": "when the enable signal is inactive, the output signal must equal its own value from the previous clock cycle"
+  }
+}

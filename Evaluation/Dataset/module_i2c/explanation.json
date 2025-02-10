@@ -1,0 +1,160 @@
+{
+  "Assertion 1": {
+    "clock signal condition": "@(posedge PCLK)",
+    "disable condition": "",
+    "logical expression": "(fifo_rx_f_empty == 1) |-> (RX_EMPTY == 1)",
+    "Signals": [
+      "fifo_rx_f_empty",
+      "RX_EMPTY"
+    ],
+    "Signal Explanations": {
+      "fifo_rx_f_empty": "the flag that indicates whether the RX FIFO is empty",
+      "RX_EMPTY": "the output signal reflecting the empty status of the RX FIFO"
+    },
+    "Logical Operators": [
+      "==",
+      "|->"
+    ],
+    "Logical Operators Explanation": {
+      "==": "checks equality between the two operands",
+      "|->": "implies that if the antecedent is true then the consequent must be true in the subsequent cycle"
+    },
+    "Assertion Explaination": "if the flag indicating that the RX FIFO is empty evaluates to true then, in the next cycle, the output signal reflecting the RX empty status must also be true"
+  },
+  "Assertion 2": {
+    "clock signal condition": "@(posedge PCLK)",
+    "disable condition": "",
+    "logical expression": "(fifo_rx_f_empty == 0) |-> (RX_EMPTY == 0)",
+    "Signals": [
+      "fifo_rx_f_empty",
+      "RX_EMPTY"
+    ],
+    "Signal Explanations": {
+      "fifo_rx_f_empty": "the flag that indicates whether the RX FIFO is empty",
+      "RX_EMPTY": "the output signal reflecting the empty status of the RX FIFO"
+    },
+    "Logical Operators": [
+      "==",
+      "|->"
+    ],
+    "Logical Operators Explanation": {
+      "==": "checks equality between the two operands",
+      "|->": "implies that if the antecedent is true then the consequent must be true in the subsequent cycle"
+    },
+    "Assertion Explaination": "if the flag indicating that the RX FIFO is empty is false then, in the next cycle, the output signal reflecting the RX empty status must also be false"
+  },
+  "Assertion 3": {
+    "clock signal condition": "@(posedge PCLK)",
+    "disable condition": "",
+    "logical expression": "(fifo_rx_f_empty == 1) |-> (RX_EMPTY == 1)",
+    "Signals": [
+      "fifo_rx_f_empty",
+      "RX_EMPTY"
+    ],
+    "Signal Explanations": {
+      "fifo_rx_f_empty": "the flag that indicates whether the RX FIFO is empty",
+      "RX_EMPTY": "the output signal reflecting the empty status of the RX FIFO"
+    },
+    "Logical Operators": [
+      "==",
+      "|->"
+    ],
+    "Logical Operators Explanation": {
+      "==": "checks equality between the two operands",
+      "|->": "implies that if the antecedent is true then the consequent must be true in the subsequent cycle"
+    },
+    "Assertion Explaination": "if the flag indicating that the RX FIFO is empty evaluates to true then, in the next cycle, the output signal reflecting the RX empty status must also be true"
+  },
+  "Assertion 4": {
+    "clock signal condition": "@(posedge PCLK)",
+    "disable condition": "",
+    "logical expression": "(fifo_rx_f_empty == 0) |-> (RX_EMPTY == 0)",
+    "Signals": [
+      "fifo_rx_f_empty",
+      "RX_EMPTY"
+    ],
+    "Signal Explanations": {
+      "fifo_rx_f_empty": "the flag that indicates whether the RX FIFO is empty",
+      "RX_EMPTY": "the output signal reflecting the empty status of the RX FIFO"
+    },
+    "Logical Operators": [
+      "==",
+      "|->"
+    ],
+    "Logical Operators Explanation": {
+      "==": "checks equality between the two operands",
+      "|->": "implies that if the antecedent is true then the consequent must be true in the subsequent cycle"
+    },
+    "Assertion Explaination": "if the flag indicating that the RX FIFO is empty is false then, in the next cycle, the output signal reflecting the RX empty status must also be false"
+  },
+  "Assertion 5": {
+    "clock signal condition": "@(posedge PCLK)",
+    "disable condition": "",
+    "logical expression": "(DATA_CONFIG_REG[1] == 0) |-> (ERROR == 0)",
+    "Signals": [
+      "DATA_CONFIG_REG[1]",
+      "ERROR"
+    ],
+    "Signal Explanations": {
+      "DATA_CONFIG_REG[1]": "bit 1 of the register configuration signal used to determine operating modes",
+      "ERROR": "the signal that indicates an error condition in the module"
+    },
+    "Logical Operators": [
+      "==",
+      "|->"
+    ],
+    "Logical Operators Explanation": {
+      "==": "checks equality between the two operands",
+      "|->": "implies that if the cause condition is met then the result condition must hold in the subsequent cycle"
+    },
+    "Assertion Explaination": "if the second bit of the configuration register indicates a value of zero then, in the following cycle, the error signal must be zero"
+  },
+  "Assertion 6": {
+    "clock signal condition": "@(posedge PCLK)",
+    "disable condition": "",
+    "logical expression": "(DATA_CONFIG_REG[0] == 0) |-> (ERROR == 0)",
+    "Signals": [
+      "DATA_CONFIG_REG[0]",
+      "ERROR"
+    ],
+    "Signal Explanations": {
+      "DATA_CONFIG_REG[0]": "bit 0 of the register configuration signal that selects operational aspects of the module",
+      "ERROR": "the signal that indicates an error condition in the module"
+    },
+    "Logical Operators": [
+      "==",
+      "|->"
+    ],
+    "Logical Operators Explanation": {
+      "==": "checks equality between two operands",
+      "|->": "indicates that if the condition on the left side holds then the right side must hold in the next cycle"
+    },
+    "Assertion Explaination": "if the first bit of the configuration register equals zero then, in the subsequent cycle, the error signal must also equal zero"
+  },
+  "Assertion 7": {
+    "clock signal condition": "@(posedge PCLK)",
+    "disable condition": "",
+    "logical expression": "(DATA_CONFIG_REG[0] == 1 & DATA_CONFIG_REG[1] == 1) |-> (ERROR == 1)",
+    "Signals": [
+      "DATA_CONFIG_REG[0]",
+      "DATA_CONFIG_REG[1]",
+      "ERROR"
+    ],
+    "Signal Explanations": {
+      "DATA_CONFIG_REG[0]": "bit 0 of the register configuration signal that selects operational aspects of the module",
+      "DATA_CONFIG_REG[1]": "bit 1 of the register configuration signal used to determine operating modes",
+      "ERROR": "the signal that indicates an error condition in the module"
+    },
+    "Logical Operators": [
+      "==",
+      "&",
+      "|->"
+    ],
+    "Logical Operators Explanation": {
+      "==": "checks equality between two operands",
+      "&": "performs a logical AND between the conditions",
+      "|->": "implies that if the compound condition on the left is true then the condition on the right must be true in the subsequent cycle"
+    },
+    "Assertion Explaination": "if both the first and second bits of the configuration register are set to one then, in the following cycle, the error signal must be one"
+  }
+}

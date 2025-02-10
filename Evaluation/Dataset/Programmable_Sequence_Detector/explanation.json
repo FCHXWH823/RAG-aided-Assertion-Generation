@@ -1,0 +1,18 @@
+{
+"Assertion 1": {
+"clock signal condition": "@(posedge clk)",
+"disable condition": "default disable iff (~resetn)",
+"logical expression": "seen == (seq_q == init)",
+"Signals": ["seen", "seq_q", "init"],
+"Signal Explanations": {
+  "seen": "output indicator signaling if the captured sequence matches the pattern",
+  "seq_q": "register storing the sequential bits captured from the input",
+  "init": "input sequence pattern used for detection"
+},
+"Logical Operators": ["=="],
+"Logical Operators Explanation": {
+  "==": "equality comparison indicating that two boolean values are identical"
+},
+"Assertion Explaination": "This assertion verifies that the boolean indicator, which reflects the sequence detection result, exactly equals the boolean value obtained by comparing the stored sequence with the provided detection pattern, ensuring that the flag correctly mirrors the outcome of the comparison."
+}
+}

@@ -1,0 +1,58 @@
+{
+  "Assertion 1": {
+    "clock signal condition": "@(posedge clk)",
+    "disable condition": "disable iff (rst)",
+    "logical expression": "count < CYCLES || out == $past(in, CYCLES, en)",
+    "Signals": ["count", "CYCLES", "out", "in", "en"],
+    "Signal Explanations": {
+      "count": "a counter that tracks how many delay stages have been clocked in",
+      "CYCLES": "the configured number of cycles that the delay is intended to span",
+      "out": "the final output value produced by the module after the delay",
+      "in": "the input value provided to the delay module",
+      "en": "an enable control signal that allows the delay to progress when asserted"
+    },
+    "Logical Operators": ["<", "||", "==", "$past"],
+    "Logical Operators Explanation": {
+      "<": "checks if one value is less than another",
+      "||": "logical OR, meaning that if one of the conditions is true, the whole expression is true",
+      "==": "determines equality between two values",
+      "$past": "returns a signal's value from a specified number of previous cycles under an enable condition"
+    },
+    "Assertion Explaination": "It states that either the delay stage counter is less than the configured delay cycle count using a less-than operator, or, by comparing for equality with a past value retrieved after the configured number of cycles (conditioned on the enable signal), the module output is exactly the same as the input from that many cycles earlier."
+  },
+  "Assertion 2": {
+    "clock signal condition": "@(posedge clk)",
+    "disable condition": "disable iff (rst)",
+    "logical expression": "count == CYCLES || out == RESET_VALUE",
+    "Signals": ["count", "CYCLES", "out", "RESET_VALUE"],
+    "Signal Explanations": {
+      "count": "a counter that tracks how many delay stages have been clocked in",
+      "CYCLES": "the configured number of cycles that the delay is intended to span",
+      "out": "the final output value produced by the module after the delay",
+      "RESET_VALUE": "the value that the module output should assume when a reset is active"
+    },
+    "Logical Operators": ["==", "||"],
+    "Logical Operators Explanation": {
+      "==": "checks whether two values are equal",
+      "||": "logical OR, meaning that if one of the conditions is true, the whole expression is true"
+    },
+    "Assertion Explaination": "It requires that either the delay stage counter is exactly equal to the configured delay cycle count using an equality operator, or, if that is not the case, the module output must be equal to the predefined reset value, as determined by another equality operator combined with a logical OR."
+  },
+  "Assertion 3": {
+    "clock signal condition": "@(posedge clk)",
+    "disable condition": "disable iff (rst)",
+    "logical expression": "!en |=> $stable(out)",
+    "Signals": ["en", "out"],
+    "Signal Explanations": {
+      "en": "an enable control signal that allows the delay to progress when asserted",
+      "out": "the final output value produced by the module after the delay"
+    },
+    "Logical Operators": ["!", "|=>", "$stable"],
+    "Logical Operators Explanation": {
+      "!": "logical negation, indicating the opposite of the signal's value",
+      "|=>": "non-overlapping implication which means that if the antecedent (left-hand condition) is true at the current cycle, then the consequent (right-hand condition) must hold at the next cycle",
+      "$stable": "ensures that a value remains unchanged from one clock cycle to the next"
+    },
+    "Assertion Explaination": "It indicates that when the enable control is not active (as determined by a logical negation), then in the subsequent evaluation the output must remain unchanged, as enforced by the non-overlapping implication together with a stability check."
+  }
+}

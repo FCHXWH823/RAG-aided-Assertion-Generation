@@ -1,0 +1,34 @@
+{
+"Assertion 1": {
+"clock signal condition": "@(posedge clk)",
+"disable condition": "disable iff (rst)",
+"logical expression": "valid_wr |-> !full",
+"Signals": ["valid_wr", "full"],
+"Signal Explanations": {
+  "valid_wr": "a derived signal that indicates that a write request is valid when a write enable is asserted and the FIFO is not full",
+  "full": "an output signal that indicates the FIFO is full by comparing the write and read pointer portions"
+},
+"Logical Operators": ["|->", "!"],
+"Logical Operators Explanation": {
+  "|->": "non-overlapping implication meaning that if the first condition holds in a clock cycle then the second must hold in that same cycle",
+  "!": "logical negation indicating that the condition is false"
+},
+"Assertion Explaination": "if the condition indicating that a write request is valid is met then it implies that the status indicating the FIFO is full must be false"
+},
+"Assertion 2": {
+"clock signal condition": "@(posedge clk)",
+"disable condition": "disable iff (rst)",
+"logical expression": "valid_rd |-> !empty",
+"Signals": ["valid_rd", "empty"],
+"Signal Explanations": {
+  "valid_rd": "a derived signal that indicates that a read request is valid when a read enable is asserted and the FIFO is not empty",
+  "empty": "an output signal that indicates the FIFO is empty by checking if the read and write pointers are equal"
+},
+"Logical Operators": ["|->", "!"],
+"Logical Operators Explanation": {
+  "|->": "non-overlapping implication meaning that if the first condition holds in a clock cycle then the second must hold in that same cycle",
+  "!": "logical negation indicating that the condition is false"
+},
+"Assertion Explaination": "if the condition indicating that a read request is valid is met then it implies that the status indicating the FIFO is empty must be false"
+}
+}

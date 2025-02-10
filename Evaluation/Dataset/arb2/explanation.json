@@ -1,0 +1,142 @@
+{
+"Assertion 1": {
+"clock signal condition": "@(posedge clk)",
+"disable condition": "",
+"logical expression": "(state == 1 & req2 == 1) |-> (gnt1 == 0)",
+"Signals": ["state", "req2", "gnt1"],
+"Signal Explanations": {
+          "state": "internal control signal of the arbiter",
+          "req2": "second request input signal",
+          "gnt1": "first grant output signal"
+},
+"Logical Operators": ["==", "&", "|->"],
+"Logical Operators Explanation": {
+          "==": "checks equality",
+          "&": "logical AND",
+          "|->": "non-overlapping implication; if the condition before this operator holds then the condition after must hold in the same evaluation"
+},
+"Assertion Explaination": "if the internal control signal is equal to one and the second request input signal is active, then it implies that the first grant output signal must be inactive"
+},
+"Assertion 2": {
+"clock signal condition": "@(posedge clk)",
+"disable condition": "",
+"logical expression": "(req1 == 1 & state == 0) |-> (gnt1 == 1)",
+"Signals": ["req1", "state", "gnt1"],
+"Signal Explanations": {
+          "req1": "first request input signal",
+          "state": "internal control signal of the arbiter",
+          "gnt1": "first grant output signal"
+},
+"Logical Operators": ["==", "&", "|->"],
+"Logical Operators Explanation": {
+          "==": "checks equality",
+          "&": "logical AND",
+          "|->": "non-overlapping implication; if the condition before this operator holds then the condition after must hold in the same evaluation"
+},
+"Assertion Explaination": "if the first request input signal is active and the internal control signal is equal to zero, then it implies that the first grant output signal must be active"
+},
+"Assertion 3": {
+"clock signal condition": "@(posedge clk)",
+"disable condition": "",
+"logical expression": "(req1 == 0) |-> (gnt1 == 0)",
+"Signals": ["req1", "gnt1"],
+"Signal Explanations": {
+          "req1": "first request input signal",
+          "gnt1": "first grant output signal"
+},
+"Logical Operators": ["==", "|->"],
+"Logical Operators Explanation": {
+          "==": "checks equality",
+          "|->": "non-overlapping implication; if the condition before this operator holds then the condition after must hold in the same evaluation"
+},
+"Assertion Explaination": "if the first request input signal is inactive then it implies that the first grant output signal must be inactive"
+},
+"Assertion 4": {
+"clock signal condition": "@(posedge clk)",
+"disable condition": "",
+"logical expression": "(req1 == 1 & req2 == 0) |-> (gnt1 == 1)",
+"Signals": ["req1", "req2", "gnt1"],
+"Signal Explanations": {
+          "req1": "first request input signal",
+          "req2": "second request input signal",
+          "gnt1": "first grant output signal"
+},
+"Logical Operators": ["==", "&", "|->"],
+"Logical Operators Explanation": {
+          "==": "checks equality",
+          "&": "logical AND",
+          "|->": "non-overlapping implication; if the condition before this operator holds then the condition after must hold in the same evaluation"
+},
+"Assertion Explaination": "if the first request input signal is active and the second request input signal is inactive, then it implies that the first grant output signal must be active"
+},
+"Assertion 5": {
+"clock signal condition": "@(posedge clk)",
+"disable condition": "",
+"logical expression": "(req1 == 1 & state == 0) |-> (gnt2 == 0)",
+"Signals": ["req1", "state", "gnt2"],
+"Signal Explanations": {
+          "req1": "first request input signal",
+          "state": "internal control signal of the arbiter",
+          "gnt2": "second grant output signal"
+},
+"Logical Operators": ["==", "&", "|->"],
+"Logical Operators Explanation": {
+          "==": "checks equality",
+          "&": "logical AND",
+          "|->": "non-overlapping implication; if the condition before this operator holds then the condition after must hold in the same evaluation"
+},
+"Assertion Explaination": "if the first request input signal is active and the internal control signal is equal to zero, then it implies that the second grant output signal must be inactive"
+},
+"Assertion 6": {
+"clock signal condition": "@(posedge clk)",
+"disable condition": "",
+"logical expression": "(req2 == 1 & state == 1) |-> (gnt2 == 1)",
+"Signals": ["req2", "state", "gnt2"],
+"Signal Explanations": {
+          "req2": "second request input signal",
+          "state": "internal control signal of the arbiter",
+          "gnt2": "second grant output signal"
+},
+"Logical Operators": ["==", "&", "|->"],
+"Logical Operators Explanation": {
+          "==": "checks equality",
+          "&": "logical AND",
+          "|->": "non-overlapping implication; if the condition before this operator holds then the condition after must hold in the same evaluation"
+},
+"Assertion Explaination": "if the second request input signal is active and the internal control signal is equal to one, then it implies that the second grant output signal must be active"
+},
+"Assertion 7": {
+"clock signal condition": "@(posedge clk)",
+"disable condition": "",
+"logical expression": "(req2 == 0) |-> (gnt2 == 0)",
+"Signals": ["req2", "gnt2"],
+"Signal Explanations": {
+          "req2": "second request input signal",
+          "gnt2": "second grant output signal"
+},
+"Logical Operators": ["==", "|->"],
+"Logical Operators Explanation": {
+          "==": "checks equality",
+          "|->": "non-overlapping implication; if the condition before this operator holds then the condition after must hold in the same evaluation"
+},
+"Assertion Explaination": "if the second request input signal is inactive then it implies that the second grant output signal must be inactive"
+},
+"Assertion 8": {
+"clock signal condition": "@(posedge clk)",
+"disable condition": "",
+"logical expression": "(req2 == 1 & req1 == 0) |-> (gnt2 == 1)",
+"Signals": ["req2", "req1", "gnt2"],
+"Signal Explanations": {
+          "req2": "second request input signal",
+          "req1": "first request input signal",
+          "gnt2": "second grant output signal"
+},
+"Logical Operators": ["==", "&", "|->"],
+"Logical Operators Explanation": {
+          "==": "checks equality",
+          "&": "logical AND",
+          "|->": "non-overlapping implication; if the condition before this operator holds then the condition after must hold in the same evaluation"
+},
+"Assertion Explaination": "if the second request input signal is active and the first request input signal is inactive, then it implies that the second grant output signal must be active"
+}
+}

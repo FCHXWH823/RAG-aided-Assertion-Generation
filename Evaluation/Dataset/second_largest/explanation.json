@@ -1,0 +1,54 @@
+{
+  "Assertion 1": {
+    "clock signal condition": "",
+    "disable condition": "",
+    "logical expression": "(max_q == 0 & max2_q == 0) | ( max2_q < max_q)",
+    "Signals": ["max_q", "max2_q"],
+    "Signal Explanations": {
+      "max_q": "a register that holds the largest value encountered since reset",
+      "max2_q": "a register that holds the second largest value encountered"
+    },
+    "Logical Operators": ["==", "&", "|", "<"],
+    "Logical Operators Explanation": {
+      "==": "checks equality",
+      "&": "logical AND",
+      "|": "logical OR",
+      "<": "less than comparison"
+    },
+    "Assertion Explaination": "Either both the stored largest and second largest values are zero or the second largest value is less than the largest value, ensuring that when nonzero the ordering of values is maintained."
+  },
+  "Assertion 2": {
+    "clock signal condition": "at posedge clk",
+    "disable condition": "",
+    "logical expression": "(max_q == 0) | ( max_q > max2_q )",
+    "Signals": ["max_q", "max2_q"],
+    "Signal Explanations": {
+      "max_q": "a register that holds the largest value encountered since reset",
+      "max2_q": "a register that holds the second largest value encountered"
+    },
+    "Logical Operators": ["==", "|", ">"],
+    "Logical Operators Explanation": {
+      "==": "checks equality",
+      "|": "logical OR",
+      ">": "greater than comparison"
+    },
+    "Assertion Explaination": "At each clock edge, the stored largest value is either zero or strictly greater than the stored second largest value, thereby ensuring the proper order is maintained during operation."
+  },
+  "Assertion 3": {
+    "clock signal condition": "@(posedge clk)",
+    "disable condition": "disable iff (~resetn)",
+    "logical expression": "(max_q == 0) | (max_q > max2_q)",
+    "Signals": ["max_q", "max2_q"],
+    "Signal Explanations": {
+      "max_q": "a register that holds the largest value encountered since reset",
+      "max2_q": "a register that holds the second largest value encountered"
+    },
+    "Logical Operators": ["==", "|", ">"],
+    "Logical Operators Explanation": {
+      "==": "checks equality",
+      "|": "logical OR",
+      ">": "greater than comparison"
+    },
+    "Assertion Explaination": "On every positive clock edge, except when the reset is active, the property requires that the stored largest value is either zero or strictly greater than the stored second largest value, thus enforcing the expected value ordering."
+  }
+}

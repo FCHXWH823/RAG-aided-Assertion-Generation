@@ -1,0 +1,17 @@
+{
+"Assertion 1": {
+"clock signal condition": "@(posedge clk)",
+"disable condition": "disable iff (~rst)",
+"logical expression": "dout[0] == din[DATA_WIDTH-1]",
+"Signals": ["dout[0]", "din[DATA_WIDTH-1]"],
+"Signal Explanations": {
+          "dout[0]": "the lowest-order bit of the output vector that holds the reversed order of the input bits",
+          "din[DATA_WIDTH-1]": "the highest-order bit of the input vector"
+},
+"Logical Operators": ["=="],
+"Logical Operators Explanation": {
+          "==": "equal"
+},
+"Assertion Explaination": "the lowest-order bit of the reversed output is equal to the highest-order bit of the original input"
+}
+}

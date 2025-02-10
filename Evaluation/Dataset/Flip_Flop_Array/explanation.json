@@ -1,0 +1,53 @@
+{
+"Assertion 1": {
+"clock signal condition": "@(posedge clk)",
+"disable condition": "",
+"logical expression": "~(rd & wr) | (rd & wr & error)",
+"Signals": ["rd", "wr", "error"],
+"Signal Explanations": {
+  "rd": "control signal that initiates a read operation from the register file",
+  "wr": "control signal that initiates a write operation to the register file",
+  "error": "indicator that flags an error condition when simultaneous operations occur"
+},
+"Logical Operators": ["~", "&", "|"],
+"Logical Operators Explanation": {
+  "~": "logical negation, which inverts the truth value of an expression",
+  "&": "logical and, which produces true only when both operands are true",
+  "|": "logical or, which produces true when at least one operand is true"
+},
+"Assertion Explaination": "Either it is not the case that both the control signal initiating a read operation and the control signal initiating a write operation are active, or if both are active then the indicator that flags an error condition must also be active"
+},
+"Assertion 2": {
+"clock signal condition": "@(posedge clk)",
+"disable condition": "",
+"logical expression": "~(~data_v_q & rd_en) | (~data_v_q & rd_en & (dout == '0))",
+"Signals": ["data_v_q", "rd_en", "dout"],
+"Signal Explanations": {
+  "data_v_q": "register output that tracks which data entries in the register file have been written",
+  "rd_en": "signal derived from address matching that enables a read operation on a specific data entry",
+  "dout": "data output that delivers the read content from the register file"
+},
+"Logical Operators": ["~", "&", "|", "=="],
+"Logical Operators Explanation": {
+  "~": "logical negation, which inverts the truth value of an expression",
+  "&": "logical and, which produces true only when all involved conditions are true",
+  "|": "logical or, which produces true when at least one condition is true",
+  "==": "equality comparator, which checks if two expressions have the same value"
+},
+"Assertion Explaination": "Either it is not the case that an invalid data entry is being read, or if a read operation is attempted on a data entry that has not been marked as written then the data output must be equal to zero"
+},
+"Assertion 3": {
+"clock signal condition": "@(posedge clk)",
+"disable condition": "",
+"logical expression": "$onehot0(rd_v)",
+"Signals": ["rd_v"],
+"Signal Explanations": {
+  "rd_v": "aggregated indicator that shows which read operations are valid based on the combination of data validity and read enable signals"
+},
+"Logical Operators": ["$onehot0"],
+"Logical Operators Explanation": {
+  "$onehot0": "a function that checks whether the given signal has at most one active bit, ensuring that only one read operation is valid at any time"
+},
+"Assertion Explaination": "The aggregated indicator that shows valid read operations must have at most a single active bit to ensure that only one valid read occurs at a time"
+}
+}

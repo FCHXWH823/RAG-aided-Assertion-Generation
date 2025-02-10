@@ -1,0 +1,19 @@
+{
+"Assertion 1": {
+"clock signal condition": "@(posedge clk)",
+"disable condition": "disable iff(!rst_n)",
+"logical expression": "$rose(req) |-> ##2 $rose(ack)",
+"Signals": ["req", "ack"],
+"Signal Explanations": {
+  "req": "input request signal of the verilog module",
+  "ack": "output acknowledgement signal of the verilog module"
+},
+"Logical Operators": ["$rose", "|->", "##2"],
+"Logical Operators Explanation": {
+  "$rose": "detects when a signal makes a rising (positive) transition",
+  "|->": "non-overlapping implication, meaning if the antecedent is true the consequent must hold after the specified delay",
+  "##2": "indicates a delay of two clock cycles before evaluating the consequent"
+},
+"Assertion Explaination": "if a rising edge is detected on the input request signal, then two clock cycles later a rising edge must be detected on the output acknowledgement signal"
+}
+}

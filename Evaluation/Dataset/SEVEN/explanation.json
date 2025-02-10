@@ -1,0 +1,34 @@
+{
+"Assertion 1": {
+"clock signal condition": "@(posedge clk)",
+"disable condition": "",
+"logical expression": "rst == 1 || digit_select == 1",
+"Signals": ["rst", "digit_select"],
+"Signal Explanations": {
+  "rst": "the signal that initializes or clears the state of the module",
+  "digit_select": "the flip-flop that chooses which seven‐segment display digit to drive"
+},
+"Logical Operators": ["==", "||"],
+"Logical Operators Explanation": {
+  "==": "returns true when the compared value exactly matches the expected value",
+  "||": "evaluates to true if at least one of its operands is true"
+},
+"Assertion Explaination": "either the signal that initializes or clears the state of the module has a value equal to its active state or the flip-flop controlling the chosen display digit has a value equal to its active state"
+},
+"Assertion 2": {
+"clock signal condition": "@(posedge clk)",
+"disable condition": "",
+"logical expression": "rst == 1 || digit_select == 0",
+"Signals": ["rst", "digit_select"],
+"Signal Explanations": {
+  "rst": "the signal that initializes or clears the state of the module",
+  "digit_select": "the flip-flop that chooses which seven‐segment display digit to drive"
+},
+"Logical Operators": ["==", "||"],
+"Logical Operators Explanation": {
+  "==": "returns true when the compared value exactly matches the expected value",
+  "||": "evaluates to true if at least one of its operands is true"
+},
+"Assertion Explaination": "either the signal that initializes or clears the state of the module has a value equal to its active state or the flip-flop controlling the chosen display digit has a value equal to its inactive state"
+}
+}

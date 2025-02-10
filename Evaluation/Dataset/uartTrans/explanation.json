@@ -1,0 +1,66 @@
+{
+"Assertion 1": {
+"clock signal condition": "@(posedge clk)",
+"disable condition": "none",
+"logical expression": "(txNext == 0) |=> (tx == 0)",
+"Signals": ["txNext", "tx"],
+"Signal Explanations": {
+  "txNext": "the combinatorial next value computed for the transmission bit",
+  "tx": "the actual transmission bit output of the module"
+},
+"Logical Operators": ["==", "|=>"],
+"Logical Operators Explanation": {
+  "==": "checks equality",
+  "|=>": "non-overlapping implication meaning that if the condition on the left is true at a clock edge, then the condition on the right must hold at the next relevant clock cycle"
+},
+"Assertion Explaination": "if the computed next value for the transmission bit is equal to the low level then in the subsequent clock cycle the actual transmission bit output must be low"
+},
+"Assertion 2": {
+"clock signal condition": "@(posedge clk)",
+"disable condition": "none",
+"logical expression": "(txNext == 1) |=> (tx == 1)",
+"Signals": ["txNext", "tx"],
+"Signal Explanations": {
+  "txNext": "the combinatorial next value computed for the transmission bit",
+  "tx": "the actual transmission bit output of the module"
+},
+"Logical Operators": ["==", "|=>"],
+"Logical Operators Explanation": {
+  "==": "checks equality",
+  "|=>": "non-overlapping implication meaning that if the condition on the left is true at a clock edge, then the condition on the right must hold at the next relevant clock cycle"
+},
+"Assertion Explaination": "if the computed next value for the transmission bit is equal to the high level then in the subsequent clock cycle the actual transmission bit output must be high"
+},
+"Assertion 3": {
+"clock signal condition": "@(posedge clk)",
+"disable condition": "none",
+"logical expression": "(stateReg[0] == 1) |-> (txDoneTick == 0)",
+"Signals": ["stateReg[0]", "txDoneTick"],
+"Signal Explanations": {
+  "stateReg[0]": "the least significant bit of the current finite state machine state register",
+  "txDoneTick": "the flag indicating the completion of the transmission operation"
+},
+"Logical Operators": ["==", "|->"],
+"Logical Operators Explanation": {
+  "==": "checks equality",
+  "|->": "overlapping implication meaning that if the condition on the left is true, then the condition on the right must be true concurrently at the same clock cycle"
+},
+"Assertion Explaination": "if the least significant bit of the current state is equal to high then at that same clock cycle the flag signaling transmission completion must be low"
+},
+"Assertion 4": {
+"clock signal condition": "@(posedge clk)",
+"disable condition": "none",
+"logical expression": "(txStart == 0) |-> (txDoneTick == 0)",
+"Signals": ["txStart", "txDoneTick"],
+"Signal Explanations": {
+  "txStart": "the signal indicating the start of a transmission operation",
+  "txDoneTick": "the flag indicating the completion of the transmission operation"
+},
+"Logical Operators": ["==", "|->"],
+"Logical Operators Explanation": {
+  "==": "checks equality",
+  "|->": "overlapping implication meaning that if the condition on the left is true, then the condition on the right must be true concurrently at the same clock cycle"
+},
+"Assertion Explaination": "if the transmission start signal is low then at the same clock cycle the transmission completion flag must also be low"
+}
+}

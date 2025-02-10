@@ -1,0 +1,156 @@
+{
+  "Assertion 1": {
+    "clock signal condition": "@(posedge clk)",
+    "disable condition": "",
+    "logical expression": "(stateReg[0] == 0) |-> (rxDoneTick == 0)",
+    "Signals": [
+      "stateReg[0]",
+      "rxDoneTick"
+    ],
+    "Signal Explanations": {
+      "stateReg[0]": "the least significant bit of the register holding the current finite‐state machine state of the receiver",
+      "rxDoneTick": "the indicator signal that flags the completion of a UART reception"
+    },
+    "Logical Operators": [
+      "==",
+      "|->"
+    ],
+    "Logical Operators Explanation": {
+      "==": "tests equality between two values",
+      "|->": "non-overlapping implication operator meaning that if the left‐hand condition holds at the current cycle then the right-hand condition is expected to hold starting at the next relevant evaluation"
+    },
+    "Assertion Explaination": "if the bit representing the current state’s least significant portion is inactive then, in the subsequent evaluation, the indicator for completed reception must also be inactive"
+  },
+  "Assertion 2": {
+    "clock signal condition": "@(posedge clk)",
+    "disable condition": "",
+    "logical expression": "(sReg[2] == 0) |=> (rxDoneTick == 0)",
+    "Signals": [
+      "sReg[2]",
+      "rxDoneTick"
+    ],
+    "Signal Explanations": {
+      "sReg[2]": "the third bit of the register that counts the number of sampling ticks during oversampling",
+      "rxDoneTick": "the signal that designates when the reception process has successfully completed"
+    },
+    "Logical Operators": [
+      "==",
+      "|=>"
+    ],
+    "Logical Operators Explanation": {
+      "==": "checks for equality",
+      "|=>": "overlapping implication operator meaning that if the left-hand condition is true, then the right-hand condition must hold concurrently in the same cycle"
+    },
+    "Assertion Explaination": "if the specified bit of the oversampling counter is inactive then concurrently the completion indicator for reception must also be inactive"
+  },
+  "Assertion 3": {
+    "clock signal condition": "@(posedge clk)",
+    "disable condition": "",
+    "logical expression": "(sReg[1] == 0) |=> (rxDoneTick == 0)",
+    "Signals": [
+      "sReg[1]",
+      "rxDoneTick"
+    ],
+    "Signal Explanations": {
+      "sReg[1]": "the second bit of the oversampling counter register used to time the sampling process",
+      "rxDoneTick": "the flag signal that indicates finalization of the reception process"
+    },
+    "Logical Operators": [
+      "==",
+      "|=>"
+    ],
+    "Logical Operators Explanation": {
+      "==": "tests for equality between the two compared values",
+      "|=>": "represents an overlapping implication stating that if the condition on the left is met, then the condition on the right should hold in the same evaluation cycle"
+    },
+    "Assertion Explaination": "if the bit corresponding to the mid-order portion of the oversampling counter is inactive then the reception complete indicator must be inactive at that moment"
+  },
+  "Assertion 4": {
+    "clock signal condition": "@(posedge clk)",
+    "disable condition": "",
+    "logical expression": "(nReg[1] == 0) |=> (rxDoneTick == 0)",
+    "Signals": [
+      "nReg[1]",
+      "rxDoneTick"
+    ],
+    "Signal Explanations": {
+      "nReg[1]": "the second bit of the register counting the number of received data bits",
+      "rxDoneTick": "the signal that signifies the end of the UART data reception"
+    },
+    "Logical Operators": [
+      "==",
+      "|=>"
+    ],
+    "Logical Operators Explanation": {
+      "==": "indicates equality between the compared value and zero",
+      "|=>": "implies that when the left-hand condition is met, the right-hand condition must hold in the same clock cycle"
+    },
+    "Assertion Explaination": "if the bit from the data bit counter is inactive then, at that same moment, the indicator for completed reception must also be inactive"
+  },
+  "Assertion 5": {
+    "clock signal condition": "@(posedge clk)",
+    "disable condition": "",
+    "logical expression": "(nReg[0] == 0) |=> (rxDoneTick == 0)",
+    "Signals": [
+      "nReg[0]",
+      "rxDoneTick"
+    ],
+    "Signal Explanations": {
+      "nReg[0]": "the least significant bit of the register tracking the count of received data bits",
+      "rxDoneTick": "the signal indicating that the reception process has been finalized"
+    },
+    "Logical Operators": [
+      "==",
+      "|=>"
+    ],
+    "Logical Operators Explanation": {
+      "==": "verifies that both sides are equal",
+      "|=>": "denotes overlapping implication meaning that if the left-hand condition is true then the right-hand condition must also hold in the current cycle"
+    },
+    "Assertion Explaination": "if the least significant portion of the data bit counter is inactive then, simultaneously, the signal indicating that reception is done must also remain inactive"
+  },
+  "Assertion 6": {
+    "clock signal condition": "@(posedge clk)",
+    "disable condition": "",
+    "logical expression": "(sTick == 0) |-> (rxDoneTick == 0)",
+    "Signals": [
+      "sTick",
+      "rxDoneTick"
+    ],
+    "Signal Explanations": {
+      "sTick": "the pulse signal used to indicate when to sample the incoming data bit during oversampling",
+      "rxDoneTick": "the flag that signals the completion of the UART reception"
+    },
+    "Logical Operators": [
+      "==",
+      "|->"
+    ],
+    "Logical Operators Explanation": {
+      "==": "checks whether the value on the left equals the value on the right",
+      "|->": "non-overlapping implication operator which means that if the condition on the left holds at the current clock edge then the condition on the right must hold starting from the subsequent relevant cycle"
+    },
+    "Assertion Explaination": "if the sampling tick pulse is inactive at a clock edge, then in the following evaluation the reception completion indicator is required to be inactive"
+  },
+  "Assertion 7": {
+    "clock signal condition": "@(posedge clk)",
+    "disable condition": "",
+    "logical expression": "(sNext[0] == 0) |=> (rxDoneTick == 0)",
+    "Signals": [
+      "sNext[0]",
+      "rxDoneTick"
+    ],
+    "Signal Explanations": {
+      "sNext[0]": "the least significant bit of the signal representing the next value of the oversampling counter",
+      "rxDoneTick": "the signal that flags when the reception of data is complete"
+    },
+    "Logical Operators": [
+      "==",
+      "|=>"
+    ],
+    "Logical Operators Explanation": {
+      "==": "compares two values for equality",
+      "|=>": "implies that if the left-hand condition is met, then the right-hand condition must hold concurrently within the same clock cycle"
+    },
+    "Assertion Explaination": "if the evaluated least significant portion of the upcoming oversampling counter value is inactive then concurrently the finished reception indicator must be inactive"
+  }
+}
