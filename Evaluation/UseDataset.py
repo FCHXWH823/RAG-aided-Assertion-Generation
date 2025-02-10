@@ -49,37 +49,89 @@ def extract_verilog_code(verilog_code_w_assertions:str, verilog_code_wo_assertio
     
     return assertions
 
+def extract_csv_from_dataset(csv_name: str):
+    
+    df = pd.DataFrame(columns=["code","Master Module","assertion","FPV Script","link"])
+    i = 0
+    for folder in os.listdir("Evaluation/Dataset"):
+        folder_path = os.path.join("Evaluation/Dataset/",folder)
+        if os.path.isdir(folder_path):    
+            master_module = folder
+            fpv_dir = "Evaluation/Dataset/"+master_module+"/"
+
+            with open(fpv_dir+master_module+"_assertion.sv","r") as file:
+                verilog_code_w_assertions = file.read()
+            
+            with open(fpv_dir+master_module+".sv","r") as file:
+                verilog_code_wo_assertions = file.read()
+
+            with open(fpv_dir+"fpv.tcl","r") as file:
+                fpv_tcl = file.read()
+
+            with open(fpv_dir+"link.txt","r") as file:
+                link = file.read()
+
+            assertions = extract_verilog_code(verilog_code_w_assertions,verilog_code_wo_assertions)
+
+            df.loc[i] = [verilog_code_wo_assertions,master_module,assertions,fpv_tcl,link]
+
+            i += 1
+    
+    df.to_csv("Evaluation/"+csv_name)
+
+
+
+    
+        
+    #     df_new.iloc[i]["code"] = verilog_code_wo_assertions
+    #     df_new.iloc[i]["transformed_assertion"] = assertions
+    #     df_new.iloc[i]["FPV Script"] = fpv_tcl
+
+    # df_new.to_csv("Evaluation/asserted-verilog-evaluation-dataset-transform-new.csv")
+
 
 
 
 if __name__ == '__main__':
 
-    dataset_dir = "Evaluation/Dataset/"
+    extract_csv_from_dataset("evaluation-dataset.csv")
 
-    df = pd.read_csv("Evaluation/asserted-verilog-evaluation-dataset-transform.csv")
+    # dataset_dir = "Evaluation/Dataset/"
 
-    df_new = df.copy()
+    # df = pd.read_csv("Evaluation/asserted-verilog-evaluation-dataset-transform.csv")
 
-    for i in range(len(df)):
-        master_module = df.iloc[i]['Master Module']
-        fpv_dir = dataset_dir+master_module+"/"
+    # df_new = df.copy()
 
-        with open(fpv_dir+master_module+"_assertion.sv","r") as file:
-            verilog_code_w_assertions = file.read()
+    # for i in range(len(df)):
+    #     master_module = df.iloc[i]['Master Module']
+    #     fpv_dir = dataset_dir+master_module+"/"
+    #     with open(fpv_dir+"link.txt","w") as file:
+    #         file.write(df.iloc[i]["link"])
+
+
+    # for i in range(len(df)):
         
-        with open(fpv_dir+master_module+".sv","r") as file:
-            verilog_code_wo_assertions = file.read()
+    #     master_module = df.iloc[i]['Master Module']
+    #     fpv_dir = dataset_dir+master_module+"/"
 
-        with open(fpv_dir+"fpv.tcl","r") as file:
-            fpv_tcl = file.read()
+    #     with open(fpv_dir+master_module+"_assertion.sv","r") as file:
+    #         verilog_code_w_assertions = file.read()
         
-        assertions = extract_verilog_code(verilog_code_w_assertions,verilog_code_wo_assertions)
+    #     with open(fpv_dir+master_module+".sv","r") as file:
+    #         verilog_code_wo_assertions = file.read()
+
+    #     with open(fpv_dir+"fpv.tcl","r") as file:
+    #         fpv_tcl = file.read()
         
-        df_new.iloc[i]["code"] = verilog_code_wo_assertions
-        df_new.iloc[i]["transformed_assertion"] = assertions
-        df_new.iloc[i]["FPV Script"] = fpv_tcl
+
+
+    #     assertions = extract_verilog_code(verilog_code_w_assertions,verilog_code_wo_assertions)
+        
+    #     df_new.iloc[i]["code"] = verilog_code_wo_assertions
+    #     df_new.iloc[i]["transformed_assertion"] = assertions
+    #     df_new.iloc[i]["FPV Script"] = fpv_tcl
     
-    df_new.to_csv("Evaluation/asserted-verilog-evaluation-dataset-transform-new.csv")
+    # df_new.to_csv("Evaluation/asserted-verilog-evaluation-dataset-transform-new.csv")
 
 
 

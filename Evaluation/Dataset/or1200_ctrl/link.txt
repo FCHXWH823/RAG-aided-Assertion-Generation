@@ -1,0 +1,1 @@
+https://github.com/saqibkh/OR1200_Formal_Verification/blob/master/tb/SVA_ctrl.sv

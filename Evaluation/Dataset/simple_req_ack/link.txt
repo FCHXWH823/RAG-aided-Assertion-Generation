@@ -1,0 +1,1 @@
+https://github.com/hassyy/systemverilog-assertion/blob/master/simple-req-ack/sva_req_ack.sv
