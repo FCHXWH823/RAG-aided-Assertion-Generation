@@ -51,10 +51,10 @@ with open("Evaluation/Dataset/Ripple_Carry_Adder/explanation.json") as jsonfile:
 
 # NYU CCS's key
 model_name = "gpt-4o-mini-2024-07-18"
-model_name = "o3-mini"
+# model_name = "o3-mini"
 
 eval_num = 100
-with open('Results/Openai-o3-mini-Prompted-Assertion-Generation-Results-for-New-Dataset.csv', 'w', newline='') as csv_file:
+with open('Results/Openai-4o-mini-Prompted-Assertion-Generation-Results-for-New-Dataset.csv', 'w', newline='') as csv_file:
     csv_writer = csv.writer(csv_file)
     csv_writer.writerow(['Master Module','Code','golden_assertions','llm_assertions'])
     for folder in os.listdir("Evaluation/Dataset/"):
@@ -69,39 +69,41 @@ with open('Results/Openai-o3-mini-Prompted-Assertion-Generation-Results-for-New-
             with open(folder_path+"/explanation.json") as file:
                 explanation_origin = file.read()
             
-            assertions_with_explanations = ""
+            i = 0
+
+            llm_responses = []
             for assertion, details in explanation_json.items():
                 explanation = details.get("Assertion Explaination", "No explanation provided")
                 # clk_condition = "" if details.get("clock signal condition") is "none" else details.get("clock signal condition")
                 # reset_condition = "" if details.get("disable condition") is "none" else details.get("disable condition")
                 
-                assertion_format = f"assert property (ONLY logical_expression without_clock signal condition and disable condition);"
-                assertions_with_explanations += f"This assertion should satisfy:\n{explanation}\nand STRICTLY follow format\n{assertion_format}\n\n"
+                assertion_format = f"assert property (ONLY logical_expression without_clock signal condition @(...) and WITHOUT disable condition disable iff(...));"
+                
 
-            output_format = '''
-                {
-                    "Assertion 1": ,
-                    "Assertion 2": ,
-                    ......
-                }
-                '''
-            prompt = f"Given Verilog code snippet as below: \n{code}\n Please generate several assertions for it, each of them following a description as follows:{assertions_with_explanations}\nThe output format should STRICTLY follow json format WITHOUT other things:\n{output_format}\n"
+                prompt = f"Given Verilog code snippet as below: \n{code}\n Please generate such an assertion for it following the description:{explanation}\nThe output format should STRICTLY follow :\n{assertion_format}\nWITHOUT other things."
 
-            completion = client.chat.completions.create(
-            model=model_name,
-            messages=[
-                {"role": "system", "content": "You are a helpful bot that generate some useful assertions for a given verilog code."},
-                {"role": "user", "content": prompt}
-            ]
-            )
+                completion = client.chat.completions.create(
+                model=model_name,
+                messages=[
+                    {"role": "system", "content": "You are a helpful bot that generate the assertion satisfying some requirements for a given verilog code."},
+                    {"role": "user", "content": prompt}
+                ]
+                )
 
-            llm_response = completion.choices[0].message.content
+                i += 1
+                match = re.search(r'assert property \(.*\);', completion.choices[0].message.content, re.DOTALL)
+                matched_str = str(match.group(0))
+                matched_str = matched_str.replace("\n"," ")
+                llm_responses.append(f"\"Assertion {i}\": \"{matched_str}\"") 
+
+            llm_response = "{\n"
+            for i in range(len(llm_responses)-1):
+                llm_response += llm_responses[i]+",\n"
+            llm_response +=llm_responses[-1]+"\n}"
             csv_writer.writerow([folder,code,explanation_origin,llm_response])
 
             if config["JasperGold_VERIFY"] == 1:
-                match = re.search(r'\{.*\}', llm_response, re.DOTALL)
-                json_content = match.group(0)
-                llm_assertions = json.loads(json_content)
+                llm_assertions = json.loads(llm_response)
                 clk_conditions = []
                 disable_conditions = []
                 golden_logic_expressions = []
@@ -130,7 +132,7 @@ with open('Results/Openai-o3-mini-Prompted-Assertion-Generation-Results-for-New-
                     processed_code += assertion+"\n"
                 processed_code += "\nendmodule\n"
 
-                with open(folder_path+"/"+folder+"_Openai-o3-mini.sv","w") as file:
+                with open(folder_path+"/"+folder+"_Openai-4o-mini.sv","w") as file:
                     file.write(processed_code)
 
 

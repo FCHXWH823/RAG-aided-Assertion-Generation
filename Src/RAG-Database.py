@@ -24,7 +24,7 @@ documents = pdf_loader.load()
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 
 # Split the PDF text into chunks
-text_splitter = RecursiveCharacterTextSplitter(chunk_size=300, chunk_overlap=50)
+text_splitter = RecursiveCharacterTextSplitter(chunk_size=3000, chunk_overlap=1000)
 chunks = text_splitter.split_documents(documents)
 
 from langchain_openai import OpenAIEmbeddings

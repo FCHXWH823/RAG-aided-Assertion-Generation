@@ -1,0 +1,406 @@
+Master Module,Code,golden_assertions,llm_assertions
+Ripple_Carry_Adder,"module full_adder 
+(
+    input a,
+    input b,
+    input cin,
+    output sum,
+    output cout
+);
+
+assign sum = a ^ b ^ cin;
+assign cout = (a & b) | (a & cin) | (b & cin);
+endmodule
+
+module Ripple_Carry_Adder #(
+	parameter DATA_WIDTH=8
+)
+(
+    input [DATA_WIDTH-1:0] a,
+    input [DATA_WIDTH-1:0] b,
+    input clk,
+    input rst,
+    output logic [DATA_WIDTH-0:0] sum,
+    output logic [DATA_WIDTH-1:0] cout_int
+);
+
+logic [DATA_WIDTH:0] carry;
+assign carry[0] = 1'b0;
+
+genvar x;
+generate
+	for( x = 0; x < DATA_WIDTH; x++ ) begin
+		// instanciate adder module
+		full_adder m_adder(
+			.a( a[x] ),
+			.b( b[x] ),
+			.cin( carry[x]),
+			.sum( sum[x] ),
+			.cout( carry[x+1] )
+		);
+	end
+endgenerate
+// output
+assign sum[DATA_WIDTH] = carry[DATA_WIDTH];
+assign cout_int        = carry[DATA_WIDTH-1:0];
+
+endmodule","{
+  ""Assertion 1"": {
+    ""clock signal condition"": ""@(posedge clk)"",
+    ""disable condition"": ""disable iff (~rst)"",
+    ""logical expression"": ""res == sum"",
+    ""Signals"": [""res"", ""sum""],
+    ""Signal Explanations"": {
+      ""res"": ""the computed result of adding the module inputs (a and b) as an expected binary sum"",
+      ""sum"": ""the actual output of the ripple carry adder representing the binary addition result""
+    },
+    ""Logical Operators"": [""==""],
+    ""Logical Operators Explanation"": {
+      ""=="": ""checks if the two expressions are equal""
+    },
+    ""Assertion Explaination"": ""checks whether the expected binary sum is equal to the actual binary addition output, ensuring the adder operation performs correctly""
+  }
+}","{
+""Assertion 1"": ""assert property ( (a + b) == sum[DATA_WIDTH-1:0] );""
+}"
+or1200_operandmuxes,"//////////////////////////////////////////////////////////////////////
+////                                                              ////
+////  OR1200's register file read operands mux                    ////
+////                                                              ////
+////  This file is part of the OpenRISC 1200 project              ////
+////  http://www.opencores.org/project,or1k                       ////
+////                                                              ////
+////  Description                                                 ////
+////  Mux for two register file read operands.                    ////
+////                                                              ////
+////  To Do:                                                      ////
+////   - make it smaller and faster                               ////
+////                                                              ////
+////  Author(s):                                                  ////
+////      - Damjan Lampret, lampret@opencores.org                 ////
+////                                                              ////
+//////////////////////////////////////////////////////////////////////
+////                                                              ////
+//// Copyright (C) 2000 Authors and OPENCORES.ORG                 ////
+////                                                              ////
+//// This source file may be used and distributed without         ////
+//// restriction provided that this copyright statement is not    ////
+//// removed from the file and that any derivative work contains  ////
+//// the original copyright notice and the associated disclaimer. ////
+////                                                              ////
+//// This source file is free software; you can redistribute it   ////
+//// and/or modify it under the terms of the GNU Lesser General   ////
+//// Public License as published by the Free Software Foundation; ////
+//// either version 2.1 of the License, or (at your option) any   ////
+//// later version.                                               ////
+////                                                              ////
+//// This source is distributed in the hope that it will be       ////
+//// useful, but WITHOUT ANY WARRANTY; without even the implied   ////
+//// warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR      ////
+//// PURPOSE.  See the GNU Lesser General Public License for more ////
+//// details.                                                     ////
+////                                                              ////
+//// You should have received a copy of the GNU Lesser General    ////
+//// Public License along with this source; if not, download it   ////
+//// from http://www.opencores.org/lgpl.shtml                     ////
+////                                                              ////
+//////////////////////////////////////////////////////////////////////
+//
+// $Log: or1200_operandmuxes.v,v $
+// Revision 2.0  2010/06/30 11:00:00  ORSoC
+// Minor update: 
+// Bugs fixed. 
+
+// synopsys translate_off
+// `include ""timescale.v""
+// synopsys translate_on
+`include ""or1200_defines.v""
+
+module or1200_operandmuxes(
+	// Clock and rst
+	clk, rst,
+
+	// Internal i/f
+	id_freeze, ex_freeze, rf_dataa, rf_datab, ex_forw, wb_forw,
+	simm, sel_a, sel_b, operand_a, operand_b, muxed_a, muxed_b
+);
+
+parameter width = `OR1200_OPERAND_WIDTH;
+
+//
+// I/O
+//
+input				clk;
+input				rst;
+input				id_freeze;
+input				ex_freeze;
+input	[width-1:0]		rf_dataa;
+input	[width-1:0]		rf_datab;
+input	[width-1:0]		ex_forw;
+input	[width-1:0]		wb_forw;
+input	[width-1:0]		simm;
+input	[`OR1200_SEL_WIDTH-1:0]	sel_a;
+input	[`OR1200_SEL_WIDTH-1:0]	sel_b;
+output	[width-1:0]		operand_a;
+output	[width-1:0]		operand_b;
+output	[width-1:0]		muxed_a;
+output	[width-1:0]		muxed_b;
+
+//
+// Internal wires and regs
+//
+reg	[width-1:0]		operand_a;
+reg	[width-1:0]		operand_b;
+reg	[width-1:0]		muxed_a;
+reg	[width-1:0]		muxed_b;
+reg				saved_a;
+reg				saved_b;
+
+//
+// Operand A register
+//
+always @(posedge clk or `OR1200_RST_EVENT rst) begin
+	if (rst == `OR1200_RST_VALUE) begin
+		operand_a <=  32'd0;
+		saved_a <=  1'b0;
+	end else if (!ex_freeze && id_freeze && !saved_a) begin
+		operand_a <=  muxed_a;
+		saved_a <=  1'b1;
+	end else if (!ex_freeze && !saved_a) begin
+		operand_a <=  muxed_a;
+	end else if (!ex_freeze && !id_freeze)
+		saved_a <=  1'b0;
+end
+
+//
+// Operand B register
+//
+always @(posedge clk or `OR1200_RST_EVENT rst) begin
+	if (rst == `OR1200_RST_VALUE) begin
+		operand_b <=  32'd0;
+		saved_b <=  1'b0;
+	end else if (!ex_freeze && id_freeze && !saved_b) begin
+		operand_b <=  muxed_b;
+		saved_b <=  1'b1;
+	end else if (!ex_freeze && !saved_b) begin
+		operand_b <=  muxed_b;
+	end else if (!ex_freeze && !id_freeze)
+		saved_b <=  1'b0;
+end
+
+//
+// Forwarding logic for operand A register
+//
+always @(ex_forw or wb_forw or rf_dataa or sel_a) begin
+`ifdef OR1200_ADDITIONAL_SYNOPSYS_DIRECTIVES
+	casez (sel_a)	// synopsys parallel_case infer_mux
+`else
+	casez (sel_a)	// synopsys parallel_case
+`endif
+		`OR1200_SEL_EX_FORW:
+			muxed_a = ex_forw;
+		`OR1200_SEL_WB_FORW:
+			muxed_a = wb_forw;
+		default:
+			muxed_a = rf_dataa;
+	endcase
+end
+
+//
+// Forwarding logic for operand B register
+//
+always @(simm or ex_forw or wb_forw or rf_datab or sel_b) begin
+`ifdef OR1200_ADDITIONAL_SYNOPSYS_DIRECTIVES
+	casez (sel_b)	// synopsys parallel_case infer_mux
+`else
+	casez (sel_b)	// synopsys parallel_case
+`endif
+		`OR1200_SEL_IMM:
+			muxed_b = simm;
+		`OR1200_SEL_EX_FORW:
+			muxed_b = ex_forw;
+		`OR1200_SEL_WB_FORW:
+			muxed_b = wb_forw;
+		default:
+			muxed_b = rf_datab;
+	endcase
+end
+
+
+endmodule","{
+""Assertion 1"": {
+""clock signal condition"": ""@(posedge clk)"",
+""disable condition"": ""disable iff (rst)"",
+""logical expression"": ""$rose(!ex_freeze && !id_freeze) ##1 (!ex_freeze && !id_freeze && sel_a == 2'd2 && $stable(ex_forw) && $stable(sel_a)) |-> muxed_a == ex_forw"",
+""Signals"": [""ex_freeze"", ""id_freeze"", ""sel_a"", ""ex_forw"", ""muxed_a""],
+""Signal Explanations"": {
+  ""ex_freeze"": ""a signal indicating that the execution stage is frozen"",
+  ""id_freeze"": ""a signal indicating that the instruction decode stage is frozen"",
+  ""sel_a"": ""the selection signal that determines which source will drive operand A"",
+  ""ex_forw"": ""the data forwarded from the execution stage for operand A"",
+  ""muxed_a"": ""the output of the multiplexer logic for operand A""
+},
+""Logical Operators"": [""$rose"", ""&&"", ""##1"", ""$stable"", ""=="", ""|->""],
+""Logical Operators Explanation"": {
+  ""$rose"": ""detects a rising edge transition (from 0 to 1) of the condition"",
+  ""&&"": ""logical AND, meaning all connected conditions must be true"",
+  ""##1"": ""delays the evaluation by one clock cycle"",
+  ""$stable"": ""ensures that a value remains constant during the evaluated interval"",
+  ""=="": ""checks equality between values"",
+  ""|->"": ""implication operator indicating that if the antecedent is true then the consequent must be true""
+},
+""Assertion Explaination"": ""when a rising edge is detected on the condition that neither the execution stage nor the instruction decode stage is frozen, then one clock cycle later if both stages remain unfrozen, the control selection indicates that the execution forwarding path for the first operand is chosen and both the execution forwarding data and its selection remain constant, it follows that the multiplexer output for the first operand must equal the execution forwarding data""
+},
+""Assertion 2"": {
+""clock signal condition"": ""@(posedge clk)"",
+""disable condition"": ""disable iff (rst)"",
+""logical expression"": ""$rose(!ex_freeze && !id_freeze) ##1 (!ex_freeze && !id_freeze && sel_a == 2'd3 && $stable(wb_forw) && $stable(sel_a)) |-> muxed_a == wb_forw"",
+""Signals"": [""ex_freeze"", ""id_freeze"", ""sel_a"", ""wb_forw"", ""muxed_a""],
+""Signal Explanations"": {
+  ""ex_freeze"": ""a signal indicating that the execution stage is frozen"",
+  ""id_freeze"": ""a signal indicating that the instruction decode stage is frozen"",
+  ""sel_a"": ""the selection signal that determines which source will drive operand A"",
+  ""wb_forw"": ""the data forwarded from the write-back stage for operand A"",
+  ""muxed_a"": ""the output of the multiplexer logic for operand A""
+},
+""Logical Operators"": [""$rose"", ""&&"", ""##1"", ""$stable"", ""=="", ""|->""],
+""Logical Operators Explanation"": {
+  ""$rose"": ""detects a rising edge transition (from 0 to 1) of the condition"",
+  ""&&"": ""logical AND, meaning all connected conditions must be true"",
+  ""##1"": ""delays the evaluation by one clock cycle"",
+  ""$stable"": ""ensures that a value remains constant during the evaluated interval"",
+  ""=="": ""checks equality between values"",
+  ""|->"": ""implication operator indicating that if the antecedent is true then the consequent must be true""
+},
+""Assertion Explaination"": ""when a rising edge is detected on the non-frozen condition for both the execution and instruction decode stages, then one clock cycle later if these stages are still unfrozen, the control selection indicates that the write-back forwarding path for the first operand is selected and both the write-back forwarding data and its selection remain constant, it follows that the multiplexer output for the first operand must equal the write-back forwarding data""
+},
+""Assertion 3"": {
+""clock signal condition"": ""@(posedge clk)"",
+""disable condition"": ""disable iff (rst)"",
+""logical expression"": ""$rose(!ex_freeze && !id_freeze) ##1 (!ex_freeze && !id_freeze && !(sel_a == 2'd2 || sel_a == 2'd3) && $stable(rf_dataa) && $stable(sel_a) && !$isunknown(operand_a)) |-> muxed_a == rf_dataa"",
+""Signals"": [""ex_freeze"", ""id_freeze"", ""sel_a"", ""rf_dataa"", ""operand_a"", ""muxed_a""],
+""Signal Explanations"": {
+  ""ex_freeze"": ""a signal indicating that the execution stage is frozen"",
+  ""id_freeze"": ""a signal indicating that the instruction decode stage is frozen"",
+  ""sel_a"": ""the selection signal that determines which source will drive operand A"",
+  ""rf_dataa"": ""the data read from the register file for operand A"",
+  ""operand_a"": ""the internal register holding the value for operand A"",
+  ""muxed_a"": ""the output of the multiplexer logic for operand A""
+},
+""Logical Operators"": [""$rose"", ""&&"", ""||"", ""!"", ""##1"", ""$stable"", ""!$isunknown"", ""=="", ""|->""],
+""Logical Operators Explanation"": {
+  ""$rose"": ""detects a rising edge transition (from 0 to 1) of the condition"",
+  ""&&"": ""logical AND, meaning all connected conditions must be true"",
+  ""||"": ""logical OR, meaning at least one connected condition must be true"",
+  ""!"": ""logical NOT, inverting the truth value of the condition"",
+  ""##1"": ""delays the evaluation by one clock cycle"",
+  ""$stable"": ""ensures that a value remains constant during the evaluated interval"",
+  ""!$isunknown"": ""checks that the evaluated value is known (not in an unknown state)"",
+  ""=="": ""checks equality between values"",
+  ""|->"": ""implication operator indicating that if the antecedent is true then the consequent must be true""
+},
+""Assertion Explaination"": ""when a rising edge is detected on the condition that both the execution and instruction decode stages are not frozen, then one clock cycle later if these stages remain unfrozen, the control selection does not indicate use of either the execution forwarding or the write-back forwarding paths, and if the data read from the register file for the first operand and its selection remain constant while the stored operand is known, it follows that the multiplexer output for the first operand must equal the register file read data""
+},
+""Assertion 4"": {
+""clock signal condition"": ""@(posedge clk)"",
+""disable condition"": ""disable iff (rst)"",
+""logical expression"": ""$rose(!ex_freeze && !id_freeze) ##1 (!ex_freeze && !id_freeze && sel_b == 2'd1 && $stable(simm) && $stable(sel_b)) |-> muxed_b == simm"",
+""Signals"": [""ex_freeze"", ""id_freeze"", ""sel_b"", ""simm"", ""muxed_b""],
+""Signal Explanations"": {
+  ""ex_freeze"": ""a signal indicating that the execution stage is frozen"",
+  ""id_freeze"": ""a signal indicating that the instruction decode stage is frozen"",
+  ""sel_b"": ""the selection signal that determines which source will drive operand B"",
+  ""simm"": ""the immediate value operand provided as an input"",
+  ""muxed_b"": ""the output of the multiplexer logic for operand B""
+},
+""Logical Operators"": [""$rose"", ""&&"", ""##1"", ""$stable"", ""=="", ""|->""],
+""Logical Operators Explanation"": {
+  ""$rose"": ""detects a rising edge transition (from 0 to 1) of the condition"",
+  ""&&"": ""logical AND, meaning all connected conditions must be true"",
+  ""##1"": ""delays the evaluation by one clock cycle"",
+  ""$stable"": ""ensures that a value remains constant during the evaluated interval"",
+  ""=="": ""checks equality between values"",
+  ""|->"": ""implication operator indicating that if the antecedent is true then the consequent must be true""
+},
+""Assertion Explaination"": ""when a rising edge is detected on the condition that both the execution and instruction decode stages are not frozen, then one clock cycle later if these stages remain unfrozen, the control selection indicates that the immediate value should be used for the second operand and both the immediate value and its selection remain constant, it follows that the multiplexer output for the second operand must equal the immediate value""
+},
+""Assertion 5"": {
+""clock signal condition"": ""@(posedge clk)"",
+""disable condition"": ""disable iff (rst)"",
+""logical expression"": ""$rose(!ex_freeze && !id_freeze) ##1 (!ex_freeze && !id_freeze && sel_b == 2'd2 && $stable(ex_forw) && $stable(sel_b)) |-> muxed_b == ex_forw"",
+""Signals"": [""ex_freeze"", ""id_freeze"", ""sel_b"", ""ex_forw"", ""muxed_b""],
+""Signal Explanations"": {
+  ""ex_freeze"": ""a signal indicating that the execution stage is frozen"",
+  ""id_freeze"": ""a signal indicating that the instruction decode stage is frozen"",
+  ""sel_b"": ""the selection signal that determines which source will drive operand B"",
+  ""ex_forw"": ""the data forwarded from the execution stage for operand B"",
+  ""muxed_b"": ""the output of the multiplexer logic for operand B""
+},
+""Logical Operators"": [""$rose"", ""&&"", ""##1"", ""$stable"", ""=="", ""|->""],
+""Logical Operators Explanation"": {
+  ""$rose"": ""detects a rising edge transition (from 0 to 1) of the condition"",
+  ""&&"": ""logical AND, meaning all connected conditions must be true"",
+  ""##1"": ""delays the evaluation by one clock cycle"",
+  ""$stable"": ""ensures that a value remains constant during the evaluated interval"",
+  ""=="": ""checks equality between values"",
+  ""|->"": ""implication operator indicating that if the antecedent is true then the consequent must be true""
+},
+""Assertion Explaination"": ""when a rising edge is detected on the condition that both the execution and instruction decode stages are not frozen, then one clock cycle later if these stages remain unfrozen, the control selection indicates that the execution forwarding path for the second operand is chosen and both the execution forwarding data and its selection remain constant, it follows that the multiplexer output for the second operand must equal the execution forwarding data""
+},
+""Assertion 6"": {
+""clock signal condition"": ""@(posedge clk)"",
+""disable condition"": ""disable iff (rst)"",
+""logical expression"": ""$rose(!ex_freeze && !id_freeze) ##1 (!ex_freeze && !id_freeze && sel_b == 2'd3 && $stable(wb_forw) && $stable(sel_b)) |-> muxed_b == wb_forw"",
+""Signals"": [""ex_freeze"", ""id_freeze"", ""sel_b"", ""wb_forw"", ""muxed_b""],
+""Signal Explanations"": {
+  ""ex_freeze"": ""a signal indicating that the execution stage is frozen"",
+  ""id_freeze"": ""a signal indicating that the instruction decode stage is frozen"",
+  ""sel_b"": ""the selection signal that determines which source will drive operand B"",
+  ""wb_forw"": ""the data forwarded from the write-back stage for operand B"",
+  ""muxed_b"": ""the output of the multiplexer logic for operand B""
+},
+""Logical Operators"": [""$rose"", ""&&"", ""##1"", ""$stable"", ""=="", ""|->""],
+""Logical Operators Explanation"": {
+  ""$rose"": ""detects a rising edge transition (from 0 to 1) of the condition"",
+  ""&&"": ""logical AND, meaning all connected conditions must be true"",
+  ""##1"": ""delays the evaluation by one clock cycle"",
+  ""$stable"": ""ensures that a value remains constant during the evaluated interval"",
+  ""=="": ""checks equality between values"",
+  ""|->"": ""implication operator indicating that if the antecedent is true then the consequent must be true""
+},
+""Assertion Explaination"": ""when a rising edge is detected on the condition that both the execution and instruction decode stages are not frozen, then one clock cycle later if these stages remain unfrozen, the control selection indicates that the write-back forwarding path for the second operand is chosen and both the write-back forwarding data and its selection remain constant, it follows that the multiplexer output for the second operand must equal the write-back forwarding data""
+},
+""Assertion 7"": {
+""clock signal condition"": ""@(posedge clk)"",
+""disable condition"": ""disable iff (rst)"",
+""logical expression"": ""$rose(!ex_freeze && !id_freeze) ##1 (!ex_freeze && !id_freeze && !(sel_b == 2'd1 || sel_b == 2'd2 || sel_b == 2'd3) && $stable(rf_datab) && $stable(sel_b)) |-> muxed_b == rf_datab"",
+""Signals"": [""ex_freeze"", ""id_freeze"", ""sel_b"", ""rf_datab"", ""muxed_b""],
+""Signal Explanations"": {
+  ""ex_freeze"": ""a signal indicating that the execution stage is frozen"",
+  ""id_freeze"": ""a signal indicating that the instruction decode stage is frozen"",
+  ""sel_b"": ""the selection signal that determines which source will drive operand B"",
+  ""rf_datab"": ""the data read from the register file for operand B"",
+  ""muxed_b"": ""the output of the multiplexer logic for operand B""
+},
+""Logical Operators"": [""$rose"", ""&&"", ""||"", ""!"", ""##1"", ""$stable"", ""=="", ""|->""],
+""Logical Operators Explanation"": {
+  ""$rose"": ""detects a rising edge transition (from 0 to 1) of the condition"",
+  ""&&"": ""logical AND, meaning all connected conditions must be true"",
+  ""||"": ""logical OR, meaning at least one connected condition must be true"",
+  ""!"": ""logical NOT, inverting the truth value of the condition"",
+  ""##1"": ""delays the evaluation by one clock cycle"",
+  ""$stable"": ""ensures that a value remains constant during the evaluated interval"",
+  ""=="": ""checks equality between values"",
+  ""|->"": ""implication operator indicating that if the antecedent is true then the consequent must be true""
+},
+""Assertion Explaination"": ""when a rising edge is detected on the condition that both the execution and instruction decode stages are not frozen, then one clock cycle later if these stages remain unfrozen, and if the control selection for the second operand does not indicate use of the immediate value, execution forwarding, or write-back forwarding while ensuring that the register file data for the second operand and its selection remain constant, it follows that the multiplexer output for the second operand must equal the register file read data""
+}
+}","{
+""Assertion 1"": ""assert property (id_freeze == 1'b0 && ex_freeze == 1'b0 |-> (id_freeze[1] == 1'b0 && ex_freeze[1] == 1'b0) |=> (sel_a == `OR1200_SEL_EX_FORW |-> (muxed_a == ex_forw)));"",
+""Assertion 2"": ""assert property (@(posedge clk) (ex_freeze == 1'b0 && id_freeze == 1'b0) |->                  @(posedge clk) (ex_freeze == 1'b0 && id_freeze == 1'b0 && sel_a == `OR1200_SEL_WB_FORW &&                  muxed_a == wb_forw));"",
+""Assertion 3"": ""assert property ( @(posedge clk)      (!ex_freeze && !id_freeze) |->      (id_freeze && ex_freeze [1:0] -> (sel_a != `OR1200_SEL_EX_FORW && sel_a != `OR1200_SEL_WB_FORW) ->      (rf_dataa == operand_a && sel_a == sel_a) |=> (muxed_a == rf_dataa)     ) );"",
+""Assertion 4"": ""assert property ( (@(posedge clk) !ex_freeze && !id_freeze) |-> ( @(posedge clk) !ex_freeze && !id_freeze ==> (sel_b == `OR1200_SEL_IMM && simm == muxed_b) ));"",
+""Assertion 5"": ""assert property (@(posedge clk) (ex_freeze == 1'b0 && id_freeze == 1'b0) |-> (ex_freeze == 1'b0 && id_freeze == 1'b0) throughout (sel_b == `OR1200_SEL_EX_FORW && muxed_b == ex_forw));"",
+""Assertion 6"": ""assert property (id_freeze == 1'b0 && ex_freeze == 1'b0 |-> (id_freeze [1:0] == 2'b00 && ex_freeze [1:0] == 2'b00) |=> (sel_b == `OR1200_SEL_WB_FORW && muxed_b == wb_forw));"",
+""Assertion 7"": ""assert property (id_freeze == 1'b0 && ex_freeze == 1'b0 |-> ##1 (id_freeze == 1'b0 && ex_freeze == 1'b0 && (sel_b != `OR1200_SEL_IMM && sel_b != `OR1200_SEL_EX_FORW && sel_b != `OR1200_SEL_WB_FORW) && (rf_datab == $past(rf_datab) && sel_b == $past(sel_b)) |-> (muxed_b == rf_datab));""
+}"
