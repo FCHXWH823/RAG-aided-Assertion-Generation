@@ -8,6 +8,14 @@ import yaml
 import json
 import re
 
+from langchain.chains.retrieval import create_retrieval_chain
+from langchain.chains.combine_documents import create_stuff_documents_chain
+from langchain_core.prompts import ChatPromptTemplate
+from langchain_openai import ChatOpenAI
+
+
+from RAG_Database_New import *
+
 def remove_last_endmodule(verilog_code):
     lines = verilog_code.strip().split("\n")
     
@@ -27,22 +35,47 @@ Folder_Name = f"Book1-{PDF_Name}"
 
 OpenAI_API_Key = config["Openai_API_Key"]
 # Initialize embeddings
-embeddings = OpenAIEmbeddings(openai_api_key=OpenAI_API_Key)
-vector_store = FAISS.load_local(f"RAG_Database/{Folder_Name}",embeddings,allow_dangerous_deserialization=True)
+vector_store = collect_RAG_database()
+retriever = vector_store.as_retriever()
+# embeddings = OpenAIEmbeddings(openai_api_key=OpenAI_API_Key)
+# vector_store = FAISS.load_local(f"RAG_Database/{Folder_Name}",embeddings,allow_dangerous_deserialization=True)
 
-retriever = vector_store.as_retriever(search_kwargs={'k': 3})
 
-# from langchain.llms import OpenAI
-from langchain_openai import ChatOpenAI
-from langchain.chains import RetrievalQA
+# prompt
+system_prompt = (
+    "You are a helpful bot that generate the assertion satisfying some requirements for a given verilog code."
+    "Use the following pieces of retrieved context to answer the question. "
+    "\n\n"
+    "{context}"
+)
+prompt = ChatPromptTemplate.from_messages(
+    [
+        ("system", system_prompt),
+        ("human","{input}"),
+    ]
+)
+
+
+# retriever = vector_store.as_retriever(search_kwargs={'k': 3})
+
+# from langchain_openai import ChatOpenAI
+# from langchain.chains import RetrievalQA
 
 llm = ChatOpenAI(
-    #model="gpt-4o-mini-2024-07-18",
-    model="o3-mini",
+    model="gpt-4o-mini-2024-07-18",
+    # model="o3-mini",
     api_key=OpenAI_API_Key
     )
 
-qa_chain = RetrievalQA.from_chain_type(llm, retriever=retriever)
+question_answer_chain = create_stuff_documents_chain(llm,prompt)
+rag_chain = create_retrieval_chain(retriever,question_answer_chain)
+
+# results = rag_chain.invoke({"input": "Please explain different types of assertions."})
+
+# results
+
+
+# qa_chain = RetrievalQA.from_chain_type(llm, retriever=retriever)
 
 # Run a query
 with open(f'Results/RAG-Openai-o3-mini-Prompted-Assertion-Generation-Results-{PDF_Name}-for-New-Dataset.csv', 'w', newline='') as csv_file:
@@ -77,7 +110,12 @@ with open(f'Results/RAG-Openai-o3-mini-Prompted-Assertion-Generation-Results-{PD
                 }
                 '''
             prompt = f"Given Verilog code snippet as below: \n{code}\n Please generate several assertions for it, each of them following a description as follows:{assertions_with_explanations}\nThe output format should STRICTLY follow json format WITHOUT other things:\n{output_format}\n"
-            llm_response = qa_chain.run(prompt)
+            llm_response = rag_chain.invoke({"input": prompt})["answer"]
+
+            
+            
+
+            # llm_response = qa_chain.run(prompt)
 
             csv_writer.writerow([folder,code,explanation_origin,llm_response])
 

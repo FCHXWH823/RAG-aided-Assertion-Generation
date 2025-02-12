@@ -236,17 +236,29 @@ assign rev_in_type   = crc_cr_ff[3:2];
 assign rev_out_type  = crc_cr_ff[4];
 
 
-assert property (@(posedge HCLK)  ((sample_bus == 1) |-> (HREADYOUT == 1)) iff (sample_bus -> HREADYOUT));
-assert property (@(posedge HCLK)  ((buffer_read_en == 1 & read_wait == 1) |-> (HREADYOUT == 0)) iff ((buffer_read_en && read_wait));
-assert property (@(posedge HCLK)  ((ahb_enable == 0) |-> (HREADYOUT == 1)) iff ((~ahb_enable));
-assert property (@(posedge HCLK)  ((write_en == 0) |-> (crc_idr_en == 0)) iff ((~write_en));
-assert property (@(posedge HCLK)  ((write_en == 1 & crc_idr_sel == 1) |-> (crc_idr_en == 1)) iff ((write_en && crc_idr_sel));
-assert property (@(posedge HCLK)  ((crc_idr_sel == 0) |-> (crc_idr_en == 0)) iff ((~crc_idr_sel));
-assert property (@(posedge HCLK)  ((hselx_pp == 0) |-> (crc_idr_en == 0)) iff ((~hselx_pp));
-assert property (@(posedge HCLK)  ((hwrite_pp == 0) |-> (crc_idr_en == 0)) iff ((~hwrite_pp));
-assert property (@(posedge HCLK)  ((write_en == 0) |-> (crc_poly_en == 0)) iff ((~write_en));
-assert property (@(posedge HCLK)  ((hselx_pp == 0) |-> (crc_poly_en == 0)) iff ((~hselx_pp));
-assert property (@(posedge HCLK)  ((hwrite_pp == 0) |-> (crc_poly_en == 0)) iff ((~hwrite_pp));
-assert property (@(posedge HCLK)  ((haddr_pp[1] == 1) |-> (crc_poly_en == 0)) iff ((haddr_pp[2] && ~crc_poly_sel));
+assert property (@(posedge HCLK)  (sample_bus |=> HREADYOUT));
+assert property (@(posedge HCLK)  ((sample_bus == 1) |-> (HREADYOUT == 1)) iff (sample_bus |=> HREADYOUT));
+assert property (@(posedge HCLK)  (buffer_read_en && read_wait |=> !HREADYOUT));
+assert property (@(posedge HCLK)  ((buffer_read_en == 1 & read_wait == 1) |-> (HREADYOUT == 0)) iff (buffer_read_en && read_wait |=> !HREADYOUT));
+assert property (@(posedge HCLK)  (ahb_enable || HREADYOUT));
+assert property (@(posedge HCLK)  ((ahb_enable == 0) |-> (HREADYOUT == 1)) iff (ahb_enable || HREADYOUT));
+assert property (@(posedge HCLK)  (HWRITE == 1'b0 |=> !crc_idr_en));
+assert property (@(posedge HCLK)  ((write_en == 0) |-> (crc_idr_en == 0)) iff (HWRITE == 1'b0 |=> !crc_idr_en));
+assert property (@(posedge HCLK)  (HWRITE && crc_idr_sel |=> crc_idr_en));
+assert property (@(posedge HCLK)  ((write_en == 1 & crc_idr_sel == 1) |-> (crc_idr_en == 1)) iff (HWRITE && crc_idr_sel |=> crc_idr_en));
+assert property (@(posedge HCLK)  (crc_idr_sel |=> !crc_idr_en));
+assert property (@(posedge HCLK)  ((crc_idr_sel == 0) |-> (crc_idr_en == 0)) iff (crc_idr_sel |=> !crc_idr_en));
+assert property (@(posedge HCLK)  (!(crc_dr_sel) |=> !crc_idr_en));
+assert property (@(posedge HCLK)  ((hselx_pp == 0) |-> (crc_idr_en == 0)) iff (!(crc_dr_sel) |=> !crc_idr_en));
+assert property (@(posedge HCLK)  (htrans_pp != NON_SEQ |=> !crc_idr_en));
+assert property (@(posedge HCLK)  ((hwrite_pp == 0) |-> (crc_idr_en == 0)) iff (htrans_pp != NON_SEQ |=> !crc_idr_en));
+assert property (@(posedge HCLK)  (write_en || !crc_poly_en));
+assert property (@(posedge HCLK)  ((write_en == 0) |-> (crc_poly_en == 0)) iff (write_en || !crc_poly_en));
+assert property (@(posedge HCLK)  (hselx_pp == 1'b0 -> !crc_poly_en));
+assert property (@(posedge HCLK)  ((hselx_pp == 0) |-> (crc_poly_en == 0)) iff (hselx_pp == 1'b0 -> !crc_poly_en));
+assert property (@(posedge HCLK)  (write_en |=> !crc_poly_en));
+assert property (@(posedge HCLK)  ((hwrite_pp == 0) |-> (crc_poly_en == 0)) iff (write_en |=> !crc_poly_en));
+assert property (@(posedge HCLK)  (crc_poly_sel |=> !crc_poly_en));
+assert property (@(posedge HCLK)  ((haddr_pp[1] == 1) |-> (crc_poly_en == 0)) iff (crc_poly_sel |=> !crc_poly_en));
 
 endmodule

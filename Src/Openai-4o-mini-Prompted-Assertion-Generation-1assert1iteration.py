@@ -46,12 +46,21 @@ client = OpenAI(
 # model_name_4 = "ft:gpt-4o-mini-2024-07-18:personal::ADYuwFrD" # initial prompt template, epoch: 10
 # model_name_5 = "ft:gpt-4o-mini-2024-07-18:personal::ADefsoKl" # new prompt template, epoch: 10
 
+def assertion_checker_prompt(llm_response, assertion_format):
+    return f'''
+    Please correct the following systemverilog assertion if there exist some syntax errors in it, such as unmatched parentheses:
+    {llm_response}
+    Please output the corrected assertion STRICTLY in the following format:
+    {assertion_format}
+    '''
+
+
 with open("Evaluation/Dataset/Ripple_Carry_Adder/explanation.json") as jsonfile:
     data = json.load(jsonfile)
 
 # NYU CCS's key
 model_name = "gpt-4o-mini-2024-07-18"
-# model_name = "o3-mini"
+checker_model_name = "o3-mini"
 
 eval_num = 100
 with open('Results/Openai-4o-mini-Prompted-Assertion-Generation-Results-for-New-Dataset.csv', 'w', newline='') as csv_file:
@@ -77,7 +86,7 @@ with open('Results/Openai-4o-mini-Prompted-Assertion-Generation-Results-for-New-
                 # clk_condition = "" if details.get("clock signal condition") is "none" else details.get("clock signal condition")
                 # reset_condition = "" if details.get("disable condition") is "none" else details.get("disable condition")
                 
-                assertion_format = f"assert property (ONLY logical_expression without_clock signal condition @(...) and WITHOUT disable condition disable iff(...));"
+                assertion_format = f"assert property (ONLY logical expression WITHOUT clock signal condition @(posedge clock) and WITHOUT disable condition disable iff(...));"
                 
 
                 prompt = f"Given Verilog code snippet as below: \n{code}\n Please generate such an assertion for it following the description:{explanation}\nThe output format should STRICTLY follow :\n{assertion_format}\nWITHOUT other things."
@@ -90,8 +99,21 @@ with open('Results/Openai-4o-mini-Prompted-Assertion-Generation-Results-for-New-
                 ]
                 )
 
+                # assertion checker
+                nItChecker = 3
+                for it in range(nItChecker):
+                    checker_prompt = assertion_checker_prompt(completion.choices[0].message.content,assertion_format)
+                    completion = client.chat.completions.create(
+                    model= model_name,
+                    messages=[
+                        {"role": "system", "content": "You are a helpful bot that correct the syntax errors of systemverilog assertion if there exists."},
+                        {"role": "user", "content": checker_prompt}
+                    ]
+                    )
+
+
                 i += 1
-                match = re.search(r'assert property \(.*\);', completion.choices[0].message.content, re.DOTALL)
+                match = re.search(r'assert property\s*\(\s*(.*?)\s*\)\s*;', completion.choices[0].message.content, re.DOTALL)
                 matched_str = str(match.group(0))
                 matched_str = matched_str.replace("\n"," ")
                 llm_responses.append(f"\"Assertion {i}\": \"{matched_str}\"") 
@@ -118,13 +140,16 @@ with open('Results/Openai-4o-mini-Prompted-Assertion-Generation-Results-for-New-
                     golden_logic_expressions.append(logic_expression)
                     
                 for assertion, details in llm_assertions.items():
-                    match = re.search(r'assert property\s*\(\s*(.*?)\s*\)', details)
+                    match = re.search(r'assert property\s*\(\s*(.*?)\s*\)\s*;', details)
                     llm_logic_expressions.append(match.group(1) if match else "")
                 
                 combine_assertions = []
                 for i in range(len(clk_conditions)):
+                    combine_assertion = f"assert property ({clk_conditions[i]} {disable_conditions[i]} ({llm_logic_expressions[i]}));" 
+                    combine_assertions.append(combine_assertion)
                     combine_assertion = f"assert property ({clk_conditions[i]} {disable_conditions[i]} ({golden_logic_expressions[i]}) iff ({llm_logic_expressions[i]}));" 
                     combine_assertions.append(combine_assertion)
+                    
 
                 processed_code = remove_last_endmodule(code)
                 processed_code += "\n\n"

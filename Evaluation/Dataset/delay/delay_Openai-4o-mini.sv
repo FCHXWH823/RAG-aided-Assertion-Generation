@@ -141,8 +141,11 @@ module delay
    end       
 
 
-assert property (@(posedge clk) disable iff (rst) (count < CYCLES || out == $past(in, CYCLES, en)) iff ((delay_stage < CYCLES));
-assert property (@(posedge clk) disable iff (rst) (count == CYCLES || out == RESET_VALUE) iff ((delay_stage == CYCLES));
-assert property (@(posedge clk) disable iff (rst) (!en |=> $stable(out)) iff (!en |=> (out == $past(out));
+assert property (@(posedge clk) disable iff (rst) ((count < CYCLES) || (out == $past(in, CYCLES) when (en))));
+assert property (@(posedge clk) disable iff (rst) (count < CYCLES || out == $past(in, CYCLES, en)) iff ((count < CYCLES) || (out == $past(in, CYCLES) when (en))));
+assert property (@(posedge clk) disable iff (rst) ((out == regs[CYCLES]) || (out == RESET_VALUE)));
+assert property (@(posedge clk) disable iff (rst) (count == CYCLES || out == RESET_VALUE) iff ((out == regs[CYCLES]) || (out == RESET_VALUE)));
+assert property (@(posedge clk) disable iff (rst) (en == 0 |=> nexttime(out == $past(out))));
+assert property (@(posedge clk) disable iff (rst) (!en |=> $stable(out)) iff (en == 0 |=> nexttime(out == $past(out))));
 
 endmodule

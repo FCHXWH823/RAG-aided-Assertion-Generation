@@ -64,8 +64,11 @@ always_comb begin
 end
 
 
-assert property (@(posedge clk)  (~(rd & wr) | (rd & wr & error)) iff ((!(rd && wr));
-assert property (@(posedge clk)  (~(~data_v_q & rd_en) | (~data_v_q & rd_en & (dout == '0))) iff ((!(rd && !data_v_q[addr]));
-assert property (@(posedge clk)  ($onehot0(rd_v)) iff (((rd_v & (rd_v - 1));
+assert property (@(posedge clk)  ((wr & rd) -> error));
+assert property (@(posedge clk)  (~(rd & wr) | (rd & wr & error)) iff ((wr & rd) -> error));
+assert property (@(posedge clk)  ((rd & ~|rd_v) |-> (dout == {DATA_W{1'b0}})));
+assert property (@(posedge clk)  (~(~data_v_q & rd_en) | (~data_v_q & rd_en & (dout == '0))) iff ((rd & ~|rd_v) |-> (dout == {DATA_W{1'b0}})));
+assert property (@(posedge clk)  (1'b1 |=> (rd_v == $onehot(rd_v))));
+assert property (@(posedge clk)  ($onehot0(rd_v)) iff (1'b1 |=> (rd_v == $onehot(rd_v))));
 
 endmodule
