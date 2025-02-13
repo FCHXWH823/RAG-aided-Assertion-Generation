@@ -29,7 +29,7 @@ module simple_req_ack (
 	assign ack = ack_ff;
 
 
-assert property (@(posedge clk) disable iff(!rst_n) (req |=> (ack[1] && !ack[0])));
-assert property (@(posedge clk) disable iff(!rst_n) ($rose(req) |-> ##2 $rose(ack)) iff (req |=> (ack[1] && !ack[0])));
+assert property (@(posedge clk) disable iff(!rst_n) (req |=> (ack[1])));
+assert property (@(posedge clk) disable iff(!rst_n) ($rose(req) |-> ##2 $rose(ack)) iff (req |=> (ack[1])));
 
 endmodule

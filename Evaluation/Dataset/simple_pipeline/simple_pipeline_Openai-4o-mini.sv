@@ -78,9 +78,9 @@ module simple_pipeline
 
    assign valid_out = valid_delay_r[LATENCY-1];   
 
-assert property (@(posedge clk) disable iff (rst) (valid_delay_r[$past(LATENCY)] == 1'b0));
-assert property (@(posedge clk) disable iff (rst) (count < LATENCY |-> valid_out == 1'b0) iff (valid_delay_r[$past(LATENCY)] == 1'b0));
-assert property (@(posedge clk) disable iff (rst) (valid_delay_r[LATENCY-1] == valid_delay_r[0]));
-assert property (@(posedge clk) disable iff (rst) (count == LATENCY |-> valid_out == $past(valid_in, LATENCY)) iff (valid_delay_r[LATENCY-1] == valid_delay_r[0]));
+assert property (@(posedge clk) disable iff (rst) (valid_out == 0 throughout (valid_delay_r < LATENCY)));
+assert property (@(posedge clk) disable iff (rst) (count < LATENCY |-> valid_out == 1'b0) iff (valid_out == 0 throughout (valid_delay_r < LATENCY)));
+assert property (@(posedge clk) disable iff (rst) (valid_out == valid_in[valid_delay_r[LATENCY-1]]));
+assert property (@(posedge clk) disable iff (rst) (count == LATENCY |-> valid_out == $past(valid_in, LATENCY)) iff (valid_out == valid_in[valid_delay_r[LATENCY-1]]));
 
 endmodule

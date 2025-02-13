@@ -26,10 +26,10 @@ always @ (*)
 	end
 
 
-assert property (@(posedge clk)  (state == 1 && req2 |=> !gnt1));
-assert property (@(posedge clk)  ((state == 1 & req2 == 1) |-> (gnt1 == 0)) iff (state == 1 && req2 |=> !gnt1));
-assert property (@(posedge clk)  (req1 && !state |=> gnt1));
-assert property (@(posedge clk)  ((req1 == 1 & state == 0) |-> (gnt1 == 1)) iff (req1 && !state |=> gnt1));
+assert property (@(posedge clk)  (state == 1 && req2 == 1 |=> gnt1 == 0));
+assert property (@(posedge clk)  ((state == 1 & req2 == 1) |-> (gnt1 == 0)) iff (state == 1 && req2 == 1 |=> gnt1 == 0));
+assert property (@(posedge clk)  (req1 && (state == 0) |=> gnt1));
+assert property (@(posedge clk)  ((req1 == 1 & state == 0) |-> (gnt1 == 1)) iff (req1 && (state == 0) |=> gnt1));
 assert property (@(posedge clk)  (req1 == 0 |=> gnt1 == 0));
 assert property (@(posedge clk)  ((req1 == 0) |-> (gnt1 == 0)) iff (req1 == 0 |=> gnt1 == 0));
 assert property (@(posedge clk)  (req1 && !req2 |=> gnt1));

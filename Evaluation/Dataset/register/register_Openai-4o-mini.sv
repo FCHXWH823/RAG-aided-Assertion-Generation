@@ -18,8 +18,8 @@ module register
    end 
    
 
-assert property (@(posedge clk) disable iff (rst) (en |=> out == $past(in)));
-assert property (@(posedge clk) disable iff (rst) (en |=> out == $past(in,1)) iff (en |=> out == $past(in)));
+assert property (@(posedge clk) disable iff (rst) (en -> (out == in[WIDTH-1:0] ##1 out)));
+assert property (@(posedge clk) disable iff (rst) (en |=> out == $past(in,1)) iff (en -> (out == in[WIDTH-1:0] ##1 out)));
 assert property (@(posedge clk) disable iff (rst) (en == 0 |-> out == $past(out)));
 assert property (@(posedge clk) disable iff (rst) (!en |=> out == $past(out,1)) iff (en == 0 |-> out == $past(out)));
 

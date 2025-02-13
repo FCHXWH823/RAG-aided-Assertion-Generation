@@ -141,10 +141,10 @@ module delay
    end       
 
 
-assert property (@(posedge clk) disable iff (rst) ((out == $past(in, CYCLES) when en) || (CYCLES > 0)));
-assert property (@(posedge clk) disable iff (rst) (count < CYCLES || out == $past(in, CYCLES, en)) iff ((out == $past(in, CYCLES) when en) || (CYCLES > 0)));
-assert property (@(posedge clk) disable iff (rst) (out == RESET_VALUE || (out == regs[CYCLES] && reg_array[i].en)));
-assert property (@(posedge clk) disable iff (rst) (count == CYCLES || out == RESET_VALUE) iff (out == RESET_VALUE || (out == regs[CYCLES] && reg_array[i].en)));
+assert property (@(posedge clk) disable iff (rst) (en |-> (out == $past(in, CYCLES) || (CYCLES > 0))));
+assert property (@(posedge clk) disable iff (rst) (count < CYCLES || out == $past(in, CYCLES, en)) iff (en |-> (out == $past(in, CYCLES) || (CYCLES > 0))));
+assert property (@(posedge clk) disable iff (rst) ((out == RESET_VALUE) || (some_delay_counter == CYCLES)));
+assert property (@(posedge clk) disable iff (rst) (count == CYCLES || out == RESET_VALUE) iff ((out == RESET_VALUE) || (some_delay_counter == CYCLES)));
 assert property (@(posedge clk) disable iff (rst) (en == 0 |=> next(out == $past(out))));
 assert property (@(posedge clk) disable iff (rst) (!en |=> $stable(out)) iff (en == 0 |=> next(out == $past(out))));
 

@@ -29,7 +29,7 @@ assign gray_next = bin_q ^ ( bin_q >> 1 );
 assign out = gray_q;
 
 
-assert property (@(posedge clk) disable iff (~resetn) (unused_bin_inc || (gray_next != gray_q && $countones(gray_next ^ gray_q) == 1)));
-assert property (@(posedge clk) disable iff (~resetn) (unused_bin_inc | $onehot(gray_next ^ gray_q)) iff (unused_bin_inc || (gray_next != gray_q && $countones(gray_next ^ gray_q) == 1)));
+assert property (@(posedge clk) disable iff (~resetn) (unused_bin_inc | ((gray_next ^ gray_q) == (1'b1 << $clog2(DATA_WIDTH)))));
+assert property (@(posedge clk) disable iff (~resetn) (unused_bin_inc | $onehot(gray_next ^ gray_q)) iff (unused_bin_inc | ((gray_next ^ gray_q) == (1'b1 << $clog2(DATA_WIDTH)))));
 
 endmodule

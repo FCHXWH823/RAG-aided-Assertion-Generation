@@ -28,7 +28,7 @@ end
 assign dout = pulse_q;
 
 
-assert property (@(posedge clk) disable iff (~resetn) (din[1] == 1'b1 and din[0] == 1'b0 |=> pulse_q == 1'b1));
-assert property (@(posedge clk) disable iff (~resetn) ($rose(din_f_q) == dout) iff (din[1] == 1'b1 and din[0] == 1'b0 |=> pulse_q == 1'b1));
+assert property (@(posedge clk) disable iff (~resetn) (din[1] && !din[0] |=> pulse_q));
+assert property (@(posedge clk) disable iff (~resetn) ($rose(din_f_q) == dout) iff (din[1] && !din[0] |=> pulse_q));
 
 endmodule

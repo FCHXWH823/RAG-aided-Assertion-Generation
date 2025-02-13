@@ -27,7 +27,7 @@ assign dout = data_q[0];
 
 
 
-assert property (@(posedge clk) disable iff (~resetn) (din_en |-> (dout == data_q[0])));
-assert property (@(posedge clk) disable iff (~resetn) (~v_f_q | (v_f_q & din_f_q[0] == dout)) iff (din_en |-> (dout == data_q[0])));
+assert property (@(posedge clk) disable iff (~resetn) (din_en -> dout == data_q[0]));
+assert property (@(posedge clk) disable iff (~resetn) (~v_f_q | (v_f_q & din_f_q[0] == dout)) iff (din_en -> dout == data_q[0]));
 
 endmodule

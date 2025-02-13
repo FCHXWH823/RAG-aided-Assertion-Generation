@@ -23,9 +23,9 @@ module SEVEN #(parameter freq = 250, parameter CBITS = 8) (input clk, input rst,
 		end
 	end
 
-assert property (@(posedge clk)  (rst == 1 || (digit_select == 0 && segment == both7seg[13:7]) || (digit_select == 1 && segment == both7seg[6:0])));
-assert property (@(posedge clk)  (rst == 1 || digit_select == 1) iff (rst == 1 || (digit_select == 0 && segment == both7seg[13:7]) || (digit_select == 1 && segment == both7seg[6:0])));
-assert property (@(posedge clk)  (rst == 1 || digit_select == 0));
-assert property (@(posedge clk)  (rst == 1 || digit_select == 0) iff (rst == 1 || digit_select == 0));
+assert property (@(posedge clk)  (rst == 1 or (digit_select == 0 and segment == both7seg[13:7]) or (digit_select == 1 and segment == both7seg[6:0])));
+assert property (@(posedge clk)  (rst == 1 || digit_select == 1) iff (rst == 1 or (digit_select == 0 and segment == both7seg[13:7]) or (digit_select == 1 and segment == both7seg[6:0])));
+assert property (@(posedge clk)  ((rst == 1) || (digit_select == 0)));
+assert property (@(posedge clk)  (rst == 1 || digit_select == 0) iff ((rst == 1) || (digit_select == 0)));
 
 endmodule
