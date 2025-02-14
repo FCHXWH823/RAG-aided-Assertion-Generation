@@ -54,6 +54,42 @@ def assertion_checker_prompt(llm_response, assertion_format):
     {assertion_format}
     '''
 
+def extract_last_module(verilog_code: str) -> str:
+    """
+    Extract the last Verilog module from the given Verilog code string.
+    
+    Parameters:
+        verilog_code (str): A string containing the Verilog code.
+    
+    Returns:
+        str: The last module found in the code, or an empty string if no module is found.
+    """
+    # Use a regex pattern with non-greedy matching to capture each module block.
+    # The pattern looks for a word boundary followed by 'module', then matches until
+    # the first occurrence of 'endmodule' (also at a word boundary).
+    pattern = r'\b(module\b.*?\bendmodule\b)'
+    
+    # Use DOTALL so that the dot (.) matches newline characters.
+    modules = re.findall(pattern, verilog_code, flags=re.DOTALL)
+    
+    if modules:
+        return modules[-1].strip()
+    else:
+        return ""
+
+def extract_prerequist_of_assertions(verilog_code_w_assertions:str, verilog_code_wo_assertions:str, num_assertions: int):
+    lines_w_assertions = extract_last_module(verilog_code_w_assertions).strip().split("\n")
+
+    lines_wo_assertions = extract_last_module(verilog_code_wo_assertions).strip().split("\n")
+
+    lines_assertions = lines_w_assertions[len(lines_wo_assertions):len(lines_w_assertions)-1]
+
+    # lines_prerequist = lines_assertions[:-num_assertions]
+    lines_assertions.append("// above are golden assertions\n\n")
+    return lines_assertions
+
+
+
 
 with open("Evaluation/Dataset/Ripple_Carry_Adder/explanation.json") as jsonfile:
     data = json.load(jsonfile)
@@ -144,6 +180,12 @@ with open('Results/Openai-4o-mini-Prompted-Assertion-Generation-Results-for-New-
                     llm_logic_expressions.append(match.group(1) if match else "")
                 
                 combine_assertions = []
+                with open(folder_path+"/"+folder+".sv","r") as file:
+                    verilog_code_wo_assertions = file.read()
+                with open(folder_path+"/"+folder+"_assertion.sv","r") as file:
+                    verilog_code_w_assertions = file.read()
+                # combine_assertions = extract_prerequist_of_assertions(verilog_code_w_assertions,verilog_code_wo_assertions,len(clk_conditions))
+
                 for i in range(len(clk_conditions)):
                     combine_assertion = f"assert property ({clk_conditions[i]} {disable_conditions[i]} ({llm_logic_expressions[i]}));" 
                     combine_assertions.append(combine_assertion)
@@ -151,7 +193,7 @@ with open('Results/Openai-4o-mini-Prompted-Assertion-Generation-Results-for-New-
                     combine_assertions.append(combine_assertion)
                     
 
-                processed_code = remove_last_endmodule(code)
+                processed_code = remove_last_endmodule(verilog_code_w_assertions)
                 processed_code += "\n\n"
                 for assertion in combine_assertions:
                     processed_code += assertion+"\n"

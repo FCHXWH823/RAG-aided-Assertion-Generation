@@ -317,19 +317,27 @@ module uartRec(clk, reset, sTick, rx, rxDoneTick, dOut);
 
 
 
+assert property(@(posedge clk) (stateReg[0] == 0) |-> (rxDoneTick == 0));  
+assert property(@(posedge clk) (sReg[2] == 0) |=> (rxDoneTick == 0));  
+assert property(@(posedge clk) (sReg[1] == 0) |=> (rxDoneTick == 0));  
+assert property(@(posedge clk) (nReg[1] == 0) |=> (rxDoneTick == 0));  
+assert property(@(posedge clk) (nReg[0] == 0) |=> (rxDoneTick == 0));  
+assert property(@(posedge clk) (sTick == 0) |-> (rxDoneTick == 0));  
+assert property(@(posedge clk) (sNext[0] == 0) |=> (rxDoneTick == 0));
+
 assert property (@(posedge clk)  (stateReg[0] == 1'b0 |-> rxDoneTick == 1'b0));
 assert property (@(posedge clk)  ((stateReg[0] == 0) |-> (rxDoneTick == 0)) iff (stateReg[0] == 1'b0 |-> rxDoneTick == 1'b0));
 assert property (@(posedge clk)  (sReg[3] == 1'b0 |-> rxDoneTick == 1'b0));
 assert property (@(posedge clk)  ((sReg[2] == 0) |=> (rxDoneTick == 0)) iff (sReg[3] == 1'b0 |-> rxDoneTick == 1'b0));
-assert property (@(posedge clk)  (sReg[3] == 1'b0 |-> rxDoneTick == 1'b0));
-assert property (@(posedge clk)  ((sReg[1] == 0) |=> (rxDoneTick == 0)) iff (sReg[3] == 1'b0 |-> rxDoneTick == 1'b0));
-assert property (@(posedge clk)  (bReg[dataBits-1] == 0 -> rxDoneTick == 0));
-assert property (@(posedge clk)  ((nReg[1] == 0) |=> (rxDoneTick == 0)) iff (bReg[dataBits-1] == 0 -> rxDoneTick == 0));
-assert property (@(posedge clk)  (sReg[0] == 1'b0 |-> rxDoneTick == 1'b0));
-assert property (@(posedge clk)  ((nReg[0] == 0) |=> (rxDoneTick == 0)) iff (sReg[0] == 1'b0 |-> rxDoneTick == 1'b0));
-assert property (@(posedge clk)  (sTick == 1'b0 |=> rxDoneTick == 1'b0));
-assert property (@(posedge clk)  ((sTick == 0) |-> (rxDoneTick == 0)) iff (sTick == 1'b0 |=> rxDoneTick == 1'b0));
-assert property (@(posedge clk)  ((sReg[2:0] == 3'b000) |-> (rxDoneTick == 1'b0)));
-assert property (@(posedge clk)  ((sNext[0] == 0) |=> (rxDoneTick == 0)) iff ((sReg[2:0] == 3'b000) |-> (rxDoneTick == 1'b0)));
+assert property (@(posedge clk)  ((sReg[3] == 1'b0) |=> (rxDoneTick == 1'b0)));
+assert property (@(posedge clk)  ((sReg[1] == 0) |=> (rxDoneTick == 0)) iff ((sReg[3] == 1'b0) |=> (rxDoneTick == 1'b0)));
+assert property (@(posedge clk)  (nReg < dataBits |-> !rxDoneTick));
+assert property (@(posedge clk)  ((nReg[1] == 0) |=> (rxDoneTick == 0)) iff (nReg < dataBits |-> !rxDoneTick));
+assert property (@(posedge clk)  (nReg[0] == 1'b0 |-> rxDoneTick == 1'b0));
+assert property (@(posedge clk)  ((nReg[0] == 0) |=> (rxDoneTick == 0)) iff (nReg[0] == 1'b0 |-> rxDoneTick == 1'b0));
+assert property (@(posedge clk)  (!(sTick) |=> (rxDoneTick == 1'b0)));
+assert property (@(posedge clk)  ((sTick == 0) |-> (rxDoneTick == 0)) iff (!(sTick) |=> (rxDoneTick == 1'b0)));
+assert property (@(posedge clk)  (sReg[2:0] == 3'b000 -> rxDoneTick == 1'b0));
+assert property (@(posedge clk)  ((sNext[0] == 0) |=> (rxDoneTick == 0)) iff (sReg[2:0] == 3'b000 -> rxDoneTick == 1'b0));
 
 endmodule

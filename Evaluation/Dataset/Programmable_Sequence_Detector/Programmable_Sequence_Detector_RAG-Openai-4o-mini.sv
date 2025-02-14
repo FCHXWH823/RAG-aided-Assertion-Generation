@@ -27,6 +27,8 @@ end
 assign seen = seq_q == init;
 
 
+assert property(@(posedge clk) disable iff(~resetn) seen == (seq_q == init));
+
 assert property (@(posedge clk) default disable iff (~resetn) (seen == (seq_q == init)));
 assert property (@(posedge clk) default disable iff (~resetn) (seen == (seq_q == init)) iff (seen == (seq_q == init)));
 

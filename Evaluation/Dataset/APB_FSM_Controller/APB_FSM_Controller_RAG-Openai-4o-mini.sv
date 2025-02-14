@@ -296,8 +296,28 @@ always @(posedge Hclk)
 
 
 
-assert property (@(posedge Hclk) disable iff (!Hresetn) (always (PRESENT_STATE == NEXT_STATE) throughout (Hclk)));
-assert property (@(posedge Hclk) disable iff (!Hresetn) (1 |-> ##2 PRESENT_STATE == $past(NEXT_STATE)) iff (always (PRESENT_STATE == NEXT_STATE) throughout (Hclk)));
+assert property(@(posedge Hclk) disable iff (!Hresetn) 1 |-> ##2 PRESENT_STATE == $past(NEXT_STATE));
+assert property(@(posedge Hclk) disable iff (!Hresetn) (PRESENT_STATE == ST_IDLE && valid && Hwrite) |-> (NEXT_STATE == ST_WWAIT));
+assert property(@(posedge Hclk) disable iff (!Hresetn) PRESENT_STATE == ST_IDLE && valid && !Hwrite |-> NEXT_STATE == ST_READ);
+assert property(@(posedge Hclk) disable iff (!Hresetn) PRESENT_STATE == ST_IDLE && !valid |-> NEXT_STATE == ST_IDLE);
+assert property(@(posedge Hclk) disable iff (!Hresetn) PRESENT_STATE == ST_WWAIT && !valid |-> NEXT_STATE == ST_WRITE);
+assert property(@(posedge Hclk) disable iff (!Hresetn) PRESENT_STATE == ST_WWAIT && valid |-> NEXT_STATE == ST_WRITEP);
+assert property(@(posedge Hclk) disable iff (!Hresetn) PRESENT_STATE == ST_READ |-> NEXT_STATE == ST_RENABLE);
+assert property(@(posedge Hclk) disable iff (!Hresetn) PRESENT_STATE == ST_WRITE && !valid |-> NEXT_STATE == ST_WENABLE);
+assert property(@(posedge Hclk) disable iff (!Hresetn) PRESENT_STATE == ST_WRITE && valid |-> NEXT_STATE == ST_WENABLEP);
+assert property(@(posedge Hclk) disable iff (!Hresetn) PRESENT_STATE == ST_WRITEP |-> NEXT_STATE == ST_WENABLEP);
+assert property(@(posedge Hclk) disable iff (!Hresetn) PRESENT_STATE == ST_RENABLE && !valid |-> NEXT_STATE == ST_IDLE);
+assert property(@(posedge Hclk) disable iff (!Hresetn) PRESENT_STATE == ST_RENABLE && valid && Hwrite |-> NEXT_STATE == ST_WWAIT);
+assert property(@(posedge Hclk) disable iff (!Hresetn) PRESENT_STATE == ST_RENABLE && valid && !Hwrite |-> NEXT_STATE == ST_READ);
+assert property(@(posedge Hclk) disable iff (!Hresetn) PRESENT_STATE == ST_WENABLE && !valid |-> NEXT_STATE == ST_IDLE);
+assert property(@(posedge Hclk) disable iff (!Hresetn) PRESENT_STATE == ST_WENABLE && valid && Hwrite |-> NEXT_STATE == ST_WWAIT);
+assert property(@(posedge Hclk) disable iff (!Hresetn) PRESENT_STATE == ST_WENABLE && valid && !Hwrite |-> NEXT_STATE == ST_READ);
+assert property(@(posedge Hclk) disable iff (!Hresetn) PRESENT_STATE == ST_WENABLEP && !valid && Hwritereg |-> NEXT_STATE == ST_WRITE);
+assert property(@(posedge Hclk) disable iff (!Hresetn) PRESENT_STATE == ST_WENABLEP && valid && Hwritereg |-> NEXT_STATE == ST_WRITEP);
+assert property(@(posedge Hclk) disable iff (!Hresetn) PRESENT_STATE == ST_WENABLEP && !Hwritereg |-> NEXT_STATE == ST_READ);
+
+assert property (@(posedge Hclk) disable iff (!Hresetn) (PRESENT_STATE == NEXT_STATE [->2]));
+assert property (@(posedge Hclk) disable iff (!Hresetn) (1 |-> ##2 PRESENT_STATE == $past(NEXT_STATE)) iff (PRESENT_STATE == NEXT_STATE [->2]));
 assert property (@(posedge Hclk) disable iff (!Hresetn) (PRESENT_STATE == ST_IDLE && valid && Hwrite |=> NEXT_STATE == ST_WWAIT));
 assert property (@(posedge Hclk) disable iff (!Hresetn) ((PRESENT_STATE == ST_IDLE && valid && Hwrite) |-> (NEXT_STATE == ST_WWAIT)) iff (PRESENT_STATE == ST_IDLE && valid && Hwrite |=> NEXT_STATE == ST_WWAIT));
 assert property (@(posedge Hclk) disable iff (!Hresetn) (PRESENT_STATE == ST_IDLE && valid && ~Hwrite |=> NEXT_STATE == ST_READ));
@@ -306,33 +326,33 @@ assert property (@(posedge Hclk) disable iff (!Hresetn) (PRESENT_STATE == ST_IDL
 assert property (@(posedge Hclk) disable iff (!Hresetn) (PRESENT_STATE == ST_IDLE && !valid |-> NEXT_STATE == ST_IDLE) iff (PRESENT_STATE == ST_IDLE && ~valid |=> NEXT_STATE == ST_IDLE));
 assert property (@(posedge Hclk) disable iff (!Hresetn) (PRESENT_STATE == ST_WWAIT && ~valid |=> NEXT_STATE == ST_WRITE));
 assert property (@(posedge Hclk) disable iff (!Hresetn) (PRESENT_STATE == ST_WWAIT && !valid |-> NEXT_STATE == ST_WRITE) iff (PRESENT_STATE == ST_WWAIT && ~valid |=> NEXT_STATE == ST_WRITE));
-assert property (@(posedge Hclk) disable iff (!Hresetn) (PRESENT_STATE == ST_WWAIT && valid |=> NEXT_STATE == ST_WRITEP));
-assert property (@(posedge Hclk) disable iff (!Hresetn) (PRESENT_STATE == ST_WWAIT && valid |-> NEXT_STATE == ST_WRITEP) iff (PRESENT_STATE == ST_WWAIT && valid |=> NEXT_STATE == ST_WRITEP));
+assert property (@(posedge Hclk) disable iff (!Hresetn) (ST_WWAIT && valid |=> NEXT_STATE == ST_WRITEP));
+assert property (@(posedge Hclk) disable iff (!Hresetn) (PRESENT_STATE == ST_WWAIT && valid |-> NEXT_STATE == ST_WRITEP) iff (ST_WWAIT && valid |=> NEXT_STATE == ST_WRITEP));
 assert property (@(posedge Hclk) disable iff (!Hresetn) (PRESENT_STATE == ST_READ |=> NEXT_STATE == ST_RENABLE));
 assert property (@(posedge Hclk) disable iff (!Hresetn) (PRESENT_STATE == ST_READ |-> NEXT_STATE == ST_RENABLE) iff (PRESENT_STATE == ST_READ |=> NEXT_STATE == ST_RENABLE));
-assert property (@(posedge Hclk) disable iff (!Hresetn) (Hwrite && ~valid |=> NEXT_STATE == ST_WENABLE));
-assert property (@(posedge Hclk) disable iff (!Hresetn) (PRESENT_STATE == ST_WRITE && !valid |-> NEXT_STATE == ST_WENABLE) iff (Hwrite && ~valid |=> NEXT_STATE == ST_WENABLE));
+assert property (@(posedge Hclk) disable iff (!Hresetn) ((PRESENT_STATE == ST_WRITE && ~valid) |=> (NEXT_STATE == ST_WENABLE)));
+assert property (@(posedge Hclk) disable iff (!Hresetn) (PRESENT_STATE == ST_WRITE && !valid |-> NEXT_STATE == ST_WENABLE) iff ((PRESENT_STATE == ST_WRITE && ~valid) |=> (NEXT_STATE == ST_WENABLE)));
 assert property (@(posedge Hclk) disable iff (!Hresetn) (PRESENT_STATE == ST_WRITE && valid |=> NEXT_STATE == ST_WENABLEP));
 assert property (@(posedge Hclk) disable iff (!Hresetn) (PRESENT_STATE == ST_WRITE && valid |-> NEXT_STATE == ST_WENABLEP) iff (PRESENT_STATE == ST_WRITE && valid |=> NEXT_STATE == ST_WENABLEP));
 assert property (@(posedge Hclk) disable iff (!Hresetn) (PRESENT_STATE == ST_WRITEP |=> NEXT_STATE == ST_WENABLEP));
 assert property (@(posedge Hclk) disable iff (!Hresetn) (PRESENT_STATE == ST_WRITEP |-> NEXT_STATE == ST_WENABLEP) iff (PRESENT_STATE == ST_WRITEP |=> NEXT_STATE == ST_WENABLEP));
-assert property (@(posedge Hclk) disable iff (!Hresetn) (PRESENT_STATE == ST_RENABLE && !valid |=> NEXT_STATE == ST_IDLE));
-assert property (@(posedge Hclk) disable iff (!Hresetn) (PRESENT_STATE == ST_RENABLE && !valid |-> NEXT_STATE == ST_IDLE) iff (PRESENT_STATE == ST_RENABLE && !valid |=> NEXT_STATE == ST_IDLE));
+assert property (@(posedge Hclk) disable iff (!Hresetn) (PRESENT_STATE == ST_RENABLE && ~valid |=> NEXT_STATE == ST_IDLE));
+assert property (@(posedge Hclk) disable iff (!Hresetn) (PRESENT_STATE == ST_RENABLE && !valid |-> NEXT_STATE == ST_IDLE) iff (PRESENT_STATE == ST_RENABLE && ~valid |=> NEXT_STATE == ST_IDLE));
 assert property (@(posedge Hclk) disable iff (!Hresetn) (PRESENT_STATE == ST_RENABLE && valid && Hwrite |=> NEXT_STATE == ST_WWAIT));
 assert property (@(posedge Hclk) disable iff (!Hresetn) (PRESENT_STATE == ST_RENABLE && valid && Hwrite |-> NEXT_STATE == ST_WWAIT) iff (PRESENT_STATE == ST_RENABLE && valid && Hwrite |=> NEXT_STATE == ST_WWAIT));
 assert property (@(posedge Hclk) disable iff (!Hresetn) (PRESENT_STATE == ST_RENABLE && valid && ~Hwrite |=> NEXT_STATE == ST_READ));
 assert property (@(posedge Hclk) disable iff (!Hresetn) (PRESENT_STATE == ST_RENABLE && valid && !Hwrite |-> NEXT_STATE == ST_READ) iff (PRESENT_STATE == ST_RENABLE && valid && ~Hwrite |=> NEXT_STATE == ST_READ));
-assert property (@(posedge Hclk) disable iff (!Hresetn) (PRESENT_STATE == ST_WENABLE && ~valid |=> NEXT_STATE == ST_IDLE));
-assert property (@(posedge Hclk) disable iff (!Hresetn) (PRESENT_STATE == ST_WENABLE && !valid |-> NEXT_STATE == ST_IDLE) iff (PRESENT_STATE == ST_WENABLE && ~valid |=> NEXT_STATE == ST_IDLE));
+assert property (@(posedge Hclk) disable iff (!Hresetn) (ST_WENABLE && ~valid |=> NEXT_STATE == ST_IDLE));
+assert property (@(posedge Hclk) disable iff (!Hresetn) (PRESENT_STATE == ST_WENABLE && !valid |-> NEXT_STATE == ST_IDLE) iff (ST_WENABLE && ~valid |=> NEXT_STATE == ST_IDLE));
 assert property (@(posedge Hclk) disable iff (!Hresetn) (PRESENT_STATE == ST_WENABLE && valid && Hwrite |=> NEXT_STATE == ST_WWAIT));
 assert property (@(posedge Hclk) disable iff (!Hresetn) (PRESENT_STATE == ST_WENABLE && valid && Hwrite |-> NEXT_STATE == ST_WWAIT) iff (PRESENT_STATE == ST_WENABLE && valid && Hwrite |=> NEXT_STATE == ST_WWAIT));
 assert property (@(posedge Hclk) disable iff (!Hresetn) (PRESENT_STATE == ST_WENABLE && valid && !Hwrite |=> NEXT_STATE == ST_READ));
 assert property (@(posedge Hclk) disable iff (!Hresetn) (PRESENT_STATE == ST_WENABLE && valid && !Hwrite |-> NEXT_STATE == ST_READ) iff (PRESENT_STATE == ST_WENABLE && valid && !Hwrite |=> NEXT_STATE == ST_READ));
 assert property (@(posedge Hclk) disable iff (!Hresetn) (ST_WENABLEP && ~valid && Hwritereg |=> NEXT_STATE == ST_WRITE));
 assert property (@(posedge Hclk) disable iff (!Hresetn) (PRESENT_STATE == ST_WENABLEP && !valid && Hwritereg |-> NEXT_STATE == ST_WRITE) iff (ST_WENABLEP && ~valid && Hwritereg |=> NEXT_STATE == ST_WRITE));
-assert property (@(posedge Hclk) disable iff (!Hresetn) (PRESENT_STATE == ST_WENABLEP && valid && Hwritereg |=> NEXT_STATE == ST_WENABLEP));
-assert property (@(posedge Hclk) disable iff (!Hresetn) (PRESENT_STATE == ST_WENABLEP && valid && Hwritereg |-> NEXT_STATE == ST_WRITEP) iff (PRESENT_STATE == ST_WENABLEP && valid && Hwritereg |=> NEXT_STATE == ST_WENABLEP));
-assert property (@(posedge Hclk) disable iff (!Hresetn) (PRESENT_STATE == ST_WENABLEP && !Hwritereg |=> NEXT_STATE == ST_READ));
-assert property (@(posedge Hclk) disable iff (!Hresetn) (PRESENT_STATE == ST_WENABLEP && !Hwritereg |-> NEXT_STATE == ST_READ) iff (PRESENT_STATE == ST_WENABLEP && !Hwritereg |=> NEXT_STATE == ST_READ));
+assert property (@(posedge Hclk) disable iff (!Hresetn) ((PRESENT_STATE == ST_WENABLE) && valid && Hwritereg |=> (NEXT_STATE == ST_WENABLEP)));
+assert property (@(posedge Hclk) disable iff (!Hresetn) (PRESENT_STATE == ST_WENABLEP && valid && Hwritereg |-> NEXT_STATE == ST_WRITEP) iff ((PRESENT_STATE == ST_WENABLE) && valid && Hwritereg |=> (NEXT_STATE == ST_WENABLEP)));
+assert property (@(posedge Hclk) disable iff (!Hresetn) (ST_WENABLEP && !Hwritereg |=> NEXT_STATE == ST_READ));
+assert property (@(posedge Hclk) disable iff (!Hresetn) (PRESENT_STATE == ST_WENABLEP && !Hwritereg |-> NEXT_STATE == ST_READ) iff (ST_WENABLEP && !Hwritereg |=> NEXT_STATE == ST_READ));
 
 endmodule

@@ -8,9 +8,12 @@ module ff
       if (rst) out = 1'b0;
       else if (en) out = in;         
 
+assert property(@(posedge clk) disable iff (rst) en |=> out == $past(in,1));
+assert property(@(posedge clk) disable iff (rst) !en |=> out == $past(out,1));
+
 assert property (@(posedge clk) disable iff (rst) (en |-> (out == in[1])));
 assert property (@(posedge clk) disable iff (rst) (en |=> out == $past(in,1)) iff (en |-> (out == in[1])));
-assert property (@(posedge clk) disable iff (rst) (en == 1'b0 |=> out == $past(out)));
-assert property (@(posedge clk) disable iff (rst) (!en |=> out == $past(out,1)) iff (en == 1'b0 |=> out == $past(out)));
+assert property (@(posedge clk) disable iff (rst) (en == 0 |-> out == $past(out)));
+assert property (@(posedge clk) disable iff (rst) (!en |=> out == $past(out,1)) iff (en == 0 |-> out == $past(out)));
 
 endmodule

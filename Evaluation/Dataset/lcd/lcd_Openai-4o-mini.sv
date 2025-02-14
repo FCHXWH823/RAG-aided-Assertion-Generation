@@ -96,7 +96,9 @@ module lcd #(parameter clk_freq = 1, parameter CBITS = 9) (input rst, input clk,
 	end
 
 
-assert property (@(posedge clk)  ((busy == 0) || (state == 2)));
-assert property (@(posedge clk)  (lcd_enable == 0 || state == 2) iff ((busy == 0) || (state == 2)));
+assert property (@(posedge clk) s_eventually (lcd_enable == 0 || state == 2));
+
+assert property (@(posedge clk)  (state == 2 || (e == 0 && rw == 0 && rs == 0)));
+assert property (@(posedge clk)  (lcd_enable == 0 || state == 2) iff (state == 2 || (e == 0 && rw == 0 && rs == 0)));
 
 endmodule

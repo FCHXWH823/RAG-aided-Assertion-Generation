@@ -46,6 +46,10 @@ module fifo
    assign empty = rd_addr_r == wr_addr_r;
       
 
+assert property(@(posedge clk) disable iff (rst) valid_wr |-> !full);
+
+assert property(@(posedge clk) disable iff (rst) valid_rd |-> !empty);
+
 assert property (@(posedge clk) disable iff (rst) (valid_wr |=> !full));
 assert property (@(posedge clk) disable iff (rst) (valid_wr |-> !full) iff (valid_wr |=> !full));
 assert property (@(posedge clk) disable iff (rst) (valid_rd |=> !empty));

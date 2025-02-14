@@ -20,15 +20,21 @@ assign dout3 = {DATA_WIDTH{din_en & ( addr == 2'd3 )}} & din;
 
 
 
+assert property(din_en | ((dout0 == 0) & (dout1 == 0) & (dout2 == 0) & (dout3 == 0)));
+assert property(~(din_en & (addr == 2'd0)) | ((dout0 == din) & (dout1 == 0) & (dout2 == 0) & (dout3 == 0)));
+assert property(~(din_en & (addr == 2'd1)) | ((dout1 == din) & (dout0 == 0) & (dout2 == 0) & (dout3 == 0)));
+assert property(~(din_en & (addr == 2'd2)) | ((dout2 == din) & (dout0 == 0) & (dout1 == 0) & (dout3 == 0)));
+assert property(~(din_en & (addr == 2'd3)) | ((dout3 == din) & (dout0 == 0) & (dout1 == 0) & (dout2 == 0)));
+
 assert property (  (din_en || (dout0 == 0 && dout1 == 0 && dout2 == 0 && dout3 == 0)));
 assert property (  (din_en | ((dout0 == 0) & (dout1 == 0) & (dout2 == 0) & (dout3 == 0))) iff (din_en || (dout0 == 0 && dout1 == 0 && dout2 == 0 && dout3 == 0)));
 assert property (  ((addr != 2'd0) || (dout0 == din && dout1 == 0 && dout2 == 0 && dout3 == 0)));
 assert property (  (~(din_en & (addr == 2'd0)) | ((dout0 == din) & (dout1 == 0) & (dout2 == 0) & (dout3 == 0))) iff ((addr != 2'd0) || (dout0 == din && dout1 == 0 && dout2 == 0 && dout3 == 0)));
-assert property (  (din_en && (addr == 2'd1) |-> (dout1 == din) && (dout0 == 0) && (dout2 == 0) && (dout3 == 0)));
-assert property (  (~(din_en & (addr == 2'd1)) | ((dout1 == din) & (dout0 == 0) & (dout2 == 0) & (dout3 == 0))) iff (din_en && (addr == 2'd1) |-> (dout1 == din) && (dout0 == 0) && (dout2 == 0) && (dout3 == 0)));
-assert property (  (addr == 2'd2 -> (dout2 == din) && (dout0 == 0) && (dout1 == 0) && (dout3 == 0)));
-assert property (  (~(din_en & (addr == 2'd2)) | ((dout2 == din) & (dout0 == 0) & (dout1 == 0) & (dout3 == 0))) iff (addr == 2'd2 -> (dout2 == din) && (dout0 == 0) && (dout1 == 0) && (dout3 == 0)));
-assert property (  (addr == 2'd3 -> (dout3 == din) && (dout0 == 0) && (dout1 == 0) && (dout2 == 0)));
-assert property (  (~(din_en & (addr == 2'd3)) | ((dout3 == din) & (dout0 == 0) & (dout1 == 0) & (dout2 == 0))) iff (addr == 2'd3 -> (dout3 == din) && (dout0 == 0) && (dout1 == 0) && (dout2 == 0)));
+assert property (  (din_en & (addr == 2'd1) | !din_en | (dout1 == din & dout0 == 0 & dout2 == 0 & dout3 == 0)));
+assert property (  (~(din_en & (addr == 2'd1)) | ((dout1 == din) & (dout0 == 0) & (dout2 == 0) & (dout3 == 0))) iff (din_en & (addr == 2'd1) | !din_en | (dout1 == din & dout0 == 0 & dout2 == 0 & dout3 == 0)));
+assert property (  (addr == 2'd2 ? (dout2 == din && dout0 == 0 && dout1 == 0 && dout3 == 0) : (addr != 2'd2)));
+assert property (  (~(din_en & (addr == 2'd2)) | ((dout2 == din) & (dout0 == 0) & (dout1 == 0) & (dout3 == 0))) iff (addr == 2'd2 ? (dout2 == din && dout0 == 0 && dout1 == 0 && dout3 == 0) : (addr != 2'd2)));
+assert property (  ((addr == 2'd3 && din_en) -> (dout3 == din) && (dout0 == 0) && (dout1 == 0) && (dout2 == 0)));
+assert property (  (~(din_en & (addr == 2'd3)) | ((dout3 == din) & (dout0 == 0) & (dout1 == 0) & (dout2 == 0))) iff ((addr == 2'd3 && din_en) -> (dout3 == din) && (dout0 == 0) && (dout1 == 0) && (dout2 == 0)));
 
 endmodule

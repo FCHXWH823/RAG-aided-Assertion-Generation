@@ -47,7 +47,7 @@
 // Bugs fixed. 
 
 // synopsys translate_off
-// `include "timescale.v"
+`include "timescale.v"
 // synopsys translate_on
 `include "or1200_defines.v"
 
@@ -162,20 +162,27 @@ always @(simm or ex_forw or wb_forw or rf_datab or sel_b) begin
 end
 
 
+assert property (@(posedge clk) disable iff(rst) $rose(!ex_freeze && !id_freeze) ##1 (!ex_freeze && !id_freeze && sel_a == 2'd2 && $stable(ex_forw) && $stable(sel_a)) |-> muxed_a == ex_forw);
+assert property (@(posedge clk) disable iff(rst) $rose(!ex_freeze && !id_freeze) ##1 (!ex_freeze && !id_freeze && sel_a == 2'd3 && $stable(wb_forw) && $stable(sel_a)) |-> muxed_a == wb_forw);
+assert property (@(posedge clk) disable iff(rst) $rose(!ex_freeze && !id_freeze) ##1 ( !ex_freeze && !id_freeze & !(sel_a == 2'd2 || sel_a == 2'd3) && $stable(rf_dataa) && $stable(sel_a) && !$isunknown(operand_a) ) |-> muxed_a == rf_dataa);
+assert property (@(posedge clk) disable iff(rst) $rose(!ex_freeze && !id_freeze) ##1 (!ex_freeze && !id_freeze && sel_b == 2'd1 && $stable(simm) && $stable(sel_b)) |->  muxed_b == simm);
+assert property (@(posedge clk) disable iff(rst) $rose(!ex_freeze && !id_freeze) ##1 (!ex_freeze && !id_freeze && sel_b == 2'd2 && $stable(ex_forw) && $stable(sel_b)) |-> muxed_b == ex_forw);
+assert property (@(posedge clk) disable iff(rst) $rose(!ex_freeze && !id_freeze) ##1 (!ex_freeze && !id_freeze && sel_b == 2'd3 && $stable(wb_forw) && $stable(sel_b)) |-> muxed_b == wb_forw);
+assert property (@(posedge clk) disable iff(rst) $rose(!ex_freeze && !id_freeze) ##1 (!ex_freeze && !id_freeze && !(sel_b == 2'd1 || sel_b == 2'd2 || sel_b == 2'd3) && $stable(rf_datab) && $stable(sel_b)) |-> muxed_b == rf_datab);
 
-assert property (@(posedge clk) disable iff (rst) (!ex_freeze && !id_freeze |-> (ex_forw == muxed_a) throughout (sel_a == `OR1200_SEL_EX_FORW)));
-assert property (@(posedge clk) disable iff (rst) ($rose(!ex_freeze && !id_freeze) ##1 (!ex_freeze && !id_freeze && sel_a == 2'd2 && $stable(ex_forw) && $stable(sel_a)) |-> muxed_a == ex_forw) iff (!ex_freeze && !id_freeze |-> (ex_forw == muxed_a) throughout (sel_a == `OR1200_SEL_EX_FORW)));
-assert property (@(posedge clk) disable iff (rst) ((id_freeze == 1'b0 && ex_freeze == 1'b0) |=>    (sel_a == `OR1200_SEL_WB_FORW && muxed_a == wb_forw)));
-assert property (@(posedge clk) disable iff (rst) ($rose(!ex_freeze && !id_freeze) ##1 (!ex_freeze && !id_freeze && sel_a == 2'd3 && $stable(wb_forw) && $stable(sel_a)) |-> muxed_a == wb_forw) iff ((id_freeze == 1'b0 && ex_freeze == 1'b0) |=>    (sel_a == `OR1200_SEL_WB_FORW && muxed_a == wb_forw)));
-assert property (@(posedge clk) disable iff (rst) (id_freeze == 0 && ex_freeze == 0 |=> ##1 (id_freeze == 0 && ex_freeze == 0 ==> (sel_a != `OR1200_SEL_EX_FORW && sel_a != `OR1200_SEL_WB_FORW && rf_dataa == operand_a && muxed_a == rf_dataa))));
-assert property (@(posedge clk) disable iff (rst) ($rose(!ex_freeze && !id_freeze) ##1 (!ex_freeze && !id_freeze && !(sel_a == 2'd2 || sel_a == 2'd3) && $stable(rf_dataa) && $stable(sel_a) && !$isunknown(operand_a)) |-> muxed_a == rf_dataa) iff (id_freeze == 0 && ex_freeze == 0 |=> ##1 (id_freeze == 0 && ex_freeze == 0 ==> (sel_a != `OR1200_SEL_EX_FORW && sel_a != `OR1200_SEL_WB_FORW && rf_dataa == operand_a && muxed_a == rf_dataa))));
-assert property (@(posedge clk) disable iff (rst) ((!ex_freeze && !id_freeze) ##1 ((!ex_freeze && !id_freeze && (sel_b == `OR1200_SEL_IMM) && (simm === simm)) ==> (muxed_b === simm))));
-assert property (@(posedge clk) disable iff (rst) ($rose(!ex_freeze && !id_freeze) ##1 (!ex_freeze && !id_freeze && sel_b == 2'd1 && $stable(simm) && $stable(sel_b)) |-> muxed_b == simm) iff ((!ex_freeze && !id_freeze) ##1 ((!ex_freeze && !id_freeze && (sel_b == `OR1200_SEL_IMM) && (simm === simm)) ==> (muxed_b === simm))));
-assert property (@(posedge clk) disable iff (rst) ((!ex_freeze && !id_freeze) |-> ##1 ((!ex_freeze && !id_freeze) throughout (sel_b == `OR1200_SEL_EX_FORW && muxed_b === ex_forw))));
-assert property (@(posedge clk) disable iff (rst) ($rose(!ex_freeze && !id_freeze) ##1 (!ex_freeze && !id_freeze && sel_b == 2'd2 && $stable(ex_forw) && $stable(sel_b)) |-> muxed_b == ex_forw) iff ((!ex_freeze && !id_freeze) |-> ##1 ((!ex_freeze && !id_freeze) throughout (sel_b == `OR1200_SEL_EX_FORW && muxed_b === ex_forw))));
-assert property (@(posedge clk) disable iff (rst) (ex_freeze == 1'b0 && id_freeze == 1'b0 |-> (ex_freeze == 1'b0 && id_freeze == 1'b0) ||=> (muxed_b == wb_forw)));
-assert property (@(posedge clk) disable iff (rst) ($rose(!ex_freeze && !id_freeze) ##1 (!ex_freeze && !id_freeze && sel_b == 2'd3 && $stable(wb_forw) && $stable(sel_b)) |-> muxed_b == wb_forw) iff (ex_freeze == 1'b0 && id_freeze == 1'b0 |-> (ex_freeze == 1'b0 && id_freeze == 1'b0) ||=> (muxed_b == wb_forw)));
-assert property (@(posedge clk) disable iff (rst) (ex_freeze == 0 && id_freeze == 0 |-> ##1 (ex_freeze == 0 && id_freeze == 0 && sel_b != `OR1200_SEL_IMM && sel_b != `OR1200_SEL_EX_FORW && sel_b != `OR1200_SEL_WB_FORW && rf_datab == rf_datab |-> muxed_b == rf_datab)));
-assert property (@(posedge clk) disable iff (rst) ($rose(!ex_freeze && !id_freeze) ##1 (!ex_freeze && !id_freeze && !(sel_b == 2'd1 || sel_b == 2'd2 || sel_b == 2'd3) && $stable(rf_datab) && $stable(sel_b)) |-> muxed_b == rf_datab) iff (ex_freeze == 0 && id_freeze == 0 |-> ##1 (ex_freeze == 0 && id_freeze == 0 && sel_b != `OR1200_SEL_IMM && sel_b != `OR1200_SEL_EX_FORW && sel_b != `OR1200_SEL_WB_FORW && rf_datab == rf_datab |-> muxed_b == rf_datab)));
+assert property (@(posedge clk) disable iff (rst) ((id_freeze == 0) && (ex_freeze == 0) |->      (id_freeze[1:0] == 0) && (ex_freeze[1:0] == 0) |->      (sel_a == `OR1200_SEL_EX_FORW) |->      (muxed_a == ex_forw)));
+assert property (@(posedge clk) disable iff (rst) ($rose(!ex_freeze && !id_freeze) ##1 (!ex_freeze && !id_freeze && sel_a == 2'd2 && $stable(ex_forw) && $stable(sel_a)) |-> muxed_a == ex_forw) iff ((id_freeze == 0) && (ex_freeze == 0) |->      (id_freeze[1:0] == 0) && (ex_freeze[1:0] == 0) |->      (sel_a == `OR1200_SEL_EX_FORW) |->      (muxed_a == ex_forw)));
+assert property (@(posedge clk) disable iff (rst) (id_freeze === 1'b0 && ex_freeze === 1'b0 |-> (id_freeze[1] === 1'b0 && ex_freeze[1] === 1'b0) |-> (sel_a == `OR1200_SEL_WB_FORW && muxed_a == wb_forw)));
+assert property (@(posedge clk) disable iff (rst) ($rose(!ex_freeze && !id_freeze) ##1 (!ex_freeze && !id_freeze && sel_a == 2'd3 && $stable(wb_forw) && $stable(sel_a)) |-> muxed_a == wb_forw) iff (id_freeze === 1'b0 && ex_freeze === 1'b0 |-> (id_freeze[1] === 1'b0 && ex_freeze[1] === 1'b0) |-> (sel_a == `OR1200_SEL_WB_FORW && muxed_a == wb_forw)));
+assert property (@(posedge clk) disable iff (rst) (id_freeze == 0 && ex_freeze == 0 -> ##1 (id_freeze == 0 && ex_freeze == 0 -> (sel_a != `OR1200_SEL_EX_FORW && sel_a != `OR1200_SEL_WB_FORW) && (rf_dataa === operand_a) && (muxed_a === rf_dataa))));
+assert property (@(posedge clk) disable iff (rst) ($rose(!ex_freeze && !id_freeze) ##1 (!ex_freeze && !id_freeze && !(sel_a == 2'd2 || sel_a == 2'd3) && $stable(rf_dataa) && $stable(sel_a) && !$isunknown(operand_a)) |-> muxed_a == rf_dataa) iff (id_freeze == 0 && ex_freeze == 0 -> ##1 (id_freeze == 0 && ex_freeze == 0 -> (sel_a != `OR1200_SEL_EX_FORW && sel_a != `OR1200_SEL_WB_FORW) && (rf_dataa === operand_a) && (muxed_a === rf_dataa))));
+assert property (@(posedge clk) disable iff (rst) (id_freeze == 1'b0 && ex_freeze == 1'b0 |-> (id_freeze == 1'b0 && ex_freeze == 1'b0 |-> (sel_b == `OR1200_SEL_IMM && muxed_b == simm))));
+assert property (@(posedge clk) disable iff (rst) ($rose(!ex_freeze && !id_freeze) ##1 (!ex_freeze && !id_freeze && sel_b == 2'd1 && $stable(simm) && $stable(sel_b)) |-> muxed_b == simm) iff (id_freeze == 1'b0 && ex_freeze == 1'b0 |-> (id_freeze == 1'b0 && ex_freeze == 1'b0 |-> (sel_b == `OR1200_SEL_IMM && muxed_b == simm))));
+assert property (@(posedge clk) disable iff (rst) (id_freeze == 0 && ex_freeze == 0 |-> (id_freeze == 0 && ex_freeze == 0).next() |=> (sel_b == `OR1200_SEL_EX_FORW && muxed_b == ex_forw)));
+assert property (@(posedge clk) disable iff (rst) ($rose(!ex_freeze && !id_freeze) ##1 (!ex_freeze && !id_freeze && sel_b == 2'd2 && $stable(ex_forw) && $stable(sel_b)) |-> muxed_b == ex_forw) iff (id_freeze == 0 && ex_freeze == 0 |-> (id_freeze == 0 && ex_freeze == 0).next() |=> (sel_b == `OR1200_SEL_EX_FORW && muxed_b == ex_forw)));
+assert property (@(posedge clk) disable iff (rst) ((!ex_freeze && !id_freeze) |-> ##1 (!ex_freeze && !id_freeze && sel_b == `OR1200_SEL_WB_FORW && wb_forw == muxed_b)));
+assert property (@(posedge clk) disable iff (rst) ($rose(!ex_freeze && !id_freeze) ##1 (!ex_freeze && !id_freeze && sel_b == 2'd3 && $stable(wb_forw) && $stable(sel_b)) |-> muxed_b == wb_forw) iff ((!ex_freeze && !id_freeze) |-> ##1 (!ex_freeze && !id_freeze && sel_b == `OR1200_SEL_WB_FORW && wb_forw == muxed_b)));
+assert property (@(posedge clk) disable iff (rst) (id_freeze == 1'b0 && ex_freeze == 1'b0 |->                   (id_freeze == 1'b0 && ex_freeze == 1'b0) ##1                   (sel_b != `OR1200_SEL_IMM &&                    sel_b != `OR1200_SEL_EX_FORW &&                    sel_b != `OR1200_SEL_WB_FORW &&                    rf_datab == rf_datab &&                    sel_b == sel_b |-> (muxed_b == rf_datab))));
+assert property (@(posedge clk) disable iff (rst) ($rose(!ex_freeze && !id_freeze) ##1 (!ex_freeze && !id_freeze && !(sel_b == 2'd1 || sel_b == 2'd2 || sel_b == 2'd3) && $stable(rf_datab) && $stable(sel_b)) |-> muxed_b == rf_datab) iff (id_freeze == 1'b0 && ex_freeze == 1'b0 |->                   (id_freeze == 1'b0 && ex_freeze == 1'b0) ##1                   (sel_b != `OR1200_SEL_IMM &&                    sel_b != `OR1200_SEL_EX_FORW &&                    sel_b != `OR1200_SEL_WB_FORW &&                    rf_datab == rf_datab &&                    sel_b == sel_b |-> (muxed_b == rf_datab))));
 
 endmodule

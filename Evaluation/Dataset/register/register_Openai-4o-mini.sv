@@ -1,6 +1,13 @@
+// Greg Stitt
+// University of Florida
+
+// Module: register
+// Description: Implements a register with an active high, asynchronous reset
+// and an enable signal.
+
 module register
   #(
-    parameter WIDTH=8
+    parameter WIDTH = 8
     )
    (
     input logic              clk,
@@ -18,9 +25,12 @@ module register
    end 
    
 
-assert property (@(posedge clk) disable iff (rst) (en -> (out == in[WIDTH-1:0] ##1 out)));
-assert property (@(posedge clk) disable iff (rst) (en |=> out == $past(in,1)) iff (en -> (out == in[WIDTH-1:0] ##1 out)));
-assert property (@(posedge clk) disable iff (rst) (en == 0 |-> out == $past(out)));
-assert property (@(posedge clk) disable iff (rst) (!en |=> out == $past(out,1)) iff (en == 0 |-> out == $past(out)));
+assert property(@(posedge clk) disable iff (rst) en |=> out == $past(in,1));
+assert property(@(posedge clk) disable iff (rst) !en |=> out == $past(out,1));
+
+assert property (@(posedge clk) disable iff (rst) (en |-> (out == in[WIDTH-1:0])));
+assert property (@(posedge clk) disable iff (rst) (en |=> out == $past(in,1)) iff (en |-> (out == in[WIDTH-1:0])));
+assert property (@(posedge clk) disable iff (rst) (en == 0 |=> out == out[1]));
+assert property (@(posedge clk) disable iff (rst) (!en |=> out == $past(out,1)) iff (en == 0 |=> out == out[1]));
 
 endmodule

@@ -44,7 +44,11 @@ assign sum[DATA_WIDTH] = carry[DATA_WIDTH];
 assign cout_int        = carry[DATA_WIDTH-1:0];
 
 
-assert property (@(posedge clk) disable iff (~rst) (sum == a + b));
-assert property (@(posedge clk) disable iff (~rst) (res == sum) iff (sum == a + b));
+logic [DATA_WIDTH:0] res;
+assign res = a + b;
+assert property(@(posedge clk) disable iff (~rst) res == sum);
+
+assert property (@(posedge clk) disable iff (~rst) (a + b == sum));
+assert property (@(posedge clk) disable iff (~rst) (res == sum) iff (a + b == sum));
 
 endmodule

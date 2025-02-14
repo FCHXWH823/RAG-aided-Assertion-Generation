@@ -21,6 +21,10 @@ endgenerate
 assign bin = tmp[DATA_WIDTH-1];
 
 
+wire [DATA_WIDTH-1:0] gray_f;
+assign gray_f = bin ^ ( bin >> 1 );
+assert property(@(posedge clk) disable iff (~rst) gray_f == gray);
+
 assert property (@(posedge clk) disable iff (~rst) (bin == (gray ^ (gray >> 1))));
 assert property (@(posedge clk) disable iff (~rst) (gray_f == gray) iff (bin == (gray ^ (gray >> 1))));
 

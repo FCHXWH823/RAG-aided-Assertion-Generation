@@ -58,10 +58,12 @@ begin
 end
 `endif // FORMAL 
 
+assert property(@(posedge clk) disable iff (~resetn) (max_q == 0) | (max_q > max2_q));
+
 assert property (  ((max_q == 0 && max2_q == 0) || (max2_q < max_q)));
 assert property (  ((max_q == 0 & max2_q == 0) | ( max2_q < max_q)) iff ((max_q == 0 && max2_q == 0) || (max2_q < max_q)));
-assert property (at posedge clk  ((max_q == 0) || (max_q > max2_q)));
-assert property (at posedge clk  ((max_q == 0) | ( max_q > max2_q )) iff ((max_q == 0) || (max_q > max2_q)));
+assert property (at posedge clk  ((max_q == 0) | (max_q > max2_q)));
+assert property (at posedge clk  ((max_q == 0) | ( max_q > max2_q )) iff ((max_q == 0) | (max_q > max2_q)));
 assert property (@(posedge clk) disable iff (~resetn) ((max_q == 0) | (max_q > max2_q)));
 assert property (@(posedge clk) disable iff (~resetn) ((max_q == 0) | (max_q > max2_q)) iff ((max_q == 0) | (max_q > max2_q)));
 

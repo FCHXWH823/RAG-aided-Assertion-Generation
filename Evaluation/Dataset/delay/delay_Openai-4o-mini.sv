@@ -10,7 +10,7 @@
 
 module register
   #(
-    parameter WIDTH = 8,
+    parameter WIDTH,
     parameter logic HAS_ASYNC_RESET = 1'b1,
     parameter logic RESET_ACTIVATION_LEVEL = 1'b1,
     parameter logic [WIDTH-1:0] RESET_VALUE = '0
@@ -42,7 +42,6 @@ module register
       end
    endgenerate
 endmodule // register
-
 
 // Module: delay
 // Description: This module delays a provided WIDTH-bit input by CYCLES cycles.
@@ -140,12 +139,21 @@ module delay
       
    end       
 
+int count;    
+always_ff @(posedge clk or posedge rst)
+if (rst) count = 0;
+else if (en == 1'b1 && count < CYCLES) count ++;
+assert property(@(posedge clk) disable iff (rst) count < CYCLES || out == $past(in, CYCLES, en));
 
-assert property (@(posedge clk) disable iff (rst) ((out == in) || (out == regs[CYCLES])));
-assert property (@(posedge clk) disable iff (rst) (count < CYCLES || out == $past(in, CYCLES, en)) iff ((out == in) || (out == regs[CYCLES])));
-assert property (@(posedge clk) disable iff (rst) ((out === in) || (out === RESET_VALUE)));
-assert property (@(posedge clk) disable iff (rst) (count == CYCLES || out == RESET_VALUE) iff ((out === in) || (out === RESET_VALUE)));
-assert property (@(posedge clk) disable iff (rst) (en == 1'b0 |=> (out === out_prev)));
-assert property (@(posedge clk) disable iff (rst) (!en |=> $stable(out)) iff (en == 1'b0 |=> (out === out_prev)));
+assert property(@(posedge clk) disable iff (rst) count == CYCLES || out == RESET_VALUE);
+
+assert property(@(posedge clk) disable iff (rst) !en |=> $stable(out));
+
+assert property (@(posedge clk) disable iff (rst) ((CYCLES > 0) && (delay_stage_counter < CYCLES) || (en && (out == regs[CYCLES-1]))));
+assert property (@(posedge clk) disable iff (rst) (count < CYCLES || out == $past(in, CYCLES, en)) iff ((CYCLES > 0) && (delay_stage_counter < CYCLES) || (en && (out == regs[CYCLES-1]))));
+assert property (@(posedge clk) disable iff (rst) (out == RESET_VALUE || (out != RESET_VALUE && $time % CYCLES == 0)));
+assert property (@(posedge clk) disable iff (rst) (count == CYCLES || out == RESET_VALUE) iff (out == RESET_VALUE || (out != RESET_VALUE && $time % CYCLES == 0)));
+assert property (@(posedge clk) disable iff (rst) (en == 1'b0 |=> out == out));
+assert property (@(posedge clk) disable iff (rst) (!en |=> $stable(out)) iff (en == 1'b0 |=> out == out));
 
 endmodule

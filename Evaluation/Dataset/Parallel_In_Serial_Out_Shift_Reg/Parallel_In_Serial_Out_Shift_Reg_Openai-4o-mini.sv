@@ -27,7 +27,22 @@ assign dout = data_q[0];
 
 
 
-assert property (@(posedge clk) disable iff (~resetn) ((~din_en) || (dout == din[0])));
-assert property (@(posedge clk) disable iff (~resetn) (~v_f_q | (v_f_q & din_f_q[0] == dout)) iff ((~din_en) || (dout == din[0])));
+reg  v_f_q;
+wire v_f_next;
+reg  [DATA_WIDTH-1:0] din_f_q;
+wire [DATA_WIDTH-1:0] din_f_next;
+assign din_f_next = { 1'b0 , din_f_q[7:1] };
+assign v_f_next   = resetn & din_en;
+
+always @(posedge clk)
+begin
+	din_f_q <= ~resetn ? {DATA_WIDTH{1'bx}} : 
+					din_en ? din : din_f_next; 
+	v_f_q   <= v_f_next;
+end
+assert property(@(posedge clk) disable iff (~resetn) ~v_f_q | (v_f_q & din_f_q[0] == dout));
+
+assert property (@(posedge clk) disable iff (~resetn) (din_en || (dout == din[0])));
+assert property (@(posedge clk) disable iff (~resetn) (~v_f_q | (v_f_q & din_f_q[0] == dout)) iff (din_en || (dout == din[0])));
 
 endmodule
