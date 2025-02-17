@@ -90,8 +90,10 @@ def extract_csv_from_dataset(csv_name: str):
     # df_new.to_csv("Evaluation/asserted-verilog-evaluation-dataset-transform-new.csv")
 
 def generate_fpv():
+
     for folder in os.listdir("Evaluation/Dataset"):
         folder_path = os.path.join("Evaluation/Dataset/",folder)
+        os.system(f"rm {folder_path}/fpv_Dynamic-RAG_Openai-4o-mini.tcl")
         if os.path.isdir(folder_path):
             with open(f"{folder_path}/fpv.tcl","r") as file:
                 fpv_tcl = file.read()
@@ -105,7 +107,7 @@ def generate_fpv():
             with open(f"{folder_path}/fpv_RAG_Openai-4o-mini.tcl","w") as file:
                 file.write(fpv_tcl_RAG_openai_4o)
 
-            with open(f"{folder_path}/fpv_Dynamic-RAG_Openai-4o-mini.tcl","w") as file:
+            with open(f"{folder_path}/fpv_Dynamic_RAG_Openai-4o-mini.tcl","w") as file:
                 file.write(fpv_tcl_Dynamic_RAG_openai_4o)
             
             
