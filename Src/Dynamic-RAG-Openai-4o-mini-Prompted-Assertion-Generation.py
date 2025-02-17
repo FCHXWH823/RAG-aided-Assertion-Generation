@@ -8,11 +8,15 @@ from sentence_transformers import SentenceTransformer
 import torch
 from transformers import AutoTokenizer, AutoModel
 import yaml
+from PyMuPDF import *
 @dataclass
 class ContentChunk:
     content: str
     chunk_type: str
     context: Optional[str] = None
+    context_upper: Optional[str] = None
+    context_lower: Optional[str] = None
+
 class TransformerEmbeddings:
     def __init__(self, model_name: str):
         self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -105,39 +109,66 @@ class VerilogTextbookProcessor:
                 context = self.get_context_window(text, start, end)
                 positions.append((start, end, code, context))
         return positions
+    # def process_chunk(self, chunk: ContentChunk):
+    #     try:
+    #         metadata = {"type": chunk.chunk_type, "context": chunk.context}
+    #         if chunk.chunk_type == "code":
+    #             content = f"{chunk.context}\n\n{chunk.content}" if chunk.context else chunk.content
+    #             self.code_vectorstore.add_texts([content], [metadata])
+    #         else:
+    #             self.text_vectorstore.add_texts([chunk.content], [metadata])
+    #     except Exception as e:
+    #         self.logger.error(f"Error processing chunk: {str(e)}")
+    
     def process_chunk(self, chunk: ContentChunk):
-        try:
-            metadata = {"type": chunk.chunk_type, "context": chunk.context}
-            if chunk.chunk_type == "code":
-                content = f"{chunk.context}\n\n{chunk.content}" if chunk.context else chunk.content
-                self.code_vectorstore.add_texts([content], [metadata])
-            else:
-                self.text_vectorstore.add_texts([chunk.content], [metadata])
-        except Exception as e:
-            self.logger.error(f"Error processing chunk: {str(e)}")
-    def process_document(self, content: str):
-        try:
-            positions = self.extract_code_blocks(content)
-            last_end = 0
-            for start, end, code, context in positions:
-                if start > last_end:
-                    self.process_chunk(ContentChunk(
-                        content=content[last_end:start].strip(),
-                        chunk_type="text"
-                    ))
+        metadata = {"type": chunk.chunk_type, "context_upper": chunk.context_upper, "context_lower": chunk.context_lower}
+        if chunk.chunk_type == "code":
+            content = f"{chunk.context_upper}\n\n{chunk.content}\n\n{chunk.context_lower}"
+            self.code_vectorstore.add_texts([content], [metadata])
+        else:
+            self.text_vectorstore.add_texts([chunk.content], [metadata])
+
+    def process_document(self, blocks):
+        for i in range(len(blocks)):
+            block = blocks[i]
+            if block["type"] == "text":
                 self.process_chunk(ContentChunk(
-                    content=code,
-                    chunk_type="code",
-                    context=context
-                ))
-                last_end = end
-            if last_end < len(content):
-                self.process_chunk(ContentChunk(
-                    content=content[last_end:].strip(),
+                    content=block_to_text(block).strip(),
                     chunk_type="text"
                 ))
-        except Exception as e:
-            self.logger.error(f"Error processing document: {str(e)}")
+            if block["type"] == "code":
+                self.process_chunk(ContentChunk(
+                    content=block_to_text(block),
+                    chunk_type="code",
+                    context_upper=block_to_text(blocks[i-1]) if i==0 else "",
+                    context_lower=block_to_text(blocks[i+1]) if i==len(blocks)-1 else ""
+                ))
+            print(f"{i}-th block finished")
+
+    # def process_document(self, content: str):
+    #     try:
+    #         positions = self.extract_code_blocks(content)
+    #         last_end = 0
+    #         for start, end, code, context in positions:
+    #             if start > last_end:
+    #                 self.process_chunk(ContentChunk(
+    #                     content=content[last_end:start].strip(),
+    #                     chunk_type="text"
+    #                 ))
+    #             self.process_chunk(ContentChunk(
+    #                 content=code,
+    #                 chunk_type="code",
+    #                 context=context
+    #             ))
+    #             last_end = end
+    #         if last_end < len(content):
+    #             self.process_chunk(ContentChunk(
+    #                 content=content[last_end:].strip(),
+    #                 chunk_type="text"
+    #             ))
+    #     except Exception as e:
+    #         self.logger.error(f"Error processing document: {str(e)}")
+
     def query(self, question: str, k: int = 3) -> List[ContentChunk]:
         is_code_query = self.is_code_query(question)
         print(f"is_code_query: {is_code_query}")
@@ -202,10 +233,12 @@ def main():
     PDF_Name = config["PDF_Name"]
 
     """Process PDF and optionally query the processed content."""
-    pdf_text = pdf_to_text(f"VerilogTextBooks/{PDF_Name}.pdf")
+    # pdf_text = pdf_to_text(f"VerilogTextBooks/{PDF_Name}.pdf")
     processor = VerilogTextbookProcessor()
-    print(len(pdf_text))
-    processor.process_document(pdf_text)
+    # print(len(pdf_text))
+    blocks = get_pdf_blocks(f"VerilogTextBooks/{PDF_Name}.pdf")
+    # processor.process_document(pdf_text)
+    processor.process_document(blocks)
     results = processor.query("How to implement a D flip-flop?")
     print(len(results))
     for chunk in results:
