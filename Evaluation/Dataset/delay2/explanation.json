@@ -2,16 +2,17 @@
 "Assertion 1": {
 "clock signal condition": "@(posedge clk)",
 "disable condition": "",
-"logical expression": "rst || sig == 1",
+"logical expression": "s_eventually (rst || sig == 1)",
 "Signals": ["rst", "sig"],
 "Signal Explanations": {
           "rst": "the reset signal that reinitializes the counter when active",
           "sig": "the output signal that is set to 1 when the counter exceeds the parameter N"
 },
-"Logical Operators": ["||", "=="],
+"Logical Operators": ["||", "==", "s_eventually"],
 "Logical Operators Explanation": {
           "||": "logical OR operator that results true if at least one of its operands is true",
-          "==": "equality operator that checks if two values are identical"
+          "==": "equality operator that checks if two values are identical",
+          "s_eventually": "a temporal operator indicating that the contained condition is required to occur at some future clock cycle"
 },
 "Assertion Explaination": "ensures that eventually either the condition of the reset being active is met or the condition of the output signal matching the active state is satisfied, meaning that either a reset occurs or the delayed output becomes active"
 }

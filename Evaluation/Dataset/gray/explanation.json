@@ -2,7 +2,7 @@
   "Assertion 1": {
     "clock signal condition": "@(posedge clk)",
     "disable condition": "",
-    "logical expression": "rst || sig == 1",
+    "logical expression": "s_eventually (rst || sig == 1)",
     "Signals": [
       "rst",
       "sig"
@@ -13,12 +13,14 @@
     },
     "Logical Operators": [
       "||",
-      "=="
+      "==",
+      "s_eventually"
     ],
     "Logical Operators Explanation": {
       "||": "logical OR operator, meaning at least one of the operands must be true",
-      "==": "equality comparison operator, which checks if the two operands are equal"
+      "==": "equality comparison operator, which checks if the two operands are equal",
+      "s_eventually": "a temporal operator indicating that the contained condition is required to occur at some future clock cycle"
     },
-    "Assertion Explaination": "the property requires that either the module’s reset control is active or the indicator that reflects a zero Gray counter value is equal to one"
+    "Assertion Explaination": "the property requires that eventually either the module’s reset control is active or the indicator that reflects a zero Gray counter value is equal to one"
   }
 }
