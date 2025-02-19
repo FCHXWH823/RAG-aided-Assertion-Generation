@@ -1,0 +1,60 @@
+
+==============================================================
+    Jasper Verification Results
+==============================================================
+    2022.09p001 64 bits for Linux64 3.10.0-1062.1.2.el7.x86_64
+    Host Name: icpc
+    User Name: master
+    Printed on: Wednesday, Feb19, 2025 12:30:01 AM CST
+    Working Directory: /home/master/RAG-aided-Assertion-Generation/Evaluation/Dataset/simple_pipeline
+
+
+==============================================================
+SUMMARY
+==============================================================
+    Total Tasks           : 1
+    Total Properties      : 16
+          assumptions     : 0                   
+           - approved     : 0                   
+           - temporary    : 0                   
+          assertions      : 6                   
+           - proven       : 4                   ( 66.7% )
+           - marked_proven: 0                   ( 0.0% )
+           - cex          : 2                   ( 33.3% )
+           - ar_cex       : 0                   ( 0.0% )
+           - undetermined : 0                   ( 0.0% )
+           - unprocessed  : 0                   ( 0.0% )
+           - error        : 0                   ( 0.0% )
+          covers          : 10                  
+           - unreachable  : 0                   ( 0.0% )
+           - covered      : 10                  ( 100.0% )
+           - ar_covered   : 0                   ( 0.0% )
+           - undetermined : 0                   ( 0.0% )
+           - unprocessed  : 0                   ( 0.0% )
+           - error        : 0                   ( 0.0% )
+
+==============================================================
+RESULTS
+==============================================================
+
+----------------------------------------------------------------------------------------------------
+       Name                                        |    Result    |  Engine  |  Bound  |  Time    
+----------------------------------------------------------------------------------------------------
+
+---[ <embedded> ]-----------------------------------------------------------------------------------
+[1]   simple_pipeline._assert_1                         proven          N      Infinite    0.001 s      
+[2]   simple_pipeline._assert_1:precondition1           covered         PRE           1    0.000 s      
+[3]   simple_pipeline._assert_2                         proven          N      Infinite    0.001 s      
+[4]   simple_pipeline._assert_2:precondition1           covered         N             5    0.001 s      
+[5]   simple_pipeline._assert_3                         cex             N             5    0.002 s      
+[6]   simple_pipeline._assert_3:precondition1           covered         PRE           1    0.000 s      
+[7]   simple_pipeline._assert_4                         cex             N         2 - 5    0.002 s      
+[8]   simple_pipeline._assert_4:precondition1           covered         N             2    0.001 s      
+[9]   simple_pipeline._assert_4:precondition2           covered         PRE           1    0.000 s      
+[10]  simple_pipeline._assert_4:precondition3           covered         PRE           1    0.000 s      
+[11]  simple_pipeline._assert_4:precondition4           covered         PRE           1    0.000 s      
+[12]  simple_pipeline._assert_5                         proven          PRE    Infinite    0.000 s      
+[13]  simple_pipeline._assert_6                         proven          N      Infinite    0.001 s      
+[14]  simple_pipeline._assert_6:precondition1           covered         PRE           1    0.000 s      
+[15]  simple_pipeline._assert_6:precondition2           covered         N             5    0.001 s      
+[16]  simple_pipeline._assert_6:precondition3           covered         PRE           1    0.000 s      

@@ -1,0 +1,18 @@
+% analyze -clear
+% analyze -sv12 ./Flip_Flop_Array_Dynamic-RAG-Openai-4o-mini.sv
+[-- (VERI-1482)] Analyzing Verilog file '/export/SoftWare/Cadence/JASPERGOLD22.09.001/lib/verilog/packages/std/std.sv' into library 'std'
+[-- (VERI-1482)] Analyzing Verilog file './Flip_Flop_Array_Dynamic-RAG-Openai-4o-mini.sv'
+% 
+% elaborate -top Flip_Flop_Array
+INFO (ISW003): Top module name is "Flip_Flop_Array".
+[INFO (VERI-1018)] ./Flip_Flop_Array_Dynamic-RAG-Openai-4o-mini.sv(1): compiling module 'Flip_Flop_Array'
+[WARN (VERI-1209)] ./Flip_Flop_Array_Dynamic-RAG-Openai-4o-mini.sv(55): expression size 8 truncated to fit in target size 1
+[ERROR (VERI-1172)] ./Flip_Flop_Array_Dynamic-RAG-Openai-4o-mini.sv(75): external reference 'countones' remains unresolved
+[INFO (VERI-1073)] ./Flip_Flop_Array_Dynamic-RAG-Openai-4o-mini.sv(1): module 'Flip_Flop_Array' remains a black box due to errors in its contents
+[ERROR (VDB-9017)] Module Flip_Flop_Array could not be elaborated
+Summary of errors detected:
+        [ERROR (VERI-1172)] ./Flip_Flop_Array_Dynamic-RAG-Openai-4o-mini.sv(75): external reference 'countones' remains unresolved
+        [ERROR (VDB-9017)] Module Flip_Flop_Array could not be elaborated
+ERROR (ENL034): 2 errors detected in the design file(s).
+
+ERROR: problem encountered at line 4 in file fpv_Dynamic_RAG_Openai-4o-mini.tcl

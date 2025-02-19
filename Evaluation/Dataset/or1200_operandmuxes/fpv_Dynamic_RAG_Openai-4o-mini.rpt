@@ -1,0 +1,29 @@
+INFO: successfully checked out licenses "jasper_interactive" and "jasper_fpv".
+INFO: reading configuration file "/home/master/.config/cadence/jasper.conf".
+% analyze -clear
+% analyze -sv12 ./or1200_operandmuxes_Dynamic-RAG-Openai-4o-mini.sv
+[-- (VERI-1482)] Analyzing Verilog file '/export/SoftWare/Cadence/JASPERGOLD22.09.001/lib/verilog/packages/std/std.sv' into library 'std'
+[-- (VERI-1482)] Analyzing Verilog file './or1200_operandmuxes_Dynamic-RAG-Openai-4o-mini.sv'
+[INFO (VERI-1328)] ./or1200_operandmuxes_Dynamic-RAG-Openai-4o-mini.sv(52): analyzing included file './or1200_defines.v'
+[ERROR (VERI-1137)] ./or1200_operandmuxes_Dynamic-RAG-Openai-4o-mini.sv(177): syntax error near '['
+[ERROR (VERI-1137)] ./or1200_operandmuxes_Dynamic-RAG-Openai-4o-mini.sv(177): syntax error near '->'
+[ERROR (VERI-1137)] ./or1200_operandmuxes_Dynamic-RAG-Openai-4o-mini.sv(178): syntax error near '['
+[ERROR (VERI-1137)] ./or1200_operandmuxes_Dynamic-RAG-Openai-4o-mini.sv(178): syntax error near '->'
+[ERROR (VERI-1137)] ./or1200_operandmuxes_Dynamic-RAG-Openai-4o-mini.sv(186): syntax error near 'assert'
+[ERROR (VERI-2344)] ./or1200_operandmuxes_Dynamic-RAG-Openai-4o-mini.sv(186): SystemVerilog 2012 keyword 'assert' used in incorrect context
+[ERROR (VERI-1137)] ./or1200_operandmuxes_Dynamic-RAG-Openai-4o-mini.sv(188): syntax error near 'endmodule'
+[ERROR (VERI-2344)] ./or1200_operandmuxes_Dynamic-RAG-Openai-4o-mini.sv(188): SystemVerilog 2012 keyword 'endmodule' used in incorrect context
+[ERROR (VERI-1072)] ./or1200_operandmuxes_Dynamic-RAG-Openai-4o-mini.sv(188): module 'or1200_operandmuxes' is ignored due to previous errors
+Summary of errors detected:
+        [ERROR (VERI-1137)] ./or1200_operandmuxes_Dynamic-RAG-Openai-4o-mini.sv(177): syntax error near '['
+        [ERROR (VERI-1137)] ./or1200_operandmuxes_Dynamic-RAG-Openai-4o-mini.sv(177): syntax error near '->'
+        [ERROR (VERI-1137)] ./or1200_operandmuxes_Dynamic-RAG-Openai-4o-mini.sv(178): syntax error near '['
+        [ERROR (VERI-1137)] ./or1200_operandmuxes_Dynamic-RAG-Openai-4o-mini.sv(178): syntax error near '->'
+        [ERROR (VERI-1137)] ./or1200_operandmuxes_Dynamic-RAG-Openai-4o-mini.sv(186): syntax error near 'assert'
+        [ERROR (VERI-2344)] ./or1200_operandmuxes_Dynamic-RAG-Openai-4o-mini.sv(186): SystemVerilog 2012 keyword 'assert' used in incorrect context
+        [ERROR (VERI-1137)] ./or1200_operandmuxes_Dynamic-RAG-Openai-4o-mini.sv(188): syntax error near 'endmodule'
+        [ERROR (VERI-2344)] ./or1200_operandmuxes_Dynamic-RAG-Openai-4o-mini.sv(188): SystemVerilog 2012 keyword 'endmodule' used in incorrect context
+        [ERROR (VERI-1072)] ./or1200_operandmuxes_Dynamic-RAG-Openai-4o-mini.sv(188): module 'or1200_operandmuxes' is ignored due to previous errors
+ERROR (ENL034): 9 errors detected in the design file(s).
+
+ERROR: problem encountered at line 2 in file fpv_Dynamic_RAG_Openai-4o-mini.tcl

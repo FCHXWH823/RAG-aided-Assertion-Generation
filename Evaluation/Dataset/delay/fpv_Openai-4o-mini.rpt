@@ -1,0 +1,57 @@
+
+==============================================================
+    Jasper Verification Results
+==============================================================
+    2022.09p001 64 bits for Linux64 3.10.0-1062.1.2.el7.x86_64
+    Host Name: icpc
+    User Name: master
+    Printed on: Tuesday, Feb18, 2025 11:36:50 PM CST
+    Working Directory: /home/master/RAG-aided-Assertion-Generation/Evaluation/Dataset/delay
+
+
+==============================================================
+SUMMARY
+==============================================================
+    Total Tasks           : 1
+    Total Properties      : 13
+          assumptions     : 0                   
+           - approved     : 0                   
+           - temporary    : 0                   
+          assertions      : 7                   
+           - proven       : 7                   ( 100.0% )
+           - marked_proven: 0                   ( 0.0% )
+           - cex          : 0                   ( 0.0% )
+           - ar_cex       : 0                   ( 0.0% )
+           - undetermined : 0                   ( 0.0% )
+           - unprocessed  : 0                   ( 0.0% )
+           - error        : 0                   ( 0.0% )
+          covers          : 6                   
+           - unreachable  : 0                   ( 0.0% )
+           - covered      : 6                   ( 100.0% )
+           - ar_covered   : 0                   ( 0.0% )
+           - undetermined : 0                   ( 0.0% )
+           - unprocessed  : 0                   ( 0.0% )
+           - error        : 0                   ( 0.0% )
+
+==============================================================
+RESULTS
+==============================================================
+
+------------------------------------------------------------------------------------------
+       Name                              |    Result    |  Engine  |  Bound  |  Time    
+------------------------------------------------------------------------------------------
+
+---[ <embedded> ]-------------------------------------------------------------------------
+[1]   delay._assert_1                         proven          Hp     Infinite    0.033 s      
+[2]   delay._assert_2                         proven          N      Infinite    0.023 s      
+[3]   delay._assert_3                         proven          Hp     Infinite    0.002 s      
+[4]   delay._assert_3:precondition1           covered         PRE           1    0.000 s      
+[5]   delay._assert_4                         proven          PRE    Infinite    0.000 s      
+[6]   delay._assert_5                         proven          N      Infinite    0.024 s      
+[7]   delay._assert_6                         proven          PRE    Infinite    0.000 s      
+[8]   delay._assert_6:precondition1           covered         PRE           1    0.000 s      
+[9]   delay._assert_7                         proven          Hp     Infinite    0.002 s      
+[10]  delay._assert_7:precondition1           covered         PRE           1    0.000 s      
+[11]  delay._assert_7:precondition2           covered         PRE           1    0.000 s      
+[12]  delay._assert_7:precondition3           covered         PRE           1    0.000 s      
+[13]  delay._assert_7:precondition4           covered         PRE           1    0.000 s      

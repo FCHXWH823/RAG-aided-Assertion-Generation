@@ -1,0 +1,29 @@
+
+INFO: successfully checked out licenses "jasper_interactive" and "jasper_fpv".
+INFO: reading configuration file "/home/master/.config/cadence/jasper.conf".
+% analyze -clear
+% analyze -sv12 ./second_largest_RAG-Openai-4o-mini.sv
+[-- (VERI-1482)] Analyzing Verilog file '/export/SoftWare/Cadence/JASPERGOLD22.09.001/lib/verilog/packages/std/std.sv' into library 'std'
+[-- (VERI-1482)] Analyzing Verilog file './second_largest_RAG-Openai-4o-mini.sv'
+[ERROR (VERI-1137)] ./second_largest_RAG-Openai-4o-mini.sv(65): syntax error near 'posedge'
+[ERROR (VERI-2344)] ./second_largest_RAG-Openai-4o-mini.sv(65): SystemVerilog 2012 keyword 'posedge' used in incorrect context
+[ERROR (VERI-1137)] ./second_largest_RAG-Openai-4o-mini.sv(65): syntax error near ')'
+[ERROR (VERI-1137)] ./second_largest_RAG-Openai-4o-mini.sv(66): syntax error near 'posedge'
+[ERROR (VERI-2344)] ./second_largest_RAG-Openai-4o-mini.sv(66): SystemVerilog 2012 keyword 'posedge' used in incorrect context
+[ERROR (VERI-1137)] ./second_largest_RAG-Openai-4o-mini.sv(66): syntax error near 'iff'
+[ERROR (VERI-2344)] ./second_largest_RAG-Openai-4o-mini.sv(66): SystemVerilog 2012 keyword 'iff' used in incorrect context
+[WARN (VERI-1763)] ./second_largest_RAG-Openai-4o-mini.sv(63): SVA directive is not sensitive to any clock. The directive will be sampled on the posedge of the fastest clock.
+[WARN (VERI-1763)] ./second_largest_RAG-Openai-4o-mini.sv(64): SVA directive is not sensitive to any clock. The directive will be sampled on the posedge of the fastest clock.
+[ERROR (VERI-1072)] ./second_largest_RAG-Openai-4o-mini.sv(70): module 'second_largest' is ignored due to previous errors
+Summary of errors detected:
+        [ERROR (VERI-1137)] ./second_largest_RAG-Openai-4o-mini.sv(65): syntax error near 'posedge'
+        [ERROR (VERI-2344)] ./second_largest_RAG-Openai-4o-mini.sv(65): SystemVerilog 2012 keyword 'posedge' used in incorrect context
+        [ERROR (VERI-1137)] ./second_largest_RAG-Openai-4o-mini.sv(65): syntax error near ')'
+        [ERROR (VERI-1137)] ./second_largest_RAG-Openai-4o-mini.sv(66): syntax error near 'posedge'
+        [ERROR (VERI-2344)] ./second_largest_RAG-Openai-4o-mini.sv(66): SystemVerilog 2012 keyword 'posedge' used in incorrect context
+        [ERROR (VERI-1137)] ./second_largest_RAG-Openai-4o-mini.sv(66): syntax error near 'iff'
+        [ERROR (VERI-2344)] ./second_largest_RAG-Openai-4o-mini.sv(66): SystemVerilog 2012 keyword 'iff' used in incorrect context
+        [ERROR (VERI-1072)] ./second_largest_RAG-Openai-4o-mini.sv(70): module 'second_largest' is ignored due to previous errors
+ERROR (ENL034): 8 errors detected in the design file(s).
+
+ERROR: problem encountered at line 2 in file fpv_RAG_Openai-4o-mini.tcl

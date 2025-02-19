@@ -1,0 +1,25 @@
+INFO: successfully checked out licenses "jasper_interactive" and "jasper_fpv".
+INFO: reading configuration file "/home/master/.config/cadence/jasper.conf".
+% analyze -clear
+% analyze -sv12 ./Programmable_Sequence_Detector_RAG-Openai-4o-mini.sv
+[-- (VERI-1482)] Analyzing Verilog file '/export/SoftWare/Cadence/JASPERGOLD22.09.001/lib/verilog/packages/std/std.sv' into library 'std'
+[-- (VERI-1482)] Analyzing Verilog file './Programmable_Sequence_Detector_RAG-Openai-4o-mini.sv'
+[ERROR (VERI-1137)] ./Programmable_Sequence_Detector_RAG-Openai-4o-mini.sv(32): syntax error near 'default'
+[ERROR (VERI-2344)] ./Programmable_Sequence_Detector_RAG-Openai-4o-mini.sv(32): SystemVerilog 2012 keyword 'default' used in incorrect context
+[ERROR (VERI-1137)] ./Programmable_Sequence_Detector_RAG-Openai-4o-mini.sv(32): syntax error near '('
+[ERROR (VERI-1137)] ./Programmable_Sequence_Detector_RAG-Openai-4o-mini.sv(33): syntax error near 'default'
+[ERROR (VERI-2344)] ./Programmable_Sequence_Detector_RAG-Openai-4o-mini.sv(33): SystemVerilog 2012 keyword 'default' used in incorrect context
+[ERROR (VERI-1137)] ./Programmable_Sequence_Detector_RAG-Openai-4o-mini.sv(33): syntax error near '('
+[WARN (VERI-1214)] ./Programmable_Sequence_Detector_RAG-Openai-4o-mini.sv(27): assignment to input 'seen'
+[ERROR (VERI-1072)] ./Programmable_Sequence_Detector_RAG-Openai-4o-mini.sv(35): module 'Programmable_Sequence_Detector' is ignored due to previous errors
+Summary of errors detected:
+        [ERROR (VERI-1137)] ./Programmable_Sequence_Detector_RAG-Openai-4o-mini.sv(32): syntax error near 'default'
+        [ERROR (VERI-2344)] ./Programmable_Sequence_Detector_RAG-Openai-4o-mini.sv(32): SystemVerilog 2012 keyword 'default' used in incorrect context
+        [ERROR (VERI-1137)] ./Programmable_Sequence_Detector_RAG-Openai-4o-mini.sv(32): syntax error near '('
+        [ERROR (VERI-1137)] ./Programmable_Sequence_Detector_RAG-Openai-4o-mini.sv(33): syntax error near 'default'
+        [ERROR (VERI-2344)] ./Programmable_Sequence_Detector_RAG-Openai-4o-mini.sv(33): SystemVerilog 2012 keyword 'default' used in incorrect context
+        [ERROR (VERI-1137)] ./Programmable_Sequence_Detector_RAG-Openai-4o-mini.sv(33): syntax error near '('
+        [ERROR (VERI-1072)] ./Programmable_Sequence_Detector_RAG-Openai-4o-mini.sv(35): module 'Programmable_Sequence_Detector' is ignored due to previous errors
+ERROR (ENL034): 7 errors detected in the design file(s).
+
+ERROR: problem encountered at line 2 in file fpv_RAG_Openai-4o-mini.tcl

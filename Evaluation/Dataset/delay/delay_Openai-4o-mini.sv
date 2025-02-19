@@ -149,8 +149,8 @@ assert property(@(posedge clk) disable iff (rst) count == CYCLES || out == RESET
 
 assert property(@(posedge clk) disable iff (rst) !en |=> $stable(out));
 
-assert property (@(posedge clk) disable iff (rst) ((CYCLES > 0) && (delay_stage_counter < CYCLES) || (en && (out == regs[CYCLES-1]))));
-assert property (@(posedge clk) disable iff (rst) (count < CYCLES || out == $past(in, CYCLES, en)) iff ((CYCLES > 0) && (delay_stage_counter < CYCLES) || (en && (out == regs[CYCLES-1]))));
+// assert property (@(posedge clk) disable iff (rst) ((CYCLES > 0) && (delay_stage_counter < CYCLES) || (en && (out == regs[CYCLES-1]))));
+// assert property (@(posedge clk) disable iff (rst) (count < CYCLES || out == $past(in, CYCLES, en)) iff ((CYCLES > 0) && (delay_stage_counter < CYCLES) || (en && (out == regs[CYCLES-1]))));
 assert property (@(posedge clk) disable iff (rst) (out == RESET_VALUE || (out != RESET_VALUE && $time % CYCLES == 0)));
 assert property (@(posedge clk) disable iff (rst) (count == CYCLES || out == RESET_VALUE) iff (out == RESET_VALUE || (out != RESET_VALUE && $time % CYCLES == 0)));
 assert property (@(posedge clk) disable iff (rst) (en == 1'b0 |=> out == out));

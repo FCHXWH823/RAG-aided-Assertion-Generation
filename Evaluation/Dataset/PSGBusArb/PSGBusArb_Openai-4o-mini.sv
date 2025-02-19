@@ -213,10 +213,10 @@ assert property (@(posedge clk)  (sel7 == 1'b0 && req0 == 1'b1 |-> sel7 == 1'b0)
 assert property (@(posedge clk)  ((sel7 == 0 & req0 == 1) |=> (sel7 == 0)) iff (sel7 == 1'b0 && req0 == 1'b1 |-> sel7 == 1'b0));
 assert property (@(posedge clk)  (sel7 == 1'b0 && req1 == 1'b1 |-> sel7 == 1'b0));
 assert property (@(posedge clk)  ((sel7 == 0 & req1 == 1) |=> (sel7 == 0)) iff (sel7 == 1'b0 && req1 == 1'b1 |-> sel7 == 1'b0));
-assert property (@(posedge clk)  (sel7 && !ack |-> next(sel7)));
-assert property (@(posedge clk)  ((sel7 == 1 & ack == 0) |=> (sel7 == 1)) iff (sel7 && !ack |-> next(sel7)));
-assert property (@(posedge clk)  (sel7 && !ce |-> sel7[1]));
-assert property (@(posedge clk)  ((sel7 == 1 & ce == 0) |=> (sel7 == 1)) iff (sel7 && !ce |-> sel7[1]));
+// assert property (@(posedge clk)  (sel7 && !ack |-> next(sel7)));
+// assert property (@(posedge clk)  ((sel7 == 1 & ack == 0) |=> (sel7 == 1)) iff (sel7 && !ack |-> next(sel7)));
+// assert property (@(posedge clk)  (sel7 && !ce |-> sel7[1]));
+// assert property (@(posedge clk)  ((sel7 == 1 & ce == 0) |=> (sel7 == 1)) iff (sel7 && !ce |-> sel7[1]));
 assert property (@(posedge clk)  (sel7 == 1'b0 && ack == 1'b0 |-> ##1 (sel7 == 1'b0)));
 assert property (@(posedge clk)  ((sel7 == 0 & ack == 0) |=> (sel7 == 0)) iff (sel7 == 1'b0 && ack == 1'b0 |-> ##1 (sel7 == 1'b0)));
 assert property (@(posedge clk)  (sel7 == 1'b0 && req2 == 1'b1 |-> sel7 == 1'b0));
@@ -231,8 +231,8 @@ assert property (@(posedge clk)  (sel5 == 1'b0 && req0 == 1'b1 |-> sel5 == 1'b0)
 assert property (@(posedge clk)  ((sel5 == 0 & req0 == 1) |=> (sel5 == 0)) iff (sel5 == 1'b0 && req0 == 1'b1 |-> sel5 == 1'b0));
 assert property (@(posedge clk)  (sel5 == 1'b0 && req1 == 1'b1 |=> sel5 == 1'b0));
 assert property (@(posedge clk)  ((sel5 == 0 & req1 == 1) |=> (sel5 == 0)) iff (sel5 == 1'b0 && req1 == 1'b1 |=> sel5 == 1'b0));
-assert property (@(posedge clk)  (sel5 == 1'b1 && ce == 1'b0 |-> sel5[1]));
-assert property (@(posedge clk)  ((sel5 == 1 & ce == 0) |=> (sel5 == 1)) iff (sel5 == 1'b1 && ce == 1'b0 |-> sel5[1]));
+// assert property (@(posedge clk)  (sel5 == 1'b1 && ce == 1'b0 |-> sel5[1]));
+// assert property (@(posedge clk)  ((sel5 == 1 & ce == 0) |=> (sel5 == 1)) iff (sel5 == 1'b1 && ce == 1'b0 |-> sel5[1]));
 assert property (@(posedge clk)  (sel5 && !ack |-> sel5));
 assert property (@(posedge clk)  ((sel5 == 1 & ack == 0) |=> (sel5 == 1)) iff (sel5 && !ack |-> sel5));
 assert property (@(posedge clk)  (sel5 == 1'b0 && ack == 1'b0 |-> sel5 == 1'b0));
@@ -245,8 +245,8 @@ assert property (@(posedge clk)  (sel5 == 1'b0 && req3 == 1'b1 |-> sel5 == 1'b0)
 assert property (@(posedge clk)  ((sel5 == 0 & req3 == 1) |=> (sel5 == 0)) iff (sel5 == 1'b0 && req3 == 1'b1 |-> sel5 == 1'b0));
 assert property (@(posedge clk)  ((!sel5 && req4) |-> (!sel5)));
 assert property (@(posedge clk)  ((sel5 == 0 & req4 == 1) |=> (sel5 == 0)) iff ((!sel5 && req4) |-> (!sel5)));
-assert property (@(posedge clk)  (!(sel5 == 1'b0 && req5 == 1'b0) |-> (sel5[1:0] == sel5[1:0])));
-assert property (@(posedge clk)  ((sel5 == 0 & req5 == 0) |=> (sel5 == 0)) iff (!(sel5 == 1'b0 && req5 == 1'b0) |-> (sel5[1:0] == sel5[1:0])));
+// assert property (@(posedge clk)  (!(sel5 == 1'b0 && req5 == 1'b0) |-> (sel5[1:0] == sel5[1:0])));
+// assert property (@(posedge clk)  ((sel5 == 0 & req5 == 0) |=> (sel5 == 0)) iff (!(sel5 == 1'b0 && req5 == 1'b0) |-> (sel5[1:0] == sel5[1:0])));
 assert property (@(posedge clk)  (sel4==1'b0 && req1==1'b1 |-> sel4==1'b0));
 assert property (@(posedge clk)  ((sel4 == 0 & req1 == 1) |=> (sel4 == 0)) iff (sel4==1'b0 && req1==1'b1 |-> sel4==1'b0));
 assert property (@(posedge clk)  (sel4 && !ack |-> sel4));

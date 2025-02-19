@@ -1,0 +1,19 @@
+% analyze -clear
+% analyze -sv12 ./delay_Dynamic-RAG-Openai-4o-mini.sv
+[-- (VERI-1482)] Analyzing Verilog file '/export/SoftWare/Cadence/JASPERGOLD22.09.001/lib/verilog/packages/std/std.sv' into library 'std'
+[-- (VERI-1482)] Analyzing Verilog file './delay_Dynamic-RAG-Openai-4o-mini.sv'
+[WARN (VERI-1818)] ./delay_Dynamic-RAG-Openai-4o-mini.sv(13): initial value of parameter 'WIDTH' is omitted
+[ERROR (VERI-1137)] ./delay_Dynamic-RAG-Openai-4o-mini.sv(152): syntax error near 'when'
+[ERROR (VERI-1137)] ./delay_Dynamic-RAG-Openai-4o-mini.sv(152): syntax error near ')'
+[ERROR (VERI-1137)] ./delay_Dynamic-RAG-Openai-4o-mini.sv(153): syntax error near 'when'
+[ERROR (VERI-1137)] ./delay_Dynamic-RAG-Openai-4o-mini.sv(153): syntax error near ')'
+[ERROR (VERI-1072)] ./delay_Dynamic-RAG-Openai-4o-mini.sv(159): module 'delay' is ignored due to previous errors
+Summary of errors detected:
+        [ERROR (VERI-1137)] ./delay_Dynamic-RAG-Openai-4o-mini.sv(152): syntax error near 'when'
+        [ERROR (VERI-1137)] ./delay_Dynamic-RAG-Openai-4o-mini.sv(152): syntax error near ')'
+        [ERROR (VERI-1137)] ./delay_Dynamic-RAG-Openai-4o-mini.sv(153): syntax error near 'when'
+        [ERROR (VERI-1137)] ./delay_Dynamic-RAG-Openai-4o-mini.sv(153): syntax error near ')'
+        [ERROR (VERI-1072)] ./delay_Dynamic-RAG-Openai-4o-mini.sv(159): module 'delay' is ignored due to previous errors
+ERROR (ENL034): 5 errors detected in the design file(s).
+
+ERROR: problem encountered at line 2 in file fpv_Dynamic_RAG_Openai-4o-mini.tcl

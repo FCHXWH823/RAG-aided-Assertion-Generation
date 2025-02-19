@@ -251,8 +251,8 @@ assert property(@(posedge HCLK) (haddr_pp[1] == 1) |-> (crc_poly_en == 0));
 
 assert property (@(posedge HCLK)  (sample_bus |-> HREADYOUT));
 assert property (@(posedge HCLK)  ((sample_bus == 1) |-> (HREADYOUT == 1)) iff (sample_bus |-> HREADYOUT));
-assert property (@(posedge HCLK)  (buffer_read_en && read_wait ==> !HREADYOUT));
-assert property (@(posedge HCLK)  ((buffer_read_en == 1 & read_wait == 1) |-> (HREADYOUT == 0)) iff (buffer_read_en && read_wait ==> !HREADYOUT));
+// assert property (@(posedge HCLK)  (buffer_read_en && read_wait ==> !HREADYOUT));
+// assert property (@(posedge HCLK)  ((buffer_read_en == 1 & read_wait == 1) |-> (HREADYOUT == 0)) iff (buffer_read_en && read_wait ==> !HREADYOUT));
 assert property (@(posedge HCLK)  (ahb_enable == 0 |-> HREADYOUT == 1));
 assert property (@(posedge HCLK)  ((ahb_enable == 0) |-> (HREADYOUT == 1)) iff (ahb_enable == 0 |-> HREADYOUT == 1));
 assert property (@(posedge HCLK)  (!write_en || !crc_idr_en));

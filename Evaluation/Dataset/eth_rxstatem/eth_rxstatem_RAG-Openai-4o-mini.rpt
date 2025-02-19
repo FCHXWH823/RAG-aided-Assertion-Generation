@@ -1,0 +1,22 @@
+% analyze -clear
+% analyze -sv12 ./eth_rxstatem_RAG-Openai-4o-mini.sv
+[-- (VERI-1482)] Analyzing Verilog file '/export/SoftWare/Cadence/JASPERGOLD22.09.001/lib/verilog/packages/std/std.sv' into library 'std'
+[-- (VERI-1482)] Analyzing Verilog file './eth_rxstatem_RAG-Openai-4o-mini.sv'
+[ERROR (VERI-1137)] ./eth_rxstatem_RAG-Openai-4o-mini.sv(241): syntax error near ')'
+[ERROR (VERI-1137)] ./eth_rxstatem_RAG-Openai-4o-mini.sv(242): syntax error near ')'
+[ERROR (VERI-1137)] ./eth_rxstatem_RAG-Openai-4o-mini.sv(277): syntax error near ')'
+[ERROR (VERI-1137)] ./eth_rxstatem_RAG-Openai-4o-mini.sv(278): syntax error near ')'
+[ERROR (VERI-1128)] ./eth_rxstatem_RAG-Openai-4o-mini.sv(291): 'valid_received_data_condition_inactive' is not declared
+[ERROR (VERI-1128)] ./eth_rxstatem_RAG-Openai-4o-mini.sv(292): 'valid_received_data_condition_inactive' is not declared
+[ERROR (VERI-1072)] ./eth_rxstatem_RAG-Openai-4o-mini.sv(294): module 'eth_rxstatem' is ignored due to previous errors
+Summary of errors detected:
+        [ERROR (VERI-1137)] ./eth_rxstatem_RAG-Openai-4o-mini.sv(241): syntax error near ')'
+        [ERROR (VERI-1137)] ./eth_rxstatem_RAG-Openai-4o-mini.sv(242): syntax error near ')'
+        [ERROR (VERI-1137)] ./eth_rxstatem_RAG-Openai-4o-mini.sv(277): syntax error near ')'
+        [ERROR (VERI-1137)] ./eth_rxstatem_RAG-Openai-4o-mini.sv(278): syntax error near ')'
+        [ERROR (VERI-1128)] ./eth_rxstatem_RAG-Openai-4o-mini.sv(291): 'valid_received_data_condition_inactive' is not declared
+        [ERROR (VERI-1128)] ./eth_rxstatem_RAG-Openai-4o-mini.sv(292): 'valid_received_data_condition_inactive' is not declared
+        [ERROR (VERI-1072)] ./eth_rxstatem_RAG-Openai-4o-mini.sv(294): module 'eth_rxstatem' is ignored due to previous errors
+ERROR (ENL034): 7 errors detected in the design file(s).
+
+ERROR: problem encountered at line 2 in file fpv_RAG_Openai-4o-mini.tcl

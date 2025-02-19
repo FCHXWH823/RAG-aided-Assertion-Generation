@@ -1,0 +1,107 @@
+
+==============================================================
+    Jasper Verification Results
+==============================================================
+    2022.09p001 64 bits for Linux64 3.10.0-1062.1.2.el7.x86_64
+    Host Name: icpc
+    User Name: master
+    Printed on: Tuesday, Feb18, 2025 03:20:41 PM CST
+    Working Directory: /home/master/RAG-aided-Assertion-Generation/Evaluation/Dataset/uartRec
+
+
+==============================================================
+SUMMARY
+==============================================================
+    Total Tasks           : 1
+    Total Properties      : 63
+          assumptions     : 0                   
+           - approved     : 0                   
+           - temporary    : 0                   
+          assertions      : 21                  
+           - proven       : 19                  ( 90.5% )
+           - marked_proven: 0                   ( 0.0% )
+           - cex          : 2                   ( 9.5% )
+           - ar_cex       : 0                   ( 0.0% )
+           - undetermined : 0                   ( 0.0% )
+           - unprocessed  : 0                   ( 0.0% )
+           - error        : 0                   ( 0.0% )
+          covers          : 42                  
+           - unreachable  : 0                   ( 0.0% )
+           - covered      : 42                  ( 100.0% )
+           - ar_covered   : 0                   ( 0.0% )
+           - undetermined : 0                   ( 0.0% )
+           - unprocessed  : 0                   ( 0.0% )
+           - error        : 0                   ( 0.0% )
+
+==============================================================
+RESULTS
+==============================================================
+
+---------------------------------------------------------------------------------------------
+       Name                                 |    Result    |  Engine  |  Bound  |  Time    
+---------------------------------------------------------------------------------------------
+
+---[ <embedded> ]----------------------------------------------------------------------------
+[1]   uartRec._assert_1                          proven          Hp     Infinite    0.001 s      
+[2]   uartRec._assert_1:precondition1            covered         PRE           1    0.000 s      
+[3]   uartRec._assert_2                          proven          Hp     Infinite    0.004 s      
+[4]   uartRec._assert_2:precondition1            covered         PRE           1    0.000 s      
+[5]   uartRec._assert_3                          proven          Hp     Infinite    0.004 s      
+[6]   uartRec._assert_3:precondition1            covered         PRE           1    0.000 s      
+[7]   uartRec._assert_4                          proven          N      Infinite    0.018 s      
+[8]   uartRec._assert_4:precondition1            covered         PRE           1    0.000 s      
+[9]   uartRec._assert_5                          proven          N      Infinite    0.015 s      
+[10]  uartRec._assert_5:precondition1            covered         PRE           1    0.000 s      
+[11]  uartRec._assert_6                          proven          Hp     Infinite    0.002 s      
+[12]  uartRec._assert_6:precondition1            covered         PRE           1    0.000 s      
+[13]  uartRec._assert_7                          proven          Hp     Infinite    0.004 s      
+[14]  uartRec._assert_7:precondition1            covered         PRE           1    0.000 s      
+[15]  uartRec._assert_8                          proven          Hp     Infinite    0.004 s      
+[16]  uartRec._assert_8:precondition1            covered         PRE           1    0.000 s      
+[17]  uartRec._assert_9                          proven          Hp     Infinite    0.004 s      
+[18]  uartRec._assert_9:precondition1            covered         Hp            2    0.005 s      
+[19]  uartRec._assert_9:precondition2            covered         PRE           1    0.000 s      
+[20]  uartRec._assert_9:precondition3            covered         PRE           1    0.000 s      
+[21]  uartRec._assert_9:precondition4            covered         PRE           1    0.000 s      
+[22]  uartRec._assert_10                         proven          Hp     Infinite    0.004 s      
+[23]  uartRec._assert_10:precondition1           covered         PRE           1    0.000 s      
+[24]  uartRec._assert_11                         proven          Hp     Infinite    0.004 s      
+[25]  uartRec._assert_11:precondition1           covered         Hp            2    0.005 s      
+[26]  uartRec._assert_11:precondition2           covered         PRE           1    0.000 s      
+[27]  uartRec._assert_11:precondition3           covered         Hp            2    0.005 s      
+[28]  uartRec._assert_11:precondition4           covered         PRE           1    0.000 s      
+[29]  uartRec._assert_12                         proven          Hp     Infinite    0.005 s      
+[30]  uartRec._assert_12:precondition1           covered         PRE           1    0.000 s      
+[31]  uartRec._assert_13                         proven          Hp     Infinite    0.004 s      
+[32]  uartRec._assert_13:precondition1           covered         Hp            2    0.005 s      
+[33]  uartRec._assert_13:precondition2           covered         PRE           1    0.000 s      
+[34]  uartRec._assert_13:precondition3           covered         Hp            2    0.005 s      
+[35]  uartRec._assert_13:precondition4           covered         PRE           1    0.000 s      
+[36]  uartRec._assert_14                         proven          N      Infinite    0.025 s      
+[37]  uartRec._assert_14:precondition1           covered         PRE           1    0.000 s      
+[38]  uartRec._assert_15                         proven          N      Infinite    0.000 s      
+[39]  uartRec._assert_15:precondition1           covered         Hp            2    0.005 s      
+[40]  uartRec._assert_15:precondition2           covered         PRE           1    0.000 s      
+[41]  uartRec._assert_15:precondition3           covered         Hp            2    0.005 s      
+[42]  uartRec._assert_15:precondition4           covered         PRE           1    0.000 s      
+[43]  uartRec._assert_16                         proven          N      Infinite    0.025 s      
+[44]  uartRec._assert_16:precondition1           covered         PRE           1    0.000 s      
+[45]  uartRec._assert_17                         proven          N      Infinite    0.000 s      
+[46]  uartRec._assert_17:precondition1           covered         Hp            2    0.005 s      
+[47]  uartRec._assert_17:precondition2           covered         PRE           1    0.000 s      
+[48]  uartRec._assert_17:precondition3           covered         Hp            2    0.005 s      
+[49]  uartRec._assert_17:precondition4           covered         PRE           1    0.000 s      
+[50]  uartRec._assert_18                         cex             Ht          154    1.502 s      
+[51]  uartRec._assert_18:precondition1           covered         PRE           1    0.000 s      
+[52]  uartRec._assert_19                         cex             Ht          154    1.503 s      
+[53]  uartRec._assert_19:precondition1           covered         PRE           1    0.000 s      
+[54]  uartRec._assert_19:precondition2           covered         PRE           1    0.000 s      
+[55]  uartRec._assert_19:precondition3           covered         PRE           1    0.000 s      
+[56]  uartRec._assert_19:precondition4           covered         PRE           1    0.000 s      
+[57]  uartRec._assert_20                         proven          Hp     Infinite    0.004 s      
+[58]  uartRec._assert_20:precondition1           covered         PRE           1    0.000 s      
+[59]  uartRec._assert_21                         proven          Hp     Infinite    0.005 s      
+[60]  uartRec._assert_21:precondition1           covered         Hp            2    0.005 s      
+[61]  uartRec._assert_21:precondition2           covered         PRE           1    0.000 s      
+[62]  uartRec._assert_21:precondition3           covered         Hp            2    0.005 s      
+[63]  uartRec._assert_21:precondition4           covered         PRE           1    0.000 s      

@@ -1,0 +1,19 @@
+% analyze -clear
+% analyze -sv12 ./or1200_if_Dynamic-RAG-Openai-4o-mini.sv
+[-- (VERI-1482)] Analyzing Verilog file '/export/SoftWare/Cadence/JASPERGOLD22.09.001/lib/verilog/packages/std/std.sv' into library 'std'
+[-- (VERI-1482)] Analyzing Verilog file './or1200_if_Dynamic-RAG-Openai-4o-mini.sv'
+[INFO (VERI-1328)] ./or1200_if_Dynamic-RAG-Openai-4o-mini.sv(52): analyzing included file './or1200_defines.v'
+[ERROR (VERI-1011)] ./or1200_if_Dynamic-RAG-Openai-4o-mini.sv(221): cannot index into non-array type logic for 'icpu_err_i'
+[ERROR (VERI-1011)] ./or1200_if_Dynamic-RAG-Openai-4o-mini.sv(222): cannot index into non-array type logic for 'icpu_err_i'
+[ERROR (VERI-1011)] ./or1200_if_Dynamic-RAG-Openai-4o-mini.sv(225): cannot index into non-array type logic for 'icpu_err_i'
+[ERROR (VERI-1011)] ./or1200_if_Dynamic-RAG-Openai-4o-mini.sv(226): cannot index into non-array type logic for 'icpu_err_i'
+[ERROR (VERI-1072)] ./or1200_if_Dynamic-RAG-Openai-4o-mini.sv(230): module 'or1200_if' is ignored due to previous errors
+Summary of errors detected:
+        [ERROR (VERI-1011)] ./or1200_if_Dynamic-RAG-Openai-4o-mini.sv(221): cannot index into non-array type logic for 'icpu_err_i'
+        [ERROR (VERI-1011)] ./or1200_if_Dynamic-RAG-Openai-4o-mini.sv(222): cannot index into non-array type logic for 'icpu_err_i'
+        [ERROR (VERI-1011)] ./or1200_if_Dynamic-RAG-Openai-4o-mini.sv(225): cannot index into non-array type logic for 'icpu_err_i'
+        [ERROR (VERI-1011)] ./or1200_if_Dynamic-RAG-Openai-4o-mini.sv(226): cannot index into non-array type logic for 'icpu_err_i'
+        [ERROR (VERI-1072)] ./or1200_if_Dynamic-RAG-Openai-4o-mini.sv(230): module 'or1200_if' is ignored due to previous errors
+ERROR (ENL034): 5 errors detected in the design file(s).
+
+ERROR: problem encountered at line 2 in file fpv_Dynamic_RAG_Openai-4o-mini.tcl

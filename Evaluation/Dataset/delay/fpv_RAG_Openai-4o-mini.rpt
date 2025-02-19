@@ -1,0 +1,20 @@
+% analyze -clear
+% analyze -sv12 ./delay_RAG-Openai-4o-mini.sv
+[-- (VERI-1482)] Analyzing Verilog file '/export/SoftWare/Cadence/JASPERGOLD22.09.001/lib/verilog/packages/std/std.sv' into library 'std'
+[-- (VERI-1482)] Analyzing Verilog file './delay_RAG-Openai-4o-mini.sv'
+[WARN (VERI-1818)] ./delay_RAG-Openai-4o-mini.sv(13): initial value of parameter 'WIDTH' is omitted
+% 
+% elaborate -top delay
+INFO (ISW003): Top module name is "delay".
+[INFO (HIER-8002)] ./delay_RAG-Openai-4o-mini.sv(159): Disabling old hierarchical reference handler
+[INFO (VERI-1018)] ./delay_RAG-Openai-4o-mini.sv(11): compiling module 'register:(WIDTH=8,RESET_VALUE=8'b0)'
+[INFO (VERI-1018)] ./delay_RAG-Openai-4o-mini.sv(54): compiling module 'delay'
+[ERROR (VERI-2072)] ./delay_RAG-Openai-4o-mini.sv(152): unknown system function call 'count' not supported
+[INFO (VERI-1073)] ./delay_RAG-Openai-4o-mini.sv(54): module 'delay' remains a black box due to errors in its contents
+[ERROR (VDB-9017)] Module delay could not be elaborated
+Summary of errors detected:
+        [ERROR (VERI-2072)] ./delay_RAG-Openai-4o-mini.sv(152): unknown system function call 'count' not supported
+        [ERROR (VDB-9017)] Module delay could not be elaborated
+ERROR (ENL034): 2 errors detected in the design file(s).
+
+ERROR: problem encountered at line 4 in file fpv_RAG_Openai-4o-mini.tcl

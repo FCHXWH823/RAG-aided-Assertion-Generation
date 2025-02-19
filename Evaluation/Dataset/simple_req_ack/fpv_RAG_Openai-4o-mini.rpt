@@ -1,0 +1,16 @@
+INFO: successfully checked out licenses "jasper_interactive" and "jasper_fpv".
+INFO: reading configuration file "/home/master/.config/cadence/jasper.conf".
+% analyze -clear
+% analyze -sv12 ./simple_req_ack_RAG-Openai-4o-mini.sv
+[-- (VERI-1482)] Analyzing Verilog file '/export/SoftWare/Cadence/JASPERGOLD22.09.001/lib/verilog/packages/std/std.sv' into library 'std'
+[-- (VERI-1482)] Analyzing Verilog file './simple_req_ack_RAG-Openai-4o-mini.sv'
+[ERROR (VERI-1011)] ./simple_req_ack_RAG-Openai-4o-mini.sv(34): cannot index into non-array type logic for 'ack'
+[ERROR (VERI-1011)] ./simple_req_ack_RAG-Openai-4o-mini.sv(35): cannot index into non-array type logic for 'ack'
+[ERROR (VERI-1072)] ./simple_req_ack_RAG-Openai-4o-mini.sv(37): module 'simple_req_ack' is ignored due to previous errors
+Summary of errors detected:
+        [ERROR (VERI-1011)] ./simple_req_ack_RAG-Openai-4o-mini.sv(34): cannot index into non-array type logic for 'ack'
+        [ERROR (VERI-1011)] ./simple_req_ack_RAG-Openai-4o-mini.sv(35): cannot index into non-array type logic for 'ack'
+        [ERROR (VERI-1072)] ./simple_req_ack_RAG-Openai-4o-mini.sv(37): module 'simple_req_ack' is ignored due to previous errors
+ERROR (ENL034): 3 errors detected in the design file(s).
+
+ERROR: problem encountered at line 2 in file fpv_RAG_Openai-4o-mini.tcl

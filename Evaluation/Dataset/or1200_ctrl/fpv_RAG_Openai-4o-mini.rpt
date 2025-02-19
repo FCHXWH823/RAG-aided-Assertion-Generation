@@ -1,0 +1,20 @@
+% analyze -clear
+% analyze -sv12 ./or1200_defines.v
+[-- (VERI-1482)] Analyzing Verilog file '/export/SoftWare/Cadence/JASPERGOLD22.09.001/lib/verilog/packages/std/std.sv' into library 'std'
+[-- (VERI-1482)] Analyzing Verilog file './or1200_defines.v'
+% analyze -sv12 ./or1200_ctrl_RAG-Openai-4o-mini.sv
+[-- (VERI-1482)] Analyzing Verilog file './or1200_ctrl_RAG-Openai-4o-mini.sv'
+[INFO (VERI-1328)] ./or1200_ctrl_RAG-Openai-4o-mini.sv(53): analyzing included file './or1200_defines.v'
+[ERROR (VERI-1137)] ./or1200_ctrl_RAG-Openai-4o-mini.sv(1243): syntax error near ';'
+[ERROR (VERI-1137)] ./or1200_ctrl_RAG-Openai-4o-mini.sv(1244): syntax error near ';'
+[ERROR (VERI-1158)] ./or1200_ctrl_RAG-Openai-4o-mini.sv(1267): use of undefined macro 'OR1200_OR32_SPECIAL_FUNC_OP'
+[ERROR (VERI-1137)] ./or1200_ctrl_RAG-Openai-4o-mini.sv(1267): syntax error near '|=>'
+[ERROR (VERI-1137)] ./or1200_ctrl_RAG-Openai-4o-mini.sv(1268): syntax error near '|=>'
+[ERROR (VERI-1072)] ./or1200_ctrl_RAG-Openai-4o-mini.sv(1270): module 'or1200_ctrl' is ignored due to previous errors
+Summary of errors detected:
+        [ERROR (VERI-1137)] ./or1200_ctrl_RAG-Openai-4o-mini.sv(1243): syntax error near ';'
+        [ERROR (VERI-1137)] ./or1200_ctrl_RAG-Openai-4o-mini.sv(1244): syntax error near ';'
+        [ERROR (VERI-1158)] ./or1200_ctrl_RAG-Openai-4o-mini.sv(1267): use of undefined macro 'OR1200_OR32_SPECIAL_FUNC_OP'
+        [ERROR (VERI-1137)] ./or1200_ctrl_RAG-Openai-4o-mini.sv(1267): syntax error near '|=>'
+        [ERROR (VERI-1137)] ./or1200_ctrl_RAG-Openai-4o-mini.sv(1268): syntax error near '|=>'
+        [ERROR (VERI-1072)] ./or1200_ctrl_RAG-Openai-4o-mini.sv(1270): module 'or1200_ctrl' is ignored due to previous errors

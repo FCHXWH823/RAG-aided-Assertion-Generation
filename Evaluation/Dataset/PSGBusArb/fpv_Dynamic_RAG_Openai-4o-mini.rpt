@@ -1,0 +1,30 @@
+% analyze -clear
+% analyze -sv12 ./PSGBusArb_Dynamic-RAG-Openai-4o-mini.sv
+[-- (VERI-1482)] Analyzing Verilog file '/export/SoftWare/Cadence/JASPERGOLD22.09.001/lib/verilog/packages/std/std.sv' into library 'std'
+[-- (VERI-1482)] Analyzing Verilog file './PSGBusArb_Dynamic-RAG-Openai-4o-mini.sv'
+[ERROR (VERI-1011)] ./PSGBusArb_Dynamic-RAG-Openai-4o-mini.sv(238): cannot index into non-array type reg for 'sel5'
+[ERROR (VERI-1425)] ./PSGBusArb_Dynamic-RAG-Openai-4o-mini.sv(238): illegal context for $
+[ERROR (VERI-1011)] ./PSGBusArb_Dynamic-RAG-Openai-4o-mini.sv(238): cannot index into non-array type logic for 'ack'
+[ERROR (VERI-1425)] ./PSGBusArb_Dynamic-RAG-Openai-4o-mini.sv(238): illegal context for $
+[ERROR (VERI-1011)] ./PSGBusArb_Dynamic-RAG-Openai-4o-mini.sv(239): cannot index into non-array type reg for 'sel5'
+[ERROR (VERI-1425)] ./PSGBusArb_Dynamic-RAG-Openai-4o-mini.sv(239): illegal context for $
+[ERROR (VERI-1011)] ./PSGBusArb_Dynamic-RAG-Openai-4o-mini.sv(239): cannot index into non-array type logic for 'ack'
+[ERROR (VERI-1425)] ./PSGBusArb_Dynamic-RAG-Openai-4o-mini.sv(239): illegal context for $
+[ERROR (VERI-1011)] ./PSGBusArb_Dynamic-RAG-Openai-4o-mini.sv(248): cannot index into non-array type reg for 'sel5'
+[ERROR (VERI-1011)] ./PSGBusArb_Dynamic-RAG-Openai-4o-mini.sv(249): cannot index into non-array type reg for 'sel5'
+[ERROR (VERI-1072)] ./PSGBusArb_Dynamic-RAG-Openai-4o-mini.sv(267): module 'PSGBusArb' is ignored due to previous errors
+Summary of errors detected:
+        [ERROR (VERI-1011)] ./PSGBusArb_Dynamic-RAG-Openai-4o-mini.sv(238): cannot index into non-array type reg for 'sel5'
+        [ERROR (VERI-1425)] ./PSGBusArb_Dynamic-RAG-Openai-4o-mini.sv(238): illegal context for $
+        [ERROR (VERI-1011)] ./PSGBusArb_Dynamic-RAG-Openai-4o-mini.sv(238): cannot index into non-array type logic for 'ack'
+        [ERROR (VERI-1425)] ./PSGBusArb_Dynamic-RAG-Openai-4o-mini.sv(238): illegal context for $
+        [ERROR (VERI-1011)] ./PSGBusArb_Dynamic-RAG-Openai-4o-mini.sv(239): cannot index into non-array type reg for 'sel5'
+        [ERROR (VERI-1425)] ./PSGBusArb_Dynamic-RAG-Openai-4o-mini.sv(239): illegal context for $
+        [ERROR (VERI-1011)] ./PSGBusArb_Dynamic-RAG-Openai-4o-mini.sv(239): cannot index into non-array type logic for 'ack'
+        [ERROR (VERI-1425)] ./PSGBusArb_Dynamic-RAG-Openai-4o-mini.sv(239): illegal context for $
+        [ERROR (VERI-1011)] ./PSGBusArb_Dynamic-RAG-Openai-4o-mini.sv(248): cannot index into non-array type reg for 'sel5'
+        [ERROR (VERI-1011)] ./PSGBusArb_Dynamic-RAG-Openai-4o-mini.sv(249): cannot index into non-array type reg for 'sel5'
+        [ERROR (VERI-1072)] ./PSGBusArb_Dynamic-RAG-Openai-4o-mini.sv(267): module 'PSGBusArb' is ignored due to previous errors
+ERROR (ENL034): 11 errors detected in the design file(s).
+
+ERROR: problem encountered at line 2 in file fpv_Dynamic_RAG_Openai-4o-mini.tcl

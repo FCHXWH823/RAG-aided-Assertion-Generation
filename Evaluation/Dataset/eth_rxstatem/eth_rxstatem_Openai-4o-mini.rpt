@@ -1,0 +1,38 @@
+% analyze -clear
+% analyze -sv12 ./eth_rxstatem_Openai-4o-mini.sv
+[-- (VERI-1482)] Analyzing Verilog file '/export/SoftWare/Cadence/JASPERGOLD22.09.001/lib/verilog/packages/std/std.sv' into library 'std'
+[-- (VERI-1482)] Analyzing Verilog file './eth_rxstatem_Openai-4o-mini.sv'
+[ERROR (VERI-1137)] ./eth_rxstatem_Openai-4o-mini.sv(259): syntax error near '>'
+[ERROR (VERI-1137)] ./eth_rxstatem_Openai-4o-mini.sv(260): syntax error near '>'
+[ERROR (VERI-1011)] ./eth_rxstatem_Openai-4o-mini.sv(241): cannot index into non-array type reg for 'StatePreamble'
+[ERROR (VERI-1011)] ./eth_rxstatem_Openai-4o-mini.sv(242): cannot index into non-array type reg for 'StatePreamble'
+[ERROR (VERI-1100)] ./eth_rxstatem_Openai-4o-mini.sv(243): procedural assignment to a non-register 'StartPreamble' is not permitted
+[ERROR (VERI-1100)] ./eth_rxstatem_Openai-4o-mini.sv(244): procedural assignment to a non-register 'StartPreamble' is not permitted
+[ERROR (VERI-1011)] ./eth_rxstatem_Openai-4o-mini.sv(245): cannot index into non-array type reg for 'StateSFD'
+[ERROR (VERI-1011)] ./eth_rxstatem_Openai-4o-mini.sv(246): cannot index into non-array type reg for 'StateSFD'
+[ERROR (VERI-1011)] ./eth_rxstatem_Openai-4o-mini.sv(263): cannot index into non-array type reg for 'StateDrop'
+[ERROR (VERI-1011)] ./eth_rxstatem_Openai-4o-mini.sv(264): cannot index into non-array type reg for 'StateDrop'
+[ERROR (VERI-1011)] ./eth_rxstatem_Openai-4o-mini.sv(281): cannot index into non-array type reg for 'StateIdle'
+[ERROR (VERI-1011)] ./eth_rxstatem_Openai-4o-mini.sv(282): cannot index into non-array type reg for 'StateIdle'
+[ERROR (VERI-1011)] ./eth_rxstatem_Openai-4o-mini.sv(291): cannot index into non-array type reg for 'StateIdle'
+[ERROR (VERI-1011)] ./eth_rxstatem_Openai-4o-mini.sv(292): cannot index into non-array type reg for 'StateIdle'
+[ERROR (VERI-1072)] ./eth_rxstatem_Openai-4o-mini.sv(294): module 'eth_rxstatem' is ignored due to previous errors
+Summary of errors detected:
+        [ERROR (VERI-1137)] ./eth_rxstatem_Openai-4o-mini.sv(259): syntax error near '>'
+        [ERROR (VERI-1137)] ./eth_rxstatem_Openai-4o-mini.sv(260): syntax error near '>'
+        [ERROR (VERI-1011)] ./eth_rxstatem_Openai-4o-mini.sv(241): cannot index into non-array type reg for 'StatePreamble'
+        [ERROR (VERI-1011)] ./eth_rxstatem_Openai-4o-mini.sv(242): cannot index into non-array type reg for 'StatePreamble'
+        [ERROR (VERI-1100)] ./eth_rxstatem_Openai-4o-mini.sv(243): procedural assignment to a non-register 'StartPreamble' is not permitted
+        [ERROR (VERI-1100)] ./eth_rxstatem_Openai-4o-mini.sv(244): procedural assignment to a non-register 'StartPreamble' is not permitted
+        [ERROR (VERI-1011)] ./eth_rxstatem_Openai-4o-mini.sv(245): cannot index into non-array type reg for 'StateSFD'
+        [ERROR (VERI-1011)] ./eth_rxstatem_Openai-4o-mini.sv(246): cannot index into non-array type reg for 'StateSFD'
+        [ERROR (VERI-1011)] ./eth_rxstatem_Openai-4o-mini.sv(263): cannot index into non-array type reg for 'StateDrop'
+        [ERROR (VERI-1011)] ./eth_rxstatem_Openai-4o-mini.sv(264): cannot index into non-array type reg for 'StateDrop'
+        [ERROR (VERI-1011)] ./eth_rxstatem_Openai-4o-mini.sv(281): cannot index into non-array type reg for 'StateIdle'
+        [ERROR (VERI-1011)] ./eth_rxstatem_Openai-4o-mini.sv(282): cannot index into non-array type reg for 'StateIdle'
+        [ERROR (VERI-1011)] ./eth_rxstatem_Openai-4o-mini.sv(291): cannot index into non-array type reg for 'StateIdle'
+        [ERROR (VERI-1011)] ./eth_rxstatem_Openai-4o-mini.sv(292): cannot index into non-array type reg for 'StateIdle'
+        [ERROR (VERI-1072)] ./eth_rxstatem_Openai-4o-mini.sv(294): module 'eth_rxstatem' is ignored due to previous errors
+ERROR (ENL034): 15 errors detected in the design file(s).
+
+ERROR: problem encountered at line 2 in file fpv_Openai-4o-mini.tcl

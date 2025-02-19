@@ -1,0 +1,290 @@
+
+==============================================================
+    Jasper Verification Results
+==============================================================
+    2022.09p001 64 bits for Linux64 3.10.0-1062.1.2.el7.x86_64
+    Host Name: icpc
+    User Name: master
+    Printed on: Tuesday, Feb18, 2025 11:58:42 PM CST
+    Working Directory: /home/master/RAG-aided-Assertion-Generation/Evaluation/Dataset/eth_rxstatem
+
+
+==============================================================
+SUMMARY
+==============================================================
+    Total Tasks           : 1
+    Total Properties      : 246
+          assumptions     : 0                   
+           - approved     : 0                   
+           - temporary    : 0                   
+          assertions      : 86                  
+           - proven       : 66                  ( 76.7% )
+           - marked_proven: 0                   ( 0.0% )
+           - cex          : 20                  ( 23.3% )
+           - ar_cex       : 0                   ( 0.0% )
+           - undetermined : 0                   ( 0.0% )
+           - unprocessed  : 0                   ( 0.0% )
+           - error        : 0                   ( 0.0% )
+          covers          : 160                 
+           - unreachable  : 0                   ( 0.0% )
+           - covered      : 160                 ( 100.0% )
+           - ar_covered   : 0                   ( 0.0% )
+           - undetermined : 0                   ( 0.0% )
+           - unprocessed  : 0                   ( 0.0% )
+           - error        : 0                   ( 0.0% )
+
+==============================================================
+RESULTS
+==============================================================
+
+--------------------------------------------------------------------------------------------------
+       Name                                      |    Result    |  Engine  |  Bound  |  Time    
+--------------------------------------------------------------------------------------------------
+
+---[ <embedded> ]---------------------------------------------------------------------------------
+[1]   eth_rxstatem._assert_1                          proven          N      Infinite    0.008 s      
+[2]   eth_rxstatem._assert_1:precondition1            covered         N             2    0.001 s      
+[3]   eth_rxstatem._assert_2                          proven          Hp     Infinite    0.012 s      
+[4]   eth_rxstatem._assert_2:precondition1            covered         Hp            2    0.016 s      
+[5]   eth_rxstatem._assert_3                          proven          Hp     Infinite    0.021 s      
+[6]   eth_rxstatem._assert_3:precondition1            covered         Hp            3    0.024 s      
+[7]   eth_rxstatem._assert_4                          proven          Hp     Infinite    0.021 s      
+[8]   eth_rxstatem._assert_4:precondition1            covered         N             4    0.002 s      
+[9]   eth_rxstatem._assert_5                          proven          Hp     Infinite    0.012 s      
+[10]  eth_rxstatem._assert_5:precondition1            covered         PRE           1    0.000 s      
+[11]  eth_rxstatem._assert_6                          proven          Hp     Infinite    0.021 s      
+[12]  eth_rxstatem._assert_6:precondition1            covered         Hp            5    0.054 s      
+[13]  eth_rxstatem._assert_7                          proven          Hp     Infinite    0.021 s      
+[14]  eth_rxstatem._assert_7:precondition1            covered         Hp            3    0.026 s      
+[15]  eth_rxstatem._assert_8                          proven          Hp     Infinite    0.012 s      
+[16]  eth_rxstatem._assert_8:precondition1            covered         PRE           1    0.000 s      
+[17]  eth_rxstatem._assert_9                          proven          Hp     Infinite    0.013 s      
+[18]  eth_rxstatem._assert_9:precondition1            covered         PRE           1    0.000 s      
+[19]  eth_rxstatem._assert_10                         proven          Hp     Infinite    0.021 s      
+[20]  eth_rxstatem._assert_10:precondition1           covered         Hp            2    0.018 s      
+[21]  eth_rxstatem._assert_11                         proven          Hp     Infinite    0.013 s      
+[22]  eth_rxstatem._assert_11:precondition1           covered         PRE           1    0.000 s      
+[23]  eth_rxstatem._assert_12                         proven          PRE    Infinite    0.000 s      
+[24]  eth_rxstatem._assert_12:precondition1           covered         Hp            2    0.016 s      
+[25]  eth_rxstatem._assert_13                         proven          Hp     Infinite    0.013 s      
+[26]  eth_rxstatem._assert_13:precondition1           covered         Hp            3    0.027 s      
+[27]  eth_rxstatem._assert_14                         proven          Hp     Infinite    0.013 s      
+[28]  eth_rxstatem._assert_14:precondition1           covered         N             2    0.001 s      
+[29]  eth_rxstatem._assert_15                         proven          Hp     Infinite    0.021 s      
+[30]  eth_rxstatem._assert_15:precondition1           covered         Hp            3    0.029 s      
+[31]  eth_rxstatem._assert_16                         proven          Hp     Infinite    0.021 s      
+[32]  eth_rxstatem._assert_16:precondition1           covered         N             4    0.002 s      
+[33]  eth_rxstatem._assert_17                         proven          Hp     Infinite    0.013 s      
+[34]  eth_rxstatem._assert_17:precondition1           covered         PRE           1    0.000 s      
+[35]  eth_rxstatem._assert_18                         proven          Hp     Infinite    0.021 s      
+[36]  eth_rxstatem._assert_18:precondition1           covered         Hp            3    0.026 s      
+[37]  eth_rxstatem._assert_19                         proven          Hp     Infinite    0.013 s      
+[38]  eth_rxstatem._assert_19:precondition1           covered         PRE           1    0.000 s      
+[39]  eth_rxstatem._assert_20                         proven          PRE    Infinite    0.000 s      
+[40]  eth_rxstatem._assert_20:precondition1           covered         PRE           1    0.000 s      
+[41]  eth_rxstatem._assert_21                         proven          Hp     Infinite    0.013 s      
+[42]  eth_rxstatem._assert_21:precondition1           covered         Hp            2    0.016 s      
+[43]  eth_rxstatem._assert_22                         proven          PRE    Infinite    0.000 s      
+[44]  eth_rxstatem._assert_22:precondition1           covered         PRE           1    0.000 s      
+[45]  eth_rxstatem._assert_23                         proven          Hp     Infinite    0.013 s      
+[46]  eth_rxstatem._assert_23:precondition1           covered         Hp            3    0.027 s      
+[47]  eth_rxstatem._assert_24                         proven          Hp     Infinite    0.022 s      
+[48]  eth_rxstatem._assert_24:precondition1           covered         N             4    0.002 s      
+[49]  eth_rxstatem._assert_25                         proven          Hp     Infinite    0.022 s      
+[50]  eth_rxstatem._assert_25:precondition1           covered         Hp            3    0.026 s      
+[51]  eth_rxstatem._assert_26                         proven          Hp     Infinite    0.022 s      
+[52]  eth_rxstatem._assert_26:precondition1           covered         Hp            5    0.054 s      
+[53]  eth_rxstatem._assert_27                         proven          Hp     Infinite    0.013 s      
+[54]  eth_rxstatem._assert_27:precondition1           covered         PRE           1    0.000 s      
+[55]  eth_rxstatem._assert_28                         proven          Hp     Infinite    0.014 s      
+[56]  eth_rxstatem._assert_28:precondition1           covered         N             2    0.001 s      
+[57]  eth_rxstatem._assert_29                         proven          Hp     Infinite    0.014 s      
+[58]  eth_rxstatem._assert_29:precondition1           covered         PRE           1    0.000 s      
+[59]  eth_rxstatem._assert_30                         proven          Hp     Infinite    0.014 s      
+[60]  eth_rxstatem._assert_30:precondition1           covered         Hp            2    0.016 s      
+[61]  eth_rxstatem._assert_31                         proven          Hp     Infinite    0.014 s      
+[62]  eth_rxstatem._assert_31:precondition1           covered         Hp            2    0.018 s      
+[63]  eth_rxstatem._assert_32                         proven          Hp     Infinite    0.014 s      
+[64]  eth_rxstatem._assert_32:precondition1           covered         N             2    0.001 s      
+[65]  eth_rxstatem._assert_33                         proven          Hp     Infinite    0.014 s      
+[66]  eth_rxstatem._assert_33:precondition1           covered         PRE           1    0.000 s      
+[67]  eth_rxstatem._assert_34                         proven          Hp     Infinite    0.047 s      
+[68]  eth_rxstatem._assert_34:precondition1           covered         PRE           1    0.000 s      
+[69]  eth_rxstatem._assert_35                         cex             N             2    0.001 s      
+[70]  eth_rxstatem._assert_35:precondition1           covered         N             2    0.001 s      
+[71]  eth_rxstatem._assert_36                         cex             Hp            3    0.026 s      
+[72]  eth_rxstatem._assert_36:precondition1           covered         PRE           1    0.000 s      
+[73]  eth_rxstatem._assert_36:precondition2           covered         N             2    0.001 s      
+[74]  eth_rxstatem._assert_36:precondition3           covered         PRE           1    0.000 s      
+[75]  eth_rxstatem._assert_36:precondition4           covered         N             2    0.001 s      
+[76]  eth_rxstatem._assert_37                         proven          Hp     Infinite    0.022 s      
+[77]  eth_rxstatem._assert_37:precondition1           covered         Hp            2    0.016 s      
+[78]  eth_rxstatem._assert_38                         proven          Hp     Infinite    0.022 s      
+[79]  eth_rxstatem._assert_38:precondition1           covered         PRE           1    0.000 s      
+[80]  eth_rxstatem._assert_38:precondition2           covered         Hp            2    0.016 s      
+[81]  eth_rxstatem._assert_38:precondition3           covered         PRE           1    0.000 s      
+[82]  eth_rxstatem._assert_38:precondition4           covered         Hp            2    0.016 s      
+[83]  eth_rxstatem._assert_39                         cex             PRE           1    0.000 s      
+[84]  eth_rxstatem._assert_40                         cex             PRE           1    0.000 s      
+[85]  eth_rxstatem._assert_40:precondition1           covered         N             4    0.002 s      
+[86]  eth_rxstatem._assert_40:precondition2           covered         Hp            3    0.024 s      
+[87]  eth_rxstatem._assert_40:precondition3           covered         PRE           1    0.000 s      
+[88]  eth_rxstatem._assert_41                         proven          Hp     Infinite    0.022 s      
+[89]  eth_rxstatem._assert_41:precondition1           covered         N             4    0.002 s      
+[90]  eth_rxstatem._assert_42                         proven          Hp     Infinite    0.022 s      
+[91]  eth_rxstatem._assert_42:precondition1           covered         PRE           1    0.000 s      
+[92]  eth_rxstatem._assert_42:precondition2           covered         N             4    0.002 s      
+[93]  eth_rxstatem._assert_42:precondition3           covered         PRE           1    0.000 s      
+[94]  eth_rxstatem._assert_42:precondition4           covered         N             4    0.002 s      
+[95]  eth_rxstatem._assert_43                         proven          Hp     Infinite    0.014 s      
+[96]  eth_rxstatem._assert_43:precondition1           covered         PRE           1    0.000 s      
+[97]  eth_rxstatem._assert_44                         proven          Hp     Infinite    0.014 s      
+[98]  eth_rxstatem._assert_44:precondition1           covered         PRE           1    0.000 s      
+[99]  eth_rxstatem._assert_44:precondition2           covered         PRE           1    0.000 s      
+[100] eth_rxstatem._assert_44:precondition3           covered         N             2    0.001 s      
+[101] eth_rxstatem._assert_44:precondition4           covered         PRE           1    0.000 s      
+[102] eth_rxstatem._assert_45                         proven          Hp     Infinite    0.023 s      
+[103] eth_rxstatem._assert_45:precondition1           covered         Hp            5    0.054 s      
+[104] eth_rxstatem._assert_46                         proven          PRE    Infinite    0.000 s      
+[105] eth_rxstatem._assert_46:precondition1           covered         PRE           1    0.000 s      
+[106] eth_rxstatem._assert_46:precondition2           covered         Hp            5    0.054 s      
+[107] eth_rxstatem._assert_46:precondition3           covered         PRE           1    0.000 s      
+[108] eth_rxstatem._assert_46:precondition4           covered         Hp            5    0.054 s      
+[109] eth_rxstatem._assert_47                         proven          Hp     Infinite    0.007 s      
+[110] eth_rxstatem._assert_47:precondition1           covered         Hp            3    0.026 s      
+[111] eth_rxstatem._assert_48                         proven          Hp     Infinite    0.022 s      
+[112] eth_rxstatem._assert_48:precondition1           covered         PRE           1    0.000 s      
+[113] eth_rxstatem._assert_48:precondition2           covered         Hp            3    0.026 s      
+[114] eth_rxstatem._assert_48:precondition3           covered         PRE           1    0.000 s      
+[115] eth_rxstatem._assert_48:precondition4           covered         Hp            3    0.026 s      
+[116] eth_rxstatem._assert_49                         cex             Hp            3    0.030 s      
+[117] eth_rxstatem._assert_49:precondition1           covered         PRE           1    0.000 s      
+[118] eth_rxstatem._assert_50                         cex             Hp            4    0.049 s      
+[119] eth_rxstatem._assert_50:precondition1           covered         PRE           1    0.000 s      
+[120] eth_rxstatem._assert_50:precondition2           covered         PRE           1    0.000 s      
+[121] eth_rxstatem._assert_50:precondition3           covered         PRE           1    0.000 s      
+[122] eth_rxstatem._assert_50:precondition4           covered         PRE           1    0.000 s      
+[123] eth_rxstatem._assert_51                         cex             Hp            3    0.031 s      
+[124] eth_rxstatem._assert_51:precondition1           covered         Hp            2    0.016 s      
+[125] eth_rxstatem._assert_52                         cex             Hp            4    0.050 s      
+[126] eth_rxstatem._assert_52:precondition1           covered         PRE           1    0.000 s      
+[127] eth_rxstatem._assert_52:precondition2           covered         Hp            2    0.016 s      
+[128] eth_rxstatem._assert_52:precondition3           covered         PRE           1    0.000 s      
+[129] eth_rxstatem._assert_52:precondition4           covered         Hp            2    0.016 s      
+[130] eth_rxstatem._assert_53                         cex             Hp            3    0.027 s      
+[131] eth_rxstatem._assert_53:precondition1           covered         Hp            3    0.027 s      
+[132] eth_rxstatem._assert_54                         cex             N             4    0.002 s      
+[133] eth_rxstatem._assert_54:precondition1           covered         PRE           1    0.000 s      
+[134] eth_rxstatem._assert_54:precondition2           covered         Hp            3    0.027 s      
+[135] eth_rxstatem._assert_54:precondition3           covered         PRE           1    0.000 s      
+[136] eth_rxstatem._assert_54:precondition4           covered         Hp            3    0.027 s      
+[137] eth_rxstatem._assert_55                         proven          Hp     Infinite    0.014 s      
+[138] eth_rxstatem._assert_55:precondition1           covered         N             2    0.001 s      
+[139] eth_rxstatem._assert_56                         proven          Hp     Infinite    0.014 s      
+[140] eth_rxstatem._assert_56:precondition1           covered         PRE           1    0.000 s      
+[141] eth_rxstatem._assert_56:precondition2           covered         N             2    0.001 s      
+[142] eth_rxstatem._assert_56:precondition3           covered         PRE           1    0.000 s      
+[143] eth_rxstatem._assert_56:precondition4           covered         N             2    0.001 s      
+[144] eth_rxstatem._assert_57                         proven          Hp     Infinite    0.007 s      
+[145] eth_rxstatem._assert_57:precondition1           covered         Hp            3    0.029 s      
+[146] eth_rxstatem._assert_58                         proven          Hp     Infinite    0.022 s      
+[147] eth_rxstatem._assert_58:precondition1           covered         PRE           1    0.000 s      
+[148] eth_rxstatem._assert_58:precondition2           covered         Hp            3    0.029 s      
+[149] eth_rxstatem._assert_58:precondition3           covered         PRE           1    0.000 s      
+[150] eth_rxstatem._assert_58:precondition4           covered         Hp            3    0.029 s      
+[151] eth_rxstatem._assert_59                         proven          Hp     Infinite    0.022 s      
+[152] eth_rxstatem._assert_59:precondition1           covered         Hp            5    0.054 s      
+[153] eth_rxstatem._assert_60                         proven          Hp     Infinite    0.022 s      
+[154] eth_rxstatem._assert_60:precondition1           covered         PRE           1    0.000 s      
+[155] eth_rxstatem._assert_60:precondition2           covered         N             4    0.002 s      
+[156] eth_rxstatem._assert_60:precondition3           covered         PRE           1    0.000 s      
+[157] eth_rxstatem._assert_60:precondition4           covered         Hp            5    0.054 s      
+[158] eth_rxstatem._assert_61                         proven          Hp     Infinite    0.014 s      
+[159] eth_rxstatem._assert_61:precondition1           covered         PRE           1    0.000 s      
+[160] eth_rxstatem._assert_62                         proven          Hp     Infinite    0.015 s      
+[161] eth_rxstatem._assert_62:precondition1           covered         PRE           1    0.000 s      
+[162] eth_rxstatem._assert_62:precondition2           covered         PRE           1    0.000 s      
+[163] eth_rxstatem._assert_62:precondition3           covered         N             2    0.001 s      
+[164] eth_rxstatem._assert_62:precondition4           covered         PRE           1    0.000 s      
+[165] eth_rxstatem._assert_63                         cex             Hp            3    0.032 s      
+[166] eth_rxstatem._assert_63:precondition1           covered         PRE           1    0.000 s      
+[167] eth_rxstatem._assert_64                         cex             Hp            4    0.052 s      
+[168] eth_rxstatem._assert_64:precondition1           covered         PRE           1    0.000 s      
+[169] eth_rxstatem._assert_64:precondition2           covered         PRE           1    0.000 s      
+[170] eth_rxstatem._assert_64:precondition3           covered         PRE           1    0.000 s      
+[171] eth_rxstatem._assert_64:precondition4           covered         PRE           1    0.000 s      
+[172] eth_rxstatem._assert_65                         cex             Hp            2    0.016 s      
+[173] eth_rxstatem._assert_65:precondition1           covered         Hp            2    0.016 s      
+[174] eth_rxstatem._assert_66                         cex             Hp            3    0.040 s      
+[175] eth_rxstatem._assert_66:precondition1           covered         PRE           1    0.000 s      
+[176] eth_rxstatem._assert_66:precondition2           covered         Hp            2    0.016 s      
+[177] eth_rxstatem._assert_66:precondition3           covered         PRE           1    0.000 s      
+[178] eth_rxstatem._assert_66:precondition4           covered         Hp            2    0.016 s      
+[179] eth_rxstatem._assert_67                         proven          PRE    Infinite    0.000 s      
+[180] eth_rxstatem._assert_67:precondition1           covered         PRE           1    0.000 s      
+[181] eth_rxstatem._assert_68                         proven          PRE    Infinite    0.000 s      
+[182] eth_rxstatem._assert_68:precondition1           covered         PRE           1    0.000 s      
+[183] eth_rxstatem._assert_68:precondition2           covered         PRE           1    0.000 s      
+[184] eth_rxstatem._assert_68:precondition3           covered         PRE           1    0.000 s      
+[185] eth_rxstatem._assert_68:precondition4           covered         PRE           1    0.000 s      
+[186] eth_rxstatem._assert_69                         proven          Hp     Infinite    0.023 s      
+[187] eth_rxstatem._assert_69:precondition1           covered         Hp            3    0.042 s      
+[188] eth_rxstatem._assert_70                         proven          Hp     Infinite    0.023 s      
+[189] eth_rxstatem._assert_70:precondition1           covered         PRE           1    0.000 s      
+[190] eth_rxstatem._assert_70:precondition2           covered         Hp            3    0.027 s      
+[191] eth_rxstatem._assert_70:precondition3           covered         PRE           1    0.000 s      
+[192] eth_rxstatem._assert_70:precondition4           covered         Hp            3    0.042 s      
+[193] eth_rxstatem._assert_71                         proven          Hp     Infinite    0.023 s      
+[194] eth_rxstatem._assert_71:precondition1           covered         Hp            5    0.057 s      
+[195] eth_rxstatem._assert_72                         proven          Hp     Infinite    0.023 s      
+[196] eth_rxstatem._assert_72:precondition1           covered         PRE           1    0.000 s      
+[197] eth_rxstatem._assert_72:precondition2           covered         N             4    0.002 s      
+[198] eth_rxstatem._assert_72:precondition3           covered         PRE           1    0.000 s      
+[199] eth_rxstatem._assert_72:precondition4           covered         Hp            5    0.057 s      
+[200] eth_rxstatem._assert_73                         proven          Hp     Infinite    0.023 s      
+[201] eth_rxstatem._assert_73:precondition1           covered         Hp            3    0.026 s      
+[202] eth_rxstatem._assert_74                         proven          PRE    Infinite    0.000 s      
+[203] eth_rxstatem._assert_74:precondition1           covered         PRE           1    0.000 s      
+[204] eth_rxstatem._assert_74:precondition2           covered         Hp            3    0.026 s      
+[205] eth_rxstatem._assert_74:precondition3           covered         PRE           1    0.000 s      
+[206] eth_rxstatem._assert_74:precondition4           covered         Hp            3    0.026 s      
+[207] eth_rxstatem._assert_75                         proven          Hp     Infinite    0.023 s      
+[208] eth_rxstatem._assert_75:precondition1           covered         Hp            5    0.054 s      
+[209] eth_rxstatem._assert_76                         proven          PRE    Infinite    0.000 s      
+[210] eth_rxstatem._assert_76:precondition1           covered         PRE           1    0.000 s      
+[211] eth_rxstatem._assert_76:precondition2           covered         Hp            5    0.054 s      
+[212] eth_rxstatem._assert_76:precondition3           covered         PRE           1    0.000 s      
+[213] eth_rxstatem._assert_76:precondition4           covered         Hp            5    0.054 s      
+[214] eth_rxstatem._assert_77                         cex             PRE           1    0.000 s      
+[215] eth_rxstatem._assert_77:precondition1           covered         PRE           1    0.000 s      
+[216] eth_rxstatem._assert_78                         cex             PRE           2    0.000 s      
+[217] eth_rxstatem._assert_78:precondition1           covered         PRE           1    0.000 s      
+[218] eth_rxstatem._assert_78:precondition2           covered         PRE           1    0.000 s      
+[219] eth_rxstatem._assert_78:precondition3           covered         PRE           1    0.000 s      
+[220] eth_rxstatem._assert_78:precondition4           covered         PRE           1    0.000 s      
+[221] eth_rxstatem._assert_79                         proven          Hp     Infinite    0.015 s      
+[222] eth_rxstatem._assert_79:precondition1           covered         N             2    0.001 s      
+[223] eth_rxstatem._assert_80                         proven          Hp     Infinite    0.015 s      
+[224] eth_rxstatem._assert_80:precondition1           covered         PRE           1    0.000 s      
+[225] eth_rxstatem._assert_80:precondition2           covered         N             2    0.001 s      
+[226] eth_rxstatem._assert_80:precondition3           covered         PRE           1    0.000 s      
+[227] eth_rxstatem._assert_80:precondition4           covered         N             2    0.001 s      
+[228] eth_rxstatem._assert_81                         cex             Hp            2    0.016 s      
+[229] eth_rxstatem._assert_81:precondition1           covered         Hp            2    0.016 s      
+[230] eth_rxstatem._assert_82                         cex             Hp            3    0.040 s      
+[231] eth_rxstatem._assert_82:precondition1           covered         PRE           1    0.000 s      
+[232] eth_rxstatem._assert_82:precondition2           covered         Hp            2    0.016 s      
+[233] eth_rxstatem._assert_82:precondition3           covered         PRE           1    0.000 s      
+[234] eth_rxstatem._assert_82:precondition4           covered         Hp            2    0.016 s      
+[235] eth_rxstatem._assert_83                         cex             PRE           1    0.000 s      
+[236] eth_rxstatem._assert_84                         cex             PRE           1    0.000 s      
+[237] eth_rxstatem._assert_84:precondition1           covered         PRE           1    0.000 s      
+[238] eth_rxstatem._assert_84:precondition2           covered         Hp            2    0.018 s      
+[239] eth_rxstatem._assert_84:precondition3           covered         PRE           1    0.000 s      
+[240] eth_rxstatem._assert_85                         proven          Hp     Infinite    0.015 s      
+[241] eth_rxstatem._assert_85:precondition1           covered         PRE           1    0.000 s      
+[242] eth_rxstatem._assert_86                         proven          PRE    Infinite    0.000 s      
+[243] eth_rxstatem._assert_86:precondition1           covered         PRE           1    0.000 s      
+[244] eth_rxstatem._assert_86:precondition2           covered         PRE           1    0.000 s      
+[245] eth_rxstatem._assert_86:precondition3           covered         PRE           1    0.000 s      
+[246] eth_rxstatem._assert_86:precondition4           covered         PRE           1    0.000 s      

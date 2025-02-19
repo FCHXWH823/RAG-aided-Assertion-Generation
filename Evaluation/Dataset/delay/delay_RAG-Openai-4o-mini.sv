@@ -149,8 +149,8 @@ assert property(@(posedge clk) disable iff (rst) count == CYCLES || out == RESET
 
 assert property(@(posedge clk) disable iff (rst) !en |=> $stable(out));
 
-assert property (@(posedge clk) disable iff (rst) (en |-> (out == $past(in, CYCLES) || (CYCLES > $count(regs) && CYCLES < CYCLES))));
-assert property (@(posedge clk) disable iff (rst) (count < CYCLES || out == $past(in, CYCLES, en)) iff (en |-> (out == $past(in, CYCLES) || (CYCLES > $count(regs) && CYCLES < CYCLES))));
+// assert property (@(posedge clk) disable iff (rst) (en |-> (out == $past(in, CYCLES) || (CYCLES > $count(regs) && CYCLES < CYCLES))));
+// assert property (@(posedge clk) disable iff (rst) (count < CYCLES || out == $past(in, CYCLES, en)) iff (en |-> (out == $past(in, CYCLES) || (CYCLES > $count(regs) && CYCLES < CYCLES))));
 assert property (@(posedge clk) disable iff (rst) ((out == regs[CYCLES]) || (out == RESET_VALUE)));
 assert property (@(posedge clk) disable iff (rst) (count == CYCLES || out == RESET_VALUE) iff ((out == regs[CYCLES]) || (out == RESET_VALUE)));
 assert property (@(posedge clk) disable iff (rst) (en == 0 |=> nexttime out == out));

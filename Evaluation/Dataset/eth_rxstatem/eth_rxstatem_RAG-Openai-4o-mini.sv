@@ -238,8 +238,8 @@ assert property (@(posedge MRxClk)  (StatePreamble && MRxDV && !MRxDEq5 |-> Stat
 assert property (@(posedge MRxClk)  ((StatePreamble == 1 & MRxDEq5 == 0 & MRxDV == 1) |=> (StatePreamble == 1)) iff (StatePreamble && MRxDV && !MRxDEq5 |-> StatePreamble));
 assert property (@(posedge MRxClk)  (MRxDEq5 |-> ##1 !StatePreamble));
 assert property (@(posedge MRxClk)  ((MRxDEq5 == 1) |=> (StatePreamble == 0)) iff (MRxDEq5 |-> ##1 !StatePreamble));
-assert property (@(posedge MRxClk)  (/*!MRxDV |-> !StatePreamble[*1]*/));
-assert property (@(posedge MRxClk)  ((MRxDV == 0) |=> (StatePreamble == 0)) iff (/*!MRxDV |-> !StatePreamble[*1]*/));
+// assert property (@(posedge MRxClk)  (/*!MRxDV |-> !StatePreamble[*1]*/));
+// assert property (@(posedge MRxClk)  ((MRxDV == 0) |=> (StatePreamble == 0)) iff (/*!MRxDV |-> !StatePreamble[*1]*/));
 assert property (@(posedge MRxClk)  (StartSFD |-> StateSFD));
 assert property (@(posedge MRxClk)  ((StartSFD == 1) |=> (StateSFD == 1)) iff (StartSFD |-> StateSFD));
 assert property (@(posedge MRxClk)  (StartIdle |=> !StateSFD));
@@ -274,8 +274,8 @@ assert property (@(posedge MRxClk)  (StatePreamble |-> !StateDrop));
 assert property (@(posedge MRxClk)  ((StatePreamble == 1) |=> (StateDrop == 0)) iff (StatePreamble |-> !StateDrop));
 assert property (@(posedge MRxClk)  (StateData[1] |-> !StateDrop));
 assert property (@(posedge MRxClk)  ((StateData1 == 1) |=> (StateDrop == 0)) iff (StateData[1] |-> !StateDrop));
-assert property (@(posedge MRxClk)  (/*!MRxDV |-> !StateDrop[1]*/));
-assert property (@(posedge MRxClk)  ((MRxDV == 0) |=> (StateDrop == 0)) iff (/*!MRxDV |-> !StateDrop[1]*/));
+// assert property (@(posedge MRxClk)  (/*!MRxDV |-> !StateDrop[1]*/));
+// assert property (@(posedge MRxClk)  ((MRxDV == 0) |=> (StateDrop == 0)) iff (/*!MRxDV |-> !StateDrop[1]*/));
 assert property (@(posedge MRxClk)  (Transmitting == 1'b0 && StateIdle |=> StateDrop == 1'b0));
 assert property (@(posedge MRxClk)  ((Transmitting == 0 & StateIdle == 1) |=> (StateDrop == 0)) iff (Transmitting == 1'b0 && StateIdle |=> StateDrop == 1'b0));
 assert property (@(posedge MRxClk)  (StartIdle |=> StateIdle));
@@ -288,7 +288,7 @@ assert property (@(posedge MRxClk)  (StartPreamble |-> !StateIdle));
 assert property (@(posedge MRxClk)  ((StartPreamble == 1) |=> (StateIdle == 0)) iff (StartPreamble |-> !StateIdle));
 assert property (@(posedge MRxClk)  (MRxDV |-> !StateIdle));
 assert property (@(posedge MRxClk)  ((MRxDV == 1) |=> (StateIdle == 0)) iff (MRxDV |-> !StateIdle));
-assert property (@(posedge MRxClk)  (valid_received_data_condition_inactive |=> StateIdle));
-assert property (@(posedge MRxClk)  ((MRxDV == 0) |=> (StateIdle == 1)) iff (valid_received_data_condition_inactive |=> StateIdle));
+// assert property (@(posedge MRxClk)  (valid_received_data_condition_inactive |=> StateIdle));
+// assert property (@(posedge MRxClk)  ((MRxDV == 0) |=> (StateIdle == 1)) iff (valid_received_data_condition_inactive |=> StateIdle));
 
 endmodule

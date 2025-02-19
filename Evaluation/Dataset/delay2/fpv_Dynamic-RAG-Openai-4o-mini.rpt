@@ -1,0 +1,47 @@
+
+==============================================================
+    Jasper Verification Results
+==============================================================
+    2022.09p001 64 bits for Linux64 3.10.0-1062.1.2.el7.x86_64
+    Host Name: icpc
+    User Name: master
+    Printed on: Tuesday, Feb18, 2025 11:49:45 PM CST
+    Working Directory: /home/master/RAG-aided-Assertion-Generation/Evaluation/Dataset/delay2
+
+
+==============================================================
+SUMMARY
+==============================================================
+    Total Tasks           : 1
+    Total Properties      : 3
+          assumptions     : 0                   
+           - approved     : 0                   
+           - temporary    : 0                   
+          assertions      : 3                   
+           - proven       : 2                   ( 66.7% )
+           - marked_proven: 0                   ( 0.0% )
+           - cex          : 1                   ( 33.3% )
+           - ar_cex       : 0                   ( 0.0% )
+           - undetermined : 0                   ( 0.0% )
+           - unprocessed  : 0                   ( 0.0% )
+           - error        : 0                   ( 0.0% )
+          covers          : 0                   
+           - unreachable  : 0                   
+           - covered      : 0                   
+           - ar_covered   : 0                   
+           - undetermined : 0                   
+           - unprocessed  : 0                   
+           - error        : 0                   
+
+==============================================================
+RESULTS
+==============================================================
+
+-----------------------------------------------------------------------------
+       Name                 |    Result    |  Engine  |  Bound  |  Time    
+-----------------------------------------------------------------------------
+
+---[ <embedded> ]------------------------------------------------------------
+[1]   delay2._assert_1           proven          Tri         (0)    0.996 s      
+[2]   delay2._assert_2           cex             PRE           1    0.000 s      
+[3]   delay2._assert_3           proven          PRE    Infinite    0.000 s      

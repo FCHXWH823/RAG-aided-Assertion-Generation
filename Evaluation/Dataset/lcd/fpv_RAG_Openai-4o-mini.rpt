@@ -1,0 +1,24 @@
+[ERROR (VERI-1137)] ./lcd_RAG-Openai-4o-mini.sv(101): syntax error near '('
+[ERROR (VERI-1137)] ./lcd_RAG-Openai-4o-mini.sv(101): syntax error near ')'
+[ERROR (VERI-1137)] ./lcd_RAG-Openai-4o-mini.sv(102): syntax error near '('
+[ERROR (VERI-1137)] ./lcd_RAG-Openai-4o-mini.sv(102): syntax error near ')'
+[ERROR (VERI-1078)] ./lcd_RAG-Openai-4o-mini.sv(101): need at least one output and one input to this gate
+[ERROR (VERI-1042)] ./lcd_RAG-Openai-4o-mini.sv(101): illegal expression in target
+[ERROR (VERI-1180)] ./lcd_RAG-Openai-4o-mini.sv(101): constant is not allowed here
+[ERROR (VERI-1078)] ./lcd_RAG-Openai-4o-mini.sv(102): need at least one output and one input to this gate
+[ERROR (VERI-1042)] ./lcd_RAG-Openai-4o-mini.sv(102): illegal expression in target
+[ERROR (VERI-1180)] ./lcd_RAG-Openai-4o-mini.sv(102): constant is not allowed here
+[ERROR (VERI-1072)] ./lcd_RAG-Openai-4o-mini.sv(104): module 'lcd' is ignored due to previous errors
+Summary of errors detected:
+        [ERROR (VERI-1137)] ./lcd_RAG-Openai-4o-mini.sv(101): syntax error near '('
+        [ERROR (VERI-1137)] ./lcd_RAG-Openai-4o-mini.sv(101): syntax error near ')'
+        [ERROR (VERI-1137)] ./lcd_RAG-Openai-4o-mini.sv(102): syntax error near '('
+        [ERROR (VERI-1137)] ./lcd_RAG-Openai-4o-mini.sv(102): syntax error near ')'
+        [ERROR (VERI-1078)] ./lcd_RAG-Openai-4o-mini.sv(101): need at least one output and one input to this gate
+        [ERROR (VERI-1042)] ./lcd_RAG-Openai-4o-mini.sv(101): illegal expression in target
+        [ERROR (VERI-1180)] ./lcd_RAG-Openai-4o-mini.sv(101): constant is not allowed here
+        [ERROR (VERI-1078)] ./lcd_RAG-Openai-4o-mini.sv(102): need at least one output and one input to this gate
+        [ERROR (VERI-1042)] ./lcd_RAG-Openai-4o-mini.sv(102): illegal expression in target
+        [ERROR (VERI-1180)] ./lcd_RAG-Openai-4o-mini.sv(102): constant is not allowed here
+        [ERROR (VERI-1072)] ./lcd_RAG-Openai-4o-mini.sv(104): module 'lcd' is ignored due to previous errors
+ERROR (ENL034): 11 errors detected in the design file(s).

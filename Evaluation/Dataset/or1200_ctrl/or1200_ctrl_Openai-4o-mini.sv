@@ -1240,10 +1240,10 @@ assert property (@(posedge clk) disable iff (rst) (!id_freeze && if_insn[31:26] 
 
 assert property (@(posedge clk) disable iff (rst) (ex_freeze == 1'b0 && ex_delayslot_dsi == 1'b1 && ex_delayslot_nop == 1'b0 |-> ##1 (ex_delayslot_dsi == 1'b0 && ex_delayslot_nop == 1'b0)));
 assert property (@(posedge clk) disable iff (rst) ((!ex_freeze & ex_delayslot_dsi & !ex_delayslot_nop) |-> ##1 (ex_delayslot_nop == 0 && ex_delayslot_dsi == 0)) iff (ex_freeze == 1'b0 && ex_delayslot_dsi == 1'b1 && ex_delayslot_nop == 1'b0 |-> ##1 (ex_delayslot_dsi == 1'b0 && ex_delayslot_nop == 1'b0)));
-assert property (@(posedge clk) disable iff (rst) ((!ex_freeze && id_freeze) || ex_flushpipe |-> (ex_macrc_op[0] == 1'b0)));
-assert property (@(posedge clk) disable iff (rst) ((!ex_freeze & id_freeze | ex_flushpipe) |-> ##1 (ex_macrc_op == 0)) iff ((!ex_freeze && id_freeze) || ex_flushpipe |-> (ex_macrc_op[0] == 1'b0)));
-assert property (@(posedge clk) disable iff (rst) (if_flushpipe | id_flushpipe | ex_flushpipe | wb_flushpipe | du_flush_pipe | except_flushpipe | extend_flush                  ==> (id_insn == {`OR1200_OR32_NOP, 26'h041_0000} |-> (id_insn == {`OR1200_OR32_NOP, 26'h041_0000}))));
-assert property (@(posedge clk) disable iff (rst) ((id_flushpipe) |-> ##1 (id_insn == {`OR1200_OR32_NOP, 26'h041_0000})) iff (if_flushpipe | id_flushpipe | ex_flushpipe | wb_flushpipe | du_flush_pipe | except_flushpipe | extend_flush                  ==> (id_insn == {`OR1200_OR32_NOP, 26'h041_0000} |-> (id_insn == {`OR1200_OR32_NOP, 26'h041_0000}))));
+// assert property (@(posedge clk) disable iff (rst) ((!ex_freeze && id_freeze) || ex_flushpipe |-> (ex_macrc_op[0] == 1'b0)));
+// assert property (@(posedge clk) disable iff (rst) ((!ex_freeze & id_freeze | ex_flushpipe) |-> ##1 (ex_macrc_op == 0)) iff ((!ex_freeze && id_freeze) || ex_flushpipe |-> (ex_macrc_op[0] == 1'b0)));
+// assert property (@(posedge clk) disable iff (rst) (if_flushpipe | id_flushpipe | ex_flushpipe | wb_flushpipe | du_flush_pipe | except_flushpipe | extend_flush                  ==> (id_insn == {`OR1200_OR32_NOP, 26'h041_0000} |-> (id_insn == {`OR1200_OR32_NOP, 26'h041_0000}))));
+// assert property (@(posedge clk) disable iff (rst) ((id_flushpipe) |-> ##1 (id_insn == {`OR1200_OR32_NOP, 26'h041_0000})) iff (if_flushpipe | id_flushpipe | ex_flushpipe | wb_flushpipe | du_flush_pipe | except_flushpipe | extend_flush                  ==> (id_insn == {`OR1200_OR32_NOP, 26'h041_0000} |-> (id_insn == {`OR1200_OR32_NOP, 26'h041_0000}))));
 assert property (@(posedge clk) disable iff (rst) (ex_freeze == 1'b0 && id_freeze == 1'b1 || ex_flushpipe == 1'b1 |-> (ex_insn == {`OR1200_OR32_NOP, 26'h0410000})));
 assert property (@(posedge clk) disable iff (rst) ((!ex_freeze & id_freeze | ex_flushpipe) |-> ##1 (ex_insn == {`OR1200_OR32_NOP, 26'h041_0000})) iff (ex_freeze == 1'b0 && id_freeze == 1'b1 || ex_flushpipe == 1'b1 |-> (ex_insn == {`OR1200_OR32_NOP, 26'h0410000})));
 assert property (@(posedge clk) disable iff (rst) (id_freeze && (if_insn[31:26] == `OR1200_OR32_JALR) |-> (!sel_imm)));
@@ -1252,8 +1252,8 @@ assert property (@(posedge clk) disable iff (rst) (id_freeze == 1'b0 && (if_insn
 assert property (@(posedge clk) disable iff (rst) ((!id_freeze && if_insn[31:26] == `OR1200_OR32_JR) |-> ##1 (sel_imm ==  1'b0)) iff (id_freeze == 1'b0 && (if_insn[31:26] == `OR1200_OR32_JALR) |-> !(sel_imm)));
 assert property (@(posedge clk) disable iff (rst) (id_freeze && (if_insn[31:26] == `OR1200_OR32_RFE) |-> !sel_imm));
 assert property (@(posedge clk) disable iff (rst) ((!id_freeze && if_insn[31:26] == `OR1200_OR32_RFE) |-> ##1 (sel_imm ==  1'b0)) iff (id_freeze && (if_insn[31:26] == `OR1200_OR32_RFE) |-> !sel_imm));
-assert property (@(posedge clk) disable iff (rst) (id_freeze == 1'b0 && (if_insn[31:26] == `OR1200_OR32_MFSPR |-> sel_imm == 1'b0)));
-assert property (@(posedge clk) disable iff (rst) ((!id_freeze && if_insn[31:26] == `OR1200_OR32_MFSPR) |-> ##1 (sel_imm ==  1'b0)) iff (id_freeze == 1'b0 && (if_insn[31:26] == `OR1200_OR32_MFSPR |-> sel_imm == 1'b0)));
+// assert property (@(posedge clk) disable iff (rst) (id_freeze == 1'b0 && (if_insn[31:26] == `OR1200_OR32_MFSPR |-> sel_imm == 1'b0)));
+// assert property (@(posedge clk) disable iff (rst) ((!id_freeze && if_insn[31:26] == `OR1200_OR32_MFSPR) |-> ##1 (sel_imm ==  1'b0)) iff (id_freeze == 1'b0 && (if_insn[31:26] == `OR1200_OR32_MFSPR |-> sel_imm == 1'b0)));
 assert property (@(posedge clk) disable iff (rst) (id_freeze == 1'b0 && (if_insn[31:26] == `OR1200_OR32_MTSPR) |-> !sel_imm));
 assert property (@(posedge clk) disable iff (rst) ((!id_freeze && if_insn[31:26] == `OR1200_OR32_MTSPR) |-> ##1 (sel_imm ==  1'b0)) iff (id_freeze == 1'b0 && (if_insn[31:26] == `OR1200_OR32_MTSPR) |-> !sel_imm));
 assert property (@(posedge clk) disable iff (rst) (id_freeze && (if_insn[31:26] == `OR1200_OR32_XSYNC) |-> !sel_imm));
