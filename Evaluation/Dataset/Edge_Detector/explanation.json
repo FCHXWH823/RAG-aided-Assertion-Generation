@@ -1,18 +1,18 @@
 {
-"Assertion 1": {
-"clock signal condition": "@(posedge clk)",
-"disable condition": "disable iff (~resetn)",
-"logical expression": "$rose(din_f_q) == dout",
-"Signals": ["din_f_q", "dout"],
-"Signal Explanations": {
-  "din_f_q": "a register that holds the delayed version of the input used to check for a low-to-high transition",
-  "dout": "the output signal that produces a one-cycle pulse following the detection of a rising edge"
-},
-"Logical Operators": ["$rose", "=="],
-"Logical Operators Explanation": {
-  "$rose": "evaluates to true when its argument transitions from low to high, indicating a rising edge",
-  "==": "compares two values to determine if they are equal"
-},
-"Assertion Explaination": "if the delayed input signal experiences a low-to-high transition then the one-cycle pulse generating signal must be asserted"
-}
+  "Assertion 1": {
+    "clock signal condition": "@(posedge clk)",
+    "disable condition": "disable iff (~resetn)",
+    "logical expression": "$rose(din_f_q) == dout",
+    "Signals": ["din_f_q", "dout"],
+    "Signal Explanations": {
+      "din_f_q": "stored copy of the incoming data signal used to check for a rising edge",
+      "dout": "output signal that represents the generated pulse after edge detection"
+    },
+    "Logical Operators": ["$rose", "=="],
+    "Logical Operators Explanation": {
+      "$rose": "a function that checks for a transition from low (0) to high (1) over successive clock cycles",
+      "==": "an operator that tests for the equality of its two operands"
+    },
+    "Assertion Explaination": "if a transition from low to high is detected in the stored copy of the incoming data signal SINCE THE LAST CLOCK CYCLE, then the result of that rising edge detection is equal to the generated pulse output"
+  }
 }

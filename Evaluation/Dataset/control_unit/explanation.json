@@ -1,66 +1,66 @@
 {
-  "Assertion 1": {
-    "clock signal condition": "@(posedge clk)",
-    "disable condition": "",
-    "logical expression": "(aes_mode[0] == 1) |-> (mode_ctr == 0)",
-    "Signals": ["aes_mode", "mode_ctr"],
-    "Signal Explanations": {
-      "aes_mode": "a 2‐bit input that selects the AES operating mode (e.g. ECB, CBC, or CTR)",
-      "mode_ctr": "an output signal that indicates whether the core is operating in CTR mode"
-    },
-    "Logical Operators": ["==", "|->"],
-    "Logical Operators Explanation": {
-      "==": "compares two values for equality",
-      "|->": "non-overlapping implication; if the left-hand condition holds, then the right-hand condition must hold in the same evaluation"
-    },
-    "Assertion Explaination": "if the least significant bit of the AES mode input equals one, then the signal indicating operation in CTR mode must be deasserted (zero)"
-  },
-  "Assertion 2": {
-    "clock signal condition": "@(posedge clk)",
-    "disable condition": "",
-    "logical expression": "(aes_mode[0] == 0) |-> (mode_cbc == 0)",
-    "Signals": ["aes_mode", "mode_cbc"],
-    "Signal Explanations": {
-      "aes_mode": "a 2‐bit input that selects the AES operating mode (e.g. ECB, CBC, or CTR)",
-      "mode_cbc": "an output signal that indicates whether the core is operating in CBC mode"
-    },
-    "Logical Operators": ["==", "|->"],
-    "Logical Operators Explanation": {
-      "==": "compares two values for equality",
-      "|->": "non-overlapping implication; if the left-hand condition holds, then the right-hand condition must hold in the same evaluation"
-    },
-    "Assertion Explaination": "if the least significant bit of the AES mode input equals zero, then the signal indicating operation in CBC mode must be deasserted (zero)"
-  },
-  "Assertion 3": {
-    "clock signal condition": "@(posedge clk)",
-    "disable condition": "",
-    "logical expression": "(start == 0) |-> (key_init == 0)",
-    "Signals": ["start", "key_init"],
-    "Signal Explanations": {
-      "start": "an input signal that triggers the start of the AES operation",
-      "key_init": "an output signal used to initiate key processing, which is directly assigned the value of the start signal"
-    },
-    "Logical Operators": ["==", "|->"],
-    "Logical Operators Explanation": {
-      "==": "compares two values for equality",
-      "|->": "non-overlapping implication; if the left-hand condition holds, then the right-hand condition must hold in the same evaluation"
-    },
-    "Assertion Explaination": "if the operation trigger signal is deasserted (zero), then the signal for initiating key processing must also be deasserted (zero)"
-  },
-  "Assertion 4": {
-    "clock signal condition": "@(posedge clk)",
-    "disable condition": "",
-    "logical expression": "(start == 1) |-> (key_init == 1)",
-    "Signals": ["start", "key_init"],
-    "Signal Explanations": {
-      "start": "an input signal that triggers the start of the AES operation",
-      "key_init": "an output signal used to initiate key processing, which is directly assigned the value of the start signal"
-    },
-    "Logical Operators": ["==", "|->"],
-    "Logical Operators Explanation": {
-      "==": "compares two values for equality",
-      "|->": "non-overlapping implication; if the left-hand condition holds, then the right-hand condition must hold in the same evaluation"
-    },
-    "Assertion Explaination": "if the operation trigger signal is asserted (one), then the signal for initiating key processing must also be asserted (one)"
-  }
+"Assertion 1": {
+"clock signal condition": "@(posedge clk)",
+"disable condition": "none",
+"logical expression": "(aes_mode[0] == 1) |-> (mode_ctr == 0)",
+"Signals": ["aes_mode[0]", "mode_ctr"],
+"Signal Explanations": {
+  "aes_mode[0]": "the least significant bit of the AES mode input that determines the operating mode",
+  "mode_ctr": "a flag output indicating whether the AES algorithm is operating in counter (CTR) mode"
+},
+"Logical Operators": ["==", "|->"],
+"Logical Operators Explanation": {
+  "==": "checks for equality between the value and the reference constant",
+  "|->": "an overlapping implication operator meaning that if the condition on the left is met then the condition on the right must hold since the current clock cycle"
+},
+"Assertion Explaination": "if the least significant bit of the AES mode input equals one then the counter mode flag must be zero since the current clock cycle"
+},
+"Assertion 2": {
+"clock signal condition": "@(posedge clk)",
+"disable condition": "none",
+"logical expression": "(aes_mode[0] == 0) |-> (mode_cbc == 0)",
+"Signals": ["aes_mode[0]", "mode_cbc"],
+"Signal Explanations": {
+  "aes_mode[0]": "the least significant bit of the AES mode input that determines the operating mode",
+  "mode_cbc": "a flag output indicating whether the AES algorithm is operating in cipher block chaining (CBC) mode"
+},
+"Logical Operators": ["==", "|->"],
+"Logical Operators Explanation": {
+  "==": "checks for equality between the value and the reference constant",
+  "|->": "an overlapping implication operator meaning that if the condition on the left is met then the condition on the right must hold since the current clock cycle"
+},
+"Assertion Explaination": "if the least significant bit of the AES mode input equals zero then the CBC mode flag must be zero since the current clock cycle"
+},
+"Assertion 3": {
+"clock signal condition": "@(posedge clk)",
+"disable condition": "none",
+"logical expression": "(start == 0) |-> (key_init == 0)",
+"Signals": ["start", "key_init"],
+"Signal Explanations": {
+  "start": "the input signal that initiates the AES operation",
+  "key_init": "a signal that indicates the initialization of the key, directly driven by the start signal"
+},
+"Logical Operators": ["==", "|->"],
+"Logical Operators Explanation": {
+  "==": "checks for equality between the value and the reference constant",
+  "|->": "an overlapping implication operator meaning that if the condition on the left is met then the condition on the right must hold since the current clock cycle"
+},
+"Assertion Explaination": "if the start signal is zero then the key initialization signal must be zero since the current clock cycle"
+},
+"Assertion 4": {
+"clock signal condition": "@(posedge clk)",
+"disable condition": "none",
+"logical expression": "(start == 1) |-> (key_init == 1)",
+"Signals": ["start", "key_init"],
+"Signal Explanations": {
+  "start": "the input signal that initiates the AES operation",
+  "key_init": "a signal that indicates the initialization of the key, directly driven by the start signal"
+},
+"Logical Operators": ["==", "|->"],
+"Logical Operators Explanation": {
+  "==": "checks for equality between the value and the reference constant",
+  "|->": "an overlapping implication operator meaning that if the condition on the left is met then the condition on the right must hold since the current clock cycle"
+},
+"Assertion Explaination": "if the start signal is one then the key initialization signal must be one since the current clock cycle"
+}
 }

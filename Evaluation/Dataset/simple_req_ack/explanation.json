@@ -1,19 +1,26 @@
 {
-"Assertion 1": {
-"clock signal condition": "@(posedge clk)",
-"disable condition": "disable iff(!rst_n)",
-"logical expression": "$rose(req) |-> ##2 $rose(ack)",
-"Signals": ["req", "ack"],
-"Signal Explanations": {
-  "req": "input request signal of the verilog module",
-  "ack": "output acknowledgement signal of the verilog module"
-},
-"Logical Operators": ["$rose", "|->", "##2"],
-"Logical Operators Explanation": {
-  "$rose": "detects when a signal makes a rising (positive) transition",
-  "|->": "non-overlapping implication, meaning if the antecedent is true the consequent must hold after the specified delay",
-  "##2": "indicates a delay of two clock cycles before evaluating the consequent"
-},
-"Assertion Explaination": "if a rising edge is detected on the input request signal, then two clock cycles later a rising edge must be detected on the output acknowledgement signal"
-}
+  "Assertion 1": {
+    "clock signal condition": "@(posedge clk)",
+    "disable condition": "disable iff(!rst_n)",
+    "logical expression": "$rose(req) |-> ##2 $rose(ack)",
+    "Signals": [
+      "req",
+      "ack"
+    ],
+    "Signal Explanations": {
+      "req": "request input signal of the module",
+      "ack": "acknowledge output signal of the module"
+    },
+    "Logical Operators": [
+      "$rose",
+      "|->",
+      "##"
+    ],
+    "Logical Operators Explanation": {
+      "$rose": "a function that returns true when a rising edge is detected on a signal",
+      "|->": "an overlapping implication operator meaning that if the condition on the left is met then the condition on the right must hold SINCE THE CURRENT CLOCK CYCLE",
+      "##": "a delay operator specifying that the condition on the right should be evaluated after a defined number of clock cycles"
+    },
+    "Assertion Explaination": "if a rising edge is detected on the request input signal then, after a delay of two clock cycles, a rising edge is detected on the acknowledge output signal"
+  }
 }

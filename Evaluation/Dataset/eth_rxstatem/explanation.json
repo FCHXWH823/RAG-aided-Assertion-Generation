@@ -1,559 +1,559 @@
 {
-"Assertion 1": {
+  "Assertion 1": {
     "clock signal condition": "@(posedge MRxClk)",
-    "disable condition": "",
+    "disable condition": "none",
     "logical expression": "(StartPreamble == 1) |=> (StatePreamble == 1)",
     "Signals": ["StartPreamble", "StatePreamble"],
     "Signal Explanations": {
-        "StartPreamble": "signal indicating when the state machine should transition to the preamble state",
-        "StatePreamble": "signal indicating that the state machine is in the preamble state"
+      "StartPreamble": "the condition that initiates the preamble sequence",
+      "StatePreamble": "the indicator that the preamble sequence is active"
     },
     "Logical Operators": ["==", "|=>"],
     "Logical Operators Explanation": {
-        "==": "checks equality (is equal to)",
-        "|=>": "implication operator asserting that if the antecedent holds then the consequent must hold in the next cycle"
+      "==": "equal",
+      "|=>": "if the condition on the left holds then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the condition that triggers transitioning to the preamble state is active, then on the next cycle the state machine will be in the preamble state"
-},
-"Assertion 2": {
+    "Assertion Explaination": "if the condition that initiates the preamble sequence is equal to 1 then the indicator that the preamble sequence is active is equal to 1 SINCE NEXT CLOCK CYCLE"
+  },
+  "Assertion 2": {
     "clock signal condition": "@(posedge MRxClk)",
-    "disable condition": "",
+    "disable condition": "none",
     "logical expression": "(StartDrop == 1) |=> (StatePreamble == 0)",
     "Signals": ["StartDrop", "StatePreamble"],
     "Signal Explanations": {
-        "StartDrop": "signal indicating when the state machine should transition to the drop state",
-        "StatePreamble": "signal indicating that the state machine is in the preamble state"
+      "StartDrop": "the condition that initiates the drop state",
+      "StatePreamble": "the indicator that the preamble sequence is active"
     },
     "Logical Operators": ["==", "|=>"],
     "Logical Operators Explanation": {
-        "==": "checks equality (is equal to)",
-        "|=>": "implication operator asserting that if the antecedent holds then the consequent must hold in the next cycle"
+      "==": "equal",
+      "|=>": "if the condition on the left holds then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the condition that triggers transitioning to the drop state is active, then in the following cycle the state machine will not be in the preamble state"
-},
-"Assertion 3": {
+    "Assertion Explaination": "if the condition that initiates the drop state is equal to 1 then the indicator that the preamble sequence is active is equal to 0 SINCE NEXT CLOCK CYCLE"
+  },
+  "Assertion 3": {
     "clock signal condition": "@(posedge MRxClk)",
-    "disable condition": "",
+    "disable condition": "none",
     "logical expression": "(StateSFD == 1) |=> (StatePreamble == 0)",
     "Signals": ["StateSFD", "StatePreamble"],
     "Signal Explanations": {
-        "StateSFD": "signal indicating that the state machine is in the SFD state",
-        "StatePreamble": "signal indicating that the state machine is in the preamble state"
+      "StateSFD": "the indicator that the Start Frame Delimiter state is active",
+      "StatePreamble": "the indicator that the preamble sequence is active"
     },
     "Logical Operators": ["==", "|=>"],
     "Logical Operators Explanation": {
-        "==": "checks equality (is equal to)",
-        "|=>": "implication operator asserting that if the antecedent holds then the consequent must hold in the next cycle"
+      "==": "equal",
+      "|=>": "if the condition on the left holds then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the indicator showing the SFD state is active, then on the next cycle the state machine will not be in the preamble state"
-},
-"Assertion 4": {
+    "Assertion Explaination": "if the indicator that the Start Frame Delimiter state is active is equal to 1 then the indicator that the preamble sequence is active is equal to 0 SINCE NEXT CLOCK CYCLE"
+  },
+  "Assertion 4": {
     "clock signal condition": "@(posedge MRxClk)",
-    "disable condition": "",
+    "disable condition": "none",
     "logical expression": "(StateData[0] == 1) |=> (StatePreamble == 0)",
     "Signals": ["StateData[0]", "StatePreamble"],
     "Signal Explanations": {
-        "StateData[0]": "signal representing the first part of the data state",
-        "StatePreamble": "signal indicating that the state machine is in the preamble state"
+      "StateData[0]": "the indicator for the lower data state bit, representing active data reception",
+      "StatePreamble": "the indicator that the preamble sequence is active"
     },
     "Logical Operators": ["==", "|=>"],
     "Logical Operators Explanation": {
-        "==": "checks equality (is equal to)",
-        "|=>": "implication operator asserting that if the antecedent holds then the consequent must hold in the next cycle"
+      "==": "equal",
+      "|=>": "if the condition on the left holds then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the indicator for the first portion of the data state is active, then on the following cycle the state machine will not be in the preamble state"
-},
-"Assertion 5": {
+    "Assertion Explaination": "if the indicator for the lower data state bit, representing active data reception, is equal to 1 then the indicator that the preamble sequence is active is equal to 0 SINCE NEXT CLOCK CYCLE"
+  },
+  "Assertion 5": {
     "clock signal condition": "@(posedge MRxClk)",
-    "disable condition": "",
+    "disable condition": "none",
     "logical expression": "(StateDrop == 1) |=> (StatePreamble == 0)",
     "Signals": ["StateDrop", "StatePreamble"],
     "Signal Explanations": {
-        "StateDrop": "signal indicating that the state machine is in the drop state",
-        "StatePreamble": "signal indicating that the state machine is in the preamble state"
+      "StateDrop": "the indicator that the drop state is active",
+      "StatePreamble": "the indicator that the preamble sequence is active"
     },
     "Logical Operators": ["==", "|=>"],
     "Logical Operators Explanation": {
-        "==": "checks equality (is equal to)",
-        "|=>": "implication operator asserting that if the antecedent holds then the consequent must hold in the next cycle"
+      "==": "equal",
+      "|=>": "if the condition on the left holds then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the indicator for the drop state is active, then on the next cycle the state machine will not be in the preamble state"
-},
-"Assertion 6": {
+    "Assertion Explaination": "if the indicator that the drop state is active is equal to 1 then the indicator that the preamble sequence is active is equal to 0 SINCE NEXT CLOCK CYCLE"
+  },
+  "Assertion 6": {
     "clock signal condition": "@(posedge MRxClk)",
-    "disable condition": "",
+    "disable condition": "none",
     "logical expression": "(StateData1 == 1) |=> (StatePreamble == 0)",
     "Signals": ["StateData1", "StatePreamble"],
     "Signal Explanations": {
-        "StateData1": "signal representing the second part of the data state",
-        "StatePreamble": "signal indicating that the state machine is in the preamble state"
+      "StateData1": "the indicator for the upper data state bit, representing active data reception",
+      "StatePreamble": "the indicator that the preamble sequence is active"
     },
     "Logical Operators": ["==", "|=>"],
     "Logical Operators Explanation": {
-        "==": "checks equality (is equal to)",
-        "|=>": "implication operator asserting that if the antecedent holds then the consequent must hold in the next cycle"
+      "==": "equal",
+      "|=>": "if the condition on the left holds then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the indicator for the second portion of the data state is active, then in the following cycle the state machine will not be in the preamble state"
-},
-"Assertion 7": {
+    "Assertion Explaination": "if the indicator for the upper data state bit, representing active data reception, is equal to 1 then the indicator that the preamble sequence is active is equal to 0 SINCE NEXT CLOCK CYCLE"
+  },
+  "Assertion 7": {
     "clock signal condition": "@(posedge MRxClk)",
-    "disable condition": "",
+    "disable condition": "none",
     "logical expression": "(StatePreamble == 1 & MRxDEq5 == 0 & MRxDV == 1) |=> (StatePreamble == 1)",
     "Signals": ["StatePreamble", "MRxDEq5", "MRxDV"],
     "Signal Explanations": {
-        "StatePreamble": "signal indicating that the state machine is in the preamble state",
-        "MRxDEq5": "signal indicating that the received data equals the value 5",
-        "MRxDV": "signal indicating that the received data is valid"
+      "StatePreamble": "the indicator that the preamble sequence is active",
+      "MRxDEq5": "the condition that checks if a received value equals 5",
+      "MRxDV": "the input signal that denotes receive data valid"
     },
     "Logical Operators": ["==", "&", "|=>"],
     "Logical Operators Explanation": {
-        "==": "checks equality (is equal to)",
-        "&": "logical AND operator",
-        "|=>": "implication operator asserting that if the entire antecedent holds then the consequent must hold in the next cycle"
+      "==": "equal",
+      "&": "logical AND",
+      "|=>": "if the condition on the left holds then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the state machine is in the preamble state while the condition for the received data not matching the value 5 is met and the received data is valid, then on the next cycle the state machine will remain in the preamble state"
-},
-"Assertion 8": {
+    "Assertion Explaination": "if the indicator that the preamble sequence is active is equal to 1 AND the condition checking if a received value equals 5 is equal to 0 AND the input signal that denotes receive data valid is equal to 1 then the indicator that the preamble sequence is active is equal to 1 SINCE NEXT CLOCK CYCLE"
+  },
+  "Assertion 8": {
     "clock signal condition": "@(posedge MRxClk)",
-    "disable condition": "",
+    "disable condition": "none",
     "logical expression": "(MRxDEq5 == 1) |=> (StatePreamble == 0)",
     "Signals": ["MRxDEq5", "StatePreamble"],
     "Signal Explanations": {
-        "MRxDEq5": "signal indicating that the received data equals the value 5",
-        "StatePreamble": "signal indicating that the state machine is in the preamble state"
+      "MRxDEq5": "the condition that checks if a received value equals 5",
+      "StatePreamble": "the indicator that the preamble sequence is active"
     },
     "Logical Operators": ["==", "|=>"],
     "Logical Operators Explanation": {
-        "==": "checks equality (is equal to)",
-        "|=>": "implication operator asserting that if the antecedent holds then the consequent must hold in the next cycle"
+      "==": "equal",
+      "|=>": "if the condition on the left holds then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the condition for the received data matching the value 5 is active, then on the next cycle the state machine will not be in the preamble state"
-},
-"Assertion 9": {
+    "Assertion Explaination": "if the condition that checks if a received value equals 5 is equal to 1 then the indicator that the preamble sequence is active is equal to 0 SINCE NEXT CLOCK CYCLE"
+  },
+  "Assertion 9": {
     "clock signal condition": "@(posedge MRxClk)",
-    "disable condition": "",
+    "disable condition": "none",
     "logical expression": "(MRxDV == 0) |=> (StatePreamble == 0)",
     "Signals": ["MRxDV", "StatePreamble"],
     "Signal Explanations": {
-        "MRxDV": "signal indicating that the received data is valid",
-        "StatePreamble": "signal indicating that the state machine is in the preamble state"
+      "MRxDV": "the input signal that denotes receive data valid",
+      "StatePreamble": "the indicator that the preamble sequence is active"
     },
     "Logical Operators": ["==", "|=>"],
     "Logical Operators Explanation": {
-        "==": "checks equality (is equal to)",
-        "|=>": "implication operator asserting that if the antecedent holds then the consequent must hold in the next cycle"
+      "==": "equal",
+      "|=>": "if the condition on the left holds then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the valid received data condition is inactive, then on the next cycle the state machine will not be in the preamble state"
-},
-"Assertion 10": {
+    "Assertion Explaination": "if the input signal that denotes receive data valid is equal to 0 then the indicator that the preamble sequence is active is equal to 0 SINCE NEXT CLOCK CYCLE"
+  },
+  "Assertion 10": {
     "clock signal condition": "@(posedge MRxClk)",
-    "disable condition": "",
+    "disable condition": "none",
     "logical expression": "(StartSFD == 1) |=> (StateSFD == 1)",
     "Signals": ["StartSFD", "StateSFD"],
     "Signal Explanations": {
-        "StartSFD": "signal indicating when the state machine should transition to the SFD state",
-        "StateSFD": "signal indicating that the state machine is in the SFD state"
+      "StartSFD": "the condition that initiates the Start Frame Delimiter state",
+      "StateSFD": "the indicator that the Start Frame Delimiter state is active"
     },
     "Logical Operators": ["==", "|=>"],
     "Logical Operators Explanation": {
-        "==": "checks equality (is equal to)",
-        "|=>": "implication operator asserting that if the antecedent holds then the consequent must hold in the next cycle"
+      "==": "equal",
+      "|=>": "if the condition on the left holds then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the condition that triggers transitioning to the SFD state is active, then on the next cycle the state machine will be in the SFD state"
-},
-"Assertion 11": {
+    "Assertion Explaination": "if the condition that initiates the Start Frame Delimiter state is equal to 1 then the indicator that the Start Frame Delimiter state is active is equal to 1 SINCE NEXT CLOCK CYCLE"
+  },
+  "Assertion 11": {
     "clock signal condition": "@(posedge MRxClk)",
-    "disable condition": "",
+    "disable condition": "none",
     "logical expression": "(StartIdle == 1) |=> (StateSFD == 0)",
     "Signals": ["StartIdle", "StateSFD"],
     "Signal Explanations": {
-        "StartIdle": "signal indicating when the state machine should transition to the idle state",
-        "StateSFD": "signal indicating that the state machine is in the SFD state"
+      "StartIdle": "the condition that initiates the idle state",
+      "StateSFD": "the indicator that the Start Frame Delimiter state is active"
     },
     "Logical Operators": ["==", "|=>"],
     "Logical Operators Explanation": {
-        "==": "checks equality (is equal to)",
-        "|=>": "implication operator asserting that if the antecedent holds then the consequent must hold in the next cycle"
+      "==": "equal",
+      "|=>": "if the condition on the left holds then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the condition that triggers transitioning to the idle state is active, then on the next cycle the state machine will not be in the SFD state"
-},
-"Assertion 12": {
+    "Assertion Explaination": "if the condition that initiates the idle state is equal to 1 then the indicator that the Start Frame Delimiter state is active is equal to 0 SINCE NEXT CLOCK CYCLE"
+  },
+  "Assertion 12": {
     "clock signal condition": "@(posedge MRxClk)",
-    "disable condition": "",
+    "disable condition": "none",
     "logical expression": "(StartDrop == 1) |=> (StateSFD == 0)",
     "Signals": ["StartDrop", "StateSFD"],
     "Signal Explanations": {
-        "StartDrop": "signal indicating when the state machine should transition to the drop state",
-        "StateSFD": "signal indicating that the state machine is in the SFD state"
+      "StartDrop": "the condition that initiates the drop state",
+      "StateSFD": "the indicator that the Start Frame Delimiter state is active"
     },
     "Logical Operators": ["==", "|=>"],
     "Logical Operators Explanation": {
-        "==": "checks equality (is equal to)",
-        "|=>": "implication operator asserting that if the antecedent holds then the consequent must hold in the next cycle"
+      "==": "equal",
+      "|=>": "if the condition on the left holds then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the condition that triggers transitioning to the drop state is active, then on the next cycle the state machine will not be in the SFD state"
-},
-"Assertion 13": {
+    "Assertion Explaination": "if the condition that initiates the drop state is equal to 1 then the indicator that the Start Frame Delimiter state is active is equal to 0 SINCE NEXT CLOCK CYCLE"
+  },
+  "Assertion 13": {
     "clock signal condition": "@(posedge MRxClk)",
-    "disable condition": "",
+    "disable condition": "none",
     "logical expression": "(StartData0 == 1) |=> (StateSFD == 0)",
     "Signals": ["StartData0", "StateSFD"],
     "Signal Explanations": {
-        "StartData0": "signal indicating when the state machine should transition to the first data state",
-        "StateSFD": "signal indicating that the state machine is in the SFD state"
+      "StartData0": "the condition that initiates the first part of the data state",
+      "StateSFD": "the indicator that the Start Frame Delimiter state is active"
     },
     "Logical Operators": ["==", "|=>"],
     "Logical Operators Explanation": {
-        "==": "checks equality (is equal to)",
-        "|=>": "implication operator asserting that if the antecedent holds then the consequent must hold in the next cycle"
+      "==": "equal",
+      "|=>": "if the condition on the left holds then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the condition that triggers transitioning to the first data state is active, then on the next cycle the state machine will not be in the SFD state"
-},
-"Assertion 14": {
+    "Assertion Explaination": "if the condition that initiates the first part of the data state is equal to 1 then the indicator that the Start Frame Delimiter state is active is equal to 0 SINCE NEXT CLOCK CYCLE"
+  },
+  "Assertion 14": {
     "clock signal condition": "@(posedge MRxClk)",
-    "disable condition": "",
+    "disable condition": "none",
     "logical expression": "(StartPreamble == 1) |=> (StateSFD == 0)",
     "Signals": ["StartPreamble", "StateSFD"],
     "Signal Explanations": {
-        "StartPreamble": "signal indicating when the state machine should transition to the preamble state",
-        "StateSFD": "signal indicating that the state machine is in the SFD state"
+      "StartPreamble": "the condition that initiates the preamble sequence",
+      "StateSFD": "the indicator that the Start Frame Delimiter state is active"
     },
     "Logical Operators": ["==", "|=>"],
     "Logical Operators Explanation": {
-        "==": "checks equality (is equal to)",
-        "|=>": "implication operator asserting that if the antecedent holds then the consequent must hold in the next cycle"
+      "==": "equal",
+      "|=>": "if the condition on the left holds then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the condition that triggers transitioning to the preamble state is active, then on the next cycle the state machine will not be in the SFD state"
-},
-"Assertion 15": {
+    "Assertion Explaination": "if the condition that initiates the preamble sequence is equal to 1 then the indicator that the Start Frame Delimiter state is active is equal to 0 SINCE NEXT CLOCK CYCLE"
+  },
+  "Assertion 15": {
     "clock signal condition": "@(posedge MRxClk)",
-    "disable condition": "",
+    "disable condition": "none",
     "logical expression": "(StateSFD == 1 & StartIdle == 0 & MRxDEqD == 0) |=> (StateSFD == 1)",
     "Signals": ["StateSFD", "StartIdle", "MRxDEqD"],
     "Signal Explanations": {
-        "StateSFD": "signal indicating that the state machine is in the SFD state",
-        "StartIdle": "signal indicating when the state machine should transition to the idle state",
-        "MRxDEqD": "signal indicating that the received data equals the value D"
+      "StateSFD": "the indicator that the Start Frame Delimiter state is active",
+      "StartIdle": "the condition that initiates the idle state",
+      "MRxDEqD": "the condition that checks if a received value equals the delimiter D"
     },
     "Logical Operators": ["==", "&", "|=>"],
     "Logical Operators Explanation": {
-        "==": "checks equality (is equal to)",
-        "&": "logical AND operator",
-        "|=>": "implication operator asserting that if the complete condition holds then the result must hold in the next cycle"
+      "==": "equal",
+      "&": "logical AND",
+      "|=>": "if the condition on the left holds then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the indicator for the SFD state is active while the condition for transitioning to idle is inactive and the received data does not match the value D, then on the next cycle the state machine will remain in the SFD state"
-},
-"Assertion 16": {
+    "Assertion Explaination": "if the indicator that the Start Frame Delimiter state is active is equal to 1 AND the condition that initiates the idle state is equal to 0 AND the condition that checks if a received value equals the delimiter D is equal to 0 then the indicator that the Start Frame Delimiter state is active is equal to 1 SINCE NEXT CLOCK CYCLE"
+  },
+  "Assertion 16": {
     "clock signal condition": "@(posedge MRxClk)",
-    "disable condition": "",
+    "disable condition": "none",
     "logical expression": "(StateData[0] == 1) |=> (StateSFD == 0)",
     "Signals": ["StateData[0]", "StateSFD"],
     "Signal Explanations": {
-        "StateData[0]": "signal representing the first part of the data state",
-        "StateSFD": "signal indicating that the state machine is in the SFD state"
+      "StateData[0]": "the indicator for the lower data state bit, representing active data reception",
+      "StateSFD": "the indicator that the Start Frame Delimiter state is active"
     },
     "Logical Operators": ["==", "|=>"],
     "Logical Operators Explanation": {
-        "==": "checks equality (is equal to)",
-        "|=>": "implication operator asserting that if the condition holds then the result must hold in the next cycle"
+      "==": "equal",
+      "|=>": "if the condition on the left holds then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the indicator for the first portion of the data state is active, then on the next cycle the state machine will not be in the SFD state"
-},
-"Assertion 17": {
+    "Assertion Explaination": "if the indicator for the lower data state bit, representing active data reception, is equal to 1 then the indicator that the Start Frame Delimiter state is active is equal to 0 SINCE NEXT CLOCK CYCLE"
+  },
+  "Assertion 17": {
     "clock signal condition": "@(posedge MRxClk)",
-    "disable condition": "",
+    "disable condition": "none",
     "logical expression": "(StateDrop == 1) |=> (StateSFD == 0)",
     "Signals": ["StateDrop", "StateSFD"],
     "Signal Explanations": {
-        "StateDrop": "signal indicating that the state machine is in the drop state",
-        "StateSFD": "signal indicating that the state machine is in the SFD state"
+      "StateDrop": "the indicator that the drop state is active",
+      "StateSFD": "the indicator that the Start Frame Delimiter state is active"
     },
     "Logical Operators": ["==", "|=>"],
     "Logical Operators Explanation": {
-        "==": "checks equality (is equal to)",
-        "|=>": "implication operator asserting that if the condition holds then the result must hold in the next cycle"
+      "==": "equal",
+      "|=>": "if the condition on the left holds then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the indicator for the drop state is active, then on the next cycle the state machine will not be in the SFD state"
-},
-"Assertion 18": {
+    "Assertion Explaination": "if the indicator that the drop state is active is equal to 1 then the indicator that the Start Frame Delimiter state is active is equal to 0 SINCE NEXT CLOCK CYCLE"
+  },
+  "Assertion 18": {
     "clock signal condition": "@(posedge MRxClk)",
-    "disable condition": "",
+    "disable condition": "none",
     "logical expression": "(MRxDEq5 == 0 & StatePreamble == 1) |=> (StateSFD == 0)",
     "Signals": ["MRxDEq5", "StatePreamble", "StateSFD"],
     "Signal Explanations": {
-        "MRxDEq5": "signal indicating that the received data does not match the value 5",
-        "StatePreamble": "signal indicating that the state machine is in the preamble state",
-        "StateSFD": "signal indicating that the state machine is in the SFD state"
+      "MRxDEq5": "the condition that checks if a received value equals 5",
+      "StatePreamble": "the indicator that the preamble sequence is active",
+      "StateSFD": "the indicator that the Start Frame Delimiter state is active"
     },
     "Logical Operators": ["==", "&", "|=>"],
     "Logical Operators Explanation": {
-        "==": "checks equality (is equal to)",
-        "&": "logical AND operator",
-        "|=>": "implication operator asserting that if all conditions in the antecedent hold then the consequent must hold in the next cycle"
+      "==": "equal",
+      "&": "logical AND",
+      "|=>": "if the combined condition on the left holds then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the condition for received data not matching the value 5 is met while the state machine is in the preamble state, then on the next cycle the machine will not be in the SFD state"
-},
-"Assertion 19": {
+    "Assertion Explaination": "if the condition that checks if a received value equals 5 is equal to 0 AND the indicator that the preamble sequence is active is equal to 1 then the indicator that the Start Frame Delimiter state is active is equal to 0 SINCE NEXT CLOCK CYCLE"
+  },
+  "Assertion 19": {
     "clock signal condition": "@(posedge MRxClk)",
-    "disable condition": "",
+    "disable condition": "none",
     "logical expression": "(MRxDV == 0) |=> (StateSFD == 0)",
     "Signals": ["MRxDV", "StateSFD"],
     "Signal Explanations": {
-        "MRxDV": "signal indicating that the received data is valid",
-        "StateSFD": "signal indicating that the state machine is in the SFD state"
+      "MRxDV": "the input signal that denotes receive data valid",
+      "StateSFD": "the indicator that the Start Frame Delimiter state is active"
     },
     "Logical Operators": ["==", "|=>"],
     "Logical Operators Explanation": {
-        "==": "checks equality (is equal to)",
-        "|=>": "implication operator asserting that if the condition holds then the result must hold in the next cycle"
+      "==": "equal",
+      "|=>": "if the condition on the left holds then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the valid received data condition is inactive, then on the next cycle the state machine will not be in the SFD state"
-},
-"Assertion 20": {
+    "Assertion Explaination": "if the input signal that denotes receive data valid is equal to 0 then the indicator that the Start Frame Delimiter state is active is equal to 0 SINCE NEXT CLOCK CYCLE"
+  },
+  "Assertion 20": {
     "clock signal condition": "@(posedge MRxClk)",
-    "disable condition": "",
+    "disable condition": "none",
     "logical expression": "(StartIdle == 1) |=> (StateDrop == 0)",
     "Signals": ["StartIdle", "StateDrop"],
     "Signal Explanations": {
-        "StartIdle": "signal indicating when the state machine should transition to the idle state",
-        "StateDrop": "signal indicating that the state machine is in the drop state"
+      "StartIdle": "the condition that initiates the idle state",
+      "StateDrop": "the indicator that the drop state is active"
     },
     "Logical Operators": ["==", "|=>"],
     "Logical Operators Explanation": {
-        "==": "checks equality (is equal to)",
-        "|=>": "implication operator asserting that if the condition holds then the result must hold in the next cycle"
+      "==": "equal",
+      "|=>": "if the condition on the left holds then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the condition that triggers transitioning to the idle state is active, then on the next cycle the state machine will not be in the drop state"
-},
-"Assertion 21": {
+    "Assertion Explaination": "if the condition that initiates the idle state is equal to 1 then the indicator that the drop state is active is equal to 0 SINCE NEXT CLOCK CYCLE"
+  },
+  "Assertion 21": {
     "clock signal condition": "@(posedge MRxClk)",
-    "disable condition": "",
+    "disable condition": "none",
     "logical expression": "(StartDrop == 1) |=> (StateDrop == 1)",
     "Signals": ["StartDrop", "StateDrop"],
     "Signal Explanations": {
-        "StartDrop": "signal indicating when the state machine should transition to the drop state",
-        "StateDrop": "signal indicating that the state machine is in the drop state"
+      "StartDrop": "the condition that initiates the drop state",
+      "StateDrop": "the indicator that the drop state is active"
     },
     "Logical Operators": ["==", "|=>"],
     "Logical Operators Explanation": {
-        "==": "checks equality (is equal to)",
-        "|=>": "implication operator asserting that if the condition holds then the result must hold in the next cycle"
+      "==": "equal",
+      "|=>": "if the condition on the left holds then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the condition that triggers transitioning to the drop state is active, then on the following cycle the state machine will be in the drop state"
-},
-"Assertion 22": {
+    "Assertion Explaination": "if the condition that initiates the drop state is equal to 1 then the indicator that the drop state is active is equal to 1 SINCE NEXT CLOCK CYCLE"
+  },
+  "Assertion 22": {
     "clock signal condition": "@(posedge MRxClk)",
-    "disable condition": "",
+    "disable condition": "none",
     "logical expression": "(StateDrop == 1 & StartIdle == 0) |=> (StateDrop == 1)",
     "Signals": ["StateDrop", "StartIdle"],
     "Signal Explanations": {
-        "StateDrop": "signal indicating that the state machine is in the drop state",
-        "StartIdle": "signal indicating when the state machine should transition to the idle state"
+      "StateDrop": "the indicator that the drop state is active",
+      "StartIdle": "the condition that initiates the idle state"
     },
     "Logical Operators": ["==", "&", "|=>"],
     "Logical Operators Explanation": {
-        "==": "checks equality (is equal to)",
-        "&": "logical AND operator",
-        "|=>": "implication operator asserting that if the combined condition holds then the result must hold in the next cycle"
+      "==": "equal",
+      "&": "logical AND",
+      "|=>": "if the combined condition on the left holds then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the machine is in the drop state and the condition for transitioning to idle is not active, then on the next cycle the machine will remain in the drop state"
-},
-"Assertion 23": {
+    "Assertion Explaination": "if the indicator that the drop state is active is equal to 1 AND the condition that initiates the idle state is equal to 0 then the indicator that the drop state is active is equal to 1 SINCE NEXT CLOCK CYCLE"
+  },
+  "Assertion 23": {
     "clock signal condition": "@(posedge MRxClk)",
-    "disable condition": "",
+    "disable condition": "none",
     "logical expression": "(StateSFD == 1 & StartDrop == 0) |=> (StateDrop == 0)",
     "Signals": ["StateSFD", "StartDrop", "StateDrop"],
     "Signal Explanations": {
-        "StateSFD": "signal indicating that the state machine is in the SFD state",
-        "StartDrop": "signal indicating when the state machine should transition to the drop state",
-        "StateDrop": "signal indicating that the state machine is in the drop state"
+      "StateSFD": "the indicator that the Start Frame Delimiter state is active",
+      "StartDrop": "the condition that initiates the drop state",
+      "StateDrop": "the indicator that the drop state is active"
     },
     "Logical Operators": ["==", "&", "|=>"],
     "Logical Operators Explanation": {
-        "==": "checks equality (is equal to)",
-        "&": "logical AND operator",
-        "|=>": "implication operator asserting that if the antecedent holds then the consequent must hold in the next cycle"
+      "==": "equal",
+      "&": "logical AND",
+      "|=>": "if the combined condition on the left holds then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the machine is in the SFD state and the condition for transitioning to the drop state is inactive, then on the next cycle the machine will not be in the drop state"
-},
-"Assertion 24": {
+    "Assertion Explaination": "if the indicator that the Start Frame Delimiter state is active is equal to 1 AND the condition that initiates the drop state is equal to 0 then the indicator that the drop state is active is equal to 0 SINCE NEXT CLOCK CYCLE"
+  },
+  "Assertion 24": {
     "clock signal condition": "@(posedge MRxClk)",
-    "disable condition": "",
+    "disable condition": "none",
     "logical expression": "(StateData[0] == 1 & StartDrop == 0) |=> (StateDrop == 0)",
     "Signals": ["StateData[0]", "StartDrop", "StateDrop"],
     "Signal Explanations": {
-        "StateData[0]": "signal representing the first part of the data state",
-        "StartDrop": "signal indicating when the state machine should transition to the drop state",
-        "StateDrop": "signal indicating that the state machine is in the drop state"
+      "StateData[0]": "the indicator for the lower data state bit, representing active data reception",
+      "StartDrop": "the condition that initiates the drop state",
+      "StateDrop": "the indicator that the drop state is active"
     },
     "Logical Operators": ["==", "&", "|=>"],
     "Logical Operators Explanation": {
-        "==": "checks equality (is equal to)",
-        "&": "logical AND operator",
-        "|=>": "implication operator asserting that if the combined condition holds then the result must hold in the next cycle"
+      "==": "equal",
+      "&": "logical AND",
+      "|=>": "if the combined condition on the left holds then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the indicator for the first part of the data state is active and the condition to transition to drop is inactive, then on the next cycle the machine will not be in the drop state"
-},
-"Assertion 25": {
+    "Assertion Explaination": "if the indicator for the lower data state bit, representing active data reception, is equal to 1 AND the condition that initiates the drop state is equal to 0 then the indicator that the drop state is active is equal to 0 SINCE NEXT CLOCK CYCLE"
+  },
+  "Assertion 25": {
     "clock signal condition": "@(posedge MRxClk)",
-    "disable condition": "",
+    "disable condition": "none",
     "logical expression": "(StatePreamble == 1) |=> (StateDrop == 0)",
     "Signals": ["StatePreamble", "StateDrop"],
     "Signal Explanations": {
-        "StatePreamble": "signal indicating that the state machine is in the preamble state",
-        "StateDrop": "signal indicating that the state machine is in the drop state"
+      "StatePreamble": "the indicator that the preamble sequence is active",
+      "StateDrop": "the indicator that the drop state is active"
     },
     "Logical Operators": ["==", "|=>"],
     "Logical Operators Explanation": {
-        "==": "checks equality (is equal to)",
-        "|=>": "implication operator asserting that if the condition holds then the result must hold in the next cycle"
+      "==": "equal",
+      "|=>": "if the condition on the left holds then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the machine is in the preamble state, then on the next cycle it will not be in the drop state"
-},
-"Assertion 26": {
+    "Assertion Explaination": "if the indicator that the preamble sequence is active is equal to 1 then the indicator that the drop state is active is equal to 0 SINCE NEXT CLOCK CYCLE"
+  },
+  "Assertion 26": {
     "clock signal condition": "@(posedge MRxClk)",
-    "disable condition": "",
+    "disable condition": "none",
     "logical expression": "(StateData1 == 1) |=> (StateDrop == 0)",
     "Signals": ["StateData1", "StateDrop"],
     "Signal Explanations": {
-        "StateData1": "signal representing the second part of the data state",
-        "StateDrop": "signal indicating that the state machine is in the drop state"
+      "StateData1": "the indicator for the upper data state bit, representing active data reception",
+      "StateDrop": "the indicator that the drop state is active"
     },
     "Logical Operators": ["==", "|=>"],
     "Logical Operators Explanation": {
-        "==": "checks equality (is equal to)",
-        "|=>": "implication operator asserting that if the condition holds then the result must hold in the next cycle"
+      "==": "equal",
+      "|=>": "if the condition on the left holds then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the indicator for the second part of the data state is active, then on the next cycle the machine will not be in the drop state"
-},
-"Assertion 27": {
+    "Assertion Explaination": "if the indicator for the upper data state bit, representing active data reception, is equal to 1 then the indicator that the drop state is active is equal to 0 SINCE NEXT CLOCK CYCLE"
+  },
+  "Assertion 27": {
     "clock signal condition": "@(posedge MRxClk)",
-    "disable condition": "",
+    "disable condition": "none",
     "logical expression": "(MRxDV == 0) |=> (StateDrop == 0)",
     "Signals": ["MRxDV", "StateDrop"],
     "Signal Explanations": {
-        "MRxDV": "signal indicating that the received data is valid",
-        "StateDrop": "signal indicating that the state machine is in the drop state"
+      "MRxDV": "the input signal that denotes receive data valid",
+      "StateDrop": "the indicator that the drop state is active"
     },
     "Logical Operators": ["==", "|=>"],
     "Logical Operators Explanation": {
-        "==": "checks equality (is equal to)",
-        "|=>": "implication operator asserting that if the condition holds then the result must hold in the next cycle"
+      "==": "equal",
+      "|=>": "if the condition on the left holds then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the valid received data condition is inactive, then on the next cycle the machine will not be in the drop state"
-},
-"Assertion 28": {
+    "Assertion Explaination": "if the input signal that denotes receive data valid is equal to 0 then the indicator that the drop state is active is equal to 0 SINCE NEXT CLOCK CYCLE"
+  },
+  "Assertion 28": {
     "clock signal condition": "@(posedge MRxClk)",
-    "disable condition": "",
+    "disable condition": "none",
     "logical expression": "(Transmitting == 0 & StateIdle == 1) |=> (StateDrop == 0)",
     "Signals": ["Transmitting", "StateIdle", "StateDrop"],
     "Signal Explanations": {
-        "Transmitting": "signal indicating that the transmitter is active",
-        "StateIdle": "signal indicating that the state machine is in the idle state",
-        "StateDrop": "signal indicating that the state machine is in the drop state"
+      "Transmitting": "the input signal indicating that transmission is in progress",
+      "StateIdle": "the indicator that the idle state is active",
+      "StateDrop": "the indicator that the drop state is active"
     },
     "Logical Operators": ["==", "&", "|=>"],
     "Logical Operators Explanation": {
-        "==": "checks equality (is equal to)",
-        "&": "logical AND operator",
-        "|=>": "implication operator asserting that if the combined condition holds then the result must hold in the next cycle"
+      "==": "equal",
+      "&": "logical AND",
+      "|=>": "if the combined condition on the left holds then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the transmitter is inactive and the machine is in the idle state, then on the next cycle the machine will not be in the drop state"
-},
-"Assertion 29": {
+    "Assertion Explaination": "if the input signal indicating that transmission is in progress is equal to 0 AND the indicator that the idle state is active is equal to 1 then the indicator that the drop state is active is equal to 0 SINCE NEXT CLOCK CYCLE"
+  },
+  "Assertion 29": {
     "clock signal condition": "@(posedge MRxClk)",
-    "disable condition": "",
+    "disable condition": "none",
     "logical expression": "(StartIdle == 1) |=> (StateIdle == 1)",
     "Signals": ["StartIdle", "StateIdle"],
     "Signal Explanations": {
-        "StartIdle": "signal indicating when the state machine should transition to the idle state",
-        "StateIdle": "signal indicating that the state machine is in the idle state"
+      "StartIdle": "the condition that initiates the idle state",
+      "StateIdle": "the indicator that the idle state is active"
     },
     "Logical Operators": ["==", "|=>"],
     "Logical Operators Explanation": {
-        "==": "checks equality (is equal to)",
-        "|=>": "implication operator asserting that if the condition holds then the result must hold in the next cycle"
+      "==": "equal",
+      "|=>": "if the condition on the left holds then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the condition that triggers transitioning to the idle state is active, then on the next cycle the machine will be in the idle state"
-},
-"Assertion 30": {
+    "Assertion Explaination": "if the condition that initiates the idle state is equal to 1 then the indicator that the idle state is active is equal to 1 SINCE NEXT CLOCK CYCLE"
+  },
+  "Assertion 30": {
     "clock signal condition": "@(posedge MRxClk)",
-    "disable condition": "",
+    "disable condition": "none",
     "logical expression": "(StartDrop == 1) |=> (StateIdle == 0)",
     "Signals": ["StartDrop", "StateIdle"],
     "Signal Explanations": {
-        "StartDrop": "signal indicating when the state machine should transition to the drop state",
-        "StateIdle": "signal indicating that the state machine is in the idle state"
+      "StartDrop": "the condition that initiates the drop state",
+      "StateIdle": "the indicator that the idle state is active"
     },
     "Logical Operators": ["==", "|=>"],
     "Logical Operators Explanation": {
-        "==": "checks equality (is equal to)",
-        "|=>": "implication operator asserting that if the condition holds then the result must hold in the next cycle"
+      "==": "equal",
+      "|=>": "if the condition on the left holds then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the condition that triggers transitioning to the drop state is active, then on the next cycle the machine will not be in the idle state"
-},
-"Assertion 31": {
+    "Assertion Explaination": "if the condition that initiates the drop state is equal to 1 then the indicator that the idle state is active is equal to 0 SINCE NEXT CLOCK CYCLE"
+  },
+  "Assertion 31": {
     "clock signal condition": "@(posedge MRxClk)",
-    "disable condition": "",
+    "disable condition": "none",
     "logical expression": "(StartSFD == 1) |=> (StateIdle == 0)",
     "Signals": ["StartSFD", "StateIdle"],
     "Signal Explanations": {
-        "StartSFD": "signal indicating when the state machine should transition to the SFD state",
-        "StateIdle": "signal indicating that the state machine is in the idle state"
+      "StartSFD": "the condition that initiates the Start Frame Delimiter state",
+      "StateIdle": "the indicator that the idle state is active"
     },
     "Logical Operators": ["==", "|=>"],
     "Logical Operators Explanation": {
-        "==": "checks equality (is equal to)",
-        "|=>": "implication operator asserting that if the condition holds then the result must hold in the next cycle"
+      "==": "equal",
+      "|=>": "if the condition on the left holds then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the condition that triggers transitioning to the SFD state is active, then on the next cycle the machine will not be in the idle state"
-},
-"Assertion 32": {
+    "Assertion Explaination": "if the condition that initiates the Start Frame Delimiter state is equal to 1 then the indicator that the idle state is active is equal to 0 SINCE NEXT CLOCK CYCLE"
+  },
+  "Assertion 32": {
     "clock signal condition": "@(posedge MRxClk)",
-    "disable condition": "",
+    "disable condition": "none",
     "logical expression": "(StartPreamble == 1) |=> (StateIdle == 0)",
     "Signals": ["StartPreamble", "StateIdle"],
     "Signal Explanations": {
-        "StartPreamble": "signal indicating when the state machine should transition to the preamble state",
-        "StateIdle": "signal indicating that the state machine is in the idle state"
+      "StartPreamble": "the condition that initiates the preamble sequence",
+      "StateIdle": "the indicator that the idle state is active"
     },
     "Logical Operators": ["==", "|=>"],
     "Logical Operators Explanation": {
-        "==": "checks equality (is equal to)",
-        "|=>": "implication operator asserting that if the condition holds then the result must hold in the next cycle"
+      "==": "equal",
+      "|=>": "if the condition on the left holds then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the condition that triggers transitioning to the preamble state is active, then on the next cycle the machine will not be in the idle state"
-},
-"Assertion 33": {
+    "Assertion Explaination": "if the condition that initiates the preamble sequence is equal to 1 then the indicator that the idle state is active is equal to 0 SINCE NEXT CLOCK CYCLE"
+  },
+  "Assertion 33": {
     "clock signal condition": "@(posedge MRxClk)",
-    "disable condition": "",
+    "disable condition": "none",
     "logical expression": "(MRxDV == 1) |=> (StateIdle == 0)",
     "Signals": ["MRxDV", "StateIdle"],
     "Signal Explanations": {
-        "MRxDV": "signal indicating that the received data is valid",
-        "StateIdle": "signal indicating that the state machine is in the idle state"
+      "MRxDV": "the input signal that denotes receive data valid",
+      "StateIdle": "the indicator that the idle state is active"
     },
     "Logical Operators": ["==", "|=>"],
     "Logical Operators Explanation": {
-        "==": "checks equality (is equal to)",
-        "|=>": "implication operator asserting that if the condition holds then the result must hold in the next cycle"
+      "==": "equal",
+      "|=>": "if the condition on the left holds then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the valid received data condition is active, then on the next cycle the machine will not be in the idle state"
-},
-"Assertion 34": {
+    "Assertion Explaination": "if the input signal that denotes receive data valid is equal to 1 then the indicator that the idle state is active is equal to 0 SINCE NEXT CLOCK CYCLE"
+  },
+  "Assertion 34": {
     "clock signal condition": "@(posedge MRxClk)",
-    "disable condition": "",
+    "disable condition": "none",
     "logical expression": "(MRxDV == 0) |=> (StateIdle == 1)",
     "Signals": ["MRxDV", "StateIdle"],
     "Signal Explanations": {
-        "MRxDV": "signal indicating that the received data is valid",
-        "StateIdle": "signal indicating that the state machine is in the idle state"
+      "MRxDV": "the input signal that denotes receive data valid",
+      "StateIdle": "the indicator that the idle state is active"
     },
     "Logical Operators": ["==", "|=>"],
     "Logical Operators Explanation": {
-        "==": "checks equality (is equal to)",
-        "|=>": "implication operator asserting that if the condition holds then the result must hold in the next cycle"
+      "==": "equal",
+      "|=>": "if the condition on the left holds then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the valid received data condition is inactive, then on the next cycle the machine will be in the idle state"
-}
+    "Assertion Explaination": "if the input signal that denotes receive data valid is equal to 0 then the indicator that the idle state is active is equal to 1 SINCE NEXT CLOCK CYCLE"
+  }
 }

@@ -1,28 +1,20 @@
 {
   "Assertion 1": {
     "clock signal condition": "@(posedge clk)",
-    "disable condition": "",
+    "disable condition": "none",
     "logical expression": "s_eventually rst == 1 || scl_not_ena == 1 || stretch == 1",
-    "Signals": [
-      "rst",
-      "scl_not_ena",
-      "stretch"
-    ],
+    "Signals": ["rst", "scl_not_ena", "stretch"],
     "Signal Explanations": {
-      "rst": "reset input signal",
-      "scl_not_ena": "input signal that controls whether the serial clock line is enabled",
-      "stretch": "flag register indicating if clock stretching is active"
+      "rst": "reset signal",
+      "scl_not_ena": "input signal indicating that the SCL line is not enabled",
+      "stretch": "signal indicating that clock stretching is active"
     },
-    "Logical Operators": [
-      "s_eventually",
-      "==",
-      "||"
-    ],
+    "Logical Operators": ["s_eventually", "||", "=="],
     "Logical Operators Explanation": {
-      "s_eventually": "asserts that eventually, in the future, the specified condition holds true",
-      "==": "checks if the value is equal to",
-      "||": "logical OR operator combining conditions"
+      "s_eventually": "a temporal operator indicating that the contained condition is required to occur at some future clock cycle (eventually)",
+      "||": "logical OR, meaning at least one operand must be true",
+      "==": "equality comparison operator meaning that the value on the left-hand side equals the value on the right-hand side"
     },
-    "Assertion Explaination": "Eventually, it is required that either the reset input becomes active (equal to 1) or the control for enabling the serial clock line becomes active (equal to 1) or the flag indicating active clock stretching is set (equal to 1)"
+    "Assertion Explaination": "eventually, either the reset condition becomes true, or the condition indicating that the SCL line is not enabled becomes true, or the condition that clock stretching is active becomes true"
   }
 }

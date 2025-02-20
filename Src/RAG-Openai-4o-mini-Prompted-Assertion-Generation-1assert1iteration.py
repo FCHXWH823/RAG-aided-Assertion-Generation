@@ -93,7 +93,7 @@ system_prompt = (
 prompt = ChatPromptTemplate.from_messages(
     [
         ("system", system_prompt),
-        ("human","{input}"),
+        ("human","Given Verilog code snippet as below: \n{code}\n Please generate such an assertion for it following the description:{input}\nThe output format should STRICTLY follow :\n{assertion_format}\nWITHOUT other things."),
     ]
 )
 
@@ -148,13 +148,16 @@ with open(f'Results/RAG-Openai-4o-mini-Prompted-Assertion-Generation-Results-{PD
 
                 prompt = f"Given Verilog code snippet as below: \n{code}\n Please generate such an assertion for it following the description:{explanation}\nThe output format should STRICTLY follow :\n{assertion_format}\nWITHOUT other things."
 
-                llm_response = rag_chain.invoke({"input":prompt})["answer"]
+                llm_result = rag_chain.invoke({"code":code,"input":explanation,"assertion_format":assertion_format})
+                llm_response = llm_result["answer"]
+                
 
                 # assertion checker
                 nItChecker = 3
                 for it in range(nItChecker):
                     checker_prompt = assertion_checker_prompt(llm_response,assertion_format)
-                    llm_response = rag_chain.invoke({"input":prompt})["answer"]
+                    # llm_response = rag_chain.invoke({"input":prompt})["answer"]
+                    llm_response = rag_chain.invoke({"code":code,"input":explanation,"assertion_format":assertion_format})["answer"]
 
                 i += 1
                 match = re.search(r'assert property\s*\(\s*(.*?)\s*\)\s*;', llm_response, re.DOTALL)

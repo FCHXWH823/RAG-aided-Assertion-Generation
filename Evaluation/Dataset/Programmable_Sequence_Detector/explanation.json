@@ -1,18 +1,24 @@
 {
-"Assertion 1": {
-"clock signal condition": "@(posedge clk)",
-"disable condition": "default disable iff (~resetn)",
-"logical expression": "seen == (seq_q == init)",
-"Signals": ["seen", "seq_q", "init"],
-"Signal Explanations": {
-  "seen": "output indicator signaling if the captured sequence matches the pattern",
-  "seq_q": "register storing the sequential bits captured from the input",
-  "init": "input sequence pattern used for detection"
-},
-"Logical Operators": ["=="],
-"Logical Operators Explanation": {
-  "==": "equality comparison indicating that two boolean values are identical"
-},
-"Assertion Explaination": "This assertion verifies that the boolean indicator, which reflects the sequence detection result, exactly equals the boolean value obtained by comparing the stored sequence with the provided detection pattern, ensuring that the flag correctly mirrors the outcome of the comparison."
-}
+  "Assertion 1": {
+    "clock signal condition": "@(posedge clk)",
+    "disable condition": "default disable iff (~resetn)",
+    "logical expression": "seen == (seq_q == init)",
+    "Signals": [
+      "seen",
+      "seq_q",
+      "init"
+    ],
+    "Signal Explanations": {
+      "seen": "output signal of the module indicating whether the current sequence matches the desired pattern",
+      "seq_q": "register holding the current sequence state of the detector",
+      "init": "input pattern representing the target sequence to detect"
+    },
+    "Logical Operators": [
+      "=="
+    ],
+    "Logical Operators Explanation": {
+      "==": "checks whether its left-hand side operand is equal to its right-hand side operand"
+    },
+    "Assertion Explaination": "the output indicator must equal the result of comparing the detector's sequence state with the target pattern using the equality operator SINCE THE CURRENT CLOCK CYCLE"
+  }
 }

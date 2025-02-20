@@ -60,11 +60,21 @@ end
 
 assert property(@(posedge clk) disable iff (~resetn) (max_q == 0) | (max_q > max2_q));
 
-assert property (  ((max_q == 0 && max2_q == 0) || (max2_q < max_q)));
-assert property (  ((max_q == 0 & max2_q == 0) | ( max2_q < max_q)) iff ((max_q == 0 && max2_q == 0) || (max2_q < max_q)));
-// assert property (at posedge clk  ((max_q == 0) || (max_q > max2_q)));
-// assert property (at posedge clk  ((max_q == 0) | ( max_q > max2_q )) iff ((max_q == 0) || (max_q > max2_q)));
-assert property (@(posedge clk) disable iff (~resetn) ((max_q == 0) || (max_q > max2_q)));
-assert property (@(posedge clk) disable iff (~resetn) ((max_q == 0) | (max_q > max2_q)) iff ((max_q == 0) || (max_q > max2_q)));
+assert property (None None ((max_q == 0) && (max2_q == 0) || (max2_q < max_q)));
+assert property (None None ((max_q == 0 & max2_q == 0) | (max2_q < max_q)) iff ((max_q == 0) && (max2_q == 0) || (max2_q < max_q)));
+assert property (@(posedge clk) None ((max_q == 0) || (max_q > max2_q)));
+assert property (@(posedge clk) None ((max_q == 0) | (max_q > max2_q)) iff ((max_q == 0) || (max_q > max2_q)));
+assert property (@(posedge clk) within the active reset branch None (max_q == 0));
+assert property (@(posedge clk) within the active reset branch None (max_q == 0) iff (max_q == 0));
+assert property (@(posedge clk) within the active reset branch None (din != dout));
+assert property (@(posedge clk) within the active reset branch None (din != dout) iff (din != dout));
+assert property (@(posedge clk) within the active reset branch None (max_q > max2_q));
+assert property (@(posedge clk) within the active reset branch None (max_q > max2_q) iff (max_q > max2_q));
+assert property (@(posedge clk) within the active reset branch None (new_max));
+assert property (@(posedge clk) within the active reset branch None (new_max) iff (new_max));
+assert property (@(posedge clk) None (resetn == 1'b1 -> (max_q > max2_q)));
+assert property (@(posedge clk) None (resetn) iff (resetn == 1'b1 -> (max_q > max2_q)));
+assert property (@(posedge clk) disable iff (~resetn) ((~resetn) || (max_q == 0) || (max_q > max2_q)));
+assert property (@(posedge clk) disable iff (~resetn) ((max_q == 0) | (max_q > max2_q)) iff ((~resetn) || (max_q == 0) || (max_q > max2_q)));
 
 endmodule

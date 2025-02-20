@@ -1,208 +1,321 @@
 {
-"Assertion 1": {
-  "clock signal condition": "@(posedge clk)",
-  "disable condition": "",
-  "logical expression": "bus_grant[0] + bus_grant[1] + bus_grant[2] < 2",
-  "Signals": ["bus_grant[0]", "bus_grant[1]", "bus_grant[2]"],
-  "Signal Explanations": {
-    "bus_grant[0]": "the grant indicator bit for master 0",
-    "bus_grant[1]": "the grant indicator bit for master 1",
-    "bus_grant[2]": "the grant indicator bit for master 2"
+  "Assertion 1": {
+    "clock signal condition": "@(posedge clk)",
+    "disable condition": "",
+    "logical expression": "bus_grant[0] + bus_grant[1] + bus_grant[2] < 2",
+    "Signals": [
+      "bus_grant[0]",
+      "bus_grant[1]",
+      "bus_grant[2]"
+    ],
+    "Signal Explanations": {
+      "bus_grant[0]": "the first output grant signal from the arbiter",
+      "bus_grant[1]": "the second output grant signal from the arbiter",
+      "bus_grant[2]": "the third output grant signal from the arbiter"
+    },
+    "Logical Operators": [
+      "+",
+      "<"
+    ],
+    "Logical Operators Explanation": {
+      "+": "the arithmetic addition operator that sums the values of signals",
+      "<": "the less-than comparison operator ensuring the sum is below a given constant"
+    },
+    "Assertion Explaination": "if the arithmetic addition of the first output grant signal, the second output grant signal, and the third output grant signal is computed then the result must be less than the constant two"
   },
-  "Logical Operators": ["+", "<"],
-  "Logical Operators Explanation": {
-    "+": "arithmetic addition of binary values",
-    "<": "checks if the left value is less than the right value"
+  "Assertion 2": {
+    "clock signal condition": "@(posedge clk)",
+    "disable condition": "",
+    "logical expression": "bus_grant[0] |-> (!bus_grant[1] && !bus_grant[2])",
+    "Signals": [
+      "bus_grant[0]",
+      "bus_grant[1]",
+      "bus_grant[2]"
+    ],
+    "Signal Explanations": {
+      "bus_grant[0]": "the first output grant signal from the arbiter",
+      "bus_grant[1]": "the second output grant signal from the arbiter",
+      "bus_grant[2]": "the third output grant signal from the arbiter"
+    },
+    "Logical Operators": [
+      "|->",
+      "!",
+      "&&"
+    ],
+    "Logical Operators Explanation": {
+      "|->": "an overlapping implication operator meaning that if the condition on the left is true then the condition on the right must hold in the current clock cycle",
+      "!": "the logical NOT operator indicating a signal is reset (0)",
+      "&&": "the logical AND operator ensuring both conditions are true"
+    },
+    "Assertion Explaination": "if the first output grant signal is set then it implies using the overlapping implication operator that both the negation of the second output grant signal and the negation of the third output grant signal are true in the current clock cycle"
   },
-  "Assertion Explaination": "the sum of the three individual grant indicator bits is compared against the value two to ensure that at most one grant indicator is active at any given time"
-},
-"Assertion 2": {
-  "clock signal condition": "@(posedge clk)",
-  "disable condition": "",
-  "logical expression": "bus_grant[0] |-> (!bus_grant[1] && !bus_grant[2])",
-  "Signals": ["bus_grant[0]", "bus_grant[1]", "bus_grant[2]"],
-  "Signal Explanations": {
-    "bus_grant[0]": "the grant indicator bit for master 0",
-    "bus_grant[1]": "the grant indicator bit for master 1",
-    "bus_grant[2]": "the grant indicator bit for master 2"
+  "Assertion 3": {
+    "clock signal condition": "@(posedge clk)",
+    "disable condition": "",
+    "logical expression": "bus_grant[1] |-> (!bus_grant[0] && !bus_grant[2])",
+    "Signals": [
+      "bus_grant[1]",
+      "bus_grant[0]",
+      "bus_grant[2]"
+    ],
+    "Signal Explanations": {
+      "bus_grant[1]": "the second output grant signal from the arbiter",
+      "bus_grant[0]": "the first output grant signal from the arbiter",
+      "bus_grant[2]": "the third output grant signal from the arbiter"
+    },
+    "Logical Operators": [
+      "|->",
+      "!",
+      "&&"
+    ],
+    "Logical Operators Explanation": {
+      "|->": "an overlapping implication operator meaning that if the condition on the left is true then the condition on the right must hold in the current clock cycle",
+      "!": "the logical NOT operator indicating a signal is reset (0)",
+      "&&": "the logical AND operator ensuring both conditions are true"
+    },
+    "Assertion Explaination": "if the second output grant signal is set then it implies using the overlapping implication operator that both the negation of the first output grant signal and the negation of the third output grant signal are true in the current clock cycle"
   },
-  "Logical Operators": ["|->", "!", "&&"],
-  "Logical Operators Explanation": {
-    "|->": "non-overlapping implication that states if the left condition is true then the right condition must hold in the relevant cycle",
-    "!": "logical NOT",
-    "&&": "logical AND, which requires both conditions be true"
+  "Assertion 4": {
+    "clock signal condition": "@(posedge clk)",
+    "disable condition": "",
+    "logical expression": "bus_grant[2] |-> (!bus_grant[1] && !bus_grant[0])",
+    "Signals": [
+      "bus_grant[2]",
+      "bus_grant[1]",
+      "bus_grant[0]"
+    ],
+    "Signal Explanations": {
+      "bus_grant[2]": "the third output grant signal from the arbiter",
+      "bus_grant[1]": "the second output grant signal from the arbiter",
+      "bus_grant[0]": "the first output grant signal from the arbiter"
+    },
+    "Logical Operators": [
+      "|->",
+      "!",
+      "&&"
+    ],
+    "Logical Operators Explanation": {
+      "|->": "an overlapping implication operator meaning that if the condition on the left is true then the condition on the right must hold in the current clock cycle",
+      "!": "the logical NOT operator indicating a signal is reset (0)",
+      "&&": "the logical AND operator ensuring both conditions are true"
+    },
+    "Assertion Explaination": "if the third output grant signal is set then it implies using the overlapping implication operator that both the negation of the second output grant signal and the negation of the first output grant signal are true in the current clock cycle"
   },
-  "Assertion Explaination": "when the grant indicator for master 0 is active, it implies that both the grant indicators for master 1 and master 2 are inactive"
-},
-"Assertion 3": {
-  "clock signal condition": "@(posedge clk)",
-  "disable condition": "",
-  "logical expression": "bus_grant[1] |-> (!bus_grant[0] && !bus_grant[2])",
-  "Signals": ["bus_grant[1]", "bus_grant[0]", "bus_grant[2]"],
-  "Signal Explanations": {
-    "bus_grant[1]": "the grant indicator bit for master 1",
-    "bus_grant[0]": "the grant indicator bit for master 0",
-    "bus_grant[2]": "the grant indicator bit for master 2"
+  "Assertion 5": {
+    "clock signal condition": "@(posedge clk)",
+    "disable condition": "",
+    "logical expression": "bus_grant != NO_GRANT && bus_ack != 1 |=> $stable(bus_grant)",
+    "Signals": [
+      "bus_grant",
+      "NO_GRANT",
+      "bus_ack",
+      "$stable(bus_grant)"
+    ],
+    "Signal Explanations": {
+      "bus_grant": "the output grant signal vector from the arbiter",
+      "NO_GRANT": "the constant representing no grant",
+      "bus_ack": "the bus acknowledge input signal",
+      "$stable(bus_grant)": "a temporal check ensuring that the output grant signal remains unchanged"
+    },
+    "Logical Operators": [
+      "!=",
+      "&&",
+      "|=>",
+      "$stable"
+    ],
+    "Logical Operators Explanation": {
+      "!=": "the not equal operator checking inequality",
+      "&&": "the logical AND operator combining conditions",
+      "|=>": "a non-overlapping implication operator meaning that if the conditions on the left are true then the condition on the right must hold starting the next clock cycle",
+      "$stable": "a temporal operator that asserts the value remains unchanged relative to the previous clock cycle"
+    },
+    "Assertion Explaination": "if the output grant signal is not equal to the no grant constant and the bus acknowledge signal is not equal to one then it implies using the non-overlapping implication operator that the output grant signal remains unchanged starting the next clock cycle"
   },
-  "Logical Operators": ["|->", "!", "&&"],
-  "Logical Operators Explanation": {
-    "|->": "non-overlapping implication indicating that if the left condition holds then the right condition must follow",
-    "!": "logical NOT",
-    "&&": "logical AND which confirms that all combined conditions must be true"
+  "Assertion 6": {
+    "clock signal condition": "@(posedge clk)",
+    "disable condition": "",
+    "logical expression": "(bus_req[0] && bus_grant == NO_GRANT) || (bus_ack && bus_req[0]) |=> (bus_grant[0] && !bus_grant[1] && !bus_grant[2])",
+    "Signals": [
+      "bus_req[0]",
+      "bus_grant",
+      "NO_GRANT",
+      "bus_ack",
+      "bus_grant[0]",
+      "bus_grant[1]",
+      "bus_grant[2]"
+    ],
+    "Signal Explanations": {
+      "bus_req[0]": "the first input request signal from a master",
+      "bus_grant": "the output grant signal vector from the arbiter",
+      "NO_GRANT": "the constant representing no grant",
+      "bus_ack": "the bus acknowledge input signal",
+      "bus_grant[0]": "the first output grant signal from the arbiter",
+      "bus_grant[1]": "the second output grant signal from the arbiter",
+      "bus_grant[2]": "the third output grant signal from the arbiter"
+    },
+    "Logical Operators": [
+      "&&",
+      "==",
+      "||",
+      "|=>",
+      "!",
+      "&&"
+    ],
+    "Logical Operators Explanation": {
+      "&&": "the logical AND operator ensuring both conditions are true",
+      "==": "the equality operator checking equivalence",
+      "||": "the logical OR operator meaning at least one condition must be true",
+      "|=>": "a non-overlapping implication operator meaning that if the left condition is true then the right condition must hold starting the next clock cycle",
+      "!": "the logical NOT operator indicating a signal is reset (0)"
+    },
+    "Assertion Explaination": "if either the condition that the first input request signal is set and the output grant signal equals the no grant constant or the condition that the bus acknowledge signal is set and the first input request signal is set holds then it implies using the non-overlapping implication operator that the first output grant signal is set and both the negation of the second and the negation of the third output grant signals are true starting the next clock cycle"
   },
-  "Assertion Explaination": "when the grant indicator for master 1 is active, it implies that both the grant indicator for master 0 and master 2 are inactive"
-},
-"Assertion 4": {
-  "clock signal condition": "@(posedge clk)",
-  "disable condition": "",
-  "logical expression": "bus_grant[2] |-> (!bus_grant[1] && !bus_grant[0])",
-  "Signals": ["bus_grant[2]", "bus_grant[1]", "bus_grant[0]"],
-  "Signal Explanations": {
-    "bus_grant[2]": "the grant indicator bit for master 2",
-    "bus_grant[1]": "the grant indicator bit for master 1",
-    "bus_grant[0]": "the grant indicator bit for master 0"
+  "Assertion 7": {
+    "clock signal condition": "@(posedge clk)",
+    "disable condition": "",
+    "logical expression": "(bus_req[1] && !bus_req[0] && bus_grant == NO_GRANT) || (bus_ack && bus_req[1] && !bus_req[0]) |=> (!bus_grant[0] && bus_grant[1] && !bus_grant[2])",
+    "Signals": [
+      "bus_req[1]",
+      "bus_req[0]",
+      "bus_grant",
+      "NO_GRANT",
+      "bus_ack",
+      "bus_grant[0]",
+      "bus_grant[1]",
+      "bus_grant[2]"
+    ],
+    "Signal Explanations": {
+      "bus_req[1]": "the second input request signal from a master",
+      "bus_req[0]": "the first input request signal from a master",
+      "bus_grant": "the output grant signal vector from the arbiter",
+      "NO_GRANT": "the constant representing no grant",
+      "bus_ack": "the bus acknowledge input signal",
+      "bus_grant[0]": "the first output grant signal from the arbiter",
+      "bus_grant[1]": "the second output grant signal from the arbiter",
+      "bus_grant[2]": "the third output grant signal from the arbiter"
+    },
+    "Logical Operators": [
+      "&&",
+      "!",
+      "==",
+      "||",
+      "|=>",
+      "&&",
+      "!"
+    ],
+    "Logical Operators Explanation": {
+      "&&": "the logical AND operator ensuring all combined conditions are true",
+      "!": "the logical NOT operator indicating a signal is reset (0)",
+      "==": "the equality operator checking equivalence",
+      "||": "the logical OR operator meaning at least one condition must be true",
+      "|=>": "a non-overlapping implication operator meaning that if the left condition is true then the right condition must hold starting the next clock cycle"
+    },
+    "Assertion Explaination": "if either the condition that the second input request signal is set while the first input request signal is reset and the output grant signal equals the no grant constant or the condition that the bus acknowledge signal is set and the second input request signal is set while the first input request signal is reset holds then it implies using the non-overlapping implication operator that the second output grant signal is set and both the negation of the first output grant signal and the negation of the third output grant signal are true starting the next clock cycle"
   },
-  "Logical Operators": ["|->", "!", "&&"],
-  "Logical Operators Explanation": {
-    "|->": "non-overlapping implication meaning that if the left part is true then the right part must hold",
-    "!": "logical NOT",
-    "&&": "logical AND that requires both conditions to be satisfied"
+  "Assertion 8": {
+    "clock signal condition": "@(posedge clk)",
+    "disable condition": "",
+    "logical expression": "(bus_req[2] && !bus_req[1] && !bus_req[0] && bus_grant == NO_GRANT) || (bus_ack && bus_req[2] && !bus_req[0] && !bus_req[1]) |=> (!bus_grant[0] && !bus_grant[1] && bus_grant[2])",
+    "Signals": [
+      "bus_req[2]",
+      "bus_req[1]",
+      "bus_req[0]",
+      "bus_grant",
+      "NO_GRANT",
+      "bus_ack",
+      "bus_grant[0]",
+      "bus_grant[1]",
+      "bus_grant[2]"
+    ],
+    "Signal Explanations": {
+      "bus_req[2]": "the third input request signal from a master",
+      "bus_req[1]": "the second input request signal from a master",
+      "bus_req[0]": "the first input request signal from a master",
+      "bus_grant": "the output grant signal vector from the arbiter",
+      "NO_GRANT": "the constant representing no grant",
+      "bus_ack": "the bus acknowledge input signal",
+      "bus_grant[0]": "the first output grant signal from the arbiter",
+      "bus_grant[1]": "the second output grant signal from the arbiter",
+      "bus_grant[2]": "the third output grant signal from the arbiter"
+    },
+    "Logical Operators": [
+      "&&",
+      "!",
+      "==",
+      "||",
+      "|=>",
+      "&&",
+      "!"
+    ],
+    "Logical Operators Explanation": {
+      "&&": "the logical AND operator ensuring all combined conditions are true",
+      "!": "the logical NOT operator indicating a signal is reset (0)",
+      "==": "the equality operator checking equivalence",
+      "||": "the logical OR operator meaning at least one condition must be true",
+      "|=>": "a non-overlapping implication operator meaning that if the left condition is true then the right condition must hold starting the next clock cycle"
+    },
+    "Assertion Explaination": "if either the condition that the third input request signal is set while both the second and the first input request signals are reset and the output grant signal equals the no grant constant or the condition that the bus acknowledge signal is set and the third input request signal is set while both the first and the second input request signals are reset holds then it implies using the non-overlapping implication operator that the third output grant signal is set and both the negation of the first output grant signal and the negation of the second output grant signal are true starting the next clock cycle"
   },
-  "Assertion Explaination": "when the grant indicator for master 2 is active, it implies that both the grant indicators for master 1 and master 0 are inactive"
-},
-"Assertion 5": {
-  "clock signal condition": "@(posedge clk)",
-  "disable condition": "",
-  "logical expression": "bus_grant != NO_GRANT && bus_ack != 1 |=> $stable(bus_grant)",
-  "Signals": ["bus_grant", "NO_GRANT", "bus_ack"],
-  "Signal Explanations": {
-    "bus_grant": "the overall grant vector indicating which master is granted access",
-    "NO_GRANT": "a constant vector representing the state of no active grant",
-    "bus_ack": "the acknowledgement signal indicating that a currently granted operation has been completed"
+  "Assertion 9": {
+    "clock signal condition": "@(posedge clk)",
+    "disable condition": "",
+    "logical expression": "$rose(bus_grant[1]) |-> ($past(bus_req[1]) && !$past(bus_req[0]))",
+    "Signals": [
+      "$rose(bus_grant[1])",
+      "$past(bus_req[1])",
+      "$past(bus_req[0])"
+    ],
+    "Signal Explanations": {
+      "$rose(bus_grant[1])": "a check indicating a rising edge on the second output grant signal",
+      "$past(bus_req[1])": "the previous clock cycle value of the second input request signal",
+      "$past(bus_req[0])": "the previous clock cycle value of the first input request signal"
+    },
+    "Logical Operators": [
+      "$rose",
+      "|->",
+      "$past",
+      "!",
+      "&&"
+    ],
+    "Logical Operators Explanation": {
+      "$rose": "a temporal operator that detects a transition of a signal from 0 to 1 in the current clock cycle",
+      "|->": "an overlapping implication operator meaning that if the left condition is true then the right condition must hold in the current clock cycle",
+      "$past": "a temporal operator that refers to the value of a signal in the previous clock cycle",
+      "!": "the logical NOT operator indicating a signal is reset (0)",
+      "&&": "the logical AND operator ensuring both conditions are true"
+    },
+    "Assertion Explaination": "if a rising edge is detected on the second output grant signal then it implies using the overlapping implication operator that in the previous clock cycle the second input request signal was set and the first input request signal was reset"
   },
-  "Logical Operators": ["!=", "&&", "|=>", "$stable"],
-  "Logical Operators Explanation": {
-    "!=": "inequality, checking that two signals are not equal",
-    "&&": "logical AND ensuring all combined conditions are true",
-    "|=>": "non-overlapping implication indicating that if the left side holds then the right side must follow in the next evaluation",
-    "$stable": "a system function that verifies that the signal value has not changed from the previous clock cycle"
-  },
-  "Assertion Explaination": "when the overall grant vector signals an active grant (i.e. it does not equal the no-grant constant) and the acknowledgement signal is not asserted, it implies that the grant vector will remain unchanged in the following cycle"
-},
-"Assertion 6": {
-  "clock signal condition": "@(posedge clk)",
-  "disable condition": "",
-  "logical expression": "(bus_req[0] && bus_grant == NO_GRANT) || (bus_ack && bus_req[0]) |=> (bus_grant[0] && !bus_grant[1] && !bus_grant[2])",
-  "Signals": ["bus_req[0]", "bus_grant", "NO_GRANT", "bus_ack", "bus_grant[0]", "bus_grant[1]", "bus_grant[2]"],
-  "Signal Explanations": {
-    "bus_req[0]": "the request signal for master 0",
-    "bus_grant": "the overall grant vector indicating current grant status",
-    "NO_GRANT": "a constant vector denoting that no grant is active",
-    "bus_ack": "the acknowledgement signal indicating completion of the current grant operation",
-    "bus_grant[0]": "the grant indicator bit for master 0",
-    "bus_grant[1]": "the grant indicator bit for master 1",
-    "bus_grant[2]": "the grant indicator bit for master 2"
-  },
-  "Logical Operators": ["&&", "==", "||", "|=>", "&&", "!"],
-  "Logical Operators Explanation": {
-    "&&": "logical AND which requires both conditions to be true",
-    "==": "equality check ensuring two signals are identical",
-    "||": "logical OR meaning at least one of the conditions must be true",
-    "|=>": "non-overlapping implication indicating that if the left condition is true then the right condition must hold in the next cycle",
-    "!": "logical NOT which inverts the condition"
-  },
-  "Assertion Explaination": "if master 0 is requesting access while no grant is currently active, or if an acknowledgement is received while master 0 is requesting, then it implies that only master 0 will be granted access and both master 1 and master 2 will have inactive grant indicators"
-},
-"Assertion 7": {
-  "clock signal condition": "@(posedge clk)",
-  "disable condition": "",
-  "logical expression": "(bus_req[1] && !bus_req[0] && bus_grant == NO_GRANT) || (bus_ack && bus_req[1] && !bus_req[0]) |=> (!bus_grant[0] && bus_grant[1] && !bus_grant[2])",
-  "Signals": ["bus_req[1]", "bus_req[0]", "bus_grant", "NO_GRANT", "bus_ack", "bus_grant[0]", "bus_grant[1]", "bus_grant[2]"],
-  "Signal Explanations": {
-    "bus_req[1]": "the request signal for master 1",
-    "bus_req[0]": "the request signal for master 0",
-    "bus_grant": "the overall grant vector indicating current grant status",
-    "NO_GRANT": "a constant vector representing no active grant",
-    "bus_ack": "the acknowledgement signal that denotes the completion of a granted operation",
-    "bus_grant[0]": "the grant indicator bit for master 0",
-    "bus_grant[1]": "the grant indicator bit for master 1",
-    "bus_grant[2]": "the grant indicator bit for master 2"
-  },
-  "Logical Operators": ["&&", "!", "==", "||", "|=>", "&&", "!"],
-  "Logical Operators Explanation": {
-    "&&": "logical AND, meaning all conditions must be true",
-    "!": "logical NOT, which inverts a condition",
-    "==": "equality check to compare signal values",
-    "||": "logical OR, meaning at least one condition must be true",
-    "|=>": "non-overlapping implication specifying that if the left side holds then the right side must hold in the subsequent cycle"
-  },
-  "Assertion Explaination": "if master 1 is requesting access while master 0 is not requesting and no grant is currently active, or if an acknowledgement is received together with master 1’s request while master 0 is not requesting, then it implies that only master 1 will be granted access and both master 0 and master 2 will have inactive grant indicators"
-},
-"Assertion 8": {
-  "clock signal condition": "@(posedge clk)",
-  "disable condition": "",
-  "logical expression": "(bus_req[2] && !bus_req[1] && !bus_req[0] && bus_grant == NO_GRANT) || (bus_ack && bus_req[2] && !bus_req[0] && !bus_req[1]) |=> (!bus_grant[0] && !bus_grant[1] && bus_grant[2])",
-  "Signals": ["bus_req[2]", "bus_req[1]", "bus_req[0]", "bus_grant", "NO_GRANT", "bus_ack", "bus_grant[0]", "bus_grant[1]", "bus_grant[2]"],
-  "Signal Explanations": {
-    "bus_req[2]": "the request signal for master 2",
-    "bus_req[1]": "the request signal for master 1",
-    "bus_req[0]": "the request signal for master 0",
-    "bus_grant": "the overall grant vector indicating current grant status",
-    "NO_GRANT": "a constant vector representing that no grant is active",
-    "bus_ack": "the acknowledgement signal indicating that a granted operation is done",
-    "bus_grant[0]": "the grant indicator bit for master 0",
-    "bus_grant[1]": "the grant indicator bit for master 1",
-    "bus_grant[2]": "the grant indicator bit for master 2"
-  },
-  "Logical Operators": ["&&", "!", "==", "||", "|=>", "&&", "!"],
-  "Logical Operators Explanation": {
-    "&&": "logical AND which requires all listed conditions to be true",
-    "!": "logical NOT that inverts a condition",
-    "==": "equality check to verify exact match",
-    "||": "logical OR meaning at least one of the conditions must be true",
-    "|=>": "non-overlapping implication indicating that if the left-hand side is true then the right-hand side must subsequently hold"
-  },
-  "Assertion Explaination": "if master 2 is requesting access while neither master 0 nor master 1 are requesting and no grant is active, or if an acknowledgement is received together with master 2’s request while master 0 and master 1 are not requesting, then it implies that only master 2 will be granted access and both master 0 and master 1 will have inactive grant indicators"
-},
-"Assertion 9": {
-  "clock signal condition": "@(posedge clk)",
-  "disable condition": "",
-  "logical expression": "$rose(bus_grant[1]) |-> ($past(bus_req[1]) && !$past(bus_req[0]))",
-  "Signals": ["bus_grant[1]", "bus_req[1]", "bus_req[0]"],
-  "Signal Explanations": {
-    "bus_grant[1]": "the grant indicator bit for master 1",
-    "bus_req[1]": "the request signal for master 1",
-    "bus_req[0]": "the request signal for master 0"
-  },
-  "Logical Operators": ["$rose", "|->", "$past", "&&", "!"],
-  "Logical Operators Explanation": {
-    "$rose": "detects a rising edge transition of a signal",
-    "|->": "non-overlapping implication meaning that if the condition on the left is met then the condition on the right must hold in the subsequent evaluation",
-    "$past": "refers to the value of a signal in the previous clock cycle",
-    "&&": "logical AND requiring all conditions to be true",
-    "!": "logical NOT that negates the condition"
-  },
-  "Assertion Explaination": "if a rising edge is detected on the grant indicator for master 1, it implies that in the previous cycle the request for master 1 was active and the request for master 0 was inactive"
-},
-"Assertion 10": {
-  "clock signal condition": "@(posedge clk)",
-  "disable condition": "",
-  "logical expression": "$rose(bus_grant[2]) |-> ($past(bus_req[2]) && !$past(bus_req[1]) && !$past(bus_req[0]))",
-  "Signals": ["bus_grant[2]", "bus_req[2]", "bus_req[1]", "bus_req[0]"],
-  "Signal Explanations": {
-    "bus_grant[2]": "the grant indicator bit for master 2",
-    "bus_req[2]": "the request signal for master 2",
-    "bus_req[1]": "the request signal for master 1",
-    "bus_req[0]": "the request signal for master 0"
-  },
-  "Logical Operators": ["$rose", "|->", "$past", "&&", "!"],
-  "Logical Operators Explanation": {
-    "$rose": "detects a rising edge transition of a signal",
-    "|->": "non-overlapping implication meaning that if the left condition holds then the right condition must follow in the next evaluation",
-    "$past": "retrieves the value of a signal from the previous clock cycle",
-    "&&": "logical AND ensuring all conditions are simultaneously true",
-    "!": "logical NOT which inverts a condition"
-  },
-  "Assertion Explaination": "if a rising edge is detected on the grant indicator for master 2, it implies that in the previous cycle the request for master 2 was active while the requests for master 1 and master 0 were inactive"
-}
+  "Assertion 10": {
+    "clock signal condition": "@(posedge clk)",
+    "disable condition": "",
+    "logical expression": "$rose(bus_grant[2]) |-> ($past(bus_req[2]) && !$past(bus_req[1]) && !$past(bus_req[0]))",
+    "Signals": [
+      "$rose(bus_grant[2])",
+      "$past(bus_req[2])",
+      "$past(bus_req[1])",
+      "$past(bus_req[0])"
+    ],
+    "Signal Explanations": {
+      "$rose(bus_grant[2])": "a check indicating a rising edge on the third output grant signal",
+      "$past(bus_req[2])": "the previous clock cycle value of the third input request signal",
+      "$past(bus_req[1])": "the previous clock cycle value of the second input request signal",
+      "$past(bus_req[0])": "the previous clock cycle value of the first input request signal"
+    },
+    "Logical Operators": [
+      "$rose",
+      "|->",
+      "$past",
+      "!",
+      "&&"
+    ],
+    "Logical Operators Explanation": {
+      "$rose": "a temporal operator that detects a transition of a signal from 0 to 1 in the current clock cycle",
+      "|->": "an overlapping implication operator meaning that if the left condition is true then the right condition must hold in the current clock cycle",
+      "$past": "a temporal operator that refers to the value of a signal in the previous clock cycle",
+      "!": "the logical NOT operator indicating a signal is reset (0)",
+      "&&": "the logical AND operator ensuring all conditions are true"
+    },
+    "Assertion Explaination": "if a rising edge is detected on the third output grant signal then it implies using the overlapping implication operator that in the previous clock cycle the third input request signal was set while both the second and the first input request signals were reset"
+  }
 }

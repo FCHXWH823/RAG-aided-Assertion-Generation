@@ -35,21 +35,21 @@ assert property(@(posedge clk) (req2 == 1 & state == 1) |-> (gnt2 == 1));
 assert property(@(posedge clk) (req2 == 0) |-> (gnt2 == 0));
 assert property(@(posedge clk) (req2 == 1 & req1 == 0) |-> (gnt2 == 1));
 
-assert property (@(posedge clk)  (state == 1 && req2 == 1 |-> gnt1 == 0));
-assert property (@(posedge clk)  ((state == 1 & req2 == 1) |-> (gnt1 == 0)) iff (state == 1 && req2 == 1 |-> gnt1 == 0));
-assert property (@(posedge clk)  (req1 == 1'b1 && state == 1'b0 |-> (gnt1 == 1'b1)));
-assert property (@(posedge clk)  ((req1 == 1 & state == 0) |-> (gnt1 == 1)) iff (req1 == 1'b1 && state == 1'b0 |-> (gnt1 == 1'b1)));
-assert property (@(posedge clk)  (req1 == 0 |-> gnt1 == 0));
-assert property (@(posedge clk)  ((req1 == 0) |-> (gnt1 == 0)) iff (req1 == 0 |-> gnt1 == 0));
-assert property (@(posedge clk)  (req1 & ~req2 |-> gnt1));
-assert property (@(posedge clk)  ((req1 == 1 & req2 == 0) |-> (gnt1 == 1)) iff (req1 & ~req2 |-> gnt1));
-assert property (@(posedge clk)  (req1 && (state == 0) |-> (!gnt2)));
-assert property (@(posedge clk)  ((req1 == 1 & state == 0) |-> (gnt2 == 0)) iff (req1 && (state == 0) |-> (!gnt2)));
-// assert property (@(posedge clk)  (req2 && (state |-> gnt2)));
-// assert property (@(posedge clk)  ((req2 == 1 & state == 1) |-> (gnt2 == 1)) iff (req2 && (state |-> gnt2)));
-assert property (@(posedge clk)  (req2 == 0 |-> gnt2 == 0));
-assert property (@(posedge clk)  ((req2 == 0) |-> (gnt2 == 0)) iff (req2 == 0 |-> gnt2 == 0));
-assert property (@(posedge clk)  (req2 & ~req1 |-> gnt2));
-assert property (@(posedge clk)  ((req2 == 1 & req1 == 0) |-> (gnt2 == 1)) iff (req2 & ~req1 |-> gnt2));
+assert property (@(posedge clk) default disable iff (rst) (state == 1 && req2 == 1 -> gnt1 == 0));
+assert property (@(posedge clk) default disable iff (rst) ((state == 1 & req2 == 1) |-> (gnt1 == 0)) iff (state == 1 && req2 == 1 -> gnt1 == 0));
+assert property (@(posedge clk) default disable iff (rst) (req1 == 1'b1 && state == 1'b0 |-> gnt1 == 1'b1));
+assert property (@(posedge clk) default disable iff (rst) ((req1 == 1 & state == 0) |-> (gnt1 == 1)) iff (req1 == 1'b1 && state == 1'b0 |-> gnt1 == 1'b1));
+assert property (@(posedge clk) default disable iff (rst) (req1 == 0 |-> gnt1 == 0));
+assert property (@(posedge clk) default disable iff (rst) ((req1 == 0) |-> (gnt1 == 0)) iff (req1 == 0 |-> gnt1 == 0));
+assert property (@(posedge clk) default disable iff (rst) (req1 == 1 && req2 == 0 |-> gnt1 == 1));
+assert property (@(posedge clk) default disable iff (rst) ((req1 == 1 & req2 == 0) |-> (gnt1 == 1)) iff (req1 == 1 && req2 == 0 |-> gnt1 == 1));
+assert property (@(posedge clk) default disable iff (rst) (req1 == 1 && state == 0 |-> gnt2 == 0));
+assert property (@(posedge clk) default disable iff (rst) ((req1 == 1 & state == 0) |-> (gnt2 == 0)) iff (req1 == 1 && state == 0 |-> gnt2 == 0));
+assert property (@(posedge clk) default disable iff (rst) (req2 == 1'b1 && state == 1'b1 -> gnt2 == 1'b1));
+assert property (@(posedge clk) default disable iff (rst) ((req2 == 1 & state == 1) |-> (gnt2 == 1)) iff (req2 == 1'b1 && state == 1'b1 -> gnt2 == 1'b1));
+assert property (@(posedge clk) default disable iff (rst) (req2 == 0 |-> gnt2 == 0));
+assert property (@(posedge clk) default disable iff (rst) ((req2 == 0) |-> (gnt2 == 0)) iff (req2 == 0 |-> gnt2 == 0));
+assert property (@(posedge clk) default disable iff (rst) (req2 == 1 && req1 == 0 |-> gnt2 == 1));
+assert property (@(posedge clk) default disable iff (rst) ((req2 == 1 & req1 == 0) |-> (gnt2 == 1)) iff (req2 == 1 && req1 == 0 |-> gnt2 == 1));
 
 endmodule

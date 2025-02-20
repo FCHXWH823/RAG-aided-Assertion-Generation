@@ -1,17 +1,22 @@
 {
-"Assertion 1": {
-"clock signal condition": "@(posedge clk)",
-"disable condition": "disable iff (~rst)",
-"logical expression": "gray_f == gray",
-"Signals": ["gray_f", "gray"],
-"Signal Explanations": {
-          "gray_f": "the generated gray code obtained by converting the binary output; it should match the input gray code",
-          "gray": "the input gray code to be converted"
-},
-"Logical Operators": ["=="],
-"Logical Operators Explanation": {
-          "==": "checks if the two signals are equal"
-},
-"Assertion Explaination": "if the generated gray code from the binary conversion is equal to the provided gray code, then the conversion process is correct"
-}
+  "Assertion 1": {
+    "clock signal condition": "@(posedge clk)",
+    "disable condition": "default disable iff (~rst)",
+    "logical expression": "gray_f == gray",
+    "Signals": [
+      "gray_f",
+      "gray"
+    ],
+    "Signal Explanations": {
+      "gray_f": "wire holding the recomputed Gray code derived from the binary output using the expression (bin XOR (bin >> 1))",
+      "gray": "input vector representing the original Gray code"
+    },
+    "Logical Operators": [
+      "=="
+    ],
+    "Logical Operators Explanation": {
+      "==": "equal"
+    },
+    "Assertion Explaination": "the recomputed Gray code derived from the binary output equals the original Gray code SINCE THE CURRENT CLOCK CYCLE"
+  }
 }

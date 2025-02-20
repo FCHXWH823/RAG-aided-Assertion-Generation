@@ -1,19 +1,26 @@
 {
-"Assertion 1": {
-"clock signal condition": "@(posedge clk)",
-"disable condition": "",
-"logical expression": "s_eventually (rst || sig == 1)",
-"Signals": ["rst", "sig"],
-"Signal Explanations": {
-          "rst": "the reset signal that reinitializes the counter when active",
-          "sig": "the output signal that is set to 1 when the counter exceeds the parameter N"
-},
-"Logical Operators": ["||", "==", "s_eventually"],
-"Logical Operators Explanation": {
-          "||": "logical OR operator that results true if at least one of its operands is true",
-          "==": "equality operator that checks if two values are identical",
-          "s_eventually": "a temporal operator indicating that the contained condition is required to occur at some future clock cycle"
-},
-"Assertion Explaination": "ensures that eventually either the condition of the reset being active is met or the condition of the output signal matching the active state is satisfied, meaning that either a reset occurs or the delayed output becomes active"
-}
+  "Assertion 1": {
+    "clock signal condition": "@(posedge clk)",
+    "disable condition": "none",
+    "logical expression": "s_eventually (rst || sig == 1)",
+    "Signals": [
+      "rst",
+      "sig"
+    ],
+    "Signal Explanations": {
+      "rst": "asynchronous reset of the verilog module",
+      "sig": "output signal of the verilog module, which is set high after the delay condition is met"
+    },
+    "Logical Operators": [
+      "s_eventually",
+      "||",
+      "=="
+    ],
+    "Logical Operators Explanation": {
+      "s_eventually": "a temporal operator indicating that the contained condition is required to occur at some future clock cycle (eventually)",
+      "||": "logical OR operator, meaning that if at least one of the conditions is true then the overall condition is satisfied",
+      "==": "equal comparison operator that verifies equality"
+    },
+    "Assertion Explaination": "eventually either the asynchronous reset of the verilog module is asserted or the output signal of the verilog module is equal to logical one"
+  }
 }

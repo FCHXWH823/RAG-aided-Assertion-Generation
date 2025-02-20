@@ -5,17 +5,17 @@
 "logical expression": "count < LATENCY |-> valid_out == 1'b0",
 "Signals": ["count", "LATENCY", "valid_out"],
 "Signal Explanations": {
-          "count": "a counter that increments each clock cycle until reaching the pipeline latency",
-          "LATENCY": "a constant representing the number of cycles in the pipeline (here 4)",
-          "valid_out": "a signal that indicates when the pipeline's output is valid"
+  "count": "a counter that tracks the number of pipeline cycles elapsed",
+  "LATENCY": "a constant representing the pipeline stage latency",
+  "valid_out": "a flag indicating whether the module’s output data is valid"
 },
 "Logical Operators": ["<", "|->", "=="],
 "Logical Operators Explanation": {
-          "<": "tests whether the left-hand value is less than the right-hand constant",
-          "|->": "if the antecedent condition holds then the consequent condition must hold in the same cycle",
-          "==": "checks for equality between two values"
+  "<": "a comparison operator meaning 'less than'",
+  "|->": "an overlapping implication operator meaning that if the condition on the left is met then the condition on the right must hold since the current clock cycle",
+  "==": "an equality comparison operator"
 },
-"Assertion Explaination": "when the counter is less than the pipeline latency, it implies that the signal indicating output validity must equal the constant false"
+"Assertion Explaination": "if the counter that tracks the number of elapsed pipeline cycles is less than the constant representing pipeline latency, then the flag indicating the validity of the output data must be equal to zero since the current clock cycle"
 },
 "Assertion 2": {
 "clock signal condition": "@(posedge clk)",
@@ -23,17 +23,17 @@
 "logical expression": "count == LATENCY |-> valid_out == $past(valid_in, LATENCY)",
 "Signals": ["count", "LATENCY", "valid_out", "valid_in"],
 "Signal Explanations": {
-          "count": "a counter that increments each clock cycle until it reaches the pipeline latency",
-          "LATENCY": "a constant that sets the number of cycles required for the pipeline computation",
-          "valid_out": "a signal that shows when the output data of the pipeline is valid",
-          "valid_in": "a signal asserted to indicate that the input data is valid"
+  "count": "a counter that tracks the number of pipeline cycles elapsed",
+  "LATENCY": "a constant representing the pipeline stage latency",
+  "valid_out": "a flag indicating whether the module’s output data is valid",
+  "valid_in": "a flag indicating whether the module’s input data is valid"
 },
-"Logical Operators": ["==", "|->", "$past"],
+"Logical Operators": ["==", "|->", "==", "$past"],
 "Logical Operators Explanation": {
-          "==": "verifies that two values are equal",
-          "|->": "if the antecedent condition is true then the consequent condition must be true on the following clock cycle",
-          "$past": "refers to the value of a signal a specified number of clock cycles in the past"
+  "==": "an equality comparison operator",
+  "|->": "an overlapping implication operator meaning that if the condition on the left is met then the condition on the right must hold since the current clock cycle",
+  "$past": "a temporal operator that returns the value of a signal from a specified number of clock cycles in the past"
 },
-"Assertion Explaination": "when the counter equals the pipeline latency, it implies that the signal indicating output validity must equal the value of the signal indicating input validity from a number of clock cycles equal to the pipeline latency"
+"Assertion Explaination": "if the counter that tracks the number of elapsed pipeline cycles equals the constant representing pipeline latency, then the flag indicating the validity of the output data must be equal to the value of the flag indicating the validity of the input data from the specified number of clock cycles ago since the current clock cycle"
 }
 }

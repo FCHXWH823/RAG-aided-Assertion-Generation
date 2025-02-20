@@ -265,26 +265,36 @@ def process_page_for_codeblocks(page):
 
 def main():
     pdf_path = "CernyDudani-SVA- The Power of Assertions in SystemVerilog.pdf"
-    page_num = 25
+    page_num = 23
 
     doc = fitz.open(pdf_path)
     text_blocks = []
-    for page_num in range(len(doc)):
+    # for page_num in range(len(doc)):
 
-        page = doc[page_num]
+    page = doc[page_num]
 
-        final_blocks = process_page_for_codeblocks(page)
+    page_dict = page.get_text("dict")
 
-        text_blocks += final_blocks
-        # Print results
-        # We'll flatten each block's lines to text for demonstration
+    # blocks -> lines -> spans (show the corresponding font)
+    raw_blocks = page_dict.get("blocks", [])
+    for raw_block in raw_blocks:
+        print(block_to_text(raw_block))
+        x0,y0,x1,y1 = raw_block["bbox"]
+        print(f"--------------x0:{x0}, x1:{x1}--------------\n\n")
+        print("\n")
 
-        for idx, block in enumerate(final_blocks, start=1):
-            block_type = block["type"]
-            block_text = block_to_text(block)
-            print(f"--- Block #{idx} --- [Type: {block_type}]")
-            print(block_text)
-            print("")
+    final_blocks = process_page_for_codeblocks(page)
+
+    text_blocks += final_blocks
+    # Print results
+    # We'll flatten each block's lines to text for demonstration
+
+    for idx, block in enumerate(final_blocks, start=1):
+        block_type = block["type"]
+        block_text = block_to_text(block)
+        print(f"--- Block #{idx} --- [Type: {block_type}]")
+        print(block_text)
+        print("")
 
 if __name__ == "__main__":
     main()

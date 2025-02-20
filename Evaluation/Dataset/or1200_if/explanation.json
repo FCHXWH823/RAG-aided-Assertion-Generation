@@ -10,10 +10,10 @@
       "except_ibuserr"
     ],
     "Signal Explanations": {
-      "no_more_dslot": "signal indicating that there is no additional delay slot instruction",
-      "except_itlbmiss": "signal indicating an instruction TLB miss exception",
-      "except_immufault": "signal indicating an instruction immediate memory fault exception",
-      "except_ibuserr": "signal indicating an instruction bus error exception"
+      "no_more_dslot": "a control signal that indicates there are no more delay slots to be processed",
+      "except_itlbmiss": "an output signal that indicates an instruction TLB miss exception",
+      "except_immufault": "an output signal that indicates an instruction MMU (immu) fault exception",
+      "except_ibuserr": "an output signal that indicates an instruction bus error exception"
     },
     "Logical Operators": [
       "|->",
@@ -21,11 +21,11 @@
       "&&"
     ],
     "Logical Operators Explanation": {
-      "|->": "if the left‐side condition is true then the right‐side condition is required to hold",
-      "==": "equality check between two values",
-      "&&": "logical AND ensuring both conditions are true"
+      "|->": "an overlapping implication operator meaning that if the condition on the left is met then the condition on the right must hold since the current clock cycle",
+      "==": "equality operator meaning the signals on both sides must have the same value",
+      "&&": "logical AND operator meaning all operands must be true"
     },
-    "Assertion Explaination": "if the signal indicating absence of a delay slot is active then it must follow that the exception indicator for a translation lookaside buffer miss, the exception indicator for an immediate fault, and the exception indicator for an instruction bus error are all equal to zero"
+    "Assertion Explaination": "if the condition indicating no more delay slots is active then the instruction exception signals for a TLB miss, an MMU fault, and a bus error must all be 0 since the current clock cycle"
   },
   "Assertion 2": {
     "clock signal condition": "@(posedge clk)",
@@ -37,9 +37,9 @@
       "saved"
     ],
     "Signal Explanations": {
-      "if_flushpipe": "signal indicating a request to flush the instruction pipeline",
-      "save_insn": "signal that becomes true when the current instruction must be saved",
-      "saved": "flag that indicates the fetched instruction and related data have been saved"
+      "if_flushpipe": "a signal that indicates whether the pipeline flush is active",
+      "save_insn": "a signal that becomes active when an instruction fetch is acknowledged or an error occurs during a freeze and the instruction has not yet been saved",
+      "saved": "a register that indicates whether the fetched instruction and its associated data have been stored"
     },
     "Logical Operators": [
       "!",
@@ -49,13 +49,13 @@
       "=="
     ],
     "Logical Operators Explanation": {
-      "!": "logical NOT, meaning the condition is inverted",
-      "&&": "logical AND, meaning both conditions must be true",
-      "|->": "implication: if the condition on the left is true then the condition on the right must follow",
-      "##1": "delay operator indicating the condition must be met one clock cycle later",
-      "==": "equality to verify that two values are the same"
+      "!": "logical NOT operator meaning the signal is de-asserted (0)",
+      "&&": "logical AND operator meaning both conditions must be true",
+      "|->": "an overlapping implication operator meaning that if the condition on the left is met then the condition on the right must hold starting in the current clock cycle, modified by any delay operators",
+      "##1": "a delay operator meaning the condition on the right must hold one clock cycle later",
+      "==": "equality operator meaning the two values must be equal"
     },
-    "Assertion Explaination": "if the signal indicating a pipeline flush is not active and the condition for saving the instruction is true then in the next cycle the flag indicating that the instruction has been saved must be equal to one"
+    "Assertion Explaination": "if the pipeline flush is not active and the condition to save the instruction is active then in the next clock cycle the saved status must be set to 1"
   },
   "Assertion 3": {
     "clock signal condition": "@(posedge clk)",
@@ -68,10 +68,10 @@
       "saved"
     ],
     "Signal Explanations": {
-      "if_flushpipe": "signal indicating a request to flush the instruction pipeline",
-      "save_insn": "signal that becomes true when the current instruction must be saved",
-      "if_freeze": "signal indicating that the instruction fetch stage is frozen",
-      "saved": "flag that indicates the fetched instruction and related data have been saved"
+      "if_flushpipe": "a signal that indicates whether the pipeline flush is active",
+      "save_insn": "a signal that becomes active when a fetched instruction is to be saved",
+      "if_freeze": "a signal that indicates if the instruction fetch stage is frozen",
+      "saved": "a register reflecting whether the instruction and its address have been stored"
     },
     "Logical Operators": [
       "|",
@@ -82,14 +82,14 @@
       "=="
     ],
     "Logical Operators Explanation": {
-      "|": "logical OR meaning at least one of the conditions must be true",
-      "!": "logical NOT, meaning the condition is inverted",
-      "&&": "logical AND requiring both conditions to be true",
-      "|->": "implication: if the left-hand side condition is met then the right-hand side condition must follow",
-      "##1": "delay operator specifying the next clock cycle",
-      "==": "equality check to ensure both sides are identical"
+      "!": "logical NOT operator meaning the signal is not active (0)",
+      "&&": "logical AND operator meaning both operands must be true",
+      "|": "logical OR operator meaning at least one of the operands is true",
+      "|->": "an overlapping implication operator meaning that if the condition on the left is met then the condition on the right must hold starting in the current clock cycle, modified by any delay operators",
+      "##1": "a delay operator meaning the condition on the right must hold one clock cycle later",
+      "==": "equality operator meaning the two values must be equal"
     },
-    "Assertion Explaination": "if either the signal for flushing the pipeline is active or both the condition for saving is false and the signal for freezing the instruction fetch stage is inactive, then one clock cycle later the flag indicating that the instruction has been saved must be equal to zero"
+    "Assertion Explaination": "if either the pipeline flush is active or both the save instruction condition is inactive and the freeze is not active then in the next clock cycle the saved status must be 0"
   },
   "Assertion 4": {
     "clock signal condition": "@(posedge clk)",
@@ -103,11 +103,11 @@
       "icpu_dat_i"
     ],
     "Signal Explanations": {
-      "if_flushpipe": "signal indicating a request to flush the instruction pipeline",
-      "save_insn": "signal that becomes true when the current instruction must be saved",
-      "icpu_err_i": "signal from the instruction cache interface that indicates an error",
-      "insn_saved": "register holding the saved instruction",
-      "icpu_dat_i": "data input carrying the fetched instruction from the instruction cache interface"
+      "if_flushpipe": "a signal that indicates if the pipeline flush is active",
+      "save_insn": "a signal that indicates the moment an instruction is to be saved",
+      "icpu_err_i": "an input signal that indicates an error occurred during instruction fetching",
+      "insn_saved": "a register that holds the saved instruction",
+      "icpu_dat_i": "an input signal carrying the fetched instruction data"
     },
     "Logical Operators": [
       "!",
@@ -118,30 +118,32 @@
       "$past"
     ],
     "Logical Operators Explanation": {
-      "!": "logical NOT, indicating a condition is false",
-      "&&": "logical AND where all conditions must be true",
-      "|->": "implication meaning that if the left-hand side condition holds then the right-hand side must follow",
-      "##1": "delay operator signifying the condition must be satisfied one clock cycle later",
-      "==": "equality check to verify both sides are identical",
-      "$past": "function that retrieves the value of a signal from the previous clock cycle"
+      "!": "logical NOT operator meaning the signal is de-asserted (0)",
+      "&&": "logical AND operator meaning all conditions must be true",
+      "|->": "an overlapping implication operator meaning that if the condition on the left is met then the condition on the right must hold starting in the current clock cycle, modified by any delay operators",
+      "##1": "a delay operator meaning the condition on the right must hold one clock cycle later",
+      "==": "equality operator meaning the two values must be equal",
+      "$past": "a temporal operator referring to the value of a signal in the previous clock cycle"
     },
-    "Assertion Explaination": "if the signal for flushing the pipeline is inactive, the condition for saving the instruction is true, and the error signal from the instruction cache is not active then one cycle later the register holding the saved instruction must equal the value that was present on the instruction data input in the previous cycle"
+    "Assertion Explaination": "if the pipeline flush is not active, the save instruction condition is active, and no error occurred during instruction fetch then in the next clock cycle the saved instruction must equal the instruction data received in the previous clock cycle"
   },
   "Assertion 5": {
     "clock signal condition": "@(posedge clk)",
     "disable condition": "disable iff (rst)",
-    "logical expression": "(if_flushpipe | (!save_insn && !if_freeze)) |-> ##1 (insn_saved == {6'b000101, 26'h041_0000})",
+    "logical expression": "(if_flushpipe | (!save_insn && !if_freeze) && !icpu_err_i) |-> ##1 (insn_saved == {6'b000101, 26'h041_0000})",
     "Signals": [
       "if_flushpipe",
       "save_insn",
       "if_freeze",
+      "icpu_err_i",
       "insn_saved"
     ],
     "Signal Explanations": {
-      "if_flushpipe": "signal indicating a request to flush the instruction pipeline",
-      "save_insn": "signal that becomes true when the current instruction must be saved",
-      "if_freeze": "signal indicating that the instruction fetch stage is frozen",
-      "insn_saved": "register holding the saved instruction"
+      "if_flushpipe": "a signal that indicates if the pipeline flush is active",
+      "save_insn": "a signal that indicates the moment when an instruction is to be saved",
+      "if_freeze": "a signal that indicates if the instruction fetch stage is frozen",
+      "icpu_err_i": "an input signal that indicates an error during instruction fetch",
+      "insn_saved": "a register holding the saved instruction value"
     },
     "Logical Operators": [
       "|",
@@ -152,14 +154,14 @@
       "=="
     ],
     "Logical Operators Explanation": {
-      "|": "logical OR meaning that at least one of the enclosed conditions is true",
-      "!": "logical NOT, meaning the condition is inverted",
-      "&&": "logical AND requiring both sub-conditions to be true",
-      "|->": "implication indicating that if the left-hand side condition holds, then the right-hand side condition must follow",
-      "##1": "delay operator meaning the condition must hold in the next clock cycle",
-      "==": "equality check ensuring that both sides are equal"
+      "|": "logical OR operator meaning at least one of the conditions must be true",
+      "!": "logical NOT operator meaning the signal is not active (0)",
+      "&&": "logical AND operator meaning both conditions must be true",
+      "|->": "an overlapping implication operator meaning that if the condition on the left is met then the condition on the right must hold starting in the current clock cycle, modified by any delay operators",
+      "##1": "a delay operator meaning the condition on the right must hold one clock cycle later",
+      "==": "equality operator meaning the two values must be equal"
     },
-    "Assertion Explaination": "if either the signal to flush the pipeline is active or both the condition for saving the instruction is false and the signal indicating a freeze in the instruction fetch stage is inactive then one clock cycle later the register holding the saved instruction must equal the constant representing a no-operation instruction"
+    "Assertion Explaination": "if either the pipeline flush is active or the save instruction condition is inactive while the freeze is not active, and no error occurred during fetching, then in the next clock cycle the saved instruction must equal the defined no-operation value with the delay slot code"
   },
   "Assertion 6": {
     "clock signal condition": "@(posedge clk)",
@@ -173,31 +175,29 @@
       "icpu_adr_i"
     ],
     "Signal Explanations": {
-      "if_flushpipe": "signal indicating a request to flush the instruction pipeline",
-      "save_insn": "signal that becomes true when the current instruction must be saved",
-      "if_freeze": "signal indicating that the instruction fetch stage is frozen",
-      "addr_saved": "register holding the saved instruction address",
-      "icpu_adr_i": "address input from the instruction cache interface"
+      "if_flushpipe": "a signal that indicates if the pipeline flush is active",
+      "save_insn": "a signal that indicates when an instruction is to be saved",
+      "if_freeze": "a signal that indicates if the instruction fetch stage is frozen",
+      "addr_saved": "a register that stores the address of the fetched instruction",
+      "icpu_adr_i": "an input signal carrying the instruction fetch address"
     },
     "Logical Operators": [
       "!",
       "|",
-      "&&",
       "|->",
       "##1",
       "==",
       "$past"
     ],
     "Logical Operators Explanation": {
-      "!": "logical NOT meaning the condition is false",
-      "|": "logical OR meaning at least one of the conditions is true",
-      "&&": "logical AND requiring both conditions to be true",
-      "|->": "implication that if the left-hand side condition holds then the right-hand side condition must follow",
-      "##1": "delay operator signifying that the condition must hold one clock cycle later",
-      "==": "equality check verifying that two values are identical",
-      "$past": "function retrieving the value of a signal from the previous clock cycle"
+      "!": "logical NOT operator meaning the signal is de-asserted (0)",
+      "|": "logical OR operator meaning at least one of the conditions must be true",
+      "|->": "an overlapping implication operator meaning that if the condition on the left is met then the condition on the right must hold starting in the current clock cycle, modified by any delay operators",
+      "##1": "a delay operator meaning the condition on the right must hold one clock cycle later",
+      "==": "equality operator meaning the two values must be equal",
+      "$past": "a temporal operator referring to the value of a signal in the previous clock cycle"
     },
-    "Assertion Explaination": "if the signal for flushing the pipeline is inactive and either the condition for saving the instruction is true or the freeze signal is inactive then one cycle later the register holding the saved address must equal the value formed by taking the upper bits of the previous cycle's address input and appending two zeros"
+    "Assertion Explaination": "if the pipeline flush is not active and either the save instruction condition is active or the instruction fetch is not frozen then in the next clock cycle the saved address must equal the previous cycle's instruction address (with the lower two bits set to 0)"
   },
   "Assertion 7": {
     "clock signal condition": "@(posedge clk)",
@@ -208,8 +208,8 @@
       "addr_saved"
     ],
     "Signal Explanations": {
-      "if_flushpipe": "signal indicating a request to flush the instruction pipeline",
-      "addr_saved": "register holding the saved instruction address"
+      "if_flushpipe": "a signal that indicates if the pipeline flush is active",
+      "addr_saved": "a register that holds the saved instruction address"
     },
     "Logical Operators": [
       "|->",
@@ -217,11 +217,11 @@
       "=="
     ],
     "Logical Operators Explanation": {
-      "|->": "implication meaning that if the left-hand side condition is true then the right-hand side condition must follow",
-      "##1": "delay operator indicating the next clock cycle",
-      "==": "equality check used to confirm both sides are the same"
+      "|->": "an overlapping implication operator meaning that if the condition on the left is met then the condition on the right must hold starting in the current clock cycle, modified by any delay operators",
+      "##1": "a delay operator meaning the condition on the right must hold one clock cycle later",
+      "==": "equality operator meaning the two values must be equal"
     },
-    "Assertion Explaination": "if the flush signal for the pipeline is active then one clock cycle later the register holding the saved address must be equal to zero"
+    "Assertion Explaination": "if the pipeline flush is active then in the next clock cycle the saved address must be 0"
   },
   "Assertion 8": {
     "clock signal condition": "@(posedge clk)",
@@ -235,11 +235,11 @@
       "icpu_tag_i"
     ],
     "Signal Explanations": {
-      "if_flushpipe": "signal indicating a request to flush the instruction pipeline",
-      "save_insn": "signal that becomes true when the current instruction must be saved",
-      "err_saved[0]": "bit in the saved error register corresponding to a TLB miss exception",
-      "icpu_err_i": "signal from the instruction cache interface indicating an error",
-      "icpu_tag_i": "tag input from the instruction cache interface used to classify the type of error"
+      "if_flushpipe": "a signal that indicates whether the pipeline flush is active",
+      "save_insn": "a signal that indicates when an instruction should be stored",
+      "err_saved[0]": "a bit of a register that holds the error tag corresponding to a TLB miss",
+      "icpu_err_i": "an input error signal from the instruction cache interface",
+      "icpu_tag_i": "an input signal indicating the error tag from the instruction cache interface"
     },
     "Logical Operators": [
       "!",
@@ -248,18 +248,19 @@
       "##1",
       "==",
       "$past",
-      "&"
+      "&",
+      "=="
     ],
     "Logical Operators Explanation": {
-      "!": "logical NOT meaning the condition is false",
-      "&&": "logical AND requiring both conditions to be true",
-      "|->": "implication indicating that if the left-hand side condition holds then the right-hand side condition must subsequently hold",
-      "##1": "delay operator meaning that the consequent must be true in the next clock cycle",
-      "==": "equality check ensuring both sides match",
-      "$past": "function that provides the value of a signal from the previous clock cycle",
-      "&": "bitwise AND used here to combine a previous error signal with a comparison result"
+      "!": "logical NOT operator meaning the signal is de-asserted (0)",
+      "&&": "logical AND operator meaning all conditions must be true",
+      "|->": "an overlapping implication operator meaning that if the condition on the left is met then the condition on the right must hold starting in the current clock cycle, modified by any delay operators",
+      "##1": "a delay operator meaning the condition on the right must hold one clock cycle later",
+      "==": "equality operator meaning the two values must be equal",
+      "$past": "a temporal operator referring to the value of a signal in the previous clock cycle",
+      "&": "bitwise AND operator combining boolean conditions"
     },
-    "Assertion Explaination": "if the pipeline flush signal is inactive and the condition for saving the instruction is true then one cycle later the bit in the saved error register corresponding to a translation lookaside buffer miss must equal the result of the bitwise AND of the previous cycle's error signal and the condition that the previous cycle's tag equals the hexadecimal value d"
+    "Assertion Explaination": "if the pipeline flush is not active and the save instruction condition is active then in the next clock cycle the error bit corresponding to a TLB miss must equal the logical AND of the previous cycle's instruction error signal and the condition that the previous cycle's instruction tag equals 0xD"
   },
   "Assertion 9": {
     "clock signal condition": "@(posedge clk)",
@@ -273,11 +274,11 @@
       "icpu_tag_i"
     ],
     "Signal Explanations": {
-      "if_flushpipe": "signal indicating a request to flush the instruction pipeline",
-      "save_insn": "signal that becomes true when the current instruction must be saved",
-      "err_saved[1]": "bit in the saved error register corresponding to an immediate memory fault exception",
-      "icpu_err_i": "signal from the instruction cache interface indicating an error",
-      "icpu_tag_i": "tag input from the instruction cache interface used to classify the type of error"
+      "if_flushpipe": "a signal that indicates whether the pipeline flush is active",
+      "save_insn": "a signal indicating when an instruction should be stored",
+      "err_saved[1]": "a bit of a register that holds the error tag corresponding to an MMU fault",
+      "icpu_err_i": "an input error signal from the instruction cache interface",
+      "icpu_tag_i": "an input signal indicating the error tag from the instruction cache interface"
     },
     "Logical Operators": [
       "!",
@@ -286,18 +287,19 @@
       "##1",
       "==",
       "$past",
-      "&"
+      "&",
+      "=="
     ],
     "Logical Operators Explanation": {
-      "!": "logical NOT indicating the inverted condition",
-      "&&": "logical AND requiring both conditions to be true",
-      "|->": "implication meaning that if the left-hand side holds then the right-hand side must follow",
-      "##1": "delay operator specifying that the check is performed one clock cycle later",
-      "==": "equality check ensuring both sides are identical",
-      "$past": "function that returns the value of a signal from the previous cycle",
-      "&": "bitwise AND combining the previous error signal and the result of the previous tag equality test"
+      "!": "logical NOT operator meaning the signal is de-asserted (0)",
+      "&&": "logical AND operator meaning all conditions must be true",
+      "|->": "an overlapping implication operator meaning that if the condition on the left is met then the condition on the right must hold starting in the current clock cycle, modified by any delay operators",
+      "##1": "a delay operator meaning the condition on the right must hold one clock cycle later",
+      "==": "equality operator meaning the two values must be equal",
+      "$past": "a temporal operator referring to the value of a signal in the previous clock cycle",
+      "&": "bitwise AND operator combining boolean conditions"
     },
-    "Assertion Explaination": "if the flush signal is inactive and the condition to save the instruction is true then one cycle later the bit in the saved error register for an immediate memory fault must equal the result of bitwise AND of the previous cycle's error signal with the condition that the previous cycle's error tag equals the hexadecimal value c"
+    "Assertion Explaination": "if the pipeline flush is not active and the save instruction condition is active then in the next clock cycle the error bit corresponding to an MMU fault must equal the logical AND of the previous cycle's instruction error signal and the condition that the previous cycle's instruction tag equals 0xC"
   },
   "Assertion 10": {
     "clock signal condition": "@(posedge clk)",
@@ -311,11 +313,11 @@
       "icpu_tag_i"
     ],
     "Signal Explanations": {
-      "if_flushpipe": "signal indicating a request to flush the instruction pipeline",
-      "save_insn": "signal that becomes true when the current instruction must be saved",
-      "err_saved[2]": "bit in the saved error register corresponding to an instruction bus error exception",
-      "icpu_err_i": "signal from the instruction cache interface indicating an error",
-      "icpu_tag_i": "tag input from the instruction cache interface used to classify the type of error"
+      "if_flushpipe": "a signal that indicates whether the pipeline flush is active",
+      "save_insn": "a signal that becomes active when an instruction is to be saved",
+      "err_saved[2]": "a bit of a register that holds the error tag corresponding to a bus error",
+      "icpu_err_i": "an input error signal from the instruction cache interface",
+      "icpu_tag_i": "an input signal indicating the error tag from the instruction cache interface"
     },
     "Logical Operators": [
       "!",
@@ -324,18 +326,19 @@
       "##1",
       "==",
       "$past",
-      "&"
+      "&",
+      "=="
     ],
     "Logical Operators Explanation": {
-      "!": "logical NOT meaning the condition is false",
-      "&&": "logical AND requiring that both conditions are true simultaneously",
-      "|->": "implication meaning that if the left-hand condition holds then the right-hand condition must subsequently hold",
-      "##1": "delay operator indicating that the consequent is evaluated one clock cycle later",
-      "==": "equality check verifying that both sides are identical",
-      "$past": "function retrieving the value of a signal from the previous cycle",
-      "&": "bitwise AND used to combine the previous error signal with the outcome of the previous tag equality check"
+      "!": "logical NOT operator meaning the signal is de-asserted (0)",
+      "&&": "logical AND operator meaning all conditions must be true",
+      "|->": "an overlapping implication operator meaning that if the condition on the left is met then the condition on the right must hold starting in the current clock cycle, modified by any delay operators",
+      "##1": "a delay operator meaning the condition on the right must hold one clock cycle later",
+      "==": "equality operator meaning the two values must be equal",
+      "$past": "a temporal operator referring to the value of a signal in the previous clock cycle",
+      "&": "bitwise AND operator combining boolean conditions"
     },
-    "Assertion Explaination": "if the flush signal is inactive and the condition for saving the instruction is true then one cycle later the bit in the saved error register for an instruction bus error must equal the result of the bitwise AND of the error signal from the previous cycle with the test that the previous cycle's error tag is equal to the hexadecimal value b"
+    "Assertion Explaination": "if the pipeline flush is not active and the save instruction condition is active then in the next clock cycle the error bit corresponding to a bus error must equal the logical AND of the previous cycle's instruction error signal and the condition that the previous cycle's instruction tag equals 0xB"
   },
   "Assertion 11": {
     "clock signal condition": "@(posedge clk)",
@@ -348,10 +351,10 @@
       "err_saved"
     ],
     "Signal Explanations": {
-      "if_flushpipe": "signal indicating a request to flush the instruction pipeline",
-      "save_insn": "signal that becomes true when the current instruction must be saved",
-      "if_freeze": "signal indicating that the instruction fetch stage is frozen",
-      "err_saved": "register holding the saved error tags for the fetched instruction"
+      "if_flushpipe": "a signal that indicates if the pipeline flush is active",
+      "save_insn": "a signal that indicates when an instruction is to be saved",
+      "if_freeze": "a signal that indicates if the instruction fetch stage is frozen",
+      "err_saved": "a register that holds the saved error tags for the instruction fetch"
     },
     "Logical Operators": [
       "|",
@@ -362,13 +365,13 @@
       "=="
     ],
     "Logical Operators Explanation": {
-      "|": "logical OR meaning at least one of the conditions must hold",
-      "!": "logical NOT indicating the inversion of a condition",
-      "&&": "logical AND meaning both conditions must be true",
-      "|->": "implication meaning that if the left-hand side condition holds then the right-hand side must follow",
-      "##1": "delay operator specifying that the condition is evaluated in the next clock cycle",
-      "==": "equality check ensuring both sides are the same"
+      "|": "logical OR operator meaning at least one of the conditions must be true",
+      "!": "logical NOT operator meaning the signal is not active (0)",
+      "&&": "logical AND operator meaning both conditions must be true",
+      "|->": "an overlapping implication operator meaning that if the condition on the left is met then the condition on the right must hold starting in the current clock cycle, modified by any delay operators",
+      "##1": "a delay operator meaning the condition on the right must hold one clock cycle later",
+      "==": "equality operator meaning the two values must be equal"
     },
-    "Assertion Explaination": "if either the signal to flush the pipeline is active or both the condition for saving the instruction is false and the signal indicating a freeze in the instruction fetch stage is inactive then one cycle later the register holding the saved error tags must equal zero for all bits"
+    "Assertion Explaination": "if either the pipeline flush is active or both the save instruction condition is inactive and the freeze is not active then in the next clock cycle the saved error tags must all be 0"
   }
 }

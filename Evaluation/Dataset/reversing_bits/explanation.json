@@ -1,17 +1,22 @@
 {
-"Assertion 1": {
-"clock signal condition": "@(posedge clk)",
-"disable condition": "disable iff (~rst)",
-"logical expression": "dout[0] == din[DATA_WIDTH-1]",
-"Signals": ["dout[0]", "din[DATA_WIDTH-1]"],
-"Signal Explanations": {
-          "dout[0]": "the lowest-order bit of the output vector that holds the reversed order of the input bits",
-          "din[DATA_WIDTH-1]": "the highest-order bit of the input vector"
-},
-"Logical Operators": ["=="],
-"Logical Operators Explanation": {
-          "==": "equal"
-},
-"Assertion Explaination": "the lowest-order bit of the reversed output is equal to the highest-order bit of the original input"
-}
+  "Assertion 1": {
+    "clock signal condition": "@(posedge clk)",
+    "disable condition": "disable iff (~rst)",
+    "logical expression": "dout[0] == din[DATA_WIDTH-1]",
+    "Signals": [
+      "dout[0]",
+      "din[DATA_WIDTH-1]"
+    ],
+    "Signal Explanations": {
+      "dout[0]": "the bit in the output vector corresponding to the least significant position after bit reversal",
+      "din[DATA_WIDTH-1]": "the bit in the input vector corresponding to the most significant position before reversal"
+    },
+    "Logical Operators": [
+      "=="
+    ],
+    "Logical Operators Explanation": {
+      "==": "the equality operator that checks if the two sides have the same value"
+    },
+    "Assertion Explaination": "if the bit obtained as the reversed version at the output's least significant position equals the bit originally at the input's most significant position SINCE THE CURRENT CLOCK CYCLE"
+  }
 }

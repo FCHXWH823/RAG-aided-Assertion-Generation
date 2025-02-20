@@ -50,7 +50,7 @@ module ff
       else if (en) out = in;  
 
     assert proprty(@(posedge clk) default disable iff (rst) !en |-> out == $past(in,1));
-    assert proprty(en || out == $past(in,1));
+    assert proprty(s_eventually (en || out == $past(in,1)));
     assert property(@(posedge clk) default disable iff (rst) en |=> out == $past(in,1));
 endmodule
 '''
@@ -60,8 +60,12 @@ step 0: extract the clock signal condition (optional), the disable condition (op
 step 1: extract all signals in the logical expression; 
 step 2: get all signals' explanations in the context of given verilog code;
 step 3: extract all logical operators in the logical expression;
-step 4: get all logical operators' explanations;
-step 5: generate the explanation ONLY for the logical expression WITHOUT containing initial signal names and STRICTLY using the explanations of signals and logic operators.
+step 4: get all logical operators' explanations.  
+for example: |->: if the conditions on the left are met then the condition on the right must hold SINCE THE CURRENT CLOCK CYCLE; 
+             |=>: if the conditions on the left are met then the condition on the right must hold SINCE NEXT CLOCK CYCLE;
+step 5: generate the explanation ONLY for the logical expression WITHOUT containing initial signal names and STRICTLY using the explanations of signals and logic operators in the last step.
+for example: !en |-> out: if enable signal is reset (0), output signal should be set (1) SINCE THE CURRENT CLOCK CYCLE;
+             !en |=> out: if enable signal is reset (0), output signal should be set (1) SINCE THE NEXT CLOCK CYCLE;
 '''
 
 assertion_output_format = '''
@@ -105,30 +109,31 @@ example_assertions_explanations = '''
 "Logical Operators": ["!", "|->", "$past", "=="],
 "Logical Operators Explanation": {
           "!": "the value of a signal is reset (0)",
-          "|->": "if xxxxx, xxxx",
+          "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE CURRENT CLOCK CYCLE",
           "$past": "the last several clock cycles",
           "==": "equal"
 },
-"Assertion Explaination": "if enable signal is reset (0), output signal equals the last one clock cycle's input signal"
+"Assertion Explaination": "if enable signal is reset (0), output signal equals the last one clock cycle's input signal SINCE THE CURRENT CLOCK CYCLE"
 },
 
 "Assertion 2": {
 "clock signal condition": ,
 "disable condition": ,
-"logical expression": en || out == $past(in,1),
-"Signals": ["en", "out", "in"],
+"logical expression": s_eventually (en || out == $past(in,1)),
+"Signals": ["s_eventually", "en", "out", "in"],
 "Signal Explanations": {
           "en": "enable signal",
           "out": "output signal of the verilog module",
           "in": "input signal of the verilog module"
 },
-"Logical Operators": ["||", "==", "$past"],
+"Logical Operators": ["s_eventually", "||", "==", "$past"],
 "Logical Operators Explanation": {
+          "s_eventually": "a temporal operator indicating that the contained condition is required to occur at some future clock cycle (eventually)",
           "||": "or",
           "==": "equal",
           "$past": "the last several clock cycles"
 },
-"Assertion Explaination": "enable signal is set (1) or output signal equals the last one clock cycle's input signal"
+"Assertion Explaination": "eventually enable signal is set (1) or output signal equals the last one clock cycle's input signal"
 },
 
 "Assertion 3": {
@@ -143,11 +148,11 @@ example_assertions_explanations = '''
 },
 "Logical Operators": ["|=>", "==", "$past"],
 "Logical Operators Explanation": {
-          "|=>": "if xxxxx, xxxx since next clock cycle",
+          "|=>": "a non-overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE NEXT CLOCK CYCLE,
           "==": "equal",
           "$past": "the last several clock cycles"
 },
-"Assertion Explaination": "if enable signal is set (1), output signal equals the last one clock cycle's input signal since next clock cycle"
+"Assertion Explaination": "if enable signal is set (1), output signal equals the last one clock cycle's input signal SINCE NEXT CLOCK CYCLE"
 }
 }
 '''
@@ -225,6 +230,8 @@ def generate_assertions_explanation_dataset():
             )
 
             assertion_explanations = completion.choices[0].message.content
+
+            os.system(f"rm {fpv_dir}/explanation_new.json")
 
             with open(fpv_dir+"explanation.json","w") as file:
                 file.write(assertion_explanations)

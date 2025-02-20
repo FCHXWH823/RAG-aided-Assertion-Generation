@@ -1,26 +1,19 @@
 {
   "Assertion 1": {
     "clock signal condition": "@(posedge clk)",
-    "disable condition": "",
-    "logical expression": "s_eventually (rst || sig == 1)",
-    "Signals": [
-      "rst",
-      "sig"
-    ],
+    "disable condition": "default disable iff (rst)",
+    "logical expression": "rst || sig == 1",
+    "Signals": ["rst", "sig"],
     "Signal Explanations": {
-      "rst": "the asynchronous reset input that initializes the counter",
-      "sig": "the indicator that is set when the Gray-coded counter equals zero"
+      "rst": "asynchronous reset input used to initialize and reset the counter logic",
+      "sig": "output signal that indicates when the Gray-coded counter equals zero"
     },
-    "Logical Operators": [
-      "||",
-      "==",
-      "s_eventually"
-    ],
+    "Logical Operators": ["s_eventually", "||", "=="],
     "Logical Operators Explanation": {
-      "||": "logical OR operator, meaning at least one of the operands must be true",
-      "==": "equality comparison operator, which checks if the two operands are equal",
-      "s_eventually": "a temporal operator indicating that the contained condition is required to occur at some future clock cycle"
+      "s_eventually": "a temporal operator requiring that the contained condition eventually holds true at some future clock cycle",
+      "||": "logical OR operator meaning that at least one of the contained conditions must be true",
+      "==": "equality operator indicating that the compared value must be exactly equal to a constant"
     },
-    "Assertion Explaination": "the property requires that eventually either the module’s reset control is active or the indicator that reflects a zero Gray counter value is equal to one"
+    "Assertion Explaination": "eventually, either the asynchronous reset input is active or the output signal that indicates a zero value in the Gray-coded counter is equal to one; that is, at some future clock cycle, it must hold that one of these conditions is satisfied"
   }
 }

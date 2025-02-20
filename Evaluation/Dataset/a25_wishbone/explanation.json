@@ -2,18 +2,12 @@
   "Assertion 1": {
     "clock signal condition": "@(posedge i_clk)",
     "disable condition": "",
-    "logical expression": "(wishbone_st == WB_IDLE) |-> ##1 (wishbone_st == WB_IDLE) | (wishbone_st == WB_BURST1) | (wishbone_st == WB_WAIT_ACK)",
+    "logical expression": "(state register equals idle) |-> ##1 (state register equals idle) | (state register equals first burst state) | (state register equals waiting for acknowledgement)",
     "Signals": [
-      "wishbone_st",
-      "WB_IDLE",
-      "WB_BURST1",
-      "WB_WAIT_ACK"
+      "state register"
     ],
     "Signal Explanations": {
-      "wishbone_st": "the current state of the Wishbone bus finite state machine",
-      "WB_IDLE": "the idle state of the Wishbone bus interface",
-      "WB_BURST1": "the first state of a burst transfer (read burst) on the Wishbone bus",
-      "WB_WAIT_ACK": "the state where the bus is waiting for an acknowledgment"
+      "state register": "a register that holds the current state of the wishbone bus operation, with possible values idle, first burst, or waiting for acknowledgement"
     },
     "Logical Operators": [
       "==",
@@ -22,28 +16,24 @@
       "|"
     ],
     "Logical Operators Explanation": {
-      "==": "equality check",
-      "|->": "non-overlapped implication operator (if antecedent holds then consequent must follow)",
-      "##1": "implies that the consequent is expected one clock cycle later",
-      "|": "logical OR operator"
+      "==": "checks equality between the current value and a specified state",
+      "|->": "an implication operator meaning that if the condition on the left is met then the condition on the right must hold at the specified timing",
+      "##1": "a delay operator that specifies a delay of one clock cycle before evaluating the right-hand side condition",
+      "|": "a logical OR operator combining multiple conditions"
     },
-    "Assertion Explaination": "If the finite state machine is in the idle state at the current clock cycle, then one clock cycle later it must be either in the idle state, the first burst state, or the waiting-for-acknowledgment state."
+    "Assertion Explaination": "if the state register equals idle in the current cycle, then one cycle later it must be either idle, in the first burst state, or in the waiting for acknowledgement state"
   },
   "Assertion 2": {
     "clock signal condition": "@(posedge i_clk)",
     "disable condition": "",
-    "logical expression": "(wishbone_st == WB_BURST1) & i_wb_ack |-> ##1 (wishbone_st == WB_BURST2)",
+    "logical expression": "(state register equals first burst state and wishbone acknowledgement is asserted) |-> ##1 (state register equals second burst state)",
     "Signals": [
-      "wishbone_st",
-      "WB_BURST1",
-      "i_wb_ack",
-      "WB_BURST2"
+      "state register",
+      "wishbone acknowledgement"
     ],
     "Signal Explanations": {
-      "wishbone_st": "the current state of the Wishbone bus finite state machine",
-      "WB_BURST1": "the first state of a burst read transfer",
-      "i_wb_ack": "the input signal that acknowledges a Wishbone bus transfer",
-      "WB_BURST2": "the second state in the sequence of a burst read transfer"
+      "state register": "a register that holds the current state of the wishbone bus operation",
+      "wishbone acknowledgement": "the signal from the wishbone bus that indicates the completion of a transfer"
     },
     "Logical Operators": [
       "==",
@@ -52,28 +42,24 @@
       "##1"
     ],
     "Logical Operators Explanation": {
-      "==": "equality check",
-      "&": "logical AND operator used to combine conditions",
-      "|->": "non-overlapped implication operator",
-      "##1": "indicates that the outcome must occur one clock cycle later"
+      "==": "checks equality between the current value and a specified state",
+      "&": "a logical AND operator requiring both conditions to be true",
+      "|->": "an implication operator meaning that if the condition on the left is met then the condition on the right must hold at the specified timing",
+      "##1": "a delay operator that specifies a delay of one clock cycle before evaluating the right-hand side condition"
     },
-    "Assertion Explaination": "If the finite state machine is in the first burst state and the acknowledgment signal is asserted at the current clock cycle, then one clock cycle later it must transition to the second burst state."
+    "Assertion Explaination": "if the state register equals first burst state and the wishbone acknowledgement is asserted in the current cycle, then one cycle later the state register must equal the second burst state"
   },
   "Assertion 3": {
     "clock signal condition": "@(posedge i_clk)",
     "disable condition": "",
-    "logical expression": "(wishbone_st == WB_BURST2) & i_wb_ack |-> ##1 (wishbone_st == WB_BURST3)",
+    "logical expression": "(state register equals second burst state and wishbone acknowledgement is asserted) |-> ##1 (state register equals third burst state)",
     "Signals": [
-      "wishbone_st",
-      "WB_BURST2",
-      "i_wb_ack",
-      "WB_BURST3"
+      "state register",
+      "wishbone acknowledgement"
     ],
     "Signal Explanations": {
-      "wishbone_st": "the current state of the Wishbone bus finite state machine",
-      "WB_BURST2": "the second state of a burst read transfer",
-      "i_wb_ack": "the input acknowledgment signal from the Wishbone bus",
-      "WB_BURST3": "the third state in the burst read sequence"
+      "state register": "a register that holds the current state of the wishbone bus operation",
+      "wishbone acknowledgement": "the signal from the wishbone bus that indicates the completion of a transfer"
     },
     "Logical Operators": [
       "==",
@@ -82,28 +68,24 @@
       "##1"
     ],
     "Logical Operators Explanation": {
-      "==": "equality check",
-      "&": "logical AND operator",
-      "|->": "non-overlapped implication operator",
-      "##1": "ensures that the consequent becomes valid in the next clock cycle"
+      "==": "checks equality between the current value and a specified state",
+      "&": "a logical AND operator requiring both conditions to be true",
+      "|->": "an implication operator meaning that if the condition on the left is met then the condition on the right must hold at the specified timing",
+      "##1": "a delay operator that specifies a delay of one clock cycle before evaluating the right-hand side condition"
     },
-    "Assertion Explaination": "If the state machine is in the second burst state and the acknowledgment is received at the current clock cycle, then one clock cycle later it must enter the third burst state."
+    "Assertion Explaination": "if the state register equals second burst state and the wishbone acknowledgement is asserted in the current cycle, then one cycle later the state register must equal the third burst state"
   },
   "Assertion 4": {
     "clock signal condition": "@(posedge i_clk)",
     "disable condition": "",
-    "logical expression": "(wishbone_st == WB_BURST3) & i_wb_ack |-> ##1 (wishbone_st == WB_WAIT_ACK)",
+    "logical expression": "(state register equals third burst state and wishbone acknowledgement is asserted) |-> ##1 (state register equals waiting for acknowledgement)",
     "Signals": [
-      "wishbone_st",
-      "WB_BURST3",
-      "i_wb_ack",
-      "WB_WAIT_ACK"
+      "state register",
+      "wishbone acknowledgement"
     ],
     "Signal Explanations": {
-      "wishbone_st": "the current state of the Wishbone bus finite state machine",
-      "WB_BURST3": "the third state of a burst read transfer",
-      "i_wb_ack": "the input signal indicating the acknowledgment of the bus transfer",
-      "WB_WAIT_ACK": "the state where the bus is waiting for further acknowledgment"
+      "state register": "a register that holds the current state of the wishbone bus operation",
+      "wishbone acknowledgement": "the signal from the wishbone bus that indicates the completion of a transfer"
     },
     "Logical Operators": [
       "==",
@@ -112,28 +94,26 @@
       "##1"
     ],
     "Logical Operators Explanation": {
-      "==": "equality check",
-      "&": "logical AND operator to combine conditions",
-      "|->": "non-overlapped implication operator",
-      "##1": "indicates that the consequent must hold one clock cycle later"
+      "==": "checks equality between the current value and a specified state",
+      "&": "a logical AND operator requiring both conditions to be true",
+      "|->": "an implication operator meaning that if the condition on the left is met then the condition on the right must hold at the specified timing",
+      "##1": "a delay operator that specifies a delay of one clock cycle before evaluating the right-hand side condition"
     },
-    "Assertion Explaination": "If the state machine is in the third burst state and the acknowledgment is asserted at the current clock cycle, then one clock cycle later it must move to the waiting-for-acknowledgment state."
+    "Assertion Explaination": "if the state register equals third burst state and the wishbone acknowledgement is asserted in the current cycle, then one cycle later the state register must equal waiting for acknowledgement"
   },
   "Assertion 5": {
     "clock signal condition": "@(posedge i_clk)",
     "disable condition": "",
-    "logical expression": "(wishbone_st == WB_WAIT_ACK) & (extra_write_r || !i_wb_ack) |-> ##1 (wishbone_st == WB_WAIT_ACK)",
+    "logical expression": "(state register equals waiting for acknowledgement and (pending extra write is asserted or wishbone acknowledgement is not asserted)) |-> ##1 (state register equals waiting for acknowledgement)",
     "Signals": [
-      "wishbone_st",
-      "WB_WAIT_ACK",
-      "extra_write_r",
-      "i_wb_ack"
+      "state register",
+      "pending extra write",
+      "wishbone acknowledgement"
     ],
     "Signal Explanations": {
-      "wishbone_st": "the current state of the Wishbone bus finite state machine",
-      "WB_WAIT_ACK": "the state where the bus is waiting for an acknowledgment",
-      "extra_write_r": "a registered flag indicating that an extra write is pending",
-      "i_wb_ack": "the input signal that acknowledges a Wishbone bus transfer"
+      "state register": "a register that holds the current state of the wishbone bus operation",
+      "pending extra write": "a flag indicating that an extra write request is buffered while a transaction is in progress",
+      "wishbone acknowledgement": "the signal from the wishbone bus that indicates the completion of a transfer"
     },
     "Logical Operators": [
       "==",
@@ -144,32 +124,28 @@
       "##1"
     ],
     "Logical Operators Explanation": {
-      "==": "equality check",
-      "&": "logical AND operator",
-      "||": "logical OR operator",
-      "!": "logical NOT operator",
-      "|->": "non-overlapped implication operator",
-      "##1": "ensures that the consequent holds one clock cycle later"
+      "==": "checks equality between the current value and a specified state",
+      "&": "a logical AND operator requiring both conditions to be true",
+      "||": "a logical OR operator where at least one condition must be true",
+      "!": "a negation operator that inverts the value of the signal",
+      "|->": "an implication operator meaning that if the condition on the left is met then the condition on the right must hold at the specified timing",
+      "##1": "a delay operator that specifies a delay of one clock cycle before evaluating the right-hand side condition"
     },
-    "Assertion Explaination": "If the state machine is in the waiting-for-acknowledgment state and either there is a pending extra write or the acknowledgment is not asserted at the current clock cycle, then one clock cycle later the machine must remain in the waiting-for-acknowledgment state."
+    "Assertion Explaination": "if the state register equals waiting for acknowledgement and either a pending extra write is asserted or the wishbone acknowledgement is not asserted in the current cycle, then one cycle later the state register must remain in waiting for acknowledgement"
   },
   "Assertion 6": {
     "clock signal condition": "@(posedge i_clk)",
     "disable condition": "",
-    "logical expression": "(wishbone_st == WB_WAIT_ACK) & (!extra_write_r && i_wb_ack) |-> ##1 (wishbone_st == WB_IDLE)",
+    "logical expression": "(state register equals waiting for acknowledgement and (pending extra write is not asserted and wishbone acknowledgement is asserted)) |-> ##1 (state register equals idle)",
     "Signals": [
-      "wishbone_st",
-      "WB_WAIT_ACK",
-      "extra_write_r",
-      "i_wb_ack",
-      "WB_IDLE"
+      "state register",
+      "pending extra write",
+      "wishbone acknowledgement"
     ],
     "Signal Explanations": {
-      "wishbone_st": "the current state of the Wishbone bus finite state machine",
-      "WB_WAIT_ACK": "the state where the bus is waiting for an acknowledgment",
-      "extra_write_r": "the registered flag indicating a pending extra write",
-      "i_wb_ack": "the input acknowledgment signal from the Wishbone bus",
-      "WB_IDLE": "the idle state of the Wishbone bus"
+      "state register": "a register that holds the current state of the wishbone bus operation",
+      "pending extra write": "a flag indicating that an extra write request is buffered while a transaction is in progress",
+      "wishbone acknowledgement": "the signal from the wishbone bus that indicates the completion of a transfer"
     },
     "Logical Operators": [
       "==",
@@ -180,13 +156,13 @@
       "##1"
     ],
     "Logical Operators Explanation": {
-      "==": "equality check",
-      "&": "logical AND operator used to combine multiple conditions",
-      "!": "logical NOT operator",
-      "&&": "logical AND operator combining the negated extra write flag and acknowledgment condition",
-      "|->": "non-overlapped implication operator",
-      "##1": "indicates that the consequent must hold in the next clock cycle"
+      "==": "checks equality between the current value and a specified state",
+      "&": "a logical AND operator at the outer level requiring both conditions to be true",
+      "!": "a negation operator that inverts the value of a signal",
+      "&&": "a logical AND operator used to combine conditions within a grouped expression",
+      "|->": "an implication operator meaning that if the condition on the left is met then the condition on the right must hold at the specified timing",
+      "##1": "a delay operator that specifies a delay of one clock cycle before evaluating the right-hand side condition"
     },
-    "Assertion Explaination": "If the state machine is in the waiting-for-acknowledgment state and there is no pending extra write while the acknowledgment is asserted at the current clock cycle, then one clock cycle later the machine must transition to the idle state."
+    "Assertion Explaination": "if the state register equals waiting for acknowledgement and there is no pending extra write while the wishbone acknowledgement is asserted in the current cycle, then one cycle later the state register must equal idle"
   }
 }

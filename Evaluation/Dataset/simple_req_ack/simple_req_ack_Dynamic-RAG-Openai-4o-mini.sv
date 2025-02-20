@@ -31,7 +31,7 @@ module simple_req_ack (
 
 assert property(@(posedge clk) disable iff(!rst_n) $rose(req) |-> ##2 $rose(ack));
 
-assert property (@(posedge clk) disable iff(!rst_n) (req |=> @(posedge clk) @(posedge clk) ack));
-assert property (@(posedge clk) disable iff(!rst_n) ($rose(req) |-> ##2 $rose(ack)) iff (req |=> @(posedge clk) @(posedge clk) ack));
+assert property (@(posedge clk) disable iff(!rst_n) (req |-> ##2 ack));
+assert property (@(posedge clk) disable iff(!rst_n) ($rose(req) |-> ##2 $rose(ack)) iff (req |-> ##2 ack));
 
 endmodule

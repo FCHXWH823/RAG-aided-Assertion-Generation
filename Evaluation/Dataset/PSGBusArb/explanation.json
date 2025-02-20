@@ -1,461 +1,704 @@
 {
-"Assertion 1": {
+  "Assertion 1": {
     "clock signal condition": "@(posedge clk)",
-    "disable condition": "",
+    "disable condition": "default disable iff (rst)",
     "logical expression": "(sel7 == 0 & req0 == 1) |=> (sel7 == 0)",
-    "Signals": ["sel7", "req0"],
+    "Signals": [
+      "sel7",
+      "req0"
+    ],
     "Signal Explanations": {
-        "sel7": "bus grant signal for requester 7",
-        "req0": "bus request signal from requester 0"
+      "sel7": "selector signal indicating if channel 7 is granted the bus",
+      "req0": "bus request signal from channel 0"
     },
-    "Logical Operators": ["==", "&", "|=>"],
+    "Logical Operators": [
+      "==",
+      "&",
+      "==",
+      "|=>",
+      "=="
+    ],
     "Logical Operators Explanation": {
-        "==": "equal",
-        "&": "logical AND",
-        "|=>": "non-overlapping implication meaning that if the antecedent holds in one cycle then the consequent must hold in the next cycle"
+      "==": "equal comparison",
+      "&": "logical AND operator",
+      "|=>": "non-overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the bus grant indicator for the channel seven is deasserted and the bus request for the channel zero is asserted, then in the following cycle the deasserted state of the channel seven grant is maintained"
-},
-"Assertion 2": {
+    "Assertion Explaination": "if the selector signal for channel 7 is low and the bus request from channel 0 is high, then in the next clock cycle the selector signal for channel 7 remains low"
+  },
+  "Assertion 2": {
     "clock signal condition": "@(posedge clk)",
-    "disable condition": "",
+    "disable condition": "default disable iff (rst)",
     "logical expression": "(sel7 == 0 & req1 == 1) |=> (sel7 == 0)",
-    "Signals": ["sel7", "req1"],
+    "Signals": [
+      "sel7",
+      "req1"
+    ],
     "Signal Explanations": {
-        "sel7": "bus grant signal for requester 7",
-        "req1": "bus request signal from requester 1"
+      "sel7": "selector signal indicating if channel 7 is granted the bus",
+      "req1": "bus request signal from channel 1"
     },
-    "Logical Operators": ["==", "&", "|=>"],
+    "Logical Operators": [
+      "==",
+      "&",
+      "==",
+      "|=>",
+      "=="
+    ],
     "Logical Operators Explanation": {
-        "==": "equal",
-        "&": "logical AND",
-        "|=>": "non-overlapping implication meaning that if the antecedent holds in one cycle then the consequent must hold in the next cycle"
+      "==": "equal comparison",
+      "&": "logical AND operator",
+      "|=>": "non-overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the bus grant indicator for the channel seven is deasserted and the bus request for the channel one is asserted, then in the next cycle the deasserted state of the channel seven grant is preserved"
-},
-"Assertion 3": {
+    "Assertion Explaination": "if the selector signal for channel 7 is low and the bus request from channel 1 is high, then in the next clock cycle the selector signal for channel 7 remains low"
+  },
+  "Assertion 3": {
     "clock signal condition": "@(posedge clk)",
-    "disable condition": "",
+    "disable condition": "default disable iff (rst)",
     "logical expression": "(sel7 == 1 & ack == 0) |=> (sel7 == 1)",
-    "Signals": ["sel7", "ack"],
+    "Signals": [
+      "sel7",
+      "ack"
+    ],
     "Signal Explanations": {
-        "sel7": "bus grant signal for requester 7",
-        "ack": "bus transfer completed signal"
+      "sel7": "selector signal indicating if channel 7 is granted the bus",
+      "ack": "signal indicating that the bus transfer is completed"
     },
-    "Logical Operators": ["==", "&", "|=>"],
+    "Logical Operators": [
+      "==",
+      "&",
+      "==",
+      "|=>",
+      "=="
+    ],
     "Logical Operators Explanation": {
-        "==": "equal",
-        "&": "logical AND",
-        "|=>": "non-overlapping implication meaning that if the antecedent holds in one cycle then the consequent must hold in the next cycle"
+      "==": "equal comparison",
+      "&": "logical AND operator",
+      "|=>": "non-overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the bus grant indicator for the channel seven is asserted and the bus transfer completion indicator is deasserted, then in the subsequent cycle the asserted state of the channel seven grant continues"
-},
-"Assertion 4": {
+    "Assertion Explaination": "if the selector signal for channel 7 is high and the bus transfer completion signal is low, then in the next clock cycle the selector signal for channel 7 remains high"
+  },
+  "Assertion 4": {
     "clock signal condition": "@(posedge clk)",
-    "disable condition": "",
+    "disable condition": "default disable iff (rst)",
     "logical expression": "(sel7 == 1 & ce == 0) |=> (sel7 == 1)",
-    "Signals": ["sel7", "ce"],
+    "Signals": [
+      "sel7",
+      "ce"
+    ],
     "Signal Explanations": {
-        "sel7": "bus grant signal for requester 7",
-        "ce": "clock enable signal"
+      "sel7": "selector signal indicating if channel 7 is granted the bus",
+      "ce": "clock enable signal"
     },
-    "Logical Operators": ["==", "&", "|=>"],
+    "Logical Operators": [
+      "==",
+      "&",
+      "==",
+      "|=>",
+      "=="
+    ],
     "Logical Operators Explanation": {
-        "==": "equal",
-        "&": "logical AND",
-        "|=>": "non-overlapping implication meaning that if the antecedent holds in one cycle then the consequent must hold in the next cycle"
+      "==": "equal comparison",
+      "&": "logical AND operator",
+      "|=>": "non-overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the bus grant indicator for the channel seven is asserted while the clock enable is deasserted, then the asserted state of that grant is maintained in the next cycle"
-},
-"Assertion 5": {
+    "Assertion Explaination": "if the selector signal for channel 7 is high and the clock enable signal is low, then in the next clock cycle the selector signal for channel 7 remains high"
+  },
+  "Assertion 5": {
     "clock signal condition": "@(posedge clk)",
-    "disable condition": "",
+    "disable condition": "default disable iff (rst)",
     "logical expression": "(sel7 == 0 & ack == 0) |=> (sel7 == 0)",
-    "Signals": ["sel7", "ack"],
+    "Signals": [
+      "sel7",
+      "ack"
+    ],
     "Signal Explanations": {
-        "sel7": "bus grant signal for requester 7",
-        "ack": "bus transfer completed signal"
+      "sel7": "selector signal indicating if channel 7 is granted the bus",
+      "ack": "signal indicating that the bus transfer is completed"
     },
-    "Logical Operators": ["==", "&", "|=>"],
+    "Logical Operators": [
+      "==",
+      "&",
+      "==",
+      "|=>",
+      "=="
+    ],
     "Logical Operators Explanation": {
-        "==": "equal",
-        "&": "logical AND",
-        "|=>": "non-overlapping implication meaning that if the antecedent holds in one cycle then the consequent must hold in the next cycle"
+      "==": "equal comparison",
+      "&": "logical AND operator",
+      "|=>": "non-overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the bus grant indicator for the channel seven is deasserted and the bus transfer completion indicator is also deasserted, then the deasserted state of that grant persists in the subsequent cycle"
-},
-"Assertion 6": {
+    "Assertion Explaination": "if the selector signal for channel 7 is low and the bus transfer completion signal is low, then in the next clock cycle the selector signal for channel 7 remains low"
+  },
+  "Assertion 6": {
     "clock signal condition": "@(posedge clk)",
-    "disable condition": "",
+    "disable condition": "default disable iff (rst)",
     "logical expression": "(sel7 == 0 & req2 == 1) |=> (sel7 == 0)",
-    "Signals": ["sel7", "req2"],
+    "Signals": [
+      "sel7",
+      "req2"
+    ],
     "Signal Explanations": {
-        "sel7": "bus grant signal for requester 7",
-        "req2": "bus request signal from requester 2"
+      "sel7": "selector signal indicating if channel 7 is granted the bus",
+      "req2": "bus request signal from channel 2"
     },
-    "Logical Operators": ["==", "&", "|=>"],
+    "Logical Operators": [
+      "==",
+      "&",
+      "==",
+      "|=>",
+      "=="
+    ],
     "Logical Operators Explanation": {
-        "==": "equal",
-        "&": "logical AND",
-        "|=>": "non-overlapping implication meaning that if the antecedent holds in one cycle then the consequent must hold in the next cycle"
+      "==": "equal comparison",
+      "&": "logical AND operator",
+      "|=>": "non-overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the bus grant indicator for the channel seven is deasserted and the bus request for the channel two is asserted, then the deasserted state of the grant is maintained in the following cycle"
-},
-"Assertion 7": {
+    "Assertion Explaination": "if the selector signal for channel 7 is low and the bus request from channel 2 is high, then in the next clock cycle the selector signal for channel 7 remains low"
+  },
+  "Assertion 7": {
     "clock signal condition": "@(posedge clk)",
-    "disable condition": "",
+    "disable condition": "default disable iff (rst)",
     "logical expression": "(sel7 == 0 & req3 == 1) |=> (sel7 == 0)",
-    "Signals": ["sel7", "req3"],
+    "Signals": [
+      "sel7",
+      "req3"
+    ],
     "Signal Explanations": {
-        "sel7": "bus grant signal for requester 7",
-        "req3": "bus request signal from requester 3"
+      "sel7": "selector signal indicating if channel 7 is granted the bus",
+      "req3": "bus request signal from channel 3"
     },
-    "Logical Operators": ["==", "&", "|=>"],
+    "Logical Operators": [
+      "==",
+      "&",
+      "==",
+      "|=>",
+      "=="
+    ],
     "Logical Operators Explanation": {
-        "==": "equal",
-        "&": "logical AND",
-        "|=>": "non-overlapping implication meaning that if the antecedent holds in one cycle then the consequent must hold in the next cycle"
+      "==": "equal comparison",
+      "&": "logical AND operator",
+      "|=>": "non-overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the indicator for granting the bus to channel seven is deasserted and the request from channel three is asserted, then in the next cycle the deasserted bus grant condition continues"
-},
-"Assertion 8": {
+    "Assertion Explaination": "if the selector signal for channel 7 is low and the bus request from channel 3 is high, then in the next clock cycle the selector signal for channel 7 remains low"
+  },
+  "Assertion 8": {
     "clock signal condition": "@(posedge clk)",
-    "disable condition": "",
+    "disable condition": "default disable iff (rst)",
     "logical expression": "(sel7 == 0 & req5 == 1) |=> (sel7 == 0)",
-    "Signals": ["sel7", "req5"],
+    "Signals": [
+      "sel7",
+      "req5"
+    ],
     "Signal Explanations": {
-        "sel7": "bus grant signal for requester 7",
-        "req5": "bus request signal from requester 5"
+      "sel7": "selector signal indicating if channel 7 is granted the bus",
+      "req5": "bus request signal from channel 5"
     },
-    "Logical Operators": ["==", "&", "|=>"],
+    "Logical Operators": [
+      "==",
+      "&",
+      "==",
+      "|=>",
+      "=="
+    ],
     "Logical Operators Explanation": {
-        "==": "equal",
-        "&": "logical AND",
-        "|=>": "non-overlapping implication meaning that if the antecedent holds in one cycle then the consequent must hold in the next cycle"
+      "==": "equal comparison",
+      "&": "logical AND operator",
+      "|=>": "non-overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the indicator for granting the bus to channel seven is deasserted and the request from channel five is asserted, then the deasserted condition of the grant is preserved in the next cycle"
-},
-"Assertion 9": {
+    "Assertion Explaination": "if the selector signal for channel 7 is low and the bus request from channel 5 is high, then in the next clock cycle the selector signal for channel 7 remains low"
+  },
+  "Assertion 9": {
     "clock signal condition": "@(posedge clk)",
-    "disable condition": "",
+    "disable condition": "default disable iff (rst)",
     "logical expression": "(sel7 == 0 & req6 == 1) |=> (sel7 == 0)",
-    "Signals": ["sel7", "req6"],
+    "Signals": [
+      "sel7",
+      "req6"
+    ],
     "Signal Explanations": {
-        "sel7": "bus grant signal for requester 7",
-        "req6": "bus request signal from requester 6"
+      "sel7": "selector signal indicating if channel 7 is granted the bus",
+      "req6": "bus request signal from channel 6"
     },
-    "Logical Operators": ["==", "&", "|=>"],
+    "Logical Operators": [
+      "==",
+      "&",
+      "==",
+      "|=>",
+      "=="
+    ],
     "Logical Operators Explanation": {
-        "==": "equal",
-        "&": "logical AND",
-        "|=>": "non-overlapping implication meaning that if the antecedent holds in one cycle then the consequent must hold in the next cycle"
+      "==": "equal comparison",
+      "&": "logical AND operator",
+      "|=>": "non-overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the grant status for channel seven is deasserted while the request for channel six is asserted, then the maintained state in the following cycle continues to be deasserted"
-},
-"Assertion 10": {
+    "Assertion Explaination": "if the selector signal for channel 7 is low and the bus request from channel 6 is high, then in the next clock cycle the selector signal for channel 7 remains low"
+  },
+  "Assertion 10": {
     "clock signal condition": "@(posedge clk)",
-    "disable condition": "",
+    "disable condition": "default disable iff (rst)",
     "logical expression": "(sel5 == 0 & req0 == 1) |=> (sel5 == 0)",
-    "Signals": ["sel5", "req0"],
+    "Signals": [
+      "sel5",
+      "req0"
+    ],
     "Signal Explanations": {
-        "sel5": "bus grant signal for requester 5",
-        "req0": "bus request signal from requester 0"
+      "sel5": "selector signal indicating if channel 5 is granted the bus",
+      "req0": "bus request signal from channel 0"
     },
-    "Logical Operators": ["==", "&", "|=>"],
+    "Logical Operators": [
+      "==",
+      "&",
+      "==",
+      "|=>",
+      "=="
+    ],
     "Logical Operators Explanation": {
-        "==": "equal",
-        "&": "logical AND",
-        "|=>": "non-overlapping implication meaning that if the antecedent holds in one cycle then the consequent must hold in the next cycle"
+      "==": "equal comparison",
+      "&": "logical AND operator",
+      "|=>": "non-overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the indicator for granting the bus to channel five is deasserted and the request from channel zero is asserted, then in the next cycle the deasserted state for channel five remains"
-},
-"Assertion 11": {
+    "Assertion Explaination": "if the selector signal for channel 5 is low and the bus request from channel 0 is high, then in the next clock cycle the selector signal for channel 5 remains low"
+  },
+  "Assertion 11": {
     "clock signal condition": "@(posedge clk)",
-    "disable condition": "",
+    "disable condition": "default disable iff (rst)",
     "logical expression": "(sel5 == 0 & req1 == 1) |=> (sel5 == 0)",
-    "Signals": ["sel5", "req1"],
+    "Signals": [
+      "sel5",
+      "req1"
+    ],
     "Signal Explanations": {
-        "sel5": "bus grant signal for requester 5",
-        "req1": "bus request signal from requester 1"
+      "sel5": "selector signal indicating if channel 5 is granted the bus",
+      "req1": "bus request signal from channel 1"
     },
-    "Logical Operators": ["==", "&", "|=>"],
+    "Logical Operators": [
+      "==",
+      "&",
+      "==",
+      "|=>",
+      "=="
+    ],
     "Logical Operators Explanation": {
-        "==": "equal",
-        "&": "logical AND",
-        "|=>": "non-overlapping implication meaning that if the antecedent holds in one cycle then the consequent must hold in the next cycle"
+      "==": "equal comparison",
+      "&": "logical AND operator",
+      "|=>": "non-overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the grant indicator for channel five is deasserted and the request from channel one is asserted, then the deasserted state is maintained in the subsequent cycle"
-},
-"Assertion 12": {
+    "Assertion Explaination": "if the selector signal for channel 5 is low and the bus request from channel 1 is high, then in the next clock cycle the selector signal for channel 5 remains low"
+  },
+  "Assertion 12": {
     "clock signal condition": "@(posedge clk)",
-    "disable condition": "",
+    "disable condition": "default disable iff (rst)",
     "logical expression": "(sel5 == 1 & ce == 0) |=> (sel5 == 1)",
-    "Signals": ["sel5", "ce"],
+    "Signals": [
+      "sel5",
+      "ce"
+    ],
     "Signal Explanations": {
-        "sel5": "bus grant signal for requester 5",
-        "ce": "clock enable signal"
+      "sel5": "selector signal indicating if channel 5 is granted the bus",
+      "ce": "clock enable signal"
     },
-    "Logical Operators": ["==", "&", "|=>"],
+    "Logical Operators": [
+      "==",
+      "&",
+      "==",
+      "|=>",
+      "=="
+    ],
     "Logical Operators Explanation": {
-        "==": "equal",
-        "&": "logical AND",
-        "|=>": "non-overlapping implication meaning that if the antecedent holds in one cycle then the consequent must hold in the next cycle"
+      "==": "equal comparison",
+      "&": "logical AND operator",
+      "|=>": "non-overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the grant indicator for channel five is asserted while the clock enable is deasserted, then that asserted state continues in the next cycle"
-},
-"Assertion 13": {
+    "Assertion Explaination": "if the selector signal for channel 5 is high and the clock enable signal is low, then in the next clock cycle the selector signal for channel 5 remains high"
+  },
+  "Assertion 13": {
     "clock signal condition": "@(posedge clk)",
-    "disable condition": "",
+    "disable condition": "default disable iff (rst)",
     "logical expression": "(sel5 == 1 & ack == 0) |=> (sel5 == 1)",
-    "Signals": ["sel5", "ack"],
+    "Signals": [
+      "sel5",
+      "ack"
+    ],
     "Signal Explanations": {
-        "sel5": "bus grant signal for requester 5",
-        "ack": "bus transfer completed signal"
+      "sel5": "selector signal indicating if channel 5 is granted the bus",
+      "ack": "signal indicating that the bus transfer is completed"
     },
-    "Logical Operators": ["==", "&", "|=>"],
+    "Logical Operators": [
+      "==",
+      "&",
+      "==",
+      "|=>",
+      "=="
+    ],
     "Logical Operators Explanation": {
-        "==": "equal",
-        "&": "logical AND",
-        "|=>": "non-overlapping implication meaning that if the antecedent holds in one cycle then the consequent must hold in the next cycle"
+      "==": "equal comparison",
+      "&": "logical AND operator",
+      "|=>": "non-overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the indicator for granting the bus to channel five is asserted and the transfer completion indicator is deasserted, then in the next cycle the asserted condition persists"
-},
-"Assertion 14": {
+    "Assertion Explaination": "if the selector signal for channel 5 is high and the bus transfer completion signal is low, then in the next clock cycle the selector signal for channel 5 remains high"
+  },
+  "Assertion 14": {
     "clock signal condition": "@(posedge clk)",
-    "disable condition": "",
+    "disable condition": "default disable iff (rst)",
     "logical expression": "(sel5 == 0 & ack == 0) |=> (sel5 == 0)",
-    "Signals": ["sel5", "ack"],
+    "Signals": [
+      "sel5",
+      "ack"
+    ],
     "Signal Explanations": {
-        "sel5": "bus grant signal for requester 5",
-        "ack": "bus transfer completed signal"
+      "sel5": "selector signal indicating if channel 5 is granted the bus",
+      "ack": "signal indicating that the bus transfer is completed"
     },
-    "Logical Operators": ["==", "&", "|=>"],
+    "Logical Operators": [
+      "==",
+      "&",
+      "==",
+      "|=>",
+      "=="
+    ],
     "Logical Operators Explanation": {
-        "==": "equal",
-        "&": "logical AND",
-        "|=>": "non-overlapping implication meaning that if the antecedent holds in one cycle then the consequent must hold in the next cycle"
+      "==": "equal comparison",
+      "&": "logical AND operator",
+      "|=>": "non-overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the grant indicator for channel five is deasserted and the transfer completion indicator is deasserted as well, then that deasserted state remains in the subsequent cycle"
-},
-"Assertion 15": {
+    "Assertion Explaination": "if the selector signal for channel 5 is low and the bus transfer completion signal is low, then in the next clock cycle the selector signal for channel 5 remains low"
+  },
+  "Assertion 15": {
     "clock signal condition": "@(posedge clk)",
-    "disable condition": "",
+    "disable condition": "default disable iff (rst)",
     "logical expression": "(sel5 == 0 & ce == 0) |=> (sel5 == 0)",
-    "Signals": ["sel5", "ce"],
+    "Signals": [
+      "sel5",
+      "ce"
+    ],
     "Signal Explanations": {
-        "sel5": "bus grant signal for requester 5",
-        "ce": "clock enable signal"
+      "sel5": "selector signal indicating if channel 5 is granted the bus",
+      "ce": "clock enable signal"
     },
-    "Logical Operators": ["==", "&", "|=>"],
+    "Logical Operators": [
+      "==",
+      "&",
+      "==",
+      "|=>",
+      "=="
+    ],
     "Logical Operators Explanation": {
-        "==": "equal",
-        "&": "logical AND",
-        "|=>": "non-overlapping implication meaning that if the antecedent holds in one cycle then the consequent must hold in the next cycle"
+      "==": "equal comparison",
+      "&": "logical AND operator",
+      "|=>": "non-overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the indicator for granting the bus to channel five is deasserted and the clock enable is deasserted, then the deasserted condition continues in the next cycle"
-},
-"Assertion 16": {
+    "Assertion Explaination": "if the selector signal for channel 5 is low and the clock enable signal is low, then in the next clock cycle the selector signal for channel 5 remains low"
+  },
+  "Assertion 16": {
     "clock signal condition": "@(posedge clk)",
-    "disable condition": "",
+    "disable condition": "default disable iff (rst)",
     "logical expression": "(sel5 == 0 & req2 == 1) |=> (sel5 == 0)",
-    "Signals": ["sel5", "req2"],
+    "Signals": [
+      "sel5",
+      "req2"
+    ],
     "Signal Explanations": {
-        "sel5": "bus grant signal for requester 5",
-        "req2": "bus request signal from requester 2"
+      "sel5": "selector signal indicating if channel 5 is granted the bus",
+      "req2": "bus request signal from channel 2"
     },
-    "Logical Operators": ["==", "&", "|=>"],
+    "Logical Operators": [
+      "==",
+      "&",
+      "==",
+      "|=>",
+      "=="
+    ],
     "Logical Operators Explanation": {
-        "==": "equal",
-        "&": "logical AND",
-        "|=>": "non-overlapping implication meaning that if the antecedent holds in one cycle then the consequent must hold in the next cycle"
+      "==": "equal comparison",
+      "&": "logical AND operator",
+      "|=>": "non-overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the grant indicator for channel five is deasserted and the bus request for channel two is asserted, then the deasserted state persists in the following cycle"
-},
-"Assertion 17": {
+    "Assertion Explaination": "if the selector signal for channel 5 is low and the bus request from channel 2 is high, then in the next clock cycle the selector signal for channel 5 remains low"
+  },
+  "Assertion 17": {
     "clock signal condition": "@(posedge clk)",
-    "disable condition": "",
+    "disable condition": "default disable iff (rst)",
     "logical expression": "(sel5 == 0 & req3 == 1) |=> (sel5 == 0)",
-    "Signals": ["sel5", "req3"],
+    "Signals": [
+      "sel5",
+      "req3"
+    ],
     "Signal Explanations": {
-        "sel5": "bus grant signal for requester 5",
-        "req3": "bus request signal from requester 3"
+      "sel5": "selector signal indicating if channel 5 is granted the bus",
+      "req3": "bus request signal from channel 3"
     },
-    "Logical Operators": ["==", "&", "|=>"],
+    "Logical Operators": [
+      "==",
+      "&",
+      "==",
+      "|=>",
+      "=="
+    ],
     "Logical Operators Explanation": {
-        "==": "equal",
-        "&": "logical AND",
-        "|=>": "non-overlapping implication meaning that if the antecedent holds in one cycle then the consequent must hold in the next cycle"
+      "==": "equal comparison",
+      "&": "logical AND operator",
+      "|=>": "non-overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the indicator for granting the bus to channel five is deasserted and the request from channel three is asserted, then the maintained deasserted condition holds in the next cycle"
-},
-"Assertion 18": {
+    "Assertion Explaination": "if the selector signal for channel 5 is low and the bus request from channel 3 is high, then in the next clock cycle the selector signal for channel 5 remains low"
+  },
+  "Assertion 18": {
     "clock signal condition": "@(posedge clk)",
-    "disable condition": "",
+    "disable condition": "default disable iff (rst)",
     "logical expression": "(sel5 == 0 & req4 == 1) |=> (sel5 == 0)",
-    "Signals": ["sel5", "req4"],
+    "Signals": [
+      "sel5",
+      "req4"
+    ],
     "Signal Explanations": {
-        "sel5": "bus grant signal for requester 5",
-        "req4": "bus request signal from requester 4"
+      "sel5": "selector signal indicating if channel 5 is granted the bus",
+      "req4": "bus request signal from channel 4"
     },
-    "Logical Operators": ["==", "&", "|=>"],
+    "Logical Operators": [
+      "==",
+      "&",
+      "==",
+      "|=>",
+      "=="
+    ],
     "Logical Operators Explanation": {
-        "==": "equal",
-        "&": "logical AND",
-        "|=>": "non-overlapping implication meaning that if the antecedent holds in one cycle then the consequent must hold in the next cycle"
+      "==": "equal comparison",
+      "&": "logical AND operator",
+      "|=>": "non-overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the grant indicator for channel five is deasserted and the request from channel four is asserted, then the deasserted state is maintained in the subsequent cycle"
-},
-"Assertion 19": {
+    "Assertion Explaination": "if the selector signal for channel 5 is low and the bus request from channel 4 is high, then in the next clock cycle the selector signal for channel 5 remains low"
+  },
+  "Assertion 19": {
     "clock signal condition": "@(posedge clk)",
-    "disable condition": "",
+    "disable condition": "default disable iff (rst)",
     "logical expression": "(sel5 == 0 & req5 == 0) |=> (sel5 == 0)",
-    "Signals": ["sel5", "req5"],
+    "Signals": [
+      "sel5",
+      "req5"
+    ],
     "Signal Explanations": {
-        "sel5": "bus grant signal for requester 5",
-        "req5": "bus request signal from requester 5"
+      "sel5": "selector signal indicating if channel 5 is granted the bus",
+      "req5": "bus request signal from channel 5"
     },
-    "Logical Operators": ["==", "&", "|=>"],
+    "Logical Operators": [
+      "==",
+      "&",
+      "==",
+      "|=>",
+      "=="
+    ],
     "Logical Operators Explanation": {
-        "==": "equal",
-        "&": "logical AND",
-        "|=>": "non-overlapping implication meaning that if the antecedent holds in one cycle then the consequent must hold in the next cycle"
+      "==": "equal comparison",
+      "&": "logical AND operator",
+      "|=>": "non-overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the indicator for granting the bus to channel five is deasserted and the corresponding bus request is also deasserted, then the deasserted state persists in the next cycle"
-},
-"Assertion 20": {
+    "Assertion Explaination": "if the selector signal for channel 5 is low and the bus request from channel 5 is low, then in the next clock cycle the selector signal for channel 5 remains low"
+  },
+  "Assertion 20": {
     "clock signal condition": "@(posedge clk)",
-    "disable condition": "",
+    "disable condition": "default disable iff (rst)",
     "logical expression": "(sel4 == 0 & req1 == 1) |=> (sel4 == 0)",
-    "Signals": ["sel4", "req1"],
+    "Signals": [
+      "sel4",
+      "req1"
+    ],
     "Signal Explanations": {
-        "sel4": "bus grant signal for requester 4",
-        "req1": "bus request signal from requester 1"
+      "sel4": "selector signal indicating if channel 4 is granted the bus",
+      "req1": "bus request signal from channel 1"
     },
-    "Logical Operators": ["==", "&", "|=>"],
+    "Logical Operators": [
+      "==",
+      "&",
+      "==",
+      "|=>",
+      "=="
+    ],
     "Logical Operators Explanation": {
-        "==": "equal",
-        "&": "logical AND",
-        "|=>": "non-overlapping implication meaning that if the antecedent holds in one cycle then the consequent must hold in the next cycle"
+      "==": "equal comparison",
+      "&": "logical AND operator",
+      "|=>": "non-overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the grant indicator for channel four is deasserted and the bus request from channel one is asserted, then the deasserted condition for channel four is maintained in the following cycle"
-},
-"Assertion 21": {
+    "Assertion Explaination": "if the selector signal for channel 4 is low and the bus request from channel 1 is high, then in the next clock cycle the selector signal for channel 4 remains low"
+  },
+  "Assertion 21": {
     "clock signal condition": "@(posedge clk)",
-    "disable condition": "",
+    "disable condition": "default disable iff (rst)",
     "logical expression": "(sel4 == 1 & ack == 0) |=> (sel4 == 1)",
-    "Signals": ["sel4", "ack"],
+    "Signals": [
+      "sel4",
+      "ack"
+    ],
     "Signal Explanations": {
-        "sel4": "bus grant signal for requester 4",
-        "ack": "bus transfer completed signal"
+      "sel4": "selector signal indicating if channel 4 is granted the bus",
+      "ack": "signal indicating that the bus transfer is completed"
     },
-    "Logical Operators": ["==", "&", "|=>"],
+    "Logical Operators": [
+      "==",
+      "&",
+      "==",
+      "|=>",
+      "=="
+    ],
     "Logical Operators Explanation": {
-        "==": "equal",
-        "&": "logical AND",
-        "|=>": "non-overlapping implication meaning that if the antecedent holds in one cycle then the consequent must hold in the next cycle"
+      "==": "equal comparison",
+      "&": "logical AND operator",
+      "|=>": "non-overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the grant indicator for channel four is asserted and the transfer complete indicator is deasserted, then the asserted condition continues into the next cycle"
-},
-"Assertion 22": {
+    "Assertion Explaination": "if the selector signal for channel 4 is high and the bus transfer completion signal is low, then in the next clock cycle the selector signal for channel 4 remains high"
+  },
+  "Assertion 22": {
     "clock signal condition": "@(posedge clk)",
-    "disable condition": "",
+    "disable condition": "default disable iff (rst)",
     "logical expression": "(sel4 == 0 & ack == 0) |=> (sel4 == 0)",
-    "Signals": ["sel4", "ack"],
+    "Signals": [
+      "sel4",
+      "ack"
+    ],
     "Signal Explanations": {
-        "sel4": "bus grant signal for requester 4",
-        "ack": "bus transfer completed signal"
+      "sel4": "selector signal indicating if channel 4 is granted the bus",
+      "ack": "signal indicating that the bus transfer is completed"
     },
-    "Logical Operators": ["==", "&", "|=>"],
+    "Logical Operators": [
+      "==",
+      "&",
+      "==",
+      "|=>",
+      "=="
+    ],
     "Logical Operators Explanation": {
-        "==": "equal",
-        "&": "logical AND",
-        "|=>": "non-overlapping implication meaning that if the antecedent holds in one cycle then the consequent must hold in the next cycle"
+      "==": "equal comparison",
+      "&": "logical AND operator",
+      "|=>": "non-overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the indicator for granting the bus to channel four is deasserted and the transfer completion indicator is deasserted as well, then the deasserted state is maintained in the following cycle"
-},
-"Assertion 23": {
+    "Assertion Explaination": "if the selector signal for channel 4 is low and the bus transfer completion signal is low, then in the next clock cycle the selector signal for channel 4 remains low"
+  },
+  "Assertion 23": {
     "clock signal condition": "@(posedge clk)",
-    "disable condition": "",
+    "disable condition": "default disable iff (rst)",
     "logical expression": "(sel4 == 0 & ce == 0) |=> (sel4 == 0)",
-    "Signals": ["sel4", "ce"],
+    "Signals": [
+      "sel4",
+      "ce"
+    ],
     "Signal Explanations": {
-        "sel4": "bus grant signal for requester 4",
-        "ce": "clock enable signal"
+      "sel4": "selector signal indicating if channel 4 is granted the bus",
+      "ce": "clock enable signal"
     },
-    "Logical Operators": ["==", "&", "|=>"],
+    "Logical Operators": [
+      "==",
+      "&",
+      "==",
+      "|=>",
+      "=="
+    ],
     "Logical Operators Explanation": {
-        "==": "equal",
-        "&": "logical AND",
-        "|=>": "non-overlapping implication meaning that if the antecedent holds in one cycle then the consequent must hold in the next cycle"
+      "==": "equal comparison",
+      "&": "logical AND operator",
+      "|=>": "non-overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the grant indicator for channel four is deasserted and the clock enable is deasserted, then the deasserted condition continues in the next cycle"
-},
-"Assertion 24": {
+    "Assertion Explaination": "if the selector signal for channel 4 is low and the clock enable signal is low, then in the next clock cycle the selector signal for channel 4 remains low"
+  },
+  "Assertion 24": {
     "clock signal condition": "@(posedge clk)",
-    "disable condition": "",
+    "disable condition": "default disable iff (rst)",
     "logical expression": "(sel4 == 1 & ce == 0) |=> (sel4 == 1)",
-    "Signals": ["sel4", "ce"],
+    "Signals": [
+      "sel4",
+      "ce"
+    ],
     "Signal Explanations": {
-        "sel4": "bus grant signal for requester 4",
-        "ce": "clock enable signal"
+      "sel4": "selector signal indicating if channel 4 is granted the bus",
+      "ce": "clock enable signal"
     },
-    "Logical Operators": ["==", "&", "|=>"],
+    "Logical Operators": [
+      "==",
+      "&",
+      "==",
+      "|=>",
+      "=="
+    ],
     "Logical Operators Explanation": {
-        "==": "equal",
-        "&": "logical AND",
-        "|=>": "non-overlapping implication meaning that if the antecedent holds in one cycle then the consequent must hold in the next cycle"
+      "==": "equal comparison",
+      "&": "logical AND operator",
+      "|=>": "non-overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the grant indicator for channel four is asserted while the clock enable is deasserted, then the asserted condition is preserved in the subsequent cycle"
-},
-"Assertion 25": {
+    "Assertion Explaination": "if the selector signal for channel 4 is high and the clock enable signal is low, then in the next clock cycle the selector signal for channel 4 remains high"
+  },
+  "Assertion 25": {
     "clock signal condition": "@(posedge clk)",
-    "disable condition": "",
+    "disable condition": "default disable iff (rst)",
     "logical expression": "(sel4 == 0 & req2 == 1) |=> (sel4 == 0)",
-    "Signals": ["sel4", "req2"],
+    "Signals": [
+      "sel4",
+      "req2"
+    ],
     "Signal Explanations": {
-        "sel4": "bus grant signal for requester 4",
-        "req2": "bus request signal from requester 2"
+      "sel4": "selector signal indicating if channel 4 is granted the bus",
+      "req2": "bus request signal from channel 2"
     },
-    "Logical Operators": ["==", "&", "|=>"],
+    "Logical Operators": [
+      "==",
+      "&",
+      "==",
+      "|=>",
+      "=="
+    ],
     "Logical Operators Explanation": {
-        "==": "equal",
-        "&": "logical AND",
-        "|=>": "non-overlapping implication meaning that if the antecedent holds in one cycle then the consequent must hold in the next cycle"
+      "==": "equal comparison",
+      "&": "logical AND operator",
+      "|=>": "non-overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the grant indicator for channel four is deasserted and the request from channel two is asserted, then the deasserted state for channel four continues in the next cycle"
-},
-"Assertion 26": {
+    "Assertion Explaination": "if the selector signal for channel 4 is low and the bus request from channel 2 is high, then in the next clock cycle the selector signal for channel 4 remains low"
+  },
+  "Assertion 26": {
     "clock signal condition": "@(posedge clk)",
-    "disable condition": "",
+    "disable condition": "default disable iff (rst)",
     "logical expression": "(sel4 == 0 & req3 == 1) |=> (sel4 == 0)",
-    "Signals": ["sel4", "req3"],
+    "Signals": [
+      "sel4",
+      "req3"
+    ],
     "Signal Explanations": {
-        "sel4": "bus grant signal for requester 4",
-        "req3": "bus request signal from requester 3"
+      "sel4": "selector signal indicating if channel 4 is granted the bus",
+      "req3": "bus request signal from channel 3"
     },
-    "Logical Operators": ["==", "&", "|=>"],
+    "Logical Operators": [
+      "==",
+      "&",
+      "==",
+      "|=>",
+      "=="
+    ],
     "Logical Operators Explanation": {
-        "==": "equal",
-        "&": "logical AND",
-        "|=>": "non-overlapping implication meaning that if the antecedent holds in one cycle then the consequent must hold in the next cycle"
+      "==": "equal comparison",
+      "&": "logical AND operator",
+      "|=>": "non-overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the indicator for granting the bus to channel four is deasserted and the request from channel three is asserted, then in the subsequent cycle the deasserted state is retained"
-},
-"Assertion 27": {
+    "Assertion Explaination": "if the selector signal for channel 4 is low and the bus request from channel 3 is high, then in the next clock cycle the selector signal for channel 4 remains low"
+  },
+  "Assertion 27": {
     "clock signal condition": "@(posedge clk)",
-    "disable condition": "",
+    "disable condition": "default disable iff (rst)",
     "logical expression": "(sel4 == 0 & req4 == 0) |=> (sel4 == 0)",
-    "Signals": ["sel4", "req4"],
+    "Signals": [
+      "sel4",
+      "req4"
+    ],
     "Signal Explanations": {
-        "sel4": "bus grant signal for requester 4",
-        "req4": "bus request signal from requester 4"
+      "sel4": "selector signal indicating if channel 4 is granted the bus",
+      "req4": "bus request signal from channel 4"
     },
-    "Logical Operators": ["==", "&", "|=>"],
+    "Logical Operators": [
+      "==",
+      "&",
+      "==",
+      "|=>",
+      "=="
+    ],
     "Logical Operators Explanation": {
-        "==": "equal",
-        "&": "logical AND",
-        "|=>": "non-overlapping implication meaning that if the antecedent holds in one cycle then the consequent must hold in the next cycle"
+      "==": "equal comparison",
+      "&": "logical AND operator",
+      "|=>": "non-overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the grant indicator for channel four is deasserted and the request from channel four is also deasserted, then the deasserted state for channel four continues in the following cycle"
-}
+    "Assertion Explaination": "if the selector signal for channel 4 is low and the bus request from channel 4 is low, then in the next clock cycle the selector signal for channel 4 remains low"
+  }
 }

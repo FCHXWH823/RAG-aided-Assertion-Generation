@@ -1,19 +1,19 @@
 {
 "Assertion 1": {
-    "clock signal condition": "@(posedge clk)",
-    "disable condition": "",
-    "logical expression": "s_eventually (rst == 1 || disp_ena == 1)",
-    "Signals": ["rst", "disp_ena"],
-    "Signal Explanations": {
-        "rst": "reset input signal of the verilog module",
-        "disp_ena": "display enable signal that is active when the current pixel is within the valid display area"
-    },
-    "Logical Operators": ["==", "||", "s_eventually"],
-    "Logical Operators Explanation": {
-        "==": "checks if two values are equal",
-        "||": "logical OR; returns true if at least one of the operands is true",
-        "s_eventually": "a temporal operator indicating that the contained condition is required to occur at some future clock cycle"
-    },
-    "Assertion Explaination": "it is eventually ensured that either the reset input signal is equal to its active value as determined by an equality check, or the display enable signal is equal to its active value as determined by an equality check; the OR operation combines these conditions so that if one holds, the overall requirement is satisfied"
+"clock signal condition": "@(posedge clk)",
+"disable condition": "none",
+"logical expression": "s_eventually (rst == 1 || disp_ena == 1)",
+"Signals": ["rst", "disp_ena"],
+"Signal Explanations": {
+          "rst": "reset signal of the verilog module",
+          "disp_ena": "display enable signal indicating if the display region is active based on current horizontal and vertical counts"
+},
+"Logical Operators": ["s_eventually", "||", "=="],
+"Logical Operators Explanation": {
+          "s_eventually": "a temporal operator indicating that the contained condition is required to occur at some future clock cycle (eventually)",
+          "||": "logical OR, meaning the condition is true if at least one subcondition holds",
+          "==": "equality operator comparing a signal's value with a constant"
+},
+"Assertion Explaination": "eventually, the condition where either the reset control is active or the display enable is active must occur"
 }
 }

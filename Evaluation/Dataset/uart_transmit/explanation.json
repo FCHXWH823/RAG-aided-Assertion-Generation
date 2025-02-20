@@ -1,18 +1,27 @@
 {
   "Assertion 1": {
     "clock signal condition": "@(posedge clk)",
-    "disable condition": "",
-    "logical expression": "rst == 1 || tx_state == 0",
-    "Signals": ["rst", "tx_state"],
+    "disable condition": "default disable iff (rst)",
+    "logical expression": "s_eventually rst == 1 || tx_state == 0",
+    "Signals": [
+      "rst",
+      "tx_state"
+    ],
     "Signal Explanations": {
-      "rst": "the input used to asynchronously reset and initialize the module",
-      "tx_state": "the internal indicator representing whether the transmission process is active or idle (0 indicates idle)"
+      "rst": "reset signal",
+      "tx_state": "transmission state indicator that is low (0) during idle and high (1) during active transmission"
     },
-    "Logical Operators": ["==", "||"],
+    "Logical Operators": [
+      "s_eventually",
+      "==",
+      "||",
+      "=="
+    ],
     "Logical Operators Explanation": {
-      "==": "checks for equality between two signals",
-      "||": "evaluates as true if at least one of the connected conditions is true"
+      "s_eventually": "a temporal operator indicating that the contained condition must occur at some future clock cycle (eventually)",
+      "==": "equal to",
+      "||": "logical OR operator meaning that at least one of the conditions must be satisfied"
     },
-    "Assertion Explaination": "using a logical OR operator, the assertion verifies that either the signal responsible for initializing the module is at its active state, or the internal indicator confirms that the transmission is not active; in other words, it ensures that eventually the module is either being reset or remains in the idle state required by the design"
+    "Assertion Explaination": "Eventually, either the reset condition is asserted or the transmission state indicator shows that the module is idle"
   }
 }

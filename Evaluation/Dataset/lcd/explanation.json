@@ -1,18 +1,19 @@
 {
-"Assertion 1": {
-"clock signal condition": "@(posedge clk)",
-"disable condition": "",
-"logical expression": "lcd_enable == 0 || state == 2",
-"Signals": ["lcd_enable", "state"],
-"Signal Explanations": {
-  "lcd_enable": "the control signal that determines whether the lcd bus command sequence is activated",
-  "state": "the variable representing the current phase of initialization or command execution within the lcd control state machine"
-},
-"Logical Operators": ["==", "||"],
-"Logical Operators Explanation": {
-  "==": "checks if two values are equal",
-  "||": "logical OR that evaluates to true if at least one of its operands is true"
-},
-"Assertion Explaination": "on every positive clock edge, eventually either the control signal for the lcd bus operation is deactivated or the state machine reaches its idle phase that denotes the completion of the initialization sequence"
-}
+  "Assertion 1": {
+    "clock signal condition": "@(posedge clk)",
+    "disable condition": "none",
+    "logical expression": "s_eventually (lcd_enable == 0 || state == 2)",
+    "Signals": ["lcd_enable", "state"],
+    "Signal Explanations": {
+      "lcd_enable": "indicates whether an LCD command should be transmitted (active high triggers a new transfer)",
+      "state": "represents the current state of the LCD controller FSM, with a value of 2 meaning that initialization is complete and the module is ready to accept new commands"
+    },
+    "Logical Operators": ["s_eventually", "==", "||"],
+    "Logical Operators Explanation": {
+      "s_eventually": "a temporal operator indicating that the contained condition is required to occur at some future clock cycle",
+      "==": "evaluates equality between two values",
+      "||": "a logical OR operator that is true if at least one of its operands is true"
+    },
+    "Assertion Explaination": "eventually the condition will be met that either the signal for triggering an LCD command is inactive (0) or the condition indicating that the controller is in the ready state (state equal to the ready value) holds"
+  }
 }

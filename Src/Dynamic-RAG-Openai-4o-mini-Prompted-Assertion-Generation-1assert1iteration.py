@@ -67,15 +67,15 @@ text_retriever = text_store.as_retriever()
 
 # prompt
 system_prompt = (
-    "You are a helpful bot that help me answer questions."
-    "Use the following pieces of retrieved context to answer the question. "
+    "You are a helpful bot that generate the assertion satisfying some requirements for a given verilog code."
+    "Use the following pieces of retrieved context to help answer the question. "
     "\n\n"
     "{context}"
 )
 prompt = ChatPromptTemplate.from_messages(
     [
         ("system", system_prompt),
-        ("human","{input}"),
+        ("human","Given Verilog code snippet as below: \n{code}\n Please generate such an assertion for it following the description:{input}\nThe output format should STRICTLY follow :\n{assertion_format}\nWITHOUT other things."),
     ]
 )
 
@@ -159,6 +159,8 @@ with open(f'Results/Dynamic-RAG-Openai-4o-mini-Prompted-Assertion-Generation-Res
     csv_writer = csv.writer(csv_file)
     csv_writer.writerow(['Master Module','Code','golden_assertions','llm_assertions'])
     for folder in os.listdir("Evaluation/Dataset/"):
+        # if "delay2" not in folder:
+        #     continue 
         folder_path = os.path.join("Evaluation/Dataset/",folder)
         if os.path.isdir(folder_path):
             with open(folder_path+"/"+folder+".sv","r") as file:
@@ -183,13 +185,14 @@ with open(f'Results/Dynamic-RAG-Openai-4o-mini-Prompted-Assertion-Generation-Res
 
                 prompt = f"Given Verilog code snippet as below: \n{code}\n Please generate such an assertion for it following the description:{explanation}\nThe output format should STRICTLY follow :\n{assertion_format}\nWITHOUT other things."
 
-                llm_response = rag_chain.invoke({"input":prompt})["answer"]
+                llm_result = rag_chain.invoke({"code":code,"input":explanation,"assertion_format":assertion_format})
+                llm_response = llm_result["answer"]
 
                 # assertion checker
                 nItChecker = 3
                 for it in range(nItChecker):
                     checker_prompt = assertion_checker_prompt(llm_response,assertion_format)
-                    llm_response = rag_chain.invoke({"input":prompt})["answer"]
+                    llm_response = rag_chain.invoke({"code":code,"input":explanation,"assertion_format":assertion_format})["answer"]
 
                 i += 1
                 match = re.search(r'assert property\s*\(\s*(.*?)\s*\)\s*;', llm_response, re.DOTALL)

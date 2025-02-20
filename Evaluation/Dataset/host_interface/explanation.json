@@ -1,198 +1,198 @@
 {
-"Assertion 1": {
-"clock signal condition": "@(posedge HCLK)",
-"disable condition": "",
-"logical expression": "(sample_bus == 1) |-> (HREADYOUT == 1)",
-"Signals": ["sample_bus", "HREADYOUT"],
-"Signal Explanations": {
-  "sample_bus": "the signal that controls when the bus signals are sampled (it is asserted when both the master's ready signal and the slave's ready signal allow the sampling)",
-  "HREADYOUT": "the output signal that indicates to the master that the slave is ready to proceed with the transaction"
-},
-"Logical Operators": ["==", "|->"],
-"Logical Operators Explanation": {
-  "==": "tests equality between two values",
-  "|->": "if the antecedent condition is true then the consequent condition must be true (implication)"
-},
-"Assertion Explaination": "When the condition to sample the bus is met, it implies that the output indicating readiness to the master must be active."
-},
-"Assertion 2": {
-"clock signal condition": "@(posedge HCLK)",
-"disable condition": "",
-"logical expression": "(buffer_read_en == 1 & read_wait == 1) |-> (HREADYOUT == 0)",
-"Signals": ["buffer_read_en", "read_wait", "HREADYOUT"],
-"Signal Explanations": {
-  "buffer_read_en": "the signal that indicates a read request from the CRC data register buffer",
-  "read_wait": "the signal that indicates a wait state during a read operation",
-  "HREADYOUT": "the output signal that tells the master whether the slave is ready to proceed"
-},
-"Logical Operators": ["==", "&", "|->"],
-"Logical Operators Explanation": {
-  "==": "checks that a signal’s value equals a specified constant",
-  "&": "logical AND that combines conditions",
-  "|->": "implies that if the left-hand side condition holds, then the right-hand side condition must hold"
-},
-"Assertion Explaination": "If both the read request from the buffer is active and a wait state is indicated, then it implies that the ready output to the master should be deasserted."
-},
-"Assertion 3": {
-"clock signal condition": "@(posedge HCLK)",
-"disable condition": "",
-"logical expression": "(ahb_enable == 0) |-> (HREADYOUT == 1)",
-"Signals": ["ahb_enable", "HREADYOUT"],
-"Signal Explanations": {
-  "ahb_enable": "the signal that indicates an active AHB transfer; it is true when a non-sequential transfer occurs",
-  "HREADYOUT": "the signal sent to the master that indicates the interface is ready"
-},
-"Logical Operators": ["==", "|->"],
-"Logical Operators Explanation": {
-  "==": "verifies that a signal’s value matches a given constant",
-  "|->": "specifies that if the condition on the left is met, then the condition on the right must follow"
-},
-"Assertion Explaination": "If an AHB transfer is not enabled, then it implies that the interface must signal it is ready to the master."
-},
-"Assertion 4": {
-"clock signal condition": "@(posedge HCLK)",
-"disable condition": "",
-"logical expression": "(write_en == 0) |-> (crc_idr_en == 0)",
-"Signals": ["write_en", "crc_idr_en"],
-"Signal Explanations": {
-  "write_en": "the signal that indicates a write operation is taking place",
-  "crc_idr_en": "the write enable signal for the register that holds the identifier value for CRC"
-},
-"Logical Operators": ["==", "|->"],
-"Logical Operators Explanation": {
-  "==": "ensures that the value of a signal equals a specific constant",
-  "|->": "ensures that if the first condition is true, then the second condition must also be true"
-},
-"Assertion Explaination": "If no write operation is occurring, then it implies that the write enable for the CRC identifier register must be deactivated."
-},
-"Assertion 5": {
-"clock signal condition": "@(posedge HCLK)",
-"disable condition": "",
-"logical expression": "(write_en == 1 & crc_idr_sel == 1) |-> (crc_idr_en == 1)",
-"Signals": ["write_en", "crc_idr_sel", "crc_idr_en"],
-"Signal Explanations": {
-  "write_en": "the signal that indicates a write transaction is taking place",
-  "crc_idr_sel": "the signal that indicates selection of the CRC identifier register based on the address decoding",
-  "crc_idr_en": "the write enable signal for the CRC identifier register"
-},
-"Logical Operators": ["==", "&", "|->"],
-"Logical Operators Explanation": {
-  "==": "checks for equality of values",
-  "&": "combines multiple conditions logically, requiring both to be true",
-  "|->": "establishes that if the combined condition is met, then the specified outcome must follow"
-},
-"Assertion Explaination": "If a write operation is active and the register selection corresponds to the CRC identifier register, then it implies that the write enable for that register must be active."
-},
-"Assertion 6": {
-"clock signal condition": "@(posedge HCLK)",
-"disable condition": "",
-"logical expression": "(crc_idr_sel == 0) |-> (crc_idr_en == 0)",
-"Signals": ["crc_idr_sel", "crc_idr_en"],
-"Signal Explanations": {
-  "crc_idr_sel": "the signal indicating whether the CRC identifier register is selected",
-  "crc_idr_en": "the signal that enables writing to the CRC identifier register"
-},
-"Logical Operators": ["==", "|->"],
-"Logical Operators Explanation": {
-  "==": "verifies that a signal attains a given value",
-  "|->": "indicates that the satisfaction of the antecedent forces the consequent condition"
-},
-"Assertion Explaination": "If the selection for the CRC identifier register is not made, then it implies that the write enable for that register should be inactive."
-},
-"Assertion 7": {
-"clock signal condition": "@(posedge HCLK)",
-"disable condition": "",
-"logical expression": "(hselx_pp == 0) |-> (crc_idr_en == 0)",
-"Signals": ["hselx_pp", "crc_idr_en"],
-"Signal Explanations": {
-  "hselx_pp": "the pipelined signal that indicates whether the device is selected for the current transaction",
-  "crc_idr_en": "the signal that enables writing to the CRC identifier register"
-},
-"Logical Operators": ["==", "|->"],
-"Logical Operators Explanation": {
-  "==": "determines equality between a signal and a constant value",
-  "|->": "dictates that if the initial condition holds, then the following condition must also be true"
-},
-"Assertion Explaination": "If the interface is not selected, then it implies that the write enable for the CRC identifier register must be inactive."
-},
-"Assertion 8": {
-"clock signal condition": "@(posedge HCLK)",
-"disable condition": "",
-"logical expression": "(hwrite_pp == 0) |-> (crc_idr_en == 0)",
-"Signals": ["hwrite_pp", "crc_idr_en"],
-"Signal Explanations": {
-  "hwrite_pp": "the pipelined write signal indicating whether the current operation is a write",
-  "crc_idr_en": "the signal that controls writing into the CRC identifier register"
-},
-"Logical Operators": ["==", "|->"],
-"Logical Operators Explanation": {
-  "==": "compares a signal’s value to a constant",
-  "|->": "sets a condition such that if the first part is true then the second part must be true"
-},
-"Assertion Explaination": "If a write operation is not indicated in the pipelined stage, then it implies that the write enable for the CRC identifier register must be deasserted."
-},
-"Assertion 9": {
-"clock signal condition": "@(posedge HCLK)",
-"disable condition": "",
-"logical expression": "(write_en == 0) |-> (crc_poly_en == 0)",
-"Signals": ["write_en", "crc_poly_en"],
-"Signal Explanations": {
-  "write_en": "the signal that indicates an active write operation",
-  "crc_poly_en": "the signal that enables writing to the CRC polynomial register"
-},
-"Logical Operators": ["==", "|->"],
-"Logical Operators Explanation": {
-  "==": "ensures a signal matches a specific value",
-  "|->": "imposes that when the antecedent is true, the consequent must be true as well"
-},
-"Assertion Explaination": "If there is no active write operation, then it implies that the write enable for the CRC polynomial register should be inactive."
-},
-"Assertion 10": {
-"clock signal condition": "@(posedge HCLK)",
-"disable condition": "",
-"logical expression": "(hselx_pp == 0) |-> (crc_poly_en == 0)",
-"Signals": ["hselx_pp", "crc_poly_en"],
-"Signal Explanations": {
-  "hselx_pp": "the pipelined selection signal indicating if the device is chosen for the transaction",
-  "crc_poly_en": "the signal controlling the write operation to the CRC polynomial register"
-},
-"Logical Operators": ["==", "|->"],
-"Logical Operators Explanation": {
-  "==": "verifies equality between a signal and a constant",
-  "|->": "dictates that the truth of the condition on the left necessitates the truth of the condition on the right"
-},
-"Assertion Explaination": "If the device is not selected during the pipeline stage, then it implies that the write enable for the CRC polynomial register must be inactive."
-},
-"Assertion 11": {
-"clock signal condition": "@(posedge HCLK)",
-"disable condition": "",
-"logical expression": "(hwrite_pp == 0) |-> (crc_poly_en == 0)",
-"Signals": ["hwrite_pp", "crc_poly_en"],
-"Signal Explanations": {
-  "hwrite_pp": "the pipelined signal indicating whether the current operation is a write",
-  "crc_poly_en": "the signal that enables writing into the CRC polynomial register"
-},
-"Logical Operators": ["==", "|->"],
-"Logical Operators Explanation": {
-  "==": "checks that a signal's value equals a specified constant",
-  "|->": "establishes that if the initial condition is satisfied, the subsequent condition must also be satisfied"
-},
-"Assertion Explaination": "If the pipelined write signal is not asserted, then it implies that the write enable for the CRC polynomial register should be deactivated."
-},
-"Assertion 12": {
-"clock signal condition": "@(posedge HCLK)",
-"disable condition": "",
-"logical expression": "(haddr_pp[1] == 1) |-> (crc_poly_en == 0)",
-"Signals": ["haddr_pp[1]", "crc_poly_en"],
-"Signal Explanations": {
-  "haddr_pp[1]": "the specific bit from the pipelined address used for selecting between registers",
-  "crc_poly_en": "the signal that controls the write access to the CRC polynomial register"
-},
-"Logical Operators": ["==", "|->"],
-"Logical Operators Explanation": {
-  "==": "verifies that a particular bit or signal value matches a defined constant",
-  "|->": "specifies that if the condition on the left holds true, then the condition on the right must also hold true"
-},
-"Assertion Explaination": "If the designated bit in the pipelined address is set, then it implies that the write enable for the CRC polynomial register must be inactive."
-}
+  "Assertion 1": {
+    "clock signal condition": "@(posedge HCLK)",
+    "disable condition": "",
+    "logical expression": "(sample_bus == 1) |-> (HREADYOUT == 1)",
+    "Signals": ["sample_bus", "HREADYOUT"],
+    "Signal Explanations": {
+      "sample_bus": "control signal that indicates when bus signals are sampled; it becomes high when both the ready output and the bus ready signals are high",
+      "HREADYOUT": "signal output to the master indicating that the core is ready"
+    },
+    "Logical Operators": ["==", "|->"],
+    "Logical Operators Explanation": {
+      "==": "equal",
+      "|->": "overlapping implication operator meaning that if the condition on the left is met then the condition on the right must hold SINCE THE CURRENT CLOCK CYCLE"
+    },
+    "Assertion Explaination": "if the control signal for bus sampling is asserted, then the ready output signal is asserted SINCE THE CURRENT CLOCK CYCLE"
+  },
+  "Assertion 2": {
+    "clock signal condition": "@(posedge HCLK)",
+    "disable condition": "",
+    "logical expression": "(buffer_read_en == 1 & read_wait == 1) |-> (HREADYOUT == 0)",
+    "Signals": ["buffer_read_en", "read_wait", "HREADYOUT"],
+    "Signal Explanations": {
+      "buffer_read_en": "signal that indicates a read operation request to the CRC data register",
+      "read_wait": "signal that indicates the read operation must wait",
+      "HREADYOUT": "signal output to the master indicating that the core is ready"
+    },
+    "Logical Operators": ["==", "&", "|->"],
+    "Logical Operators Explanation": {
+      "==": "equal",
+      "&": "logical AND operator meaning both conditions must be true",
+      "|->": "overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE CURRENT CLOCK CYCLE"
+    },
+    "Assertion Explaination": "if both the read operation request is active and the read wait signal is asserted, then the ready output signal is de-asserted SINCE THE CURRENT CLOCK CYCLE"
+  },
+  "Assertion 3": {
+    "clock signal condition": "@(posedge HCLK)",
+    "disable condition": "",
+    "logical expression": "(ahb_enable == 0) |-> (HREADYOUT == 1)",
+    "Signals": ["ahb_enable", "HREADYOUT"],
+    "Signal Explanations": {
+      "ahb_enable": "signal indicating that an AHB transfer is enabled by having a NON_SEQ transfer type",
+      "HREADYOUT": "signal output to the master indicating that the core is ready"
+    },
+    "Logical Operators": ["==", "|->"],
+    "Logical Operators Explanation": {
+      "==": "equal",
+      "|->": "overlapping implication operator meaning that if the condition on the left is met then the condition on the right must hold SINCE THE CURRENT CLOCK CYCLE"
+    },
+    "Assertion Explaination": "if the AHB transfer is not enabled, then the ready output signal must be asserted SINCE THE CURRENT CLOCK CYCLE"
+  },
+  "Assertion 4": {
+    "clock signal condition": "@(posedge HCLK)",
+    "disable condition": "",
+    "logical expression": "(write_en == 0) |-> (crc_idr_en == 0)",
+    "Signals": ["write_en", "crc_idr_en"],
+    "Signal Explanations": {
+      "write_en": "signal that indicates when a write operation is enabled based on peripheral selection, bus write command, and transfer type",
+      "crc_idr_en": "signal enabling the write operation for the CRC_IDR register"
+    },
+    "Logical Operators": ["==", "|->"],
+    "Logical Operators Explanation": {
+      "==": "equal",
+      "|->": "overlapping implication operator meaning that if the condition on the left is met then the condition on the right must hold SINCE THE CURRENT CLOCK CYCLE"
+    },
+    "Assertion Explaination": "if a write operation is not enabled, then the write enable for the CRC_IDR register must be de-asserted SINCE THE CURRENT CLOCK CYCLE"
+  },
+  "Assertion 5": {
+    "clock signal condition": "@(posedge HCLK)",
+    "disable condition": "",
+    "logical expression": "(write_en == 1 & crc_idr_sel == 1) |-> (crc_idr_en == 1)",
+    "Signals": ["write_en", "crc_idr_sel", "crc_idr_en"],
+    "Signal Explanations": {
+      "write_en": "signal that indicates when a write operation is enabled",
+      "crc_idr_sel": "signal that indicates the CRC_IDR register is selected based on address decoding",
+      "crc_idr_en": "signal enabling the write operation for the CRC_IDR register"
+    },
+    "Logical Operators": ["==", "&", "|->"],
+    "Logical Operators Explanation": {
+      "==": "equal",
+      "&": "logical AND operator meaning both conditions must be true",
+      "|->": "overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE CURRENT CLOCK CYCLE"
+    },
+    "Assertion Explaination": "if a write operation is enabled and the CRC_IDR register is selected, then the write enable for the CRC_IDR register must be asserted SINCE THE CURRENT CLOCK CYCLE"
+  },
+  "Assertion 6": {
+    "clock signal condition": "@(posedge HCLK)",
+    "disable condition": "",
+    "logical expression": "(crc_idr_sel == 0) |-> (crc_idr_en == 0)",
+    "Signals": ["crc_idr_sel", "crc_idr_en"],
+    "Signal Explanations": {
+      "crc_idr_sel": "signal that indicates the CRC_IDR register is selected based on address decoding",
+      "crc_idr_en": "signal enabling the write operation for the CRC_IDR register"
+    },
+    "Logical Operators": ["==", "|->"],
+    "Logical Operators Explanation": {
+      "==": "equal",
+      "|->": "overlapping implication operator meaning that if the condition on the left is met then the condition on the right must hold SINCE THE CURRENT CLOCK CYCLE"
+    },
+    "Assertion Explaination": "if the CRC_IDR register is not selected, then the write enable for the CRC_IDR register must be de-asserted SINCE THE CURRENT CLOCK CYCLE"
+  },
+  "Assertion 7": {
+    "clock signal condition": "@(posedge HCLK)",
+    "disable condition": "",
+    "logical expression": "(hselx_pp == 0) |-> (crc_idr_en == 0)",
+    "Signals": ["hselx_pp", "crc_idr_en"],
+    "Signal Explanations": {
+      "hselx_pp": "pipelined signal indicating if the peripheral is selected",
+      "crc_idr_en": "signal enabling the write operation for the CRC_IDR register"
+    },
+    "Logical Operators": ["==", "|->"],
+    "Logical Operators Explanation": {
+      "==": "equal",
+      "|->": "overlapping implication operator meaning that if the condition on the left is met then the condition on the right must hold SINCE THE CURRENT CLOCK CYCLE"
+    },
+    "Assertion Explaination": "if the peripheral selection is not active, then the write enable for the CRC_IDR register must be de-asserted SINCE THE CURRENT CLOCK CYCLE"
+  },
+  "Assertion 8": {
+    "clock signal condition": "@(posedge HCLK)",
+    "disable condition": "",
+    "logical expression": "(hwrite_pp == 0) |-> (crc_idr_en == 0)",
+    "Signals": ["hwrite_pp", "crc_idr_en"],
+    "Signal Explanations": {
+      "hwrite_pp": "pipelined write signal indicating a write operation",
+      "crc_idr_en": "signal enabling the write operation for the CRC_IDR register"
+    },
+    "Logical Operators": ["==", "|->"],
+    "Logical Operators Explanation": {
+      "==": "equal",
+      "|->": "overlapping implication operator meaning that if the condition on the left is met then the condition on the right must hold SINCE THE CURRENT CLOCK CYCLE"
+    },
+    "Assertion Explaination": "if the pipelined write signal is de-asserted, then the write enable for the CRC_IDR register must be de-asserted SINCE THE CURRENT CLOCK CYCLE"
+  },
+  "Assertion 9": {
+    "clock signal condition": "@(posedge HCLK)",
+    "disable condition": "",
+    "logical expression": "(write_en == 0) |-> (crc_poly_en == 0)",
+    "Signals": ["write_en", "crc_poly_en"],
+    "Signal Explanations": {
+      "write_en": "signal that indicates when a write operation is enabled",
+      "crc_poly_en": "signal enabling the write operation for the CRC_POL register"
+    },
+    "Logical Operators": ["==", "|->"],
+    "Logical Operators Explanation": {
+      "==": "equal",
+      "|->": "overlapping implication operator meaning that if the condition on the left is met then the condition on the right must hold SINCE THE CURRENT CLOCK CYCLE"
+    },
+    "Assertion Explaination": "if the write operation is not enabled, then the write enable for the CRC_POL register must be de-asserted SINCE THE CURRENT CLOCK CYCLE"
+  },
+  "Assertion 10": {
+    "clock signal condition": "@(posedge HCLK)",
+    "disable condition": "",
+    "logical expression": "(hselx_pp == 0) |-> (crc_poly_en == 0)",
+    "Signals": ["hselx_pp", "crc_poly_en"],
+    "Signal Explanations": {
+      "hselx_pp": "pipelined signal indicating if the peripheral is selected",
+      "crc_poly_en": "signal enabling the write operation for the CRC_POL register"
+    },
+    "Logical Operators": ["==", "|->"],
+    "Logical Operators Explanation": {
+      "==": "equal",
+      "|->": "overlapping implication operator meaning that if the condition on the left is met then the condition on the right must hold SINCE THE CURRENT CLOCK CYCLE"
+    },
+    "Assertion Explaination": "if the peripheral selection is not active, then the write enable for the CRC_POL register must be de-asserted SINCE THE CURRENT CLOCK CYCLE"
+  },
+  "Assertion 11": {
+    "clock signal condition": "@(posedge HCLK)",
+    "disable condition": "",
+    "logical expression": "(hwrite_pp == 0) |-> (crc_poly_en == 0)",
+    "Signals": ["hwrite_pp", "crc_poly_en"],
+    "Signal Explanations": {
+      "hwrite_pp": "pipelined write signal indicating a write operation",
+      "crc_poly_en": "signal enabling the write operation for the CRC_POL register"
+    },
+    "Logical Operators": ["==", "|->"],
+    "Logical Operators Explanation": {
+      "==": "equal",
+      "|->": "overlapping implication operator meaning that if the condition on the left is met then the condition on the right must hold SINCE THE CURRENT CLOCK CYCLE"
+    },
+    "Assertion Explaination": "if the pipelined write signal is de-asserted, then the write enable for the CRC_POL register must be de-asserted SINCE THE CURRENT CLOCK CYCLE"
+  },
+  "Assertion 12": {
+    "clock signal condition": "@(posedge HCLK)",
+    "disable condition": "",
+    "logical expression": "(haddr_pp[1] == 1) |-> (crc_poly_en == 0)",
+    "Signals": ["haddr_pp[1]", "crc_poly_en"],
+    "Signal Explanations": {
+      "haddr_pp[1]": "bit 1 of the pipelined address signal indicating a specific addressing condition",
+      "crc_poly_en": "signal enabling the write operation for the CRC_POL register"
+    },
+    "Logical Operators": ["==", "|->"],
+    "Logical Operators Explanation": {
+      "==": "equal",
+      "|->": "overlapping implication operator meaning that if the condition on the left is met then the condition on the right must hold SINCE THE CURRENT CLOCK CYCLE"
+    },
+    "Assertion Explaination": "if the specific addressing condition indicated by bit 1 of the pipelined address is met, then the write enable for the CRC_POL register must be de-asserted SINCE THE CURRENT CLOCK CYCLE"
+  }
 }

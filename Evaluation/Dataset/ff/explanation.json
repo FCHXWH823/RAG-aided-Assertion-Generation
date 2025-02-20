@@ -11,11 +11,11 @@
     },
     "Logical Operators": ["|=>", "==", "$past"],
     "Logical Operators Explanation": {
-      "|=>": "non-overlapping implication meaning that if the antecedent is true in the current clock cycle, then the consequent must be true in the following clock cycle",
-      "==": "equality comparison",
-      "$past": "refers to the value of a signal in the previous clock cycle"
+      "|=>": "a non-overlapping implication operator meaning that if the condition on the left is met then the condition on the right must hold SINCE NEXT CLOCK CYCLE",
+      "==": "equal",
+      "$past": "the value of a signal in the previous clock cycle"
     },
-    "Assertion Explaination": "when the enable signal is active, the output signal must equal the input signal's value from the previous clock cycle"
+    "Assertion Explaination": "if enable signal is active (1), then output signal equals the input signal's value from the previous clock cycle SINCE NEXT CLOCK CYCLE"
   },
   "Assertion 2": {
     "clock signal condition": "@(posedge clk)",
@@ -28,11 +28,11 @@
     },
     "Logical Operators": ["!", "|=>", "==", "$past"],
     "Logical Operators Explanation": {
-      "!": "logical negation indicating the signal is not active",
-      "|=>": "non-overlapping implication meaning that if the antecedent is true in the current clock cycle, then the consequent must be true in the following clock cycle",
-      "==": "equality comparison",
-      "$past": "refers to the value of a signal in the previous clock cycle"
+      "!": "the value of a signal is reset (0)",
+      "|=>": "a non-overlapping implication operator meaning that if the condition on the left is met then the condition on the right must hold SINCE NEXT CLOCK CYCLE",
+      "==": "equal",
+      "$past": "the value of a signal in the previous clock cycle"
     },
-    "Assertion Explaination": "when the enable signal is inactive, the output signal must equal its own value from the previous clock cycle"
+    "Assertion Explaination": "if enable signal is not active (0), then output signal equals its value from the previous clock cycle SINCE NEXT CLOCK CYCLE"
   }
 }

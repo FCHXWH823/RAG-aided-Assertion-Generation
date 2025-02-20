@@ -18,7 +18,7 @@ module PWM #(parameter CBITS = 10)
 
 assert property(@(posedge clk) 1 |-> s_eventually(~pulse));
 
-assert property (@(posedge clk)  (pulse |=> !pulse));
-assert property (@(posedge clk)  (1 |-> s_eventually(~pulse)) iff (pulse |=> !pulse));
+assert property (@(posedge clk)  (1'b1 -> s_eventually !pulse));
+assert property (@(posedge clk)  (1 |-> s_eventually(~pulse)) iff (1'b1 -> s_eventually !pulse));
 
 endmodule

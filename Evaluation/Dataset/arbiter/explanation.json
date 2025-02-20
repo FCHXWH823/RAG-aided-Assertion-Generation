@@ -3,352 +3,328 @@
     "clock signal condition": "@(posedge clk)",
     "disable condition": "disable iff (~rst_n)",
     "logical expression": "(gnt[0] && $past(arb_type == 3'd0)) |-> $past(req[0])",
-    "Signals": ["gnt[0]", "arb_type", "req[0]"],
+    "Signals": ["gnt", "arb_type", "req"],
     "Signal Explanations": {
-      "gnt[0]": "the output grant signal for channel 0 produced by the arbiter",
-      "arb_type": "the input that selects the arbitration scheme type",
-      "req[0]": "the input request signal for channel 0"
+      "gnt": "the grant output vector that indicates which request is granted",
+      "arb_type": "the arbitration type signal that selects the arbitration scheme",
+      "req": "the request signal vector representing pending client requests"
     },
     "Logical Operators": ["&&", "$past", "==", "|->"],
     "Logical Operators Explanation": {
-      "&&": "logical AND that requires both operands to be true",
-      "$past": "refers to the value of a signal from the previous clock cycle",
-      "==": "checks equality between two values",
-      "|->": "non-overlapping implication meaning that if the condition on the left is true then the condition on the right must have held in the previous cycle"
+      "&&": "logical AND that yields true when both operands are true",
+      "$past": "temporal operator returning the value of a signal from the previous clock cycle",
+      "==": "equality operator that checks if two values are equal",
+      "|->": "overlapping implication operator which means that if the left-hand condition holds then the right-hand condition must hold in the current clock cycle"
     },
-    "Assertion Explaination": "if the grant output for the first channel is active and, in the previous cycle, the arbitration selection indicated a fixed priority configuration with the first channel having highest priority, then the request input for that same channel was active in the previous cycle"
+    "Assertion Explaination": "if the output grant of the first arbitration line is asserted and the stored arbitration selection from the previous clock cycle equals the fixed scheme zero, then the stored request information from the previous clock cycle indicates that the first request was active"
   },
   "Assertion 2": {
     "clock signal condition": "@(posedge clk)",
     "disable condition": "disable iff (~rst_n)",
     "logical expression": "(gnt[1] && $past(arb_type == 3'd0)) |-> $past(req[1] & ~req[0])",
-    "Signals": ["gnt[1]", "arb_type", "req[1]", "req[0]"],
+    "Signals": ["gnt", "arb_type", "req"],
     "Signal Explanations": {
-      "gnt[1]": "the output grant signal for channel 1 produced by the arbiter",
-      "arb_type": "the input that selects the arbitration scheme type",
-      "req[1]": "the input request signal for channel 1",
-      "req[0]": "the input request signal for channel 0"
+      "gnt": "the grant output vector that indicates which request is granted",
+      "arb_type": "the arbitration type signal that selects the arbitration scheme",
+      "req": "the request signal vector representing pending client requests"
     },
     "Logical Operators": ["&&", "$past", "==", "&", "~", "|->"],
     "Logical Operators Explanation": {
-      "&&": "logical AND that requires both operands to be true",
-      "$past": "refers to the value of a signal from the previous clock cycle",
-      "==": "checks equality between two values",
-      "&": "logical conjunction within the past expression combining conditions",
-      "~": "logical negation indicating a false or de‐asserted condition",
-      "|->": "non-overlapping implication meaning that if the left side is true then the right side must have been true in the relevant previous cycle"
+      "&&": "logical AND that yields true when both operands are true",
+      "$past": "temporal operator returning the value of a signal from the previous clock cycle",
+      "==": "equality operator that checks if two values are equal",
+      "&": "logical (or bitwise) AND that combines conditions",
+      "~": "logical NOT which inverts the value of a signal",
+      "|->": "overlapping implication operator which means that if the left-hand condition holds then the right-hand condition must hold in the current clock cycle"
     },
-    "Assertion Explaination": "if the grant output for the second channel is active and the previous cycle showed that the arbitration scheme was the fixed priority type where channel 0 has higher priority than channel 1, then during the previous cycle the request input for the second channel was active while the request input for the first channel was inactive"
+    "Assertion Explaination": "if the output grant of the second arbitration line is asserted and the stored arbitration selection from the previous clock cycle equals the fixed scheme zero, then the stored request information from the previous clock cycle indicates that the second request was active while the first request was not active"
   },
   "Assertion 3": {
     "clock signal condition": "@(posedge clk)",
     "disable condition": "disable iff (~rst_n)",
     "logical expression": "(gnt[2] && $past(arb_type == 3'd0)) |-> $past(req[2] & ~req[1] & ~req[0])",
-    "Signals": ["gnt[2]", "arb_type", "req[2]", "req[1]", "req[0]"],
+    "Signals": ["gnt", "arb_type", "req"],
     "Signal Explanations": {
-      "gnt[2]": "the output grant signal for channel 2 produced by the arbiter",
-      "arb_type": "the input that selects the arbitration scheme type",
-      "req[2]": "the input request signal for channel 2",
-      "req[1]": "the input request signal for channel 1",
-      "req[0]": "the input request signal for channel 0"
+      "gnt": "the grant output vector that indicates which request is granted",
+      "arb_type": "the arbitration type signal that selects the arbitration scheme",
+      "req": "the request signal vector representing pending client requests"
     },
     "Logical Operators": ["&&", "$past", "==", "&", "~", "|->"],
     "Logical Operators Explanation": {
-      "&&": "logical AND that requires both conditions to be true",
-      "$past": "refers to the value of a signal from the previous clock cycle",
-      "==": "checks equality",
-      "&": "combines multiple conditions",
-      "~": "indicates the negation of a condition",
-      "|->": "non-overlapping implication signifying that when the antecedent is fulfilled, the consequent must have been true in the prior cycle"
+      "&&": "logical AND that yields true when both operands are true",
+      "$past": "temporal operator returning the value of a signal from the previous clock cycle",
+      "==": "equality operator that checks if two values are equal",
+      "&": "logical AND that combines multiple conditions",
+      "~": "logical NOT which inverts the value of a signal",
+      "|->": "overlapping implication operator which means that if the left-hand condition holds then the right-hand condition must hold in the current clock cycle"
     },
-    "Assertion Explaination": "if the grant output for the third channel is active and the previous cycle indicated the fixed priority arbitration configuration with the first two channels having higher priority, then in the previous cycle the request input for the third channel was active while the request inputs for the first and second channels were inactive"
+    "Assertion Explaination": "if the output grant of the third arbitration line is asserted and the stored arbitration selection from the previous clock cycle equals the fixed scheme zero, then the stored request information from the previous clock cycle indicates that the third request was active while the second and first requests were not active"
   },
   "Assertion 4": {
     "clock signal condition": "@(posedge clk)",
     "disable condition": "disable iff (~rst_n)",
     "logical expression": "(gnt[3] && $past(arb_type == 3'd0)) |-> $past(req[3] & ~req[2] & ~req[1] & ~req[0])",
-    "Signals": ["gnt[3]", "arb_type", "req[3]", "req[2]", "req[1]", "req[0]"],
+    "Signals": ["gnt", "arb_type", "req"],
     "Signal Explanations": {
-      "gnt[3]": "the output grant signal for channel 3 produced by the arbiter",
-      "arb_type": "the input that selects the arbitration scheme type",
-      "req[3]": "the input request signal for channel 3",
-      "req[2]": "the input request signal for channel 2",
-      "req[1]": "the input request signal for channel 1",
-      "req[0]": "the input request signal for channel 0"
+      "gnt": "the grant output vector that indicates which request is granted",
+      "arb_type": "the arbitration type signal that selects the arbitration scheme",
+      "req": "the request signal vector representing pending client requests"
     },
     "Logical Operators": ["&&", "$past", "==", "&", "~", "|->"],
     "Logical Operators Explanation": {
-      "&&": "logical AND that requires all operand conditions to be true",
-      "$past": "refers to the value of a signal from the previous clock cycle",
-      "==": "performs an equality comparison",
-      "&": "combines several conditions together",
-      "~": "denotes the negation of a condition",
-      "|->": "non-overlapping implication ensuring that if the antecedent is true then the consequent was true in the previous cycle"
+      "&&": "logical AND that yields true when both operands are true",
+      "$past": "temporal operator returning the value of a signal from the previous clock cycle",
+      "==": "equality operator that checks if two values are equal",
+      "&": "logical AND that combines multiple conditions",
+      "~": "logical NOT which inverts the value of a signal",
+      "|->": "overlapping implication operator which means that if the left-hand condition holds then the right-hand condition must hold in the current clock cycle"
     },
-    "Assertion Explaination": "if the grant output for the fourth channel is active and the previous cycle established a fixed priority arbitration where all lower priority requests were absent, then in that previous cycle the request for the fourth channel was active while all higher priority request inputs were inactive"
+    "Assertion Explaination": "if the output grant of the fourth arbitration line is asserted and the stored arbitration selection from the previous clock cycle equals the fixed scheme zero, then the stored request information from the previous clock cycle indicates that the fourth request was active while the third, second, and first requests were not active"
   },
   "Assertion 5": {
     "clock signal condition": "@(posedge clk)",
     "disable condition": "disable iff (~rst_n)",
     "logical expression": "(gnt[0] && $past(arb_type == 3'd1)) |-> $past(req[0] & ~req[1])",
-    "Signals": ["gnt[0]", "arb_type", "req[0]", "req[1]"],
+    "Signals": ["gnt", "arb_type", "req"],
     "Signal Explanations": {
-      "gnt[0]": "the output grant signal for channel 0 produced by the arbiter",
-      "arb_type": "the input that selects the arbitration scheme type",
-      "req[0]": "the input request signal for channel 0",
-      "req[1]": "the input request signal for channel 1"
+      "gnt": "the grant output vector that indicates which request is granted",
+      "arb_type": "the arbitration type signal that selects the arbitration scheme",
+      "req": "the request signal vector representing pending client requests"
     },
     "Logical Operators": ["&&", "$past", "==", "&", "~", "|->"],
     "Logical Operators Explanation": {
-      "&&": "logical AND requiring both conditions to hold",
-      "$past": "refers to a value from the previous clock cycle",
-      "==": "determines equality between the current arbitration type and a constant",
-      "&": "combines conditions within the past evaluation",
-      "~": "logical negation indicating an inactive condition",
-      "|->": "non-overlapping implication indicating that the consequent must have held in the corresponding past cycle if the antecedent holds now"
+      "&&": "logical AND that yields true when both operands are true",
+      "$past": "temporal operator returning the value of a signal from the previous clock cycle",
+      "==": "equality operator that checks if two values are equal",
+      "&": "logical AND that combines conditions",
+      "~": "logical NOT which inverts the value of a signal",
+      "|->": "overlapping implication operator which means that if the left-hand condition holds then the right-hand condition must hold in the current clock cycle"
     },
-    "Assertion Explaination": "if the grant output for the first channel is active and the previous cycle showed that the arbitration type corresponded to the configuration where channel 1 has priority over channel 0, then in that previous cycle the request for the first channel was active while the request for the second channel was inactive"
+    "Assertion Explaination": "if the output grant of the first arbitration line is asserted and the stored arbitration selection from the previous clock cycle equals the fixed scheme one, then the stored request information from the previous clock cycle indicates that the first request was active and the second request was not active"
   },
   "Assertion 6": {
     "clock signal condition": "@(posedge clk)",
     "disable condition": "disable iff (~rst_n)",
     "logical expression": "(gnt[1] && $past(arb_type == 3'd1)) |-> $past(req[1])",
-    "Signals": ["gnt[1]", "arb_type", "req[1]"],
+    "Signals": ["gnt", "arb_type", "req"],
     "Signal Explanations": {
-      "gnt[1]": "the output grant signal for channel 1 produced by the arbiter",
-      "arb_type": "the input that selects the arbitration scheme type",
-      "req[1]": "the input request signal for channel 1"
+      "gnt": "the grant output vector that indicates which request is granted",
+      "arb_type": "the arbitration type signal that selects the arbitration scheme",
+      "req": "the request signal vector representing pending client requests"
     },
     "Logical Operators": ["&&", "$past", "==", "|->"],
     "Logical Operators Explanation": {
-      "&&": "logical AND that ensures both conditions are met",
-      "$past": "refers to the signal value in the previous clock cycle",
-      "==": "compares the previous arbitration type to a constant value",
-      "|->": "non-overlapping implication meaning that if the left side is true then the right side must have been true in the relevant past cycle"
+      "&&": "logical AND that yields true when both operands are true",
+      "$past": "temporal operator returning the value of a signal from the previous clock cycle",
+      "==": "equality operator that checks if two values are equal",
+      "|->": "overlapping implication operator which means that if the left-hand condition holds then the right-hand condition must hold in the current clock cycle"
     },
-    "Assertion Explaination": "if the grant output for the second channel is active and the previous cycle indicated that the arbitration selection was for the configuration prioritizing channel 1, then the request input for the second channel was active in the previous cycle"
+    "Assertion Explaination": "if the output grant of the second arbitration line is asserted and the stored arbitration selection from the previous clock cycle equals the fixed scheme one, then the stored request information from the previous clock cycle indicates that the second request was active"
   },
   "Assertion 7": {
     "clock signal condition": "@(posedge clk)",
     "disable condition": "disable iff (~rst_n)",
     "logical expression": "(gnt[2] && $past(arb_type == 3'd1)) |-> $past(req[2] & ~req[1] & ~req[0])",
-    "Signals": ["gnt[2]", "arb_type", "req[2]", "req[1]", "req[0]"],
+    "Signals": ["gnt", "arb_type", "req"],
     "Signal Explanations": {
-      "gnt[2]": "the output grant signal for channel 2 produced by the arbiter",
-      "arb_type": "the input that selects the arbitration scheme type",
-      "req[2]": "the input request signal for channel 2",
-      "req[1]": "the input request signal for channel 1",
-      "req[0]": "the input request signal for channel 0"
+      "gnt": "the grant output vector that indicates which request is granted",
+      "arb_type": "the arbitration type signal that selects the arbitration scheme",
+      "req": "the request signal vector representing pending client requests"
     },
     "Logical Operators": ["&&", "$past", "==", "&", "~", "|->"],
     "Logical Operators Explanation": {
-      "&&": "logical AND requiring both conditions to be true",
-      "$past": "refers to the value carried over from the previous clock cycle",
-      "==": "used for verifying equality with a constant",
-      "&": "combines multiple conditions in the past evaluation",
-      "~": "negates a condition to indicate its inactivity",
-      "|->": "non-overlapping implication ensuring that the consequence was true in the previous cycle if the antecedent holds now"
+      "&&": "logical AND that yields true when both operands are true",
+      "$past": "temporal operator returning the value of a signal from the previous clock cycle",
+      "==": "equality operator that checks if two values are equal",
+      "&": "logical AND that combines conditions",
+      "~": "logical NOT which inverts the value of a signal",
+      "|->": "overlapping implication operator which means that if the left-hand condition holds then the right-hand condition must hold in the current clock cycle"
     },
-    "Assertion Explaination": "if the grant output for the third channel is active and the previous cycle reflected an arbitration configuration that favors channel 1 over the others, then in that previous cycle the request for channel 2 was active while the requests for channels 1 and 0 were not active"
+    "Assertion Explaination": "if the output grant of the third arbitration line is asserted and the stored arbitration selection from the previous clock cycle equals the fixed scheme one, then the stored request information from the previous clock cycle indicates that the third request was active while both the second and first requests were not active"
   },
   "Assertion 8": {
     "clock signal condition": "@(posedge clk)",
     "disable condition": "disable iff (~rst_n)",
     "logical expression": "(gnt[3] && $past(arb_type == 3'd1)) |-> $past(req[3] & ~req[2] & ~req[1] & ~req[0])",
-    "Signals": ["gnt[3]", "arb_type", "req[3]", "req[2]", "req[1]", "req[0]"],
+    "Signals": ["gnt", "arb_type", "req"],
     "Signal Explanations": {
-      "gnt[3]": "the output grant signal for channel 3 produced by the arbiter",
-      "arb_type": "the input that selects the arbitration scheme type",
-      "req[3]": "the input request signal for channel 3",
-      "req[2]": "the input request signal for channel 2",
-      "req[1]": "the input request signal for channel 1",
-      "req[0]": "the input request signal for channel 0"
+      "gnt": "the grant output vector that indicates which request is granted",
+      "arb_type": "the arbitration type signal that selects the arbitration scheme",
+      "req": "the request signal vector representing pending client requests"
     },
     "Logical Operators": ["&&", "$past", "==", "&", "~", "|->"],
     "Logical Operators Explanation": {
-      "&&": "logical AND where both conditions must be satisfied",
-      "$past": "refers to the signal values from the previous cycle",
-      "==": "performs an equality check against the expected arbitration type",
-      "&": "combines individual conditions within the past reference",
-      "~": "denotes the inversion of a condition, meaning it is inactive",
-      "|->": "non-overlapping implication indicating that if the antecedent holds then the consequent must have been true in the previous cycle"
+      "&&": "logical AND that yields true when both operands are true",
+      "$past": "temporal operator returning the value of a signal from the previous clock cycle",
+      "==": "equality operator that checks if two values are equal",
+      "&": "logical AND that combines conditions",
+      "~": "logical NOT which inverts the value of a signal",
+      "|->": "overlapping implication operator which means that if the left-hand condition holds then the right-hand condition must hold in the current clock cycle"
     },
-    "Assertion Explaination": "if the grant output for the fourth channel is active and the previous cycle’s arbitration configuration corresponded to the fixed priority type where channel 1 is highest, then during that previous cycle the request for the fourth channel was active while the requests for channels 2, 1, and 0 were inactive"
+    "Assertion Explaination": "if the output grant of the fourth arbitration line is asserted and the stored arbitration selection from the previous clock cycle equals the fixed scheme one, then the stored request information from the previous clock cycle indicates that the fourth request was active while the third, second, and first requests were not active"
   },
   "Assertion 9": {
     "clock signal condition": "@(posedge clk)",
     "disable condition": "disable iff (~rst_n)",
     "logical expression": "(gnt[0] && $past(arb_type == 3'd2)) |-> $past(req[0] & ~req[2])",
-    "Signals": ["gnt[0]", "arb_type", "req[0]", "req[2]"],
+    "Signals": ["gnt", "arb_type", "req"],
     "Signal Explanations": {
-      "gnt[0]": "the output grant signal for channel 0 produced by the arbiter",
-      "arb_type": "the input that selects the arbitration scheme type",
-      "req[0]": "the input request signal for channel 0",
-      "req[2]": "the input request signal for channel 2"
+      "gnt": "the grant output vector that indicates which request is granted",
+      "arb_type": "the arbitration type signal that selects the arbitration scheme",
+      "req": "the request signal vector representing pending client requests"
     },
     "Logical Operators": ["&&", "$past", "==", "&", "~", "|->"],
     "Logical Operators Explanation": {
-      "&&": "logical AND enforcing simultaneous truth",
-      "$past": "captures the value from the previous clock cycle",
-      "==": "compares the previous arbitration type with a designated constant",
-      "&": "combines conditions within the past evaluation",
-      "~": "negates a condition to indicate it should not be active",
-      "|->": "non-overlapping implication meaning that if the antecedent is true then the consequent held in the prior cycle"
+      "&&": "logical AND that yields true when both operands are true",
+      "$past": "temporal operator returning the value of a signal from the previous clock cycle",
+      "==": "equality operator that checks if two values are equal",
+      "&": "logical AND that combines conditions",
+      "~": "logical NOT which inverts the value of a signal",
+      "|->": "overlapping implication operator which means that if the left-hand condition holds then the right-hand condition must hold in the current clock cycle"
     },
-    "Assertion Explaination": "if the grant output for the first channel is active and the previous cycle indicated an arbitration configuration corresponding to the second scheme, then in that previous cycle the request for the first channel was active while the request for the third channel was inactive"
+    "Assertion Explaination": "if the output grant of the first arbitration line is asserted and the stored arbitration selection from the previous clock cycle equals the fixed scheme two, then the stored request information from the previous clock cycle indicates that the first request was active while the third request was not active"
   },
   "Assertion 10": {
     "clock signal condition": "@(posedge clk)",
     "disable condition": "disable iff (~rst_n)",
     "logical expression": "(gnt[1] && $past(arb_type == 3'd2)) |-> $past(req[1] & ~req[2] & ~req[0])",
-    "Signals": ["gnt[1]", "arb_type", "req[1]", "req[2]", "req[0]"],
+    "Signals": ["gnt", "arb_type", "req"],
     "Signal Explanations": {
-      "gnt[1]": "the output grant signal for channel 1 produced by the arbiter",
-      "arb_type": "the input that selects the arbitration scheme type",
-      "req[1]": "the input request signal for channel 1",
-      "req[2]": "the input request signal for channel 2",
-      "req[0]": "the input request signal for channel 0"
+      "gnt": "the grant output vector that indicates which request is granted",
+      "arb_type": "the arbitration type signal that selects the arbitration scheme",
+      "req": "the request signal vector representing pending client requests"
     },
     "Logical Operators": ["&&", "$past", "==", "&", "~", "|->"],
     "Logical Operators Explanation": {
-      "&&": "logical AND requiring both conditions to be satisfied",
-      "$past": "uses the value from the previous clock cycle",
-      "==": "performs an equality test",
-      "&": "combines multiple conditions together",
-      "~": "represents a negated or inactive condition",
-      "|->": "non-overlapping implication that relates the antecedent to a past consequence"
+      "&&": "logical AND that yields true when both operands are true",
+      "$past": "temporal operator returning the value of a signal from the previous clock cycle",
+      "==": "equality operator that checks if two values are equal",
+      "&": "logical AND that combines conditions",
+      "~": "logical NOT which inverts the value of a signal",
+      "|->": "overlapping implication operator which means that if the left-hand condition holds then the right-hand condition must hold in the current clock cycle"
     },
-    "Assertion Explaination": "if the grant output for the second channel is active and the previous cycle showed the arbitration type matching the second scheme, then in that previous cycle the request for the second channel was active while the requests for the first and third channels were inactive"
+    "Assertion Explaination": "if the output grant of the second arbitration line is asserted and the stored arbitration selection from the previous clock cycle equals the fixed scheme two, then the stored request information from the previous clock cycle indicates that the second request was active while the first and third requests were not active"
   },
   "Assertion 11": {
     "clock signal condition": "@(posedge clk)",
     "disable condition": "disable iff (~rst_n)",
     "logical expression": "(gnt[2] && $past(arb_type == 3'd2)) |-> $past(req[2])",
-    "Signals": ["gnt[2]", "arb_type", "req[2]"],
+    "Signals": ["gnt", "arb_type", "req"],
     "Signal Explanations": {
-      "gnt[2]": "the output grant signal for channel 2 produced by the arbiter",
-      "arb_type": "the input that selects the arbitration scheme type",
-      "req[2]": "the input request signal for channel 2"
+      "gnt": "the grant output vector that indicates which request is granted",
+      "arb_type": "the arbitration type signal that selects the arbitration scheme",
+      "req": "the request signal vector representing pending client requests"
     },
     "Logical Operators": ["&&", "$past", "==", "|->"],
     "Logical Operators Explanation": {
-      "&&": "logical AND which requires both the current and past conditions to be true",
-      "$past": "fetches the previous clock cycle's value",
-      "==": "checks for equality with a constant",
-      "|->": "non-overlapping implication implying that the antecedent guarantees the consequent in the previous cycle"
+      "&&": "logical AND that yields true when both operands are true",
+      "$past": "temporal operator returning the value of a signal from the previous clock cycle",
+      "==": "equality operator that checks if two values are equal",
+      "|->": "overlapping implication operator which means that if the left-hand condition holds then the right-hand condition must hold in the current clock cycle"
     },
-    "Assertion Explaination": "if the grant output for the third channel is active and the previous cycle had the arbitration type set to the second scheme, then in that previous cycle the request for the third channel was active"
+    "Assertion Explaination": "if the output grant of the third arbitration line is asserted and the stored arbitration selection from the previous clock cycle equals the fixed scheme two, then the stored request information from the previous clock cycle indicates that the third request was active"
   },
   "Assertion 12": {
     "clock signal condition": "@(posedge clk)",
     "disable condition": "disable iff (~rst_n)",
     "logical expression": "(gnt[3] && $past(arb_type == 3'd2)) |-> $past(req[3] & ~req[2] & ~req[1] & ~req[0])",
-    "Signals": ["gnt[3]", "arb_type", "req[3]", "req[2]", "req[1]", "req[0]"],
+    "Signals": ["gnt", "arb_type", "req"],
     "Signal Explanations": {
-      "gnt[3]": "the output grant signal for channel 3 produced by the arbiter",
-      "arb_type": "the input that selects the arbitration scheme type",
-      "req[3]": "the input request signal for channel 3",
-      "req[2]": "the input request signal for channel 2",
-      "req[1]": "the input request signal for channel 1",
-      "req[0]": "the input request signal for channel 0"
+      "gnt": "the grant output vector that indicates which request is granted",
+      "arb_type": "the arbitration type signal that selects the arbitration scheme",
+      "req": "the request signal vector representing pending client requests"
     },
     "Logical Operators": ["&&", "$past", "==", "&", "~", "|->"],
     "Logical Operators Explanation": {
-      "&&": "logical AND ensuring both current and past conditions hold",
-      "$past": "retrieves values from the previous cycle",
-      "==": "verifies equality with an expected constant",
-      "&": "combines several conditions within the past expression",
-      "~": "denotes the negation (inactivity) of a condition",
-      "|->": "non-overlapping implication meaning if the antecedent holds then the consequent was true in the previous cycle"
+      "&&": "logical AND that yields true when both operands are true",
+      "$past": "temporal operator returning the value of a signal from the previous clock cycle",
+      "==": "equality operator that checks if two values are equal",
+      "&": "logical AND that combines conditions",
+      "~": "logical NOT which inverts the value of a signal",
+      "|->": "overlapping implication operator which means that if the left-hand condition holds then the right-hand condition must hold in the current clock cycle"
     },
-    "Assertion Explaination": "if the grant output for the fourth channel is active and the previous cycle indicated the second arbitration scheme, then in that cycle the request for the fourth channel was active while the requests for all other channels were inactive"
+    "Assertion Explaination": "if the output grant of the fourth arbitration line is asserted and the stored arbitration selection from the previous clock cycle equals the fixed scheme two, then the stored request information from the previous clock cycle indicates that the fourth request was active while the third, second, and first requests were not active"
   },
   "Assertion 13": {
     "clock signal condition": "@(posedge clk)",
     "disable condition": "disable iff (~rst_n)",
     "logical expression": "(gnt[0] && $past(arb_type == 3'd3)) |-> $past(req[0] & ~req[3])",
-    "Signals": ["gnt[0]", "arb_type", "req[0]", "req[3]"],
+    "Signals": ["gnt", "arb_type", "req"],
     "Signal Explanations": {
-      "gnt[0]": "the output grant signal for channel 0 produced by the arbiter",
-      "arb_type": "the input that selects the arbitration scheme type",
-      "req[0]": "the input request signal for channel 0",
-      "req[3]": "the input request signal for channel 3"
+      "gnt": "the grant output vector that indicates which request is granted",
+      "arb_type": "the arbitration type signal that selects the arbitration scheme",
+      "req": "the request signal vector representing pending client requests"
     },
     "Logical Operators": ["&&", "$past", "==", "&", "~", "|->"],
     "Logical Operators Explanation": {
-      "&&": "logical AND checking for simultaneous truth",
-      "$past": "refers to the previous clock cycle’s value",
-      "==": "compares the past arbitration type with a specified constant",
-      "&": "combines multiple conditions inside the past evaluation",
-      "~": "indicates that a condition is not active",
-      "|->": "non-overlapping implication that mandates the consequent held in the previous cycle if the antecedent is true"
+      "&&": "logical AND that yields true when both operands are true",
+      "$past": "temporal operator returning the value of a signal from the previous clock cycle",
+      "==": "equality operator that checks if two values are equal",
+      "&": "logical AND that combines conditions",
+      "~": "logical NOT which inverts the value of a signal",
+      "|->": "overlapping implication operator which means that if the left-hand condition holds then the right-hand condition must hold in the current clock cycle"
     },
-    "Assertion Explaination": "if the grant output for the first channel is active and the previous cycle had the arbitration type corresponding to a configuration where channel 3 has the highest priority, then in the previous cycle the request for the first channel was active while the request for the fourth channel was inactive"
+    "Assertion Explaination": "if the output grant of the first arbitration line is asserted and the stored arbitration selection from the previous clock cycle equals the fixed scheme three, then the stored request information from the previous clock cycle indicates that the first request was active while the fourth request was not active"
   },
   "Assertion 14": {
     "clock signal condition": "@(posedge clk)",
     "disable condition": "disable iff (~rst_n)",
     "logical expression": "(gnt[1] && $past(arb_type == 3'd3)) |-> $past(req[1] & ~req[3] & ~req[0])",
-    "Signals": ["gnt[1]", "arb_type", "req[1]", "req[3]", "req[0]"],
+    "Signals": ["gnt", "arb_type", "req"],
     "Signal Explanations": {
-      "gnt[1]": "the output grant signal for channel 1 produced by the arbiter",
-      "arb_type": "the input that selects the arbitration scheme type",
-      "req[1]": "the input request signal for channel 1",
-      "req[3]": "the input request signal for channel 3",
-      "req[0]": "the input request signal for channel 0"
+      "gnt": "the grant output vector that indicates which request is granted",
+      "arb_type": "the arbitration type signal that selects the arbitration scheme",
+      "req": "the request signal vector representing pending client requests"
     },
     "Logical Operators": ["&&", "$past", "==", "&", "~", "|->"],
     "Logical Operators Explanation": {
-      "&&": "logical AND ensuring both conditions are met concurrently",
-      "$past": "retrieves the value from the previous cycle",
-      "==": "performs an equality comparison",
-      "&": "aggregates multiple conditions within the past operator",
-      "~": "signifies the negation of a condition",
-      "|->": "non-overlapping implication meaning that the antecedent guarantees the consequent in the prior cycle"
+      "&&": "logical AND that yields true when both operands are true",
+      "$past": "temporal operator returning the value of a signal from the previous clock cycle",
+      "==": "equality operator that checks if two values are equal",
+      "&": "logical AND that combines conditions",
+      "~": "logical NOT which inverts the value of a signal",
+      "|->": "overlapping implication operator which means that if the left-hand condition holds then the right-hand condition must hold in the current clock cycle"
     },
-    "Assertion Explaination": "if the grant output for the second channel is active and the previous cycle’s arbitration configuration indicated that channel 3 was prioritized over channels 1 and 0, then in that previous cycle the request for the second channel was active while the requests for the first and fourth channels were inactive"
+    "Assertion Explaination": "if the output grant of the second arbitration line is asserted and the stored arbitration selection from the previous clock cycle equals the fixed scheme three, then the stored request information from the previous clock cycle indicates that the second request was active while the fourth and first requests were not active"
   },
   "Assertion 15": {
     "clock signal condition": "@(posedge clk)",
     "disable condition": "disable iff (~rst_n)",
     "logical expression": "(gnt[2] && $past(arb_type == 3'd3)) |-> $past(req[2] & ~req[3] & ~req[0] & ~req[1])",
-    "Signals": ["gnt[2]", "arb_type", "req[2]", "req[3]", "req[0]", "req[1]"],
+    "Signals": ["gnt", "arb_type", "req"],
     "Signal Explanations": {
-      "gnt[2]": "the output grant signal for channel 2 produced by the arbiter",
-      "arb_type": "the input that selects the arbitration scheme type",
-      "req[2]": "the input request signal for channel 2",
-      "req[3]": "the input request signal for channel 3",
-      "req[0]": "the input request signal for channel 0",
-      "req[1]": "the input request signal for channel 1"
+      "gnt": "the grant output vector that indicates which request is granted",
+      "arb_type": "the arbitration type signal that selects the arbitration scheme",
+      "req": "the request signal vector representing pending client requests"
     },
     "Logical Operators": ["&&", "$past", "==", "&", "~", "|->"],
     "Logical Operators Explanation": {
-      "&&": "logical AND requiring all listed conditions to be true",
-      "$past": "selects the previous cycle's value",
-      "==": "compares the previous arbitration type against the expected value",
-      "&": "groups multiple conditions together",
-      "~": "denotes a condition is not asserted",
-      "|->": "non-overlapping implication meaning that the truth of the antecedent necessitates the truth of the consequent in the previous cycle"
+      "&&": "logical AND that yields true when both operands are true",
+      "$past": "temporal operator returning the value of a signal from the previous clock cycle",
+      "==": "equality operator that checks if two values are equal",
+      "&": "logical AND that combines conditions",
+      "~": "logical NOT which inverts the value of a signal",
+      "|->": "overlapping implication operator which means that if the left-hand condition holds then the right-hand condition must hold in the current clock cycle"
     },
-    "Assertion Explaination": "if the grant output for the third channel is active and the previous cycle indicated an arbitration configuration where channel 3 is highest priority, then in that previous cycle the request for the third channel was active while all other channel requests were inactive"
+    "Assertion Explaination": "if the output grant of the third arbitration line is asserted and the stored arbitration selection from the previous clock cycle equals the fixed scheme three, then the stored request information from the previous clock cycle indicates that the third request was active while the fourth, first, and second requests were not active"
   },
   "Assertion 16": {
     "clock signal condition": "@(posedge clk)",
     "disable condition": "disable iff (~rst_n)",
     "logical expression": "(gnt[3] && $past(arb_type == 3'd3)) |-> $past(req[3])",
-    "Signals": ["gnt[3]", "arb_type", "req[3]"],
+    "Signals": ["gnt", "arb_type", "req"],
     "Signal Explanations": {
-      "gnt[3]": "the output grant signal for channel 3 produced by the arbiter",
-      "arb_type": "the input that selects the arbitration scheme type",
-      "req[3]": "the input request signal for channel 3"
+      "gnt": "the grant output vector that indicates which request is granted",
+      "arb_type": "the arbitration type signal that selects the arbitration scheme",
+      "req": "the request signal vector representing pending client requests"
     },
     "Logical Operators": ["&&", "$past", "==", "|->"],
     "Logical Operators Explanation": {
-      "&&": "logical AND ensuring simultaneous truth of conditions",
-      "$past": "refers to the previous clock cycle value",
-      "==": "checks for equality with a constant",
-      "|->": "non-overlapping implication indicating that if the antecedent holds then the consequent was true in the previous cycle"
+      "&&": "logical AND that yields true when both operands are true",
+      "$past": "temporal operator returning the value of a signal from the previous clock cycle",
+      "==": "equality operator that checks if two values are equal",
+      "|->": "overlapping implication operator which means that if the left-hand condition holds then the right-hand condition must hold in the current clock cycle"
     },
-    "Assertion Explaination": "if the grant output for the fourth channel is active and the previous cycle had the arbitration type corresponding to the configuration that prioritizes channel 3, then in that previous cycle the request for the fourth channel was active"
+    "Assertion Explaination": "if the output grant of the fourth arbitration line is asserted and the stored arbitration selection from the previous clock cycle equals the fixed scheme three, then the stored request information from the previous clock cycle indicates that the fourth request was active"
   }
 }

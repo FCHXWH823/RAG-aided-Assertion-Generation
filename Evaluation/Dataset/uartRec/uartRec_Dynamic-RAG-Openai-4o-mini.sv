@@ -325,19 +325,19 @@ assert property(@(posedge clk) (nReg[0] == 0) |=> (rxDoneTick == 0));
 assert property(@(posedge clk) (sTick == 0) |-> (rxDoneTick == 0));  
 assert property(@(posedge clk) (sNext[0] == 0) |=> (rxDoneTick == 0));
 
-assert property (@(posedge clk)  (stateReg[0] == 0 |=> rxDoneTick == 0));
-assert property (@(posedge clk)  ((stateReg[0] == 0) |-> (rxDoneTick == 0)) iff (stateReg[0] == 0 |=> rxDoneTick == 0));
-assert property (@(posedge clk)  (sReg[3] == 0 |=> rxDoneTick == 0));
-assert property (@(posedge clk)  ((sReg[2] == 0) |=> (rxDoneTick == 0)) iff (sReg[3] == 0 |=> rxDoneTick == 0));
-assert property (@(posedge clk)  (sReg[3] == 0 |=> rxDoneTick == 0));
-assert property (@(posedge clk)  ((sReg[1] == 0) |=> (rxDoneTick == 0)) iff (sReg[3] == 0 |=> rxDoneTick == 0));
-assert property (@(posedge clk)  (!(nReg == (dataBits-1)) |=> !rxDoneTick));
-assert property (@(posedge clk)  ((nReg[1] == 0) |=> (rxDoneTick == 0)) iff (!(nReg == (dataBits-1)) |=> !rxDoneTick));
-assert property (@(posedge clk)  (nReg < (dataBits-1) |=> rxDoneTick == 1'b0));
-assert property (@(posedge clk)  ((nReg[0] == 0) |=> (rxDoneTick == 0)) iff (nReg < (dataBits-1) |=> rxDoneTick == 1'b0));
-assert property (@(posedge clk)  (sTick == 0 |=> rxDoneTick == 0));
-assert property (@(posedge clk)  ((sTick == 0) |-> (rxDoneTick == 0)) iff (sTick == 0 |=> rxDoneTick == 0));
-assert property (@(posedge clk)  (sReg[3:0] == 4'b0000 |=> rxDoneTick == 1'b0));
-assert property (@(posedge clk)  ((sNext[0] == 0) |=> (rxDoneTick == 0)) iff (sReg[3:0] == 4'b0000 |=> rxDoneTick == 1'b0));
+assert property (@(posedge clk)  (stateReg[0] == 0 |-> rxDoneTick == 0));
+assert property (@(posedge clk)  ((stateReg[0] == 0) |-> (rxDoneTick == 0)) iff (stateReg[0] == 0 |-> rxDoneTick == 0));
+assert property (@(posedge clk)  (sReg == 0 -> !rxDoneTick));
+assert property (@(posedge clk)  ((sReg[2] == 0) |=> (rxDoneTick == 0)) iff (sReg == 0 -> !rxDoneTick));
+assert property (@(posedge clk)  (sReg == 0 |-> !rxDoneTick));
+assert property (@(posedge clk)  ((sReg[1] == 0) |=> (rxDoneTick == 0)) iff (sReg == 0 |-> !rxDoneTick));
+assert property (@(posedge clk)  (nReg == 0 |-> !rxDoneTick));
+assert property (@(posedge clk)  ((nReg[1] == 0) |=> (rxDoneTick == 0)) iff (nReg == 0 |-> !rxDoneTick));
+assert property (@(posedge clk)  ((nReg[0] == 0) |=> (rxDoneTick == 0)));
+assert property (@(posedge clk)  ((nReg[0] == 0) |=> (rxDoneTick == 0)) iff ((nReg[0] == 0) |=> (rxDoneTick == 0)));
+assert property (@(posedge clk)  (sTick |=> !rxDoneTick));
+assert property (@(posedge clk)  ((sTick == 0) |-> (rxDoneTick == 0)) iff (sTick |=> !rxDoneTick));
+assert property (@(posedge clk)  (sReg == 0 -> !rxDoneTick));
+assert property (@(posedge clk)  ((sNext[0] == 0) |=> (rxDoneTick == 0)) iff (sReg == 0 -> !rxDoneTick));
 
 endmodule

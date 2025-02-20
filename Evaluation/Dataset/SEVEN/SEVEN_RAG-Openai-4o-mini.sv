@@ -26,9 +26,9 @@ module SEVEN #(parameter freq = 250, parameter CBITS = 8) (input clk, input rst,
 assert property(@(posedge clk) s_eventually rst == 1 || digit_select == 1);
 assert property(@(posedge clk) s_eventually rst == 1 || digit_select == 0);
 
-assert property (@(posedge clk)  (s_eventually rst == 1 or (digit_select == 0 and segment == both7seg[6:0]) or (digit_select == 1 and segment == both7seg[13:7])));
-assert property (@(posedge clk)  (s_eventually rst == 1 || digit_select == 1) iff (s_eventually rst == 1 or (digit_select == 0 and segment == both7seg[6:0]) or (digit_select == 1 and segment == both7seg[13:7])));
-assert property (@(posedge clk)  (s_eventually (rst == 1) || (digit_select == 0)));
-assert property (@(posedge clk)  (s_eventually rst == 1 || digit_select == 0) iff (s_eventually (rst == 1) || (digit_select == 0)));
+assert property (@(posedge clk)  (s_eventually (rst == 1'b1 || digit_select == 1'b1)));
+assert property (@(posedge clk)  (s_eventually rst == 1 || digit_select == 1) iff (s_eventually (rst == 1'b1 || digit_select == 1'b1)));
+assert property (@(posedge clk)  (s_eventually (rst == 1 || digit_select == 0)));
+assert property (@(posedge clk)  (s_eventually rst == 1 || digit_select == 0) iff (s_eventually (rst == 1 || digit_select == 0)));
 
 endmodule
