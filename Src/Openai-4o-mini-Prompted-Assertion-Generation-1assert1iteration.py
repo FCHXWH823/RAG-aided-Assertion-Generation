@@ -160,6 +160,8 @@ with open('Results/Openai-4o-mini-Prompted-Assertion-Generation-Results-for-New-
             llm_response +=llm_responses[-1]+"\n}"
             csv_writer.writerow([folder,code,explanation_origin,llm_response])
 
+            print(f"====================={folder} finished=====================")
+
             if config["JasperGold_VERIFY"] == 1:
                 llm_assertions = json.loads(llm_response)
                 clk_conditions = []

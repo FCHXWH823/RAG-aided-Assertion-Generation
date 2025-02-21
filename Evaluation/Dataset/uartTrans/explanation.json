@@ -1,66 +1,94 @@
 {
   "Assertion 1": {
     "clock signal condition": "@(posedge clk)",
-    "disable condition": "none",
+    "disable condition": "",
     "logical expression": "(txNext == 0) |=> (tx == 0)",
-    "Signals": ["txNext", "tx"],
+    "Signals": [
+      "txNext",
+      "tx"
+    ],
     "Signal Explanations": {
-      "txNext": "the signal that holds the next value intended for transmission in the UART state machine",
-      "tx": "the output bit-stream signal generated from the internal transmission register"
+      "txNext": "next value of the transmit register; this signal holds the value that will update the transmit register in the next clock cycle",
+      "tx": "transmit bit‐stream output signal; this is the actual serial output of the UART transmitter"
     },
-    "Logical Operators": ["==", "|=>"],
+    "Logical Operators": [
+      "==",
+      "|=>",
+      "=="
+    ],
     "Logical Operators Explanation": {
       "==": "equal",
-      "|=>": "if the condition on the left is met then the condition on the right must hold SINCE THE NEXT CLOCK CYCLE"
+      "|=>": "a non-overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the signal that holds the next value intended for transmission equals 0 then the output bit-stream signal equals 0 SINCE THE NEXT CLOCK CYCLE"
+    "Assertion Explaination": "if next value of the transmit register is equal to 0, then the transmit bit-stream output should be equal to 0 SINCE NEXT CLOCK CYCLE"
   },
   "Assertion 2": {
     "clock signal condition": "@(posedge clk)",
-    "disable condition": "none",
+    "disable condition": "",
     "logical expression": "(txNext == 1) |=> (tx == 1)",
-    "Signals": ["txNext", "tx"],
+    "Signals": [
+      "txNext",
+      "tx"
+    ],
     "Signal Explanations": {
-      "txNext": "the signal that holds the next value intended for transmission in the UART state machine",
-      "tx": "the output bit-stream signal generated from the internal transmission register"
+      "txNext": "next value of the transmit register; this signal holds the value that will update the transmit register in the next clock cycle",
+      "tx": "transmit bit‐stream output signal; this is the actual serial output of the UART transmitter"
     },
-    "Logical Operators": ["==", "|=>"],
+    "Logical Operators": [
+      "==",
+      "|=>",
+      "=="
+    ],
     "Logical Operators Explanation": {
       "==": "equal",
-      "|=>": "if the condition on the left is met then the condition on the right must hold SINCE THE NEXT CLOCK CYCLE"
+      "|=>": "a non-overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the signal that holds the next value intended for transmission equals 1 then the output bit-stream signal equals 1 SINCE THE NEXT CLOCK CYCLE"
+    "Assertion Explaination": "if next value of the transmit register is equal to 1, then the transmit bit-stream output should be equal to 1 SINCE NEXT CLOCK CYCLE"
   },
   "Assertion 3": {
     "clock signal condition": "@(posedge clk)",
-    "disable condition": "none",
+    "disable condition": "",
     "logical expression": "(stateReg[0] == 1) |-> (txDoneTick == 0)",
-    "Signals": ["stateReg[0]", "txDoneTick"],
+    "Signals": [
+      "stateReg[0]",
+      "txDoneTick"
+    ],
     "Signal Explanations": {
-      "stateReg[0]": "the least significant bit of the state register in the UART FSM, indicating a particular state condition",
-      "txDoneTick": "the signal indicating a transmission done tick, used as a read signal to the FIFO"
+      "stateReg[0]": "the least significant bit of the current state register, representing a particular state condition in the FSM",
+      "txDoneTick": "transmit done tick signal that indicates completion of a transmit cycle"
     },
-    "Logical Operators": ["==", "|->"],
+    "Logical Operators": [
+      "==",
+      "|->",
+      "=="
+    ],
     "Logical Operators Explanation": {
       "==": "equal",
-      "|->": "if the condition on the left is met then the condition on the right must hold SINCE THE CURRENT CLOCK CYCLE"
+      "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the least significant bit of the state register is set then the transmission done tick signal equals 0 SINCE THE CURRENT CLOCK CYCLE"
+    "Assertion Explaination": "if the least significant bit of the current state register is equal to 1, then the transmit done tick signal should be equal to 0 SINCE THE SAME CLOCK CYCLE"
   },
   "Assertion 4": {
     "clock signal condition": "@(posedge clk)",
-    "disable condition": "none",
+    "disable condition": "",
     "logical expression": "(txStart == 0) |-> (txDoneTick == 0)",
-    "Signals": ["txStart", "txDoneTick"],
+    "Signals": [
+      "txStart",
+      "txDoneTick"
+    ],
     "Signal Explanations": {
-      "txStart": "the signal used to initiate the transmission in the UART module",
-      "txDoneTick": "the signal indicating that a transmission completion event (or read request) has occurred"
+      "txStart": "transmit start signal that indicates the initiation of a transmission",
+      "txDoneTick": "transmit done tick signal that indicates completion of a transmit cycle"
     },
-    "Logical Operators": ["==", "|->"],
+    "Logical Operators": [
+      "==",
+      "|->",
+      "=="
+    ],
     "Logical Operators Explanation": {
       "==": "equal",
-      "|->": "if the condition on the left is met then the condition on the right must hold SINCE THE CURRENT CLOCK CYCLE"
+      "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the signal used to initiate the transmission is reset (0) then the transmission done tick signal equals 0 SINCE THE CURRENT CLOCK CYCLE"
+    "Assertion Explaination": "if the transmit start signal is equal to 0, then the transmit done tick signal should be equal to 0 SINCE THE SAME CLOCK CYCLE"
   }
 }

@@ -3,44 +3,32 @@
     "clock signal condition": "@(posedge clk)",
     "disable condition": "disable iff (rst)",
     "logical expression": "valid_wr |-> !full",
-    "Signals": [
-      "valid_wr",
-      "full"
-    ],
+    "Signals": ["valid_wr", "full"],
     "Signal Explanations": {
-      "valid_wr": "a valid write request, which means that the write enable is active and the FIFO is not full",
-      "full": "a flag indicating that the FIFO has no space for new data (i.e., the FIFO is full)"
+      "valid_wr": "derived valid write signal, defined as wr_en && !full",
+      "full": "output signal indicating FIFO is full"
     },
-    "Logical Operators": [
-      "|->",
-      "!"
-    ],
+    "Logical Operators": ["|->", "!"],
     "Logical Operators Explanation": {
-      "|->": "an overlapping implication operator meaning that if the condition on the left is met then the condition on the right must hold SINCE THE CURRENT CLOCK CYCLE",
-      "!": "a logical negation operator meaning that the value of the signal is inverted"
+      "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE",
+      "!": "the value of a signal is reset (0)"
     },
-    "Assertion Explaination": "if there is a valid write request then it must be that the FIFO is not full SINCE THE CURRENT CLOCK CYCLE"
+    "Assertion Explaination": "if the derived valid write signal is set (1), then the FIFO full indicator is reset (0) SINCE THE SAME CLOCK CYCLE"
   },
   "Assertion 2": {
     "clock signal condition": "@(posedge clk)",
     "disable condition": "disable iff (rst)",
     "logical expression": "valid_rd |-> !empty",
-    "Signals": [
-      "valid_rd",
-      "empty"
-    ],
+    "Signals": ["valid_rd", "empty"],
     "Signal Explanations": {
-      "valid_rd": "a valid read request, which means that the read enable is active and the FIFO is not empty",
-      "empty": "a flag indicating that the FIFO contains no data (i.e., the FIFO is empty)"
+      "valid_rd": "derived valid read signal, defined as rd_en && !empty",
+      "empty": "output signal indicating FIFO is empty"
     },
-    "Logical Operators": [
-      "|->",
-      "!"
-    ],
+    "Logical Operators": ["|->", "!"],
     "Logical Operators Explanation": {
-      "|->": "an overlapping implication operator meaning that if the condition on the left is met then the condition on the right must hold SINCE THE CURRENT CLOCK CYCLE",
-      "!": "a logical negation operator meaning that the value of the signal is inverted"
+      "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE",
+      "!": "the value of a signal is reset (0)"
     },
-    "Assertion Explaination": "if there is a valid read request then it must be that the FIFO is not empty SINCE THE CURRENT CLOCK CYCLE"
+    "Assertion Explaination": "if the derived valid read signal is set (1), then the FIFO empty indicator is reset (0) SINCE THE SAME CLOCK CYCLE"
   }
 }

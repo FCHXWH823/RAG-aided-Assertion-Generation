@@ -1,304 +1,422 @@
 {
   "Assertion 1": {
     "clock signal condition": "@(posedge clk)",
-    "disable condition": "disable iff (rst)",
+    "disable condition": "default disable iff (rst)",
     "logical expression": "(!ex_freeze & ex_delayslot_dsi & !ex_delayslot_nop) |-> ##1 (ex_delayslot_nop == 0 && ex_delayslot_dsi == 0)",
-    "Signals": ["ex_freeze", "ex_delayslot_dsi", "ex_delayslot_nop"],
+    "Signals": [
+      "ex_freeze",
+      "ex_delayslot_dsi",
+      "ex_delayslot_nop"
+    ],
     "Signal Explanations": {
       "ex_freeze": "freeze signal for the EX stage",
-      "ex_delayslot_dsi": "signal indicating that a delay slot instruction is present in the EX stage",
-      "ex_delayslot_nop": "signal indicating that a filler no‐operation instruction is present in the EX stage"
+      "ex_delayslot_dsi": "signal indicating that a delay slot instruction is in the EX stage",
+      "ex_delayslot_nop": "signal indicating that a filler nop instruction is in the EX stage"
     },
-    "Logical Operators": ["!", "&", "|->", "##1", "==", "&&"],
+    "Logical Operators": [
+      "!",
+      "&",
+      "|->",
+      "##1",
+      "==",
+      "&&"
+    ],
     "Logical Operators Explanation": {
-      "!": "logical NOT, meaning the signal is reset (0)",
-      "&": "logical AND, meaning both conditions are required",
-      "|->": "implication operator meaning that if the condition on the left is met then the condition on the right must hold",
-      "##1": "delay operator meaning the consequent is expected in the next clock cycle",
-      "==": "equality comparison",
-      "&&": "logical AND, used to combine conditions"
+      "!": "the value of a signal is reset (0)",
+      "&": "logical AND",
+      "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE",
+      "##1": "the condition on the right must hold after one clock cycle",
+      "==": "equal",
+      "&&": "logical AND"
     },
-    "Assertion Explaination": "if the EX stage is not frozen and the delay slot instruction indicator is set while the filler no‐operation indicator is not set then in the next clock cycle both the filler no‐operation indicator and the delay slot instruction indicator must be reset (0)"
+    "Assertion Explaination": "if the freeze signal for the EX stage is reset (0) and the signal indicating that a delay slot instruction is in the EX stage is set (1) and the signal indicating that a filler nop instruction is in the EX stage is reset (0), then after one clock cycle the signal indicating that a filler nop instruction is in the EX stage equals 0 and the signal indicating that a delay slot instruction is in the EX stage equals 0"
   },
   "Assertion 2": {
     "clock signal condition": "@(posedge clk)",
-    "disable condition": "disable iff (rst)",
+    "disable condition": "default disable iff (rst)",
     "logical expression": "(!ex_freeze & id_freeze | ex_flushpipe) |-> ##1 (ex_macrc_op == 0)",
-    "Signals": ["ex_freeze", "id_freeze", "ex_flushpipe", "ex_macrc_op"],
+    "Signals": [
+      "ex_freeze",
+      "id_freeze",
+      "ex_flushpipe",
+      "ex_macrc_op"
+    ],
     "Signal Explanations": {
       "ex_freeze": "freeze signal for the EX stage",
       "id_freeze": "freeze signal for the ID stage",
-      "ex_flushpipe": "flush pipeline signal for the EX stage",
-      "ex_macrc_op": "signal representing the macrc operation result in the EX stage"
+      "ex_flushpipe": "pipeline flush signal for the EX stage",
+      "ex_macrc_op": "signal indicating a MAC read operation in the EX stage"
     },
-    "Logical Operators": ["!", "&", "|", "|->", "##1", "=="],
+    "Logical Operators": [
+      "!",
+      "&",
+      "|->",
+      "##1",
+      "=="
+    ],
     "Logical Operators Explanation": {
-      "!": "logical NOT, meaning the signal is reset (0)",
-      "&": "logical AND, meaning both conditions must be true",
-      "|": "logical OR, meaning either of the conditions can be true",
-      "|->": "implication operator meaning that if the condition on the left is met then the condition on the right must hold",
-      "##1": "delay operator indicating that the consequent is expected in the next clock cycle",
-      "==": "equality comparison"
+      "!": "the value of a signal is reset (0)",
+      "&": "logical AND",
+      "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE",
+      "##1": "the condition on the right must hold after one clock cycle",
+      "==": "equal"
     },
-    "Assertion Explaination": "if either the EX stage is not frozen and the ID stage is frozen or the EX stage flush pipeline signal is active then in the next clock cycle the macrc operation result in the EX stage must be reset (0)"
+    "Assertion Explaination": "if the freeze signal for the EX stage is reset (0) and either the freeze signal for the ID stage is set (1) or the pipeline flush signal for the EX stage is set (1), then after one clock cycle the signal indicating a MAC read operation in the EX stage equals 0"
   },
   "Assertion 3": {
     "clock signal condition": "@(posedge clk)",
-    "disable condition": "disable iff (rst)",
-    "logical expression": "(!ex_freeze & id_freeze) |-> ##1 (rf_addrw == 5'd00)",
-    "Signals": ["ex_freeze", "id_freeze", "rf_addrw"],
+    "disable condition": "default disable iff (rst)",
+    "logical expression": "(id_flushpipe) |-> ##1 (id_insn == {`OR1200_OR32_NOP, 26'h041_0000})",
+    "Signals": [
+      "id_flushpipe",
+      "id_insn"
+    ],
     "Signal Explanations": {
-      "ex_freeze": "freeze signal for the EX stage",
-      "id_freeze": "freeze signal for the ID stage",
-      "rf_addrw": "register file write address"
+      "id_flushpipe": "pipeline flush signal for the ID stage",
+      "id_insn": "instruction signal in the ID stage"
     },
-    "Logical Operators": ["!", "&", "|->", "##1", "=="],
+    "Logical Operators": [
+      "|->",
+      "##1",
+      "=="
+    ],
     "Logical Operators Explanation": {
-      "!": "logical NOT, meaning the signal is reset (0)",
-      "&": "logical AND, requiring both conditions to be true",
-      "|->": "implication operator meaning that if the condition on the left is met then the condition on the right must hold",
-      "##1": "delay operator meaning that the condition on the right is to be met in the next clock cycle",
-      "==": "equality comparison"
+      "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE",
+      "##1": "the condition on the right must hold after one clock cycle",
+      "==": "equal"
     },
-    "Assertion Explaination": "if the EX stage is not frozen and the ID stage is frozen then in the next clock cycle the register file write address must equal 0"
+    "Assertion Explaination": "if the pipeline flush signal for the ID stage is set (1), then after one clock cycle the instruction signal in the ID stage equals the constant NOP value"
   },
   "Assertion 4": {
     "clock signal condition": "@(posedge clk)",
-    "disable condition": "disable iff (rst)",
-    "logical expression": "(id_flushpipe) |-> ##1 (id_insn == {NOP, 26'h041_0000})",
-    "Signals": ["id_flushpipe", "id_insn"],
-    "Signal Explanations": {
-      "id_flushpipe": "flush pipeline signal for the ID stage",
-      "id_insn": "instruction in the ID stage"
-    },
-    "Logical Operators": ["|->", "##1", "=="],
-    "Logical Operators Explanation": {
-      "|->": "implication operator meaning that if the condition on the left is met then the condition on the right must hold",
-      "##1": "delay operator indicating that the consequent is expected in the next clock cycle",
-      "==": "equality comparison"
-    },
-    "Assertion Explaination": "if the flush pipeline signal for the ID stage is active then in the next clock cycle the instruction in the ID stage must equal the designated no‐operation instruction"
-  },
-  "Assertion 5": {
-    "clock signal condition": "@(posedge clk)",
-    "disable condition": "disable iff (rst)",
-    "logical expression": "(!ex_freeze & id_freeze | ex_flushpipe) |-> ##1 (ex_insn == {NOP, 26'h041_0000})",
-    "Signals": ["ex_freeze", "id_freeze", "ex_flushpipe", "ex_insn"],
+    "disable condition": "default disable iff (rst)",
+    "logical expression": "(!ex_freeze & id_freeze | ex_flushpipe) |-> ##1 (ex_insn == {`OR1200_OR32_NOP, 26'h041_0000})",
+    "Signals": [
+      "ex_freeze",
+      "id_freeze",
+      "ex_flushpipe",
+      "ex_insn"
+    ],
     "Signal Explanations": {
       "ex_freeze": "freeze signal for the EX stage",
       "id_freeze": "freeze signal for the ID stage",
-      "ex_flushpipe": "flush pipeline signal for the EX stage",
-      "ex_insn": "instruction in the EX stage"
+      "ex_flushpipe": "pipeline flush signal for the EX stage",
+      "ex_insn": "instruction signal in the EX stage"
     },
-    "Logical Operators": ["!", "&", "|", "|->", "##1", "=="],
+    "Logical Operators": [
+      "!",
+      "&",
+      "|->",
+      "##1",
+      "=="
+    ],
     "Logical Operators Explanation": {
-      "!": "logical NOT, indicating the signal is reset (0)",
-      "&": "logical AND, requiring both conditions to be true",
-      "|": "logical OR, meaning either condition can be true",
-      "|->": "implication operator meaning that if the condition on the left is met then the condition on the right must hold",
-      "##1": "delay operator indicating that the consequent must hold in the next clock cycle",
-      "==": "equality comparison"
+      "!": "the value of a signal is reset (0)",
+      "&": "logical AND",
+      "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE",
+      "##1": "the condition on the right must hold after one clock cycle",
+      "==": "equal"
     },
-    "Assertion Explaination": "if either the EX stage is not frozen and the ID stage is frozen or the EX stage flush pipeline signal is active then in the next clock cycle the instruction in the EX stage must equal the designated no‐operation instruction"
+    "Assertion Explaination": "if the freeze signal for the EX stage is reset (0) and either the freeze signal for the ID stage is set (1) or the pipeline flush signal for the EX stage is set (1), then after one clock cycle the instruction signal in the EX stage equals the constant NOP value"
+  },
+  "Assertion 5": {
+    "clock signal condition": "@(posedge clk)",
+    "disable condition": "default disable iff (rst)",
+    "logical expression": "(!id_freeze && if_insn[31:26] == `OR1200_OR32_JALR) |-> ##1 (sel_imm ==  1'b0)",
+    "Signals": [
+      "id_freeze",
+      "if_insn",
+      "sel_imm"
+    ],
+    "Signal Explanations": {
+      "id_freeze": "freeze signal for the ID stage",
+      "if_insn": "instruction signal in the IF stage (opcode field used)",
+      "sel_imm": "signal controlling immediate value selection"
+    },
+    "Logical Operators": [
+      "!",
+      "&&",
+      "==",
+      "|->",
+      "##1"
+    ],
+    "Logical Operators Explanation": {
+      "!": "the value of a signal is reset (0)",
+      "&&": "logical AND",
+      "==": "equal",
+      "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE",
+      "##1": "the condition on the right must hold after one clock cycle"
+    },
+    "Assertion Explaination": "if the freeze signal for the ID stage is reset (0) and the opcode field of the instruction in the IF stage equals the JALR opcode, then after one clock cycle the signal controlling immediate value selection equals 0"
   },
   "Assertion 6": {
     "clock signal condition": "@(posedge clk)",
-    "disable condition": "disable iff (rst)",
-    "logical expression": "(!id_freeze && if_insn_opcode == JALR) |-> ##1 (sel_imm == 1'b0)",
-    "Signals": ["id_freeze", "if_insn_opcode", "sel_imm"],
+    "disable condition": "default disable iff (rst)",
+    "logical expression": "(!id_freeze && if_insn[31:26] == `OR1200_OR32_JR) |-> ##1 (sel_imm ==  1'b0)",
+    "Signals": [
+      "id_freeze",
+      "if_insn",
+      "sel_imm"
+    ],
     "Signal Explanations": {
       "id_freeze": "freeze signal for the ID stage",
-      "if_insn_opcode": "opcode field of the instruction in the IF stage (indicating JALR)",
-      "sel_imm": "signal that selects the immediate operand"
+      "if_insn": "instruction signal in the IF stage (opcode field used)",
+      "sel_imm": "signal controlling immediate value selection"
     },
-    "Logical Operators": ["!", "&&", "|->", "##1", "=="],
+    "Logical Operators": [
+      "!",
+      "&&",
+      "==",
+      "|->",
+      "##1"
+    ],
     "Logical Operators Explanation": {
-      "!": "logical NOT, meaning the signal is reset (0)",
-      "&&": "logical AND, requiring both conditions to be true",
-      "|->": "implication operator meaning that if the condition on the left is met then the condition on the right must hold",
-      "##1": "delay operator indicating that the consequent must hold in the next clock cycle",
-      "==": "equality comparison"
+      "!": "the value of a signal is reset (0)",
+      "&&": "logical AND",
+      "==": "equal",
+      "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE",
+      "##1": "the condition on the right must hold after one clock cycle"
     },
-    "Assertion Explaination": "if the ID stage is not frozen and the opcode of the IF stage instruction indicates JALR then in the next clock cycle the immediate selection signal must be reset (0)"
+    "Assertion Explaination": "if the freeze signal for the ID stage is reset (0) and the opcode field of the instruction in the IF stage equals the JR opcode, then after one clock cycle the signal controlling immediate value selection equals 0"
   },
   "Assertion 7": {
     "clock signal condition": "@(posedge clk)",
-    "disable condition": "disable iff (rst)",
-    "logical expression": "(!id_freeze && if_insn_opcode == JR) |-> ##1 (sel_imm == 1'b0)",
-    "Signals": ["id_freeze", "if_insn_opcode", "sel_imm"],
+    "disable condition": "default disable iff (rst)",
+    "logical expression": "(!id_freeze && if_insn[31:26] == `OR1200_OR32_RFE) |-> ##1 (sel_imm ==  1'b0)",
+    "Signals": [
+      "id_freeze",
+      "if_insn",
+      "sel_imm"
+    ],
     "Signal Explanations": {
       "id_freeze": "freeze signal for the ID stage",
-      "if_insn_opcode": "opcode field of the instruction in the IF stage (indicating JR)",
-      "sel_imm": "signal that selects the immediate operand"
+      "if_insn": "instruction signal in the IF stage (opcode field used)",
+      "sel_imm": "signal controlling immediate value selection"
     },
-    "Logical Operators": ["!", "&&", "|->", "##1", "=="],
+    "Logical Operators": [
+      "!",
+      "&&",
+      "==",
+      "|->",
+      "##1"
+    ],
     "Logical Operators Explanation": {
-      "!": "logical NOT, indicating a reset (0)",
-      "&&": "logical AND, meaning both conditions must be true",
-      "|->": "implication operator meaning that if the condition on the left is met then the condition on the right must hold",
-      "##1": "delay operator indicating that the consequent must hold in the next clock cycle",
-      "==": "equality comparison"
+      "!": "the value of a signal is reset (0)",
+      "&&": "logical AND",
+      "==": "equal",
+      "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE",
+      "##1": "the condition on the right must hold after one clock cycle"
     },
-    "Assertion Explaination": "if the ID stage is not frozen and the opcode of the IF stage instruction indicates JR then in the next clock cycle the immediate selection signal must be reset (0)"
+    "Assertion Explaination": "if the freeze signal for the ID stage is reset (0) and the opcode field of the instruction in the IF stage equals the RFE opcode, then after one clock cycle the signal controlling immediate value selection equals 0"
   },
   "Assertion 8": {
     "clock signal condition": "@(posedge clk)",
-    "disable condition": "disable iff (rst)",
-    "logical expression": "(!id_freeze && if_insn_opcode == RFE) |-> ##1 (sel_imm == 1'b0)",
-    "Signals": ["id_freeze", "if_insn_opcode", "sel_imm"],
+    "disable condition": "default disable iff (rst)",
+    "logical expression": "(!id_freeze && if_insn[31:26] == `OR1200_OR32_MFSPR) |-> ##1 (sel_imm ==  1'b0)",
+    "Signals": [
+      "id_freeze",
+      "if_insn",
+      "sel_imm"
+    ],
     "Signal Explanations": {
       "id_freeze": "freeze signal for the ID stage",
-      "if_insn_opcode": "opcode field of the instruction in the IF stage (indicating RFE)",
-      "sel_imm": "signal that selects the immediate operand"
+      "if_insn": "instruction signal in the IF stage (opcode field used)",
+      "sel_imm": "signal controlling immediate value selection"
     },
-    "Logical Operators": ["!", "&&", "|->", "##1", "=="],
+    "Logical Operators": [
+      "!",
+      "&&",
+      "==",
+      "|->",
+      "##1"
+    ],
     "Logical Operators Explanation": {
-      "!": "logical NOT, meaning the signal is reset (0)",
-      "&&": "logical AND, combining conditions",
-      "|->": "implication operator meaning that if the condition on the left is met then the condition on the right must hold",
-      "##1": "delay operator indicating that the consequent must hold in the next clock cycle",
-      "==": "equality comparison"
+      "!": "the value of a signal is reset (0)",
+      "&&": "logical AND",
+      "==": "equal",
+      "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE",
+      "##1": "the condition on the right must hold after one clock cycle"
     },
-    "Assertion Explaination": "if the ID stage is not frozen and the opcode of the IF stage instruction indicates RFE then in the next clock cycle the immediate selection signal must be reset (0)"
+    "Assertion Explaination": "if the freeze signal for the ID stage is reset (0) and the opcode field of the instruction in the IF stage equals the MFSPR opcode, then after one clock cycle the signal controlling immediate value selection equals 0"
   },
   "Assertion 9": {
     "clock signal condition": "@(posedge clk)",
-    "disable condition": "disable iff (rst)",
-    "logical expression": "(!id_freeze && if_insn_opcode == MFSPR) |-> ##1 (sel_imm == 1'b0)",
-    "Signals": ["id_freeze", "if_insn_opcode", "sel_imm"],
+    "disable condition": "default disable iff (rst)",
+    "logical expression": "(!id_freeze && if_insn[31:26] == `OR1200_OR32_MTSPR) |-> ##1 (sel_imm ==  1'b0)",
+    "Signals": [
+      "id_freeze",
+      "if_insn",
+      "sel_imm"
+    ],
     "Signal Explanations": {
       "id_freeze": "freeze signal for the ID stage",
-      "if_insn_opcode": "opcode field of the instruction in the IF stage (indicating MFSPR)",
-      "sel_imm": "signal that selects the immediate operand"
+      "if_insn": "instruction signal in the IF stage (opcode field used)",
+      "sel_imm": "signal controlling immediate value selection"
     },
-    "Logical Operators": ["!", "&&", "|->", "##1", "=="],
+    "Logical Operators": [
+      "!",
+      "&&",
+      "==",
+      "|->",
+      "##1"
+    ],
     "Logical Operators Explanation": {
-      "!": "logical NOT, meaning the signal is reset (0)",
-      "&&": "logical AND, requiring all conditions to be met",
-      "|->": "implication operator meaning that if the condition on the left is met then the condition on the right must hold",
-      "##1": "delay operator indicating that the consequent must hold in the next clock cycle",
-      "==": "equality comparison"
+      "!": "the value of a signal is reset (0)",
+      "&&": "logical AND",
+      "==": "equal",
+      "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE",
+      "##1": "the condition on the right must hold after one clock cycle"
     },
-    "Assertion Explaination": "if the ID stage is not frozen and the opcode of the IF stage instruction indicates MFSPR then in the next clock cycle the immediate selection signal must be reset (0)"
+    "Assertion Explaination": "if the freeze signal for the ID stage is reset (0) and the opcode field of the instruction in the IF stage equals the MTSPR opcode, then after one clock cycle the signal controlling immediate value selection equals 0"
   },
   "Assertion 10": {
     "clock signal condition": "@(posedge clk)",
-    "disable condition": "disable iff (rst)",
-    "logical expression": "(!id_freeze && if_insn_opcode == MTSPR) |-> ##1 (sel_imm == 1'b0)",
-    "Signals": ["id_freeze", "if_insn_opcode", "sel_imm"],
+    "disable condition": "default disable iff (rst)",
+    "logical expression": "(!id_freeze && if_insn[31:26] == `OR1200_OR32_XSYNC) |-> ##1 (sel_imm ==  1'b0)",
+    "Signals": [
+      "id_freeze",
+      "if_insn",
+      "sel_imm"
+    ],
     "Signal Explanations": {
       "id_freeze": "freeze signal for the ID stage",
-      "if_insn_opcode": "opcode field of the instruction in the IF stage (indicating MTSPR)",
-      "sel_imm": "signal that selects the immediate operand"
+      "if_insn": "instruction signal in the IF stage (opcode field used)",
+      "sel_imm": "signal controlling immediate value selection"
     },
-    "Logical Operators": ["!", "&&", "|->", "##1", "=="],
+    "Logical Operators": [
+      "!",
+      "&&",
+      "==",
+      "|->",
+      "##1"
+    ],
     "Logical Operators Explanation": {
-      "!": "logical NOT, meaning that the signal is reset (0)",
-      "&&": "logical AND, meaning both conditions must be true",
-      "|->": "implication operator meaning that if the condition on the left is met then the condition on the right must hold",
-      "##1": "delay operator indicating that the consequent is expected in the next clock cycle",
-      "==": "equality comparison"
+      "!": "the value of a signal is reset (0)",
+      "&&": "logical AND",
+      "==": "equal",
+      "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE",
+      "##1": "the condition on the right must hold after one clock cycle"
     },
-    "Assertion Explaination": "if the ID stage is not frozen and the opcode of the IF stage instruction indicates MTSPR then in the next clock cycle the immediate selection signal must be reset (0)"
+    "Assertion Explaination": "if the freeze signal for the ID stage is reset (0) and the opcode field of the instruction in the IF stage equals the XSYNC opcode, then after one clock cycle the signal controlling immediate value selection equals 0"
   },
   "Assertion 11": {
     "clock signal condition": "@(posedge clk)",
-    "disable condition": "disable iff (rst)",
-    "logical expression": "(!id_freeze && if_insn_opcode == XSYNC) |-> ##1 (sel_imm == 1'b0)",
-    "Signals": ["id_freeze", "if_insn_opcode", "sel_imm"],
+    "disable condition": "default disable iff (rst)",
+    "logical expression": "(!id_freeze && if_insn[31:26] == `OR1200_OR32_SW) |-> ##1 (sel_imm ==  1'b0)",
+    "Signals": [
+      "id_freeze",
+      "if_insn",
+      "sel_imm"
+    ],
     "Signal Explanations": {
       "id_freeze": "freeze signal for the ID stage",
-      "if_insn_opcode": "opcode field of the instruction in the IF stage (indicating XSYNC)",
-      "sel_imm": "signal that selects the immediate operand"
+      "if_insn": "instruction signal in the IF stage (opcode field used)",
+      "sel_imm": "signal controlling immediate value selection"
     },
-    "Logical Operators": ["!", "&&", "|->", "##1", "=="],
+    "Logical Operators": [
+      "!",
+      "&&",
+      "==",
+      "|->",
+      "##1"
+    ],
     "Logical Operators Explanation": {
-      "!": "logical NOT, meaning the signal is reset (0)",
-      "&&": "logical AND, requiring both conditions to be satisfied",
-      "|->": "implication operator meaning that if the condition on the left is met then the condition on the right must hold",
-      "##1": "delay operator indicating that the consequent must hold in the next clock cycle",
-      "==": "equality comparison"
+      "!": "the value of a signal is reset (0)",
+      "&&": "logical AND",
+      "==": "equal",
+      "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE",
+      "##1": "the condition on the right must hold after one clock cycle"
     },
-    "Assertion Explaination": "if the ID stage is not frozen and the opcode of the IF stage instruction indicates XSYNC then in the next clock cycle the immediate selection signal must be reset (0)"
+    "Assertion Explaination": "if the freeze signal for the ID stage is reset (0) and the opcode field of the instruction in the IF stage equals the SW opcode, then after one clock cycle the signal controlling immediate value selection equals 0"
   },
   "Assertion 12": {
     "clock signal condition": "@(posedge clk)",
-    "disable condition": "disable iff (rst)",
-    "logical expression": "(!id_freeze && if_insn_opcode == SW) |-> ##1 (sel_imm == 1'b0)",
-    "Signals": ["id_freeze", "if_insn_opcode", "sel_imm"],
+    "disable condition": "default disable iff (rst)",
+    "logical expression": "(!id_freeze && if_insn[31:26] == `OR1200_OR32_SB) |-> ##1 (sel_imm ==  1'b0)",
+    "Signals": [
+      "id_freeze",
+      "if_insn",
+      "sel_imm"
+    ],
     "Signal Explanations": {
       "id_freeze": "freeze signal for the ID stage",
-      "if_insn_opcode": "opcode field of the instruction in the IF stage (indicating SW)",
-      "sel_imm": "signal that selects the immediate operand"
+      "if_insn": "instruction signal in the IF stage (opcode field used)",
+      "sel_imm": "signal controlling immediate value selection"
     },
-    "Logical Operators": ["!", "&&", "|->", "##1", "=="],
+    "Logical Operators": [
+      "!",
+      "&&",
+      "==",
+      "|->",
+      "##1"
+    ],
     "Logical Operators Explanation": {
-      "!": "logical NOT, indicating that the signal is reset (0)",
-      "&&": "logical AND, meaning both conditions must be true",
-      "|->": "implication operator meaning that if the condition on the left is met then the condition on the right must hold",
-      "##1": "delay operator indicating that the consequence is expected in the next clock cycle",
-      "==": "equality comparison"
+      "!": "the value of a signal is reset (0)",
+      "&&": "logical AND",
+      "==": "equal",
+      "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE",
+      "##1": "the condition on the right must hold after one clock cycle"
     },
-    "Assertion Explaination": "if the ID stage is not frozen and the opcode of the IF stage instruction indicates SW then in the next clock cycle the immediate selection signal must be reset (0)"
+    "Assertion Explaination": "if the freeze signal for the ID stage is reset (0) and the opcode field of the instruction in the IF stage equals the SB opcode, then after one clock cycle the signal controlling immediate value selection equals 0"
   },
   "Assertion 13": {
     "clock signal condition": "@(posedge clk)",
-    "disable condition": "disable iff (rst)",
-    "logical expression": "(!id_freeze && if_insn_opcode == SB) |-> ##1 (sel_imm == 1'b0)",
-    "Signals": ["id_freeze", "if_insn_opcode", "sel_imm"],
+    "disable condition": "default disable iff (rst)",
+    "logical expression": "(!id_freeze && if_insn[31:26] == `OR1200_OR32_ALU) |-> ##1 (sel_imm ==  1'b0)",
+    "Signals": [
+      "id_freeze",
+      "if_insn",
+      "sel_imm"
+    ],
     "Signal Explanations": {
       "id_freeze": "freeze signal for the ID stage",
-      "if_insn_opcode": "opcode field of the instruction in the IF stage (indicating SB)",
-      "sel_imm": "signal that selects the immediate operand"
+      "if_insn": "instruction signal in the IF stage (opcode field used)",
+      "sel_imm": "signal controlling immediate value selection"
     },
-    "Logical Operators": ["!", "&&", "|->", "##1", "=="],
+    "Logical Operators": [
+      "!",
+      "&&",
+      "==",
+      "|->",
+      "##1"
+    ],
     "Logical Operators Explanation": {
-      "!": "logical NOT, meaning the signal is reset (0)",
-      "&&": "logical AND, meaning that both conditions must be true",
-      "|->": "implication operator meaning that if the condition on the left is met then the condition on the right must hold",
-      "##1": "delay operator indicating that the consequent must hold in the next clock cycle",
-      "==": "equality comparison"
+      "!": "the value of a signal is reset (0)",
+      "&&": "logical AND",
+      "==": "equal",
+      "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE",
+      "##1": "the condition on the right must hold after one clock cycle"
     },
-    "Assertion Explaination": "if the ID stage is not frozen and the opcode of the IF stage instruction indicates SB then in the next clock cycle the immediate selection signal must be reset (0)"
+    "Assertion Explaination": "if the freeze signal for the ID stage is reset (0) and the opcode field of the instruction in the IF stage equals the ALU opcode, then after one clock cycle the signal controlling immediate value selection equals 0"
   },
   "Assertion 14": {
     "clock signal condition": "@(posedge clk)",
-    "disable condition": "disable iff (rst)",
-    "logical expression": "(!id_freeze && if_insn_opcode == ALU) |-> ##1 (sel_imm == 1'b0)",
-    "Signals": ["id_freeze", "if_insn_opcode", "sel_imm"],
+    "disable condition": "default disable iff (rst)",
+    "logical expression": "(!id_freeze && if_insn[31:26] == `OR1200_OR32_SFXX) |-> ##1 (sel_imm ==  1'b0)",
+    "Signals": [
+      "id_freeze",
+      "if_insn",
+      "sel_imm"
+    ],
     "Signal Explanations": {
       "id_freeze": "freeze signal for the ID stage",
-      "if_insn_opcode": "opcode field of the instruction in the IF stage (indicating ALU)",
-      "sel_imm": "signal that selects the immediate operand"
+      "if_insn": "instruction signal in the IF stage (opcode field used)",
+      "sel_imm": "signal controlling immediate value selection"
     },
-    "Logical Operators": ["!", "&&", "|->", "##1", "=="],
+    "Logical Operators": [
+      "!",
+      "&&",
+      "==",
+      "|->",
+      "##1"
+    ],
     "Logical Operators Explanation": {
-      "!": "logical NOT, which indicates the signal is reset (0)",
-      "&&": "logical AND, meaning both conditions must hold",
-      "|->": "implication operator meaning that if the conditions on the left are met then the condition on the right must hold",
-      "##1": "delay operator indicating that the consequent is expected in the next clock cycle",
-      "==": "equality comparison"
+      "!": "the value of a signal is reset (0)",
+      "&&": "logical AND",
+      "==": "equal",
+      "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE",
+      "##1": "the condition on the right must hold after one clock cycle"
     },
-    "Assertion Explaination": "if the ID stage is not frozen and the opcode of the IF stage instruction indicates ALU then in the next clock cycle the immediate selection signal must be reset (0)"
-  },
-  "Assertion 15": {
-    "clock signal condition": "@(posedge clk)",
-    "disable condition": "disable iff (rst)",
-    "logical expression": "(!id_freeze && if_insn_opcode == SFXX) |-> ##1 (sel_imm == 1'b0)",
-    "Signals": ["id_freeze", "if_insn_opcode", "sel_imm"],
-    "Signal Explanations": {
-      "id_freeze": "freeze signal for the ID stage",
-      "if_insn_opcode": "opcode field of the instruction in the IF stage (indicating SFXX)",
-      "sel_imm": "signal that selects the immediate operand"
-    },
-    "Logical Operators": ["!", "&&", "|->", "##1", "=="],
-    "Logical Operators Explanation": {
-      "!": "logical NOT, meaning the signal is reset (0)",
-      "&&": "logical AND, meaning that both conditions must hold",
-      "|->": "implication operator meaning that if the condition on the left is met then the condition on the right must hold",
-      "##1": "delay operator indicating that the consequent must hold in the next clock cycle",
-      "==": "equality comparison"
-    },
-    "Assertion Explaination": "if the ID stage is not frozen and the opcode of the IF stage instruction indicates SFXX then in the next clock cycle the immediate selection signal must be reset (0)"
+    "Assertion Explaination": "if the freeze signal for the ID stage is reset (0) and the opcode field of the instruction in the IF stage equals the SFXX opcode, then after one clock cycle the signal controlling immediate value selection equals 0"
   }
 }

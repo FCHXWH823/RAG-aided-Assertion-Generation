@@ -5,389 +5,354 @@
     "logical expression": "1 |-> ##2 PRESENT_STATE == $past(NEXT_STATE)",
     "Signals": ["PRESENT_STATE", "NEXT_STATE"],
     "Signal Explanations": {
-      "PRESENT_STATE": "the current finite state machine state",
-      "NEXT_STATE": "the computed next state of the finite state machine"
+      "PRESENT_STATE": "the current state of the FSM",
+      "NEXT_STATE": "the computed next state of the FSM"
     },
     "Logical Operators": ["|->", "##2", "==", "$past"],
     "Logical Operators Explanation": {
-      "|->": "an overlapping implication operator meaning that if the condition on the left is met then the condition on the right must hold SINCE THE CURRENT CLOCK CYCLE",
-      "##2": "a delay operator indicating that the condition on the right must be satisfied two clock cycles later",
-      "==": "an equality operator ensuring that the two sides are equal",
-      "$past": "a function that returns the value of a signal from a previous clock cycle"
+      "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE",
+      "##2": "a delay operator meaning that the condition on the right is evaluated 2 clock cycles later",
+      "==": "equal",
+      "$past": "the value from previous clock cycle(s)"
     },
-    "Assertion Explaination": "since the constant true condition holds, it implies that two clock cycles later the current finite state machine state is equal to the value of the computed next state from the immediately preceding clock cycle"
+    "Assertion Explaination": "if the constant true condition is satisfied then after 2 clock cycles the current state of the FSM equals the computed next state of the FSM from the previous cycle"
   },
   "Assertion 2": {
     "clock signal condition": "@(posedge Hclk)",
     "disable condition": "disable iff (!Hresetn)",
     "logical expression": "(PRESENT_STATE == ST_IDLE && valid && Hwrite) |-> (NEXT_STATE == ST_WWAIT)",
-    "Signals": ["PRESENT_STATE", "ST_IDLE", "valid", "Hwrite", "NEXT_STATE", "ST_WWAIT"],
+    "Signals": ["PRESENT_STATE", "valid", "Hwrite", "NEXT_STATE"],
     "Signal Explanations": {
-      "PRESENT_STATE": "the current finite state machine state",
-      "ST_IDLE": "the idle state constant of the finite state machine",
-      "valid": "the signal indicating that a transfer is valid",
-      "Hwrite": "the signal indicating that the operation is a write",
-      "NEXT_STATE": "the computed next state of the finite state machine",
-      "ST_WWAIT": "the write-wait state constant of the finite state machine"
+      "PRESENT_STATE": "the current state of the FSM",
+      "valid": "a signal indicating transaction validity",
+      "Hwrite": "a signal indicating a write operation",
+      "NEXT_STATE": "the computed next state of the FSM"
     },
-    "Logical Operators": ["==", "&&", "|->"],
+    "Logical Operators": ["==", "&&", "|->", "=="],
     "Logical Operators Explanation": {
-      "==": "an equality operator ensuring both sides are equal",
-      "&&": "a logical AND operator meaning both conditions must be true",
-      "|->": "an overlapping implication operator meaning that if the left condition is met then the right condition must hold SINCE THE CURRENT CLOCK CYCLE"
+      "==": "equal",
+      "&&": "logical AND",
+      "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the current finite state machine state equals the idle state and the transfer valid and write signals are asserted, then since the current clock cycle the computed next state must equal the write-wait state"
+    "Assertion Explaination": "if the current state of the FSM equals idle, transaction is valid, and a write operation is active then the computed next state of the FSM equals write wait SINCE THE SAME CLOCK CYCLE"
   },
   "Assertion 3": {
     "clock signal condition": "@(posedge Hclk)",
     "disable condition": "disable iff (!Hresetn)",
     "logical expression": "PRESENT_STATE == ST_IDLE && valid && !Hwrite |-> NEXT_STATE == ST_READ",
-    "Signals": ["PRESENT_STATE", "ST_IDLE", "valid", "Hwrite", "NEXT_STATE", "ST_READ"],
+    "Signals": ["PRESENT_STATE", "valid", "Hwrite", "NEXT_STATE"],
     "Signal Explanations": {
-      "PRESENT_STATE": "the current finite state machine state",
-      "ST_IDLE": "the idle state constant of the finite state machine",
-      "valid": "the signal indicating that a transfer is valid",
-      "Hwrite": "the signal indicating that the operation is a write",
-      "NEXT_STATE": "the computed next state of the finite state machine",
-      "ST_READ": "the read state constant of the finite state machine"
+      "PRESENT_STATE": "the current state of the FSM",
+      "valid": "a signal indicating transaction validity",
+      "Hwrite": "a signal indicating a write operation",
+      "NEXT_STATE": "the computed next state of the FSM"
     },
-    "Logical Operators": ["==", "&&", "!", "|->"],
+    "Logical Operators": ["==", "&&", "!", "|->", "=="],
     "Logical Operators Explanation": {
-      "==": "an equality operator ensuring both sides are equal",
-      "&&": "a logical AND operator meaning both conditions must be true",
-      "!": "a logical NOT operator indicating the signal is deasserted",
-      "|->": "an overlapping implication operator meaning that if the left condition is met then the right condition must hold SINCE THE CURRENT CLOCK CYCLE"
+      "==": "equal",
+      "&&": "logical AND",
+      "!": "the value of a signal is reset (0)",
+      "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the current finite state machine state equals the idle state and the transfer valid signal is asserted while the write signal is deasserted, then since the current clock cycle the computed next state must equal the read state"
+    "Assertion Explaination": "if the current state of the FSM equals idle, transaction is valid, and the write operation is not active then the computed next state of the FSM equals read SINCE THE SAME CLOCK CYCLE"
   },
   "Assertion 4": {
     "clock signal condition": "@(posedge Hclk)",
     "disable condition": "disable iff (!Hresetn)",
     "logical expression": "PRESENT_STATE == ST_IDLE && !valid |-> NEXT_STATE == ST_IDLE",
-    "Signals": ["PRESENT_STATE", "ST_IDLE", "valid", "NEXT_STATE"],
+    "Signals": ["PRESENT_STATE", "valid", "NEXT_STATE"],
     "Signal Explanations": {
-      "PRESENT_STATE": "the current finite state machine state",
-      "ST_IDLE": "the idle state constant of the finite state machine",
-      "valid": "the signal indicating that a transfer is valid",
-      "NEXT_STATE": "the computed next state of the finite state machine"
+      "PRESENT_STATE": "the current state of the FSM",
+      "valid": "a signal indicating transaction validity",
+      "NEXT_STATE": "the computed next state of the FSM"
     },
-    "Logical Operators": ["==", "&&", "!", "|->"],
+    "Logical Operators": ["==", "&&", "!", "|->", "=="],
     "Logical Operators Explanation": {
-      "==": "an equality operator ensuring both sides are equal",
-      "&&": "a logical AND operator meaning both conditions must be true",
-      "!": "a logical NOT operator indicating the signal is deasserted",
-      "|->": "an overlapping implication operator meaning that if the left condition is met then the right condition must hold SINCE THE CURRENT CLOCK CYCLE"
+      "==": "equal",
+      "&&": "logical AND",
+      "!": "the value of a signal is reset (0)",
+      "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the current finite state machine state equals the idle state and the transfer valid signal is deasserted, then since the current clock cycle the computed next state must remain the idle state"
+    "Assertion Explaination": "if the current state of the FSM equals idle and transaction is not valid then the computed next state of the FSM equals idle SINCE THE SAME CLOCK CYCLE"
   },
   "Assertion 5": {
     "clock signal condition": "@(posedge Hclk)",
     "disable condition": "disable iff (!Hresetn)",
     "logical expression": "PRESENT_STATE == ST_WWAIT && !valid |-> NEXT_STATE == ST_WRITE",
-    "Signals": ["PRESENT_STATE", "ST_WWAIT", "valid", "NEXT_STATE", "ST_WRITE"],
+    "Signals": ["PRESENT_STATE", "valid", "NEXT_STATE"],
     "Signal Explanations": {
-      "PRESENT_STATE": "the current finite state machine state",
-      "ST_WWAIT": "the write-wait state constant of the finite state machine",
-      "valid": "the signal indicating that a transfer is valid",
-      "NEXT_STATE": "the computed next state of the finite state machine",
-      "ST_WRITE": "the write state constant of the finite state machine"
+      "PRESENT_STATE": "the current state of the FSM",
+      "valid": "a signal indicating transaction validity",
+      "NEXT_STATE": "the computed next state of the FSM"
     },
-    "Logical Operators": ["==", "&&", "!", "|->"],
+    "Logical Operators": ["==", "&&", "!", "|->", "=="],
     "Logical Operators Explanation": {
-      "==": "an equality operator ensuring both sides are equal",
-      "&&": "a logical AND operator meaning both conditions must be true",
-      "!": "a logical NOT operator indicating the signal is deasserted",
-      "|->": "an overlapping implication operator meaning that if the left condition is met then the right condition must hold SINCE THE CURRENT CLOCK CYCLE"
+      "==": "equal",
+      "&&": "logical AND",
+      "!": "the value of a signal is reset (0)",
+      "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the current finite state machine state equals the write-wait state and the transfer valid signal is deasserted, then since the current clock cycle the computed next state must equal the write state"
+    "Assertion Explaination": "if the current state of the FSM equals write wait and transaction is not valid then the computed next state of the FSM equals write SINCE THE SAME CLOCK CYCLE"
   },
   "Assertion 6": {
     "clock signal condition": "@(posedge Hclk)",
     "disable condition": "disable iff (!Hresetn)",
     "logical expression": "PRESENT_STATE == ST_WWAIT && valid |-> NEXT_STATE == ST_WRITEP",
-    "Signals": ["PRESENT_STATE", "ST_WWAIT", "valid", "NEXT_STATE", "ST_WRITEP"],
+    "Signals": ["PRESENT_STATE", "valid", "NEXT_STATE"],
     "Signal Explanations": {
-      "PRESENT_STATE": "the current finite state machine state",
-      "ST_WWAIT": "the write-wait state constant of the finite state machine",
-      "valid": "the signal indicating that a transfer is valid",
-      "NEXT_STATE": "the computed next state of the finite state machine",
-      "ST_WRITEP": "the write precondition state constant of the finite state machine"
+      "PRESENT_STATE": "the current state of the FSM",
+      "valid": "a signal indicating transaction validity",
+      "NEXT_STATE": "the computed next state of the FSM"
     },
-    "Logical Operators": ["==", "&&", "|->"],
+    "Logical Operators": ["==", "&&", "|->", "=="],
     "Logical Operators Explanation": {
-      "==": "an equality operator ensuring both sides are equal",
-      "&&": "a logical AND operator meaning both conditions must be true",
-      "|->": "an overlapping implication operator meaning that if the left condition is met then the right condition must hold SINCE THE CURRENT CLOCK CYCLE"
+      "==": "equal",
+      "&&": "logical AND",
+      "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the current finite state machine state equals the write-wait state and the transfer valid signal is asserted, then since the current clock cycle the computed next state must equal the write precondition state"
+    "Assertion Explaination": "if the current state of the FSM equals write wait and transaction is valid then the computed next state of the FSM equals write pipelined SINCE THE SAME CLOCK CYCLE"
   },
   "Assertion 7": {
     "clock signal condition": "@(posedge Hclk)",
     "disable condition": "disable iff (!Hresetn)",
     "logical expression": "PRESENT_STATE == ST_READ |-> NEXT_STATE == ST_RENABLE",
-    "Signals": ["PRESENT_STATE", "ST_READ", "NEXT_STATE", "ST_RENABLE"],
+    "Signals": ["PRESENT_STATE", "NEXT_STATE"],
     "Signal Explanations": {
-      "PRESENT_STATE": "the current finite state machine state",
-      "ST_READ": "the read state constant of the finite state machine",
-      "NEXT_STATE": "the computed next state of the finite state machine",
-      "ST_RENABLE": "the read-enable state constant of the finite state machine"
+      "PRESENT_STATE": "the current state of the FSM",
+      "NEXT_STATE": "the computed next state of the FSM"
     },
-    "Logical Operators": ["==", "|->"],
+    "Logical Operators": ["==", "|->", "=="],
     "Logical Operators Explanation": {
-      "==": "an equality operator ensuring both sides are equal",
-      "|->": "an overlapping implication operator meaning that if the left condition is met then the right condition must hold SINCE THE CURRENT CLOCK CYCLE"
+      "==": "equal",
+      "|->": "an overlapping implication operator meaning that if the condition on the left is met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the current finite state machine state equals the read state then since the current clock cycle the computed next state must equal the read-enable state"
+    "Assertion Explaination": "if the current state of the FSM equals read then the computed next state of the FSM equals read enable SINCE THE SAME CLOCK CYCLE"
   },
   "Assertion 8": {
     "clock signal condition": "@(posedge Hclk)",
     "disable condition": "disable iff (!Hresetn)",
     "logical expression": "PRESENT_STATE == ST_WRITE && !valid |-> NEXT_STATE == ST_WENABLE",
-    "Signals": ["PRESENT_STATE", "ST_WRITE", "valid", "NEXT_STATE", "ST_WENABLE"],
+    "Signals": ["PRESENT_STATE", "valid", "NEXT_STATE"],
     "Signal Explanations": {
-      "PRESENT_STATE": "the current finite state machine state",
-      "ST_WRITE": "the write state constant of the finite state machine",
-      "valid": "the signal indicating that a transfer is valid",
-      "NEXT_STATE": "the computed next state of the finite state machine",
-      "ST_WENABLE": "the write-enable state constant of the finite state machine"
+      "PRESENT_STATE": "the current state of the FSM",
+      "valid": "a signal indicating transaction validity",
+      "NEXT_STATE": "the computed next state of the FSM"
     },
-    "Logical Operators": ["==", "&&", "!", "|->"],
+    "Logical Operators": ["==", "&&", "!", "|->", "=="],
     "Logical Operators Explanation": {
-      "==": "an equality operator ensuring both sides are equal",
-      "&&": "a logical AND operator meaning both conditions must be true",
-      "!": "a logical NOT operator indicating the signal is deasserted",
-      "|->": "an overlapping implication operator meaning that if the left condition is met then the right condition must hold SINCE THE CURRENT CLOCK CYCLE"
+      "==": "equal",
+      "&&": "logical AND",
+      "!": "the value of a signal is reset (0)",
+      "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the current finite state machine state equals the write state and the transfer valid signal is deasserted, then since the current clock cycle the computed next state must equal the write-enable state"
+    "Assertion Explaination": "if the current state of the FSM equals write and transaction is not valid then the computed next state of the FSM equals write enable SINCE THE SAME CLOCK CYCLE"
   },
   "Assertion 9": {
     "clock signal condition": "@(posedge Hclk)",
     "disable condition": "disable iff (!Hresetn)",
     "logical expression": "PRESENT_STATE == ST_WRITE && valid |-> NEXT_STATE == ST_WENABLEP",
-    "Signals": ["PRESENT_STATE", "ST_WRITE", "valid", "NEXT_STATE", "ST_WENABLEP"],
+    "Signals": ["PRESENT_STATE", "valid", "NEXT_STATE"],
     "Signal Explanations": {
-      "PRESENT_STATE": "the current finite state machine state",
-      "ST_WRITE": "the write state constant of the finite state machine",
-      "valid": "the signal indicating that a transfer is valid",
-      "NEXT_STATE": "the computed next state of the finite state machine",
-      "ST_WENABLEP": "the write-enable precondition state constant of the finite state machine"
+      "PRESENT_STATE": "the current state of the FSM",
+      "valid": "a signal indicating transaction validity",
+      "NEXT_STATE": "the computed next state of the FSM"
     },
-    "Logical Operators": ["==", "&&", "|->"],
+    "Logical Operators": ["==", "&&", "|->", "=="],
     "Logical Operators Explanation": {
-      "==": "an equality operator ensuring both sides are equal",
-      "&&": "a logical AND operator meaning both conditions must be true",
-      "|->": "an overlapping implication operator meaning that if the left condition is met then the right condition must hold SINCE THE CURRENT CLOCK CYCLE"
+      "==": "equal",
+      "&&": "logical AND",
+      "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the current finite state machine state equals the write state and the transfer valid signal is asserted, then since the current clock cycle the computed next state must equal the write-enable precondition state"
+    "Assertion Explaination": "if the current state of the FSM equals write and transaction is valid then the computed next state of the FSM equals write enable pipelined SINCE THE SAME CLOCK CYCLE"
   },
   "Assertion 10": {
     "clock signal condition": "@(posedge Hclk)",
     "disable condition": "disable iff (!Hresetn)",
     "logical expression": "PRESENT_STATE == ST_WRITEP |-> NEXT_STATE == ST_WENABLEP",
-    "Signals": ["PRESENT_STATE", "ST_WRITEP", "NEXT_STATE", "ST_WENABLEP"],
+    "Signals": ["PRESENT_STATE", "NEXT_STATE"],
     "Signal Explanations": {
-      "PRESENT_STATE": "the current finite state machine state",
-      "ST_WRITEP": "the write precondition state constant of the finite state machine",
-      "NEXT_STATE": "the computed next state of the finite state machine",
-      "ST_WENABLEP": "the write-enable precondition state constant of the finite state machine"
+      "PRESENT_STATE": "the current state of the FSM",
+      "NEXT_STATE": "the computed next state of the FSM"
     },
-    "Logical Operators": ["==", "|->"],
+    "Logical Operators": ["==", "|->", "=="],
     "Logical Operators Explanation": {
-      "==": "an equality operator ensuring both sides are equal",
-      "|->": "an overlapping implication operator meaning that if the left condition is met then the right condition must hold SINCE THE CURRENT CLOCK CYCLE"
+      "==": "equal",
+      "|->": "an overlapping implication operator meaning that if the condition on the left is met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the current finite state machine state equals the write precondition state, then since the current clock cycle the computed next state must equal the write-enable precondition state"
+    "Assertion Explaination": "if the current state of the FSM equals write pipelined then the computed next state of the FSM equals write enable pipelined SINCE THE SAME CLOCK CYCLE"
   },
   "Assertion 11": {
     "clock signal condition": "@(posedge Hclk)",
     "disable condition": "disable iff (!Hresetn)",
     "logical expression": "PRESENT_STATE == ST_RENABLE && !valid |-> NEXT_STATE == ST_IDLE",
-    "Signals": ["PRESENT_STATE", "ST_RENABLE", "valid", "NEXT_STATE", "ST_IDLE"],
+    "Signals": ["PRESENT_STATE", "valid", "NEXT_STATE"],
     "Signal Explanations": {
-      "PRESENT_STATE": "the current finite state machine state",
-      "ST_RENABLE": "the read-enable state constant of the finite state machine",
-      "valid": "the signal indicating that a transfer is valid",
-      "NEXT_STATE": "the computed next state of the finite state machine",
-      "ST_IDLE": "the idle state constant of the finite state machine"
+      "PRESENT_STATE": "the current state of the FSM",
+      "valid": "a signal indicating transaction validity",
+      "NEXT_STATE": "the computed next state of the FSM"
     },
-    "Logical Operators": ["==", "&&", "!", "|->"],
+    "Logical Operators": ["==", "&&", "!", "|->", "=="],
     "Logical Operators Explanation": {
-      "==": "an equality operator ensuring both sides are equal",
-      "&&": "a logical AND operator meaning both conditions must be true",
-      "!": "a logical NOT operator indicating the signal is deasserted",
-      "|->": "an overlapping implication operator meaning that if the left condition is met then the right condition must hold SINCE THE CURRENT CLOCK CYCLE"
+      "==": "equal",
+      "&&": "logical AND",
+      "!": "the value of a signal is reset (0)",
+      "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the current finite state machine state equals the read-enable state and the transfer valid signal is deasserted, then since the current clock cycle the computed next state must equal the idle state"
+    "Assertion Explaination": "if the current state of the FSM equals read enable and transaction is not valid then the computed next state of the FSM equals idle SINCE THE SAME CLOCK CYCLE"
   },
   "Assertion 12": {
     "clock signal condition": "@(posedge Hclk)",
     "disable condition": "disable iff (!Hresetn)",
     "logical expression": "PRESENT_STATE == ST_RENABLE && valid && Hwrite |-> NEXT_STATE == ST_WWAIT",
-    "Signals": ["PRESENT_STATE", "ST_RENABLE", "valid", "Hwrite", "NEXT_STATE", "ST_WWAIT"],
+    "Signals": ["PRESENT_STATE", "valid", "Hwrite", "NEXT_STATE"],
     "Signal Explanations": {
-      "PRESENT_STATE": "the current finite state machine state",
-      "ST_RENABLE": "the read-enable state constant of the finite state machine",
-      "valid": "the signal indicating that a transfer is valid",
-      "Hwrite": "the signal indicating that the operation is a write",
-      "NEXT_STATE": "the computed next state of the finite state machine",
-      "ST_WWAIT": "the write-wait state constant of the finite state machine"
+      "PRESENT_STATE": "the current state of the FSM",
+      "valid": "a signal indicating transaction validity",
+      "Hwrite": "a signal indicating a write operation",
+      "NEXT_STATE": "the computed next state of the FSM"
     },
-    "Logical Operators": ["==", "&&", "|->"],
+    "Logical Operators": ["==", "&&", "|->", "=="],
     "Logical Operators Explanation": {
-      "==": "an equality operator ensuring both sides are equal",
-      "&&": "a logical AND operator meaning all conditions must be true",
-      "|->": "an overlapping implication operator meaning that if the left condition is met then the right condition must hold SINCE THE CURRENT CLOCK CYCLE"
+      "==": "equal",
+      "&&": "logical AND",
+      "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the current finite state machine state equals the read-enable state and both the transfer valid and write signals are asserted, then since the current clock cycle the computed next state must equal the write-wait state"
+    "Assertion Explaination": "if the current state of the FSM equals read enable, transaction is valid, and a write operation is active then the computed next state of the FSM equals write wait SINCE THE SAME CLOCK CYCLE"
   },
   "Assertion 13": {
     "clock signal condition": "@(posedge Hclk)",
     "disable condition": "disable iff (!Hresetn)",
     "logical expression": "PRESENT_STATE == ST_RENABLE && valid && !Hwrite |-> NEXT_STATE == ST_READ",
-    "Signals": ["PRESENT_STATE", "ST_RENABLE", "valid", "Hwrite", "NEXT_STATE", "ST_READ"],
+    "Signals": ["PRESENT_STATE", "valid", "Hwrite", "NEXT_STATE"],
     "Signal Explanations": {
-      "PRESENT_STATE": "the current finite state machine state",
-      "ST_RENABLE": "the read-enable state constant of the finite state machine",
-      "valid": "the signal indicating that a transfer is valid",
-      "Hwrite": "the signal indicating that the operation is a write",
-      "NEXT_STATE": "the computed next state of the finite state machine",
-      "ST_READ": "the read state constant of the finite state machine"
+      "PRESENT_STATE": "the current state of the FSM",
+      "valid": "a signal indicating transaction validity",
+      "Hwrite": "a signal indicating a write operation",
+      "NEXT_STATE": "the computed next state of the FSM"
     },
-    "Logical Operators": ["==", "&&", "!", "|->"],
+    "Logical Operators": ["==", "&&", "!", "|->", "=="],
     "Logical Operators Explanation": {
-      "==": "an equality operator ensuring both sides are equal",
-      "&&": "a logical AND operator meaning all conditions must be true",
-      "!": "a logical NOT operator indicating the signal is deasserted",
-      "|->": "an overlapping implication operator meaning that if the left condition is met then the right condition must hold SINCE THE CURRENT CLOCK CYCLE"
+      "==": "equal",
+      "&&": "logical AND",
+      "!": "the value of a signal is reset (0)",
+      "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the current finite state machine state equals the read-enable state and the transfer valid signal is asserted while the write signal is deasserted, then since the current clock cycle the computed next state must equal the read state"
+    "Assertion Explaination": "if the current state of the FSM equals read enable, transaction is valid, and the write operation is not active then the computed next state of the FSM equals read SINCE THE SAME CLOCK CYCLE"
   },
   "Assertion 14": {
     "clock signal condition": "@(posedge Hclk)",
     "disable condition": "disable iff (!Hresetn)",
     "logical expression": "PRESENT_STATE == ST_WENABLE && !valid |-> NEXT_STATE == ST_IDLE",
-    "Signals": ["PRESENT_STATE", "ST_WENABLE", "valid", "NEXT_STATE", "ST_IDLE"],
+    "Signals": ["PRESENT_STATE", "valid", "NEXT_STATE"],
     "Signal Explanations": {
-      "PRESENT_STATE": "the current finite state machine state",
-      "ST_WENABLE": "the write-enable state constant of the finite state machine",
-      "valid": "the signal indicating that a transfer is valid",
-      "NEXT_STATE": "the computed next state of the finite state machine",
-      "ST_IDLE": "the idle state constant of the finite state machine"
+      "PRESENT_STATE": "the current state of the FSM",
+      "valid": "a signal indicating transaction validity",
+      "NEXT_STATE": "the computed next state of the FSM"
     },
-    "Logical Operators": ["==", "&&", "!", "|->"],
+    "Logical Operators": ["==", "&&", "!", "|->", "=="],
     "Logical Operators Explanation": {
-      "==": "an equality operator ensuring both sides are equal",
-      "&&": "a logical AND operator meaning all conditions must be true",
-      "!": "a logical NOT operator indicating the signal is deasserted",
-      "|->": "an overlapping implication operator meaning that if the left condition is met then the right condition must hold SINCE THE CURRENT CLOCK CYCLE"
+      "==": "equal",
+      "&&": "logical AND",
+      "!": "the value of a signal is reset (0)",
+      "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the current finite state machine state equals the write-enable state and the transfer valid signal is deasserted, then since the current clock cycle the computed next state must equal the idle state"
+    "Assertion Explaination": "if the current state of the FSM equals write enable and transaction is not valid then the computed next state of the FSM equals idle SINCE THE SAME CLOCK CYCLE"
   },
   "Assertion 15": {
     "clock signal condition": "@(posedge Hclk)",
     "disable condition": "disable iff (!Hresetn)",
     "logical expression": "PRESENT_STATE == ST_WENABLE && valid && Hwrite |-> NEXT_STATE == ST_WWAIT",
-    "Signals": ["PRESENT_STATE", "ST_WENABLE", "valid", "Hwrite", "NEXT_STATE", "ST_WWAIT"],
+    "Signals": ["PRESENT_STATE", "valid", "Hwrite", "NEXT_STATE"],
     "Signal Explanations": {
-      "PRESENT_STATE": "the current finite state machine state",
-      "ST_WENABLE": "the write-enable state constant of the finite state machine",
-      "valid": "the signal indicating that a transfer is valid",
-      "Hwrite": "the signal indicating that the operation is a write",
-      "NEXT_STATE": "the computed next state of the finite state machine",
-      "ST_WWAIT": "the write-wait state constant of the finite state machine"
+      "PRESENT_STATE": "the current state of the FSM",
+      "valid": "a signal indicating transaction validity",
+      "Hwrite": "a signal indicating a write operation",
+      "NEXT_STATE": "the computed next state of the FSM"
     },
-    "Logical Operators": ["==", "&&", "|->"],
+    "Logical Operators": ["==", "&&", "|->", "=="],
     "Logical Operators Explanation": {
-      "==": "an equality operator ensuring both sides are equal",
-      "&&": "a logical AND operator meaning all conditions must be true",
-      "|->": "an overlapping implication operator meaning that if the left condition is met then the right condition must hold SINCE THE CURRENT CLOCK CYCLE"
+      "==": "equal",
+      "&&": "logical AND",
+      "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the current finite state machine state equals the write-enable state and both the transfer valid and write signals are asserted, then since the current clock cycle the computed next state must equal the write-wait state"
+    "Assertion Explaination": "if the current state of the FSM equals write enable, transaction is valid, and a write operation is active then the computed next state of the FSM equals write wait SINCE THE SAME CLOCK CYCLE"
   },
   "Assertion 16": {
     "clock signal condition": "@(posedge Hclk)",
     "disable condition": "disable iff (!Hresetn)",
     "logical expression": "PRESENT_STATE == ST_WENABLE && valid && !Hwrite |-> NEXT_STATE == ST_READ",
-    "Signals": ["PRESENT_STATE", "ST_WENABLE", "valid", "Hwrite", "NEXT_STATE", "ST_READ"],
+    "Signals": ["PRESENT_STATE", "valid", "Hwrite", "NEXT_STATE"],
     "Signal Explanations": {
-      "PRESENT_STATE": "the current finite state machine state",
-      "ST_WENABLE": "the write-enable state constant of the finite state machine",
-      "valid": "the signal indicating that a transfer is valid",
-      "Hwrite": "the signal indicating that the operation is a write",
-      "NEXT_STATE": "the computed next state of the finite state machine",
-      "ST_READ": "the read state constant of the finite state machine"
+      "PRESENT_STATE": "the current state of the FSM",
+      "valid": "a signal indicating transaction validity",
+      "Hwrite": "a signal indicating a write operation",
+      "NEXT_STATE": "the computed next state of the FSM"
     },
-    "Logical Operators": ["==", "&&", "!", "|->"],
+    "Logical Operators": ["==", "&&", "!", "|->", "=="],
     "Logical Operators Explanation": {
-      "==": "an equality operator ensuring both sides are equal",
-      "&&": "a logical AND operator meaning all conditions must be true",
-      "!": "a logical NOT operator indicating the signal is deasserted",
-      "|->": "an overlapping implication operator meaning that if the left condition is met then the right condition must hold SINCE THE CURRENT CLOCK CYCLE"
+      "==": "equal",
+      "&&": "logical AND",
+      "!": "the value of a signal is reset (0)",
+      "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the current finite state machine state equals the write-enable state and the transfer valid signal is asserted while the write signal is deasserted, then since the current clock cycle the computed next state must equal the read state"
+    "Assertion Explaination": "if the current state of the FSM equals write enable, transaction is valid, and the write operation is not active then the computed next state of the FSM equals read SINCE THE SAME CLOCK CYCLE"
   },
   "Assertion 17": {
     "clock signal condition": "@(posedge Hclk)",
     "disable condition": "disable iff (!Hresetn)",
     "logical expression": "PRESENT_STATE == ST_WENABLEP && !valid && Hwritereg |-> NEXT_STATE == ST_WRITE",
-    "Signals": ["PRESENT_STATE", "ST_WENABLEP", "valid", "Hwritereg", "NEXT_STATE", "ST_WRITE"],
+    "Signals": ["PRESENT_STATE", "valid", "Hwritereg", "NEXT_STATE"],
     "Signal Explanations": {
-      "PRESENT_STATE": "the current finite state machine state",
-      "ST_WENABLEP": "the write-enable precondition state constant of the finite state machine",
-      "valid": "the signal indicating that a transfer is valid",
-      "Hwritereg": "the signal used as an additional write control",
-      "NEXT_STATE": "the computed next state of the finite state machine",
-      "ST_WRITE": "the write state constant of the finite state machine"
+      "PRESENT_STATE": "the current state of the FSM",
+      "valid": "a signal indicating transaction validity",
+      "Hwritereg": "a control signal for write register operation",
+      "NEXT_STATE": "the computed next state of the FSM"
     },
-    "Logical Operators": ["==", "&&", "!", "|->"],
+    "Logical Operators": ["==", "&&", "!", "&&", "|->", "=="],
     "Logical Operators Explanation": {
-      "==": "an equality operator ensuring both sides are equal",
-      "&&": "a logical AND operator meaning all conditions must be true",
-      "!": "a logical NOT operator indicating the signal is deasserted",
-      "|->": "an overlapping implication operator meaning that if the left condition is met then the right condition must hold SINCE THE CURRENT CLOCK CYCLE"
+      "==": "equal",
+      "&&": "logical AND",
+      "!": "the value of a signal is reset (0)",
+      "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the current finite state machine state equals the write-enable precondition state and the transfer valid signal is deasserted while the additional write control is asserted, then since the current clock cycle the computed next state must equal the write state"
+    "Assertion Explaination": "if the current state of the FSM equals write enable pipelined, transaction is not valid, and the write register control is active then the computed next state of the FSM equals write SINCE THE SAME CLOCK CYCLE"
   },
   "Assertion 18": {
     "clock signal condition": "@(posedge Hclk)",
     "disable condition": "disable iff (!Hresetn)",
     "logical expression": "PRESENT_STATE == ST_WENABLEP && valid && Hwritereg |-> NEXT_STATE == ST_WRITEP",
-    "Signals": ["PRESENT_STATE", "ST_WENABLEP", "valid", "Hwritereg", "NEXT_STATE", "ST_WRITEP"],
+    "Signals": ["PRESENT_STATE", "valid", "Hwritereg", "NEXT_STATE"],
     "Signal Explanations": {
-      "PRESENT_STATE": "the current finite state machine state",
-      "ST_WENABLEP": "the write-enable precondition state constant of the finite state machine",
-      "valid": "the signal indicating that a transfer is valid",
-      "Hwritereg": "the signal used as an additional write control",
-      "NEXT_STATE": "the computed next state of the finite state machine",
-      "ST_WRITEP": "the write precondition state constant of the finite state machine"
+      "PRESENT_STATE": "the current state of the FSM",
+      "valid": "a signal indicating transaction validity",
+      "Hwritereg": "a control signal for write register operation",
+      "NEXT_STATE": "the computed next state of the FSM"
     },
-    "Logical Operators": ["==", "&&", "|->"],
+    "Logical Operators": ["==", "&&", "|->", "=="],
     "Logical Operators Explanation": {
-      "==": "an equality operator ensuring both sides are equal",
-      "&&": "a logical AND operator meaning all conditions must be true",
-      "|->": "an overlapping implication operator meaning that if the left condition is met then the right condition must hold SINCE THE CURRENT CLOCK CYCLE"
+      "==": "equal",
+      "&&": "logical AND",
+      "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the current finite state machine state equals the write-enable precondition state and both the transfer valid and additional write control signals are asserted, then since the current clock cycle the computed next state must equal the write precondition state"
+    "Assertion Explaination": "if the current state of the FSM equals write enable pipelined, transaction is valid, and the write register control is active then the computed next state of the FSM equals write pipelined SINCE THE SAME CLOCK CYCLE"
   },
   "Assertion 19": {
     "clock signal condition": "@(posedge Hclk)",
     "disable condition": "disable iff (!Hresetn)",
     "logical expression": "PRESENT_STATE == ST_WENABLEP && !Hwritereg |-> NEXT_STATE == ST_READ",
-    "Signals": ["PRESENT_STATE", "ST_WENABLEP", "Hwritereg", "NEXT_STATE", "ST_READ"],
+    "Signals": ["PRESENT_STATE", "Hwritereg", "NEXT_STATE"],
     "Signal Explanations": {
-      "PRESENT_STATE": "the current finite state machine state",
-      "ST_WENABLEP": "the write-enable precondition state constant of the finite state machine",
-      "Hwritereg": "the signal used as an additional write control",
-      "NEXT_STATE": "the computed next state of the finite state machine",
-      "ST_READ": "the read state constant of the finite state machine"
+      "PRESENT_STATE": "the current state of the FSM",
+      "Hwritereg": "a control signal for write register operation",
+      "NEXT_STATE": "the computed next state of the FSM"
     },
-    "Logical Operators": ["==", "&&", "!", "|->"],
+    "Logical Operators": ["==", "&&", "!", "|->", "=="],
     "Logical Operators Explanation": {
-      "==": "an equality operator ensuring both sides are equal",
-      "&&": "a logical AND operator meaning all conditions must be true",
-      "!": "a logical NOT operator indicating the signal is deasserted",
-      "|->": "an overlapping implication operator meaning that if the left condition is met then the right condition must hold SINCE THE CURRENT CLOCK CYCLE"
+      "==": "equal",
+      "&&": "logical AND",
+      "!": "the value of a signal is reset (0)",
+      "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the current finite state machine state equals the write-enable precondition state and the additional write control signal is deasserted, then since the current clock cycle the computed next state must equal the read state"
+    "Assertion Explaination": "if the current state of the FSM equals write enable pipelined and the write register control is not active then the computed next state of the FSM equals read SINCE THE SAME CLOCK CYCLE"
   }
 }

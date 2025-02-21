@@ -9,9 +9,9 @@
       "gray_q"
     ],
     "Signal Explanations": {
-      "unused_bin_inc": "a signal representing the unused carry-out bit from the binary addition operation",
-      "gray_next": "the computed next Gray code value derived by XOR-ing the current binary value with its right-shifted self",
-      "gray_q": "the stored current Gray code value in the register"
+      "unused_bin_inc": "a signal representing the carry-out from the binary increment, which is not used in subsequent logic",
+      "gray_next": "the next Gray code computed from the binary counter's value using Gray code conversion",
+      "gray_q": "the current Gray code stored in the register"
     },
     "Logical Operators": [
       "|",
@@ -19,10 +19,10 @@
       "^"
     ],
     "Logical Operators Explanation": {
-      "|": "logical OR operator that evaluates true if at least one of the operands is true",
-      "$onehot": "a function that checks whether the input has exactly one bit set",
-      "^": "bitwise XOR operator that produces a true value for each bit position where the two operands differ"
+      "|": "OR operator that yields true if at least one of the operands is true",
+      "$onehot": "a function that verifies that exactly one bit in its operand is set to 1",
+      "^": "XOR operator returning 1 if the compared bits differ and 0 if they are the same"
     },
-    "Assertion Explaination": "either an indication that the increment operation produced a carry-out is true, or the transition between the stored Gray code value and the computed next Gray code value reflects a change in exactly one bit, ensuring the Gray code property holds SINCE THE CURRENT CLOCK CYCLE"
+    "Assertion Explaination": "if the signal representing the carry-out from the binary increment is set OR the function that verifies exactly one bit is active in the result of the bitwise XOR between the next Gray code value and the current Gray code value holds true"
   }
 }

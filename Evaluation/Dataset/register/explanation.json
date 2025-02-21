@@ -1,38 +1,38 @@
 {
-  "Assertion 1": {
-    "clock signal condition": "@(posedge clk)",
-    "disable condition": "disable iff (rst)",
-    "logical expression": "en |=> out == $past(in,1)",
-    "Signals": ["en", "out", "in"],
-    "Signal Explanations": {
-      "en": "enable signal",
-      "out": "output signal of the verilog module",
-      "in": "input signal of the verilog module"
-    },
-    "Logical Operators": ["|=>", "==", "$past"],
-    "Logical Operators Explanation": {
-      "|=>": "a non-overlapping implication operator meaning that if the condition on the left is met then the condition on the right must hold SINCE NEXT CLOCK CYCLE",
-      "==": "equal",
-      "$past": "returns the value of a signal from the previous clock cycle(s)"
-    },
-    "Assertion Explaination": "if the enable signal is set, then the output signal equals the value of the input signal from the previous clock cycle SINCE NEXT CLOCK CYCLE"
-  },
-  "Assertion 2": {
-    "clock signal condition": "@(posedge clk)",
-    "disable condition": "disable iff (rst)",
-    "logical expression": "!en |=> out == $past(out,1)",
-    "Signals": ["en", "out"],
-    "Signal Explanations": {
-      "en": "enable signal",
-      "out": "output signal of the verilog module"
-    },
-    "Logical Operators": ["!", "|=>", "==", "$past"],
-    "Logical Operators Explanation": {
-      "!": "the negation operator meaning that the signal is reset (0)",
-      "|=>": "a non-overlapping implication operator meaning that if the condition on the left is met then the condition on the right must hold SINCE NEXT CLOCK CYCLE",
-      "==": "equal",
-      "$past": "returns the value of a signal from the previous clock cycle(s)"
-    },
-    "Assertion Explaination": "if the enable signal is reset (0), then the output signal equals its value from the previous clock cycle SINCE NEXT CLOCK CYCLE"
-  }
+"Assertion 1": {
+"clock signal condition": "@(posedge clk)",
+"disable condition": "disable iff (rst)",
+"logical expression": "en |=> out == $past(in,1)",
+"Signals": ["en", "out", "in"],
+"Signal Explanations": {
+          "en": "enable signal",
+          "out": "output signal of the verilog module",
+          "in": "input signal of the verilog module"
+},
+"Logical Operators": ["|=>", "==", "$past"],
+"Logical Operators Explanation": {
+          "|=>": "a non-overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE NEXT CLOCK CYCLE",
+          "==": "equal",
+          "$past": "the last one clock cycle's value"
+},
+"Assertion Explaination": "if enable signal is set (1), output signal equals the last one clock cycle's input signal SINCE NEXT CLOCK CYCLE"
+},
+"Assertion 2": {
+"clock signal condition": "@(posedge clk)",
+"disable condition": "disable iff (rst)",
+"logical expression": "!en |=> out == $past(out,1)",
+"Signals": ["en", "out"],
+"Signal Explanations": {
+          "en": "enable signal",
+          "out": "output signal of the verilog module"
+},
+"Logical Operators": ["!", "|=>", "==", "$past"],
+"Logical Operators Explanation": {
+          "!": "the value of a signal is reset (0)",
+          "|=>": "a non-overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE NEXT CLOCK CYCLE",
+          "==": "equal",
+          "$past": "the last one clock cycle's value"
+},
+"Assertion Explaination": "if enable signal is reset (0), output signal equals the last one clock cycle's output signal SINCE NEXT CLOCK CYCLE"
+}
 }

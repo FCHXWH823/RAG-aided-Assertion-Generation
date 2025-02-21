@@ -57,15 +57,29 @@ endmodule
 
 assertion_explanation_prompt = '''
 step 0: extract the clock signal condition (optional), the disable condition (optional), the logical expression;
+for example: for the first assertion `assert proprty(@(posedge clk) default disable iff (rst) !en |-> out == $past(in,1))`
+"clock signal condition": @(posedge clk),
+"disable condition": default disable iff (rst),
+"logical expression": !en |-> out == $past(in,1)
 step 1: extract all signals in the logical expression; 
-step 2: get all signals' explanations in the context of given verilog code;
-step 3: extract all logical operators in the logical expression;
-step 4: get all logical operators' explanations.  
-for example: |->: if the conditions on the left are met then the condition on the right must hold SINCE THE CURRENT CLOCK CYCLE; 
-             |=>: if the conditions on the left are met then the condition on the right must hold SINCE NEXT CLOCK CYCLE;
-step 5: generate the explanation ONLY for the logical expression WITHOUT containing initial signal names and STRICTLY using the explanations of signals and logic operators in the last step.
-for example: !en |-> out: if enable signal is reset (0), output signal should be set (1) SINCE THE CURRENT CLOCK CYCLE;
-             !en |=> out: if enable signal is reset (0), output signal should be set (1) SINCE THE NEXT CLOCK CYCLE;
+for example: for the logical expression `!en |-> out == $past(in,1)`,
+"Signals": ["en", "out", "in"]
+step 2: get all signals' explanations in the context of given verilog code:
+for example: for "Signals": ["en", "out", "in"],
+"Signal Explanations": {
+          "en": "enable signal",
+          "out": "output signal of the verilog module",
+          "in": "input signal of the verilog module"
+}
+step 3: extract all logical operators in the logical expression:
+for example: for the logical expression `!en |-> out == $past(in,1)`,
+"Logical Operators": ["!", "|->", "$past", "=="]
+step 4: get all logical operators' explanations. Be careful about |-> and |=>, and their explanations must STRICTLY follow the following example: 
+for example: "|->": if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE; 
+             "|=>": if the conditions on the left are met then the condition on the right must hold SINCE THE NEXT CLOCK CYCLE;
+step 5: generate the explanation ONLY for the logical expression WITHOUT containing initial signal names and STRICTLY using the explanations of signals and logic operators in the last step: 
+for example: for the logical expression `!en |-> out`, the explanation is: if enable signal is reset (0), output signal should be set (1) SINCE THE SAME CLOCK CYCLE;
+             for the logical expression `!en |=> out`, the explanation is: if enable signal is reset (0), output signal should be set (1) SINCE THE NEXT CLOCK CYCLE;
 '''
 
 assertion_output_format = '''
@@ -109,18 +123,18 @@ example_assertions_explanations = '''
 "Logical Operators": ["!", "|->", "$past", "=="],
 "Logical Operators Explanation": {
           "!": "the value of a signal is reset (0)",
-          "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE CURRENT CLOCK CYCLE",
+          "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE",
           "$past": "the last several clock cycles",
           "==": "equal"
 },
-"Assertion Explaination": "if enable signal is reset (0), output signal equals the last one clock cycle's input signal SINCE THE CURRENT CLOCK CYCLE"
+"Assertion Explaination": "if enable signal is reset (0), output signal equals the last one clock cycle's input signal SINCE THE SAME CLOCK CYCLE"
 },
 
 "Assertion 2": {
 "clock signal condition": ,
 "disable condition": ,
 "logical expression": s_eventually (en || out == $past(in,1)),
-"Signals": ["s_eventually", "en", "out", "in"],
+"Signals": ["en", "out", "in"],
 "Signal Explanations": {
           "en": "enable signal",
           "out": "output signal of the verilog module",
@@ -218,9 +232,8 @@ def generate_assertions_explanation_dataset():
             with open(fpv_dir+master_module+"_assertion.sv","r") as file:
                 verilog_code_w_assertions = file.read()
             
-            prompt = f"Given the following verilog code with several assertions: \n{verilog_code_w_assertions}\n. Please explain each of them following {assertion_explanation_prompt} and the final output must follow the format {assertion_output_format} STRICTLY and WITHOUT other contents \
-            Given some assertion explanation examples: \n{example_assertions_explanations}\n"
-            
+            prompt = f"Given the following verilog code with several assertions: \n{verilog_code_w_assertions}\n Please explain each of them. To explain each assertion, it consists of six steps as follows. Next, I will explain each of them based on the following example verilog codes with assertions:\n{example_code_with_assertions}\n {assertion_explanation_prompt} and the final output explanation must follow the format STRICTLY and WITHOUT other contents \n{assertion_output_format}\n The corresponding explanation of assertions in the given example verilog code is: \n{example_assertions_explanations}\n"
+            print(prompt)
             completion = client.chat.completions.create(
             model=model_name,
             messages=[

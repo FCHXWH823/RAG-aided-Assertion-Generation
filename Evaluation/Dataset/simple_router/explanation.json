@@ -1,176 +1,114 @@
 {
   "Assertion 1": {
-    "clock signal condition": "@(posedge clk)",
-    "disable condition": "default disable iff (rst)",
+    "clock signal condition": "",
+    "disable condition": "",
     "logical expression": "din_en | ((dout0 == 0) & (dout1 == 0) & (dout2 == 0) & (dout3 == 0))",
-    "Signals": [
-      "din_en",
-      "dout0",
-      "dout1",
-      "dout2",
-      "dout3"
-    ],
+    "Signals": ["din_en", "dout0", "dout1", "dout2", "dout3"],
     "Signal Explanations": {
-      "din_en": "data input enable signal controlling whether new data is driven",
-      "dout0": "first output corresponding to the first channel",
-      "dout1": "second output corresponding to the second channel",
-      "dout2": "third output corresponding to the third channel",
-      "dout3": "fourth output corresponding to the fourth channel"
+      "din_en": "data input enable signal",
+      "dout0": "data output signal for address 0",
+      "dout1": "data output signal for address 1",
+      "dout2": "data output signal for address 2",
+      "dout3": "data output signal for address 3"
     },
-    "Logical Operators": [
-      "|",
-      "==",
-      "&"
-    ],
+    "Logical Operators": ["|", "==", "&"],
     "Logical Operators Explanation": {
-      "|": "logical OR: if at least one of the conditions is true then the overall condition is true",
-      "==": "equality comparison: verifies that two values are identical",
-      "&": "logical AND: requires all the conditions to be true simultaneously"
+      "|": "or",
+      "==": "equal",
+      "&": "and"
     },
-    "Assertion Explaination": "either the data input enable signal is active or, in the current clock cycle, all of the routed output channels are forced to zero"
+    "Assertion Explaination": "either the data input enable signal is asserted or all data output signals for addresses 0, 1, 2, and 3 are equal to zero"
   },
   "Assertion 2": {
-    "clock signal condition": "@(posedge clk)",
-    "disable condition": "default disable iff (rst)",
+    "clock signal condition": "",
+    "disable condition": "",
     "logical expression": "~(din_en & (addr == 2'd0)) | ((dout0 == din) & (dout1 == 0) & (dout2 == 0) & (dout3 == 0))",
-    "Signals": [
-      "din_en",
-      "addr",
-      "dout0",
-      "din",
-      "dout1",
-      "dout2",
-      "dout3"
-    ],
+    "Signals": ["din_en", "addr", "dout0", "din", "dout1", "dout2", "dout3"],
     "Signal Explanations": {
-      "din_en": "data input enable signal controlling when data is routed",
-      "addr": "address signal that selects which output channel receives the data",
-      "dout0": "first output corresponding to address 0",
-      "din": "data input signal carrying the actual data value",
-      "dout1": "second output which should be inactive for address 0",
-      "dout2": "third output which should be inactive for address 0",
-      "dout3": "fourth output which should be inactive for address 0"
+      "din_en": "data input enable signal",
+      "addr": "2-bit address signal to select the corresponding data output",
+      "dout0": "data output signal for address 0",
+      "din": "data input signal",
+      "dout1": "data output signal for address 1",
+      "dout2": "data output signal for address 2",
+      "dout3": "data output signal for address 3"
     },
-    "Logical Operators": [
-      "~",
-      "&",
-      "==",
-      "|"
-    ],
+    "Logical Operators": ["~", "&", "==", "|"],
     "Logical Operators Explanation": {
-      "~": "logical NOT: inverts the following condition",
-      "&": "logical AND: requires both conditions to be true simultaneously",
-      "==": "equality comparison: checks if two values are exactly the same",
-      "|": "logical OR: succeeds if at least one constituent condition is true"
+      "~": "the value is inverted (negation)",
+      "&": "and",
+      "==": "equal",
+      "|": "or"
     },
-    "Assertion Explaination": "if the data input enable signal is active and the address indicates the first channel then, in the current clock cycle, the data is routed to the first output while the remaining output channels are forced to zero; otherwise, the condition is met by default"
+    "Assertion Explaination": "if the data input enable signal is asserted and the 2-bit address signal equals 0 then the data output signal for address 0 equals the data input signal and the data output signals for addresses 1, 2, and 3 are equal to zero"
   },
   "Assertion 3": {
-    "clock signal condition": "@(posedge clk)",
-    "disable condition": "default disable iff (rst)",
+    "clock signal condition": "",
+    "disable condition": "",
     "logical expression": "~(din_en & (addr == 2'd1)) | ((dout1 == din) & (dout0 == 0) & (dout2 == 0) & (dout3 == 0))",
-    "Signals": [
-      "din_en",
-      "addr",
-      "dout1",
-      "din",
-      "dout0",
-      "dout2",
-      "dout3"
-    ],
+    "Signals": ["din_en", "addr", "dout1", "din", "dout0", "dout2", "dout3"],
     "Signal Explanations": {
-      "din_en": "data input enable signal controlling when data is routed",
-      "addr": "address signal that selects which output channel receives the data",
-      "dout1": "second output corresponding to address 1",
-      "din": "data input signal carrying the actual data value",
-      "dout0": "first output which should be inactive for address 1",
-      "dout2": "third output which should be inactive for address 1",
-      "dout3": "fourth output which should be inactive for address 1"
+      "din_en": "data input enable signal",
+      "addr": "2-bit address signal to select the corresponding data output",
+      "dout1": "data output signal for address 1",
+      "din": "data input signal",
+      "dout0": "data output signal for address 0",
+      "dout2": "data output signal for address 2",
+      "dout3": "data output signal for address 3"
     },
-    "Logical Operators": [
-      "~",
-      "&",
-      "==",
-      "|"
-    ],
+    "Logical Operators": ["~", "&", "==", "|"],
     "Logical Operators Explanation": {
-      "~": "logical NOT: inverts the outcome of the combined condition following it",
-      "&": "logical AND: insists that all combined conditions are simultaneously true",
-      "==": "equality comparison: verifies that two quantities match exactly",
-      "|": "logical OR: ensures that at least one of the conditions is true"
+      "~": "the value is inverted (negation)",
+      "&": "and",
+      "==": "equal",
+      "|": "or"
     },
-    "Assertion Explaination": "if the data input enable signal is active and the address indicates the second channel then, in the current clock cycle, the data is routed to the second output while the other channels are forced to zero; otherwise, the overall condition holds"
+    "Assertion Explaination": "if the data input enable signal is asserted and the 2-bit address signal equals 1 then the data output signal for address 1 equals the data input signal and the data output signals for addresses 0, 2, and 3 are equal to zero"
   },
   "Assertion 4": {
-    "clock signal condition": "@(posedge clk)",
-    "disable condition": "default disable iff (rst)",
+    "clock signal condition": "",
+    "disable condition": "",
     "logical expression": "~(din_en & (addr == 2'd2)) | ((dout2 == din) & (dout0 == 0) & (dout1 == 0) & (dout3 == 0))",
-    "Signals": [
-      "din_en",
-      "addr",
-      "dout2",
-      "din",
-      "dout0",
-      "dout1",
-      "dout3"
-    ],
+    "Signals": ["din_en", "addr", "dout2", "din", "dout0", "dout1", "dout3"],
     "Signal Explanations": {
-      "din_en": "data input enable signal controlling when data routing occurs",
-      "addr": "address signal that selects the appropriate output channel",
-      "dout2": "third output corresponding to address 2",
-      "din": "data input signal carrying the data value",
-      "dout0": "first output which should be inactive for address 2",
-      "dout1": "second output which should be inactive for address 2",
-      "dout3": "fourth output which should be inactive for address 2"
+      "din_en": "data input enable signal",
+      "addr": "2-bit address signal to select the corresponding data output",
+      "dout2": "data output signal for address 2",
+      "din": "data input signal",
+      "dout0": "data output signal for address 0",
+      "dout1": "data output signal for address 1",
+      "dout3": "data output signal for address 3"
     },
-    "Logical Operators": [
-      "~",
-      "&",
-      "==",
-      "|"
-    ],
+    "Logical Operators": ["~", "&", "==", "|"],
     "Logical Operators Explanation": {
-      "~": "logical NOT: reverses the truth value of the condition it precedes",
-      "&": "logical AND: requires that every one of the conditions holds true at the same time",
-      "==": "equality comparison: confirms that two operands have identical values",
-      "|": "logical OR: the overall condition is true if at least one among its parts is true"
+      "~": "the value is inverted (negation)",
+      "&": "and",
+      "==": "equal",
+      "|": "or"
     },
-    "Assertion Explaination": "if the data input enable signal is active and the address indicates the third channel then, in the current clock cycle, the data is routed to the third output and all other outputs are forced to zero; otherwise, the condition is considered true"
+    "Assertion Explaination": "if the data input enable signal is asserted and the 2-bit address signal equals 2 then the data output signal for address 2 equals the data input signal and the data output signals for addresses 0, 1, and 3 are equal to zero"
   },
   "Assertion 5": {
-    "clock signal condition": "@(posedge clk)",
-    "disable condition": "default disable iff (rst)",
+    "clock signal condition": "",
+    "disable condition": "",
     "logical expression": "~(din_en & (addr == 2'd3)) | ((dout3 == din) & (dout0 == 0) & (dout1 == 0) & (dout2 == 0))",
-    "Signals": [
-      "din_en",
-      "addr",
-      "dout3",
-      "din",
-      "dout0",
-      "dout1",
-      "dout2"
-    ],
+    "Signals": ["din_en", "addr", "dout3", "din", "dout0", "dout1", "dout2"],
     "Signal Explanations": {
-      "din_en": "data input enable signal used to control routing activation",
-      "addr": "address signal used to select the destination output channel",
-      "dout3": "fourth output corresponding to address 3",
-      "din": "data input signal that carries the data to be routed",
-      "dout0": "first output which should be inactive for address 3",
-      "dout1": "second output which should be inactive for address 3",
-      "dout2": "third output which should be inactive for address 3"
+      "din_en": "data input enable signal",
+      "addr": "2-bit address signal to select the corresponding data output",
+      "dout3": "data output signal for address 3",
+      "din": "data input signal",
+      "dout0": "data output signal for address 0",
+      "dout1": "data output signal for address 1",
+      "dout2": "data output signal for address 2"
     },
-    "Logical Operators": [
-      "~",
-      "&",
-      "==",
-      "|"
-    ],
+    "Logical Operators": ["~", "&", "==", "|"],
     "Logical Operators Explanation": {
-      "~": "logical NOT: negates the result of the subsequent combined condition",
-      "&": "logical AND: stipulates that all specified conditions must be true concurrently",
-      "==": "equality comparison: checks whether two items are exactly the same",
-      "|": "logical OR: yields true if any one of the grouped conditions is true"
+      "~": "the value is inverted (negation)",
+      "&": "and",
+      "==": "equal",
+      "|": "or"
     },
-    "Assertion Explaination": "if the data input enable signal is active and the address indicates the fourth channel then, in the current clock cycle, the data is routed to the fourth output while every other output is forced to zero; otherwise, the overall condition is satisfied"
+    "Assertion Explaination": "if the data input enable signal is asserted and the 2-bit address signal equals 3 then the data output signal for address 3 equals the data input signal and the data output signals for addresses 0, 1, and 2 are equal to zero"
   }
 }

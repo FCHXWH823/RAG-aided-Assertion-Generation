@@ -1,26 +1,19 @@
 {
-  "Assertion 1": {
-    "clock signal condition": "@(posedge clk)",
-    "disable condition": "disable iff(!rst_n)",
-    "logical expression": "$rose(req) |-> ##2 $rose(ack)",
-    "Signals": [
-      "req",
-      "ack"
-    ],
-    "Signal Explanations": {
-      "req": "request input signal of the module",
-      "ack": "acknowledge output signal of the module"
-    },
-    "Logical Operators": [
-      "$rose",
-      "|->",
-      "##"
-    ],
-    "Logical Operators Explanation": {
-      "$rose": "a function that returns true when a rising edge is detected on a signal",
-      "|->": "an overlapping implication operator meaning that if the condition on the left is met then the condition on the right must hold SINCE THE CURRENT CLOCK CYCLE",
-      "##": "a delay operator specifying that the condition on the right should be evaluated after a defined number of clock cycles"
-    },
-    "Assertion Explaination": "if a rising edge is detected on the request input signal then, after a delay of two clock cycles, a rising edge is detected on the acknowledge output signal"
-  }
+"Assertion 1": {
+"clock signal condition": "@(posedge clk)",
+"disable condition": "disable iff(!rst_n)",
+"logical expression": "$rose(req) |-> ##2 $rose(ack)",
+"Signals": ["req", "ack"],
+"Signal Explanations": {
+  "req": "request signal input of the verilog module",
+  "ack": "acknowledge signal output of the verilog module"
+},
+"Logical Operators": ["$rose", "|->", "##2"],
+"Logical Operators Explanation": {
+  "$rose": "a function that returns true if the referenced signal transitions from 0 to 1 in the current clock cycle",
+  "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE",
+  "##2": "a delay operator indicating that the condition following it should occur after 2 clock cycles"
+},
+"Assertion Explaination": "if request signal is detected to have a rising edge then after a delay of 2 clock cycles the acknowledge signal is detected to have a rising edge"
+}
 }

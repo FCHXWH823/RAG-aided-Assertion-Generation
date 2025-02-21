@@ -5,14 +5,14 @@
     "logical expression": "$rose(din_f_q) == dout",
     "Signals": ["din_f_q", "dout"],
     "Signal Explanations": {
-      "din_f_q": "stored copy of the incoming data signal used to check for a rising edge",
-      "dout": "output signal that represents the generated pulse after edge detection"
+      "din_f_q": "a delayed version of the input signal, updated at every clock cycle",
+      "dout": "output signal representing the pulse generated when an edge is detected"
     },
     "Logical Operators": ["$rose", "=="],
     "Logical Operators Explanation": {
-      "$rose": "a function that checks for a transition from low (0) to high (1) over successive clock cycles",
-      "==": "an operator that tests for the equality of its two operands"
+      "$rose": "a function that detects a rising edge (transition from 0 to 1) of a signal in the current clock cycle",
+      "==": "equal"
     },
-    "Assertion Explaination": "if a transition from low to high is detected in the stored copy of the incoming data signal SINCE THE LAST CLOCK CYCLE, then the result of that rising edge detection is equal to the generated pulse output"
+    "Assertion Explaination": "the result of detecting a rising edge on the delayed version of the input signal is equal to the output signal in the current clock cycle"
   }
 }

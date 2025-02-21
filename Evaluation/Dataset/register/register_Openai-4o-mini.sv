@@ -28,9 +28,9 @@ module register
 assert property(@(posedge clk) disable iff (rst) en |=> out == $past(in,1));
 assert property(@(posedge clk) disable iff (rst) !en |=> out == $past(out,1));
 
-assert property (@(posedge clk) disable iff (rst) (en |-> (out == in[WIDTH-1:0])));
-assert property (@(posedge clk) disable iff (rst) (en |=> out == $past(in,1)) iff (en |-> (out == in[WIDTH-1:0])));
-assert property (@(posedge clk) disable iff (rst) (en == 0 |-> (out == out[1] |-> (out == out[2] |-> (out == out[3] |-> (out == out[4] |-> (out == out[5] |-> (out == out[6] |-> (out == out[7])))))))));
-assert property (@(posedge clk) disable iff (rst) (!en |=> out == $past(out,1)) iff (en == 0 |-> (out == out[1] |-> (out == out[2] |-> (out == out[3] |-> (out == out[4] |-> (out == out[5] |-> (out == out[6] |-> (out == out[7])))))))));
+assert property (@(posedge clk) disable iff (rst) (en == 1 -> out == in[WIDTH-1:0]));
+assert property (@(posedge clk) disable iff (rst) (en |=> out == $past(in,1)) iff (en == 1 -> out == in[WIDTH-1:0]));
+assert property (@(posedge clk) disable iff (rst) (en == 0 |-> out == out[1]));
+assert property (@(posedge clk) disable iff (rst) (!en |=> out == $past(out,1)) iff (en == 0 |-> out == out[1]));
 
 endmodule

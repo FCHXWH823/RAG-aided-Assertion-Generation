@@ -3,20 +3,15 @@
     "clock signal condition": "@(posedge clk)",
     "disable condition": "disable iff (~rst)",
     "logical expression": "res == sum",
-    "Signals": [
-      "res",
-      "sum"
-    ],
+    "Signals": ["res", "sum"],
     "Signal Explanations": {
-      "res": "the result computed by adding the two operands",
-      "sum": "the computed output from the chain of full adders representing the overall sum with carry"
+      "res": "result of addition of a and b",
+      "sum": "computed sum output from the ripple-carry adder"
     },
-    "Logical Operators": [
-      "=="
-    ],
+    "Logical Operators": ["=="],
     "Logical Operators Explanation": {
-      "==": "equal, ensuring that the values on its two sides match"
+      "==": "equal"
     },
-    "Assertion Explaination": "if the result computed by adding the two operands is equal to the computed output from the chain of full adders representing the overall sum with carry SINCE THE CURRENT CLOCK CYCLE"
+    "Assertion Explaination": "if the result of addition of a and b is equal to the computed sum output from the ripple-carry adder"
   }
 }

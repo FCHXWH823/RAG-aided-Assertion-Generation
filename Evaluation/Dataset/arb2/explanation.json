@@ -1,142 +1,142 @@
 {
   "Assertion 1": {
     "clock signal condition": "@(posedge clk)",
-    "disable condition": "default disable iff (rst)",
+    "disable condition": "",
     "logical expression": "(state == 1 & req2 == 1) |-> (gnt1 == 0)",
     "Signals": ["state", "req2", "gnt1"],
     "Signal Explanations": {
-      "state": "internal arbitration state",
-      "req2": "second request input",
-      "gnt1": "first grant output"
+      "state": "internal state signal",
+      "req2": "request signal from client 2",
+      "gnt1": "grant signal for client 1"
     },
     "Logical Operators": ["==", "&", "|->"],
     "Logical Operators Explanation": {
       "==": "equal",
       "&": "logical AND",
-      "|->": "if the conditions on the left are met then the condition on the right must hold SINCE THE CURRENT CLOCK CYCLE"
+      "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"
     },
-    "Assertion Explaination": "if internal arbitration state equals 1 and second request input equals 1 then first grant output equals 0 SINCE THE CURRENT CLOCK CYCLE"
+    "Assertion Explaination": "if internal state signal equals 1 and request signal from client 2 equals 1 then grant signal for client 1 equals 0 SINCE THE SAME CLOCK CYCLE"
   },
   "Assertion 2": {
     "clock signal condition": "@(posedge clk)",
-    "disable condition": "default disable iff (rst)",
+    "disable condition": "",
     "logical expression": "(req1 == 1 & state == 0) |-> (gnt1 == 1)",
     "Signals": ["req1", "state", "gnt1"],
     "Signal Explanations": {
-      "req1": "first request input",
-      "state": "internal arbitration state",
-      "gnt1": "first grant output"
+      "req1": "request signal from client 1",
+      "state": "internal state signal",
+      "gnt1": "grant signal for client 1"
     },
     "Logical Operators": ["==", "&", "|->"],
     "Logical Operators Explanation": {
       "==": "equal",
       "&": "logical AND",
-      "|->": "if the conditions on the left are met then the condition on the right must hold SINCE THE CURRENT CLOCK CYCLE"
+      "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"
     },
-    "Assertion Explaination": "if first request input equals 1 and internal arbitration state equals 0 then first grant output equals 1 SINCE THE CURRENT CLOCK CYCLE"
+    "Assertion Explaination": "if request signal from client 1 equals 1 and internal state signal equals 0 then grant signal for client 1 equals 1 SINCE THE SAME CLOCK CYCLE"
   },
   "Assertion 3": {
     "clock signal condition": "@(posedge clk)",
-    "disable condition": "default disable iff (rst)",
+    "disable condition": "",
     "logical expression": "(req1 == 0) |-> (gnt1 == 0)",
     "Signals": ["req1", "gnt1"],
     "Signal Explanations": {
-      "req1": "first request input",
-      "gnt1": "first grant output"
+      "req1": "request signal from client 1",
+      "gnt1": "grant signal for client 1"
     },
     "Logical Operators": ["==", "|->"],
     "Logical Operators Explanation": {
       "==": "equal",
-      "|->": "if the condition on the left is met then the condition on the right must hold SINCE THE CURRENT CLOCK CYCLE"
+      "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"
     },
-    "Assertion Explaination": "if first request input equals 0 then first grant output equals 0 SINCE THE CURRENT CLOCK CYCLE"
+    "Assertion Explaination": "if request signal from client 1 equals 0 then grant signal for client 1 equals 0 SINCE THE SAME CLOCK CYCLE"
   },
   "Assertion 4": {
     "clock signal condition": "@(posedge clk)",
-    "disable condition": "default disable iff (rst)",
+    "disable condition": "",
     "logical expression": "(req1 == 1 & req2 == 0) |-> (gnt1 == 1)",
     "Signals": ["req1", "req2", "gnt1"],
     "Signal Explanations": {
-      "req1": "first request input",
-      "req2": "second request input",
-      "gnt1": "first grant output"
+      "req1": "request signal from client 1",
+      "req2": "request signal from client 2",
+      "gnt1": "grant signal for client 1"
     },
     "Logical Operators": ["==", "&", "|->"],
     "Logical Operators Explanation": {
       "==": "equal",
       "&": "logical AND",
-      "|->": "if the conditions on the left are met then the condition on the right must hold SINCE THE CURRENT CLOCK CYCLE"
+      "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"
     },
-    "Assertion Explaination": "if first request input equals 1 and second request input equals 0 then first grant output equals 1 SINCE THE CURRENT CLOCK CYCLE"
+    "Assertion Explaination": "if request signal from client 1 equals 1 and request signal from client 2 equals 0 then grant signal for client 1 equals 1 SINCE THE SAME CLOCK CYCLE"
   },
   "Assertion 5": {
     "clock signal condition": "@(posedge clk)",
-    "disable condition": "default disable iff (rst)",
+    "disable condition": "",
     "logical expression": "(req1 == 1 & state == 0) |-> (gnt2 == 0)",
     "Signals": ["req1", "state", "gnt2"],
     "Signal Explanations": {
-      "req1": "first request input",
-      "state": "internal arbitration state",
-      "gnt2": "second grant output"
+      "req1": "request signal from client 1",
+      "state": "internal state signal",
+      "gnt2": "grant signal for client 2"
     },
     "Logical Operators": ["==", "&", "|->"],
     "Logical Operators Explanation": {
       "==": "equal",
       "&": "logical AND",
-      "|->": "if the conditions on the left are met then the condition on the right must hold SINCE THE CURRENT CLOCK CYCLE"
+      "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"
     },
-    "Assertion Explaination": "if first request input equals 1 and internal arbitration state equals 0 then second grant output equals 0 SINCE THE CURRENT CLOCK CYCLE"
+    "Assertion Explaination": "if request signal from client 1 equals 1 and internal state signal equals 0 then grant signal for client 2 equals 0 SINCE THE SAME CLOCK CYCLE"
   },
   "Assertion 6": {
     "clock signal condition": "@(posedge clk)",
-    "disable condition": "default disable iff (rst)",
+    "disable condition": "",
     "logical expression": "(req2 == 1 & state == 1) |-> (gnt2 == 1)",
     "Signals": ["req2", "state", "gnt2"],
     "Signal Explanations": {
-      "req2": "second request input",
-      "state": "internal arbitration state",
-      "gnt2": "second grant output"
+      "req2": "request signal from client 2",
+      "state": "internal state signal",
+      "gnt2": "grant signal for client 2"
     },
     "Logical Operators": ["==", "&", "|->"],
     "Logical Operators Explanation": {
       "==": "equal",
       "&": "logical AND",
-      "|->": "if the conditions on the left are met then the condition on the right must hold SINCE THE CURRENT CLOCK CYCLE"
+      "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"
     },
-    "Assertion Explaination": "if second request input equals 1 and internal arbitration state equals 1 then second grant output equals 1 SINCE THE CURRENT CLOCK CYCLE"
+    "Assertion Explaination": "if request signal from client 2 equals 1 and internal state signal equals 1 then grant signal for client 2 equals 1 SINCE THE SAME CLOCK CYCLE"
   },
   "Assertion 7": {
     "clock signal condition": "@(posedge clk)",
-    "disable condition": "default disable iff (rst)",
+    "disable condition": "",
     "logical expression": "(req2 == 0) |-> (gnt2 == 0)",
     "Signals": ["req2", "gnt2"],
     "Signal Explanations": {
-      "req2": "second request input",
-      "gnt2": "second grant output"
+      "req2": "request signal from client 2",
+      "gnt2": "grant signal for client 2"
     },
     "Logical Operators": ["==", "|->"],
     "Logical Operators Explanation": {
       "==": "equal",
-      "|->": "if the condition on the left is met then the condition on the right must hold SINCE THE CURRENT CLOCK CYCLE"
+      "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"
     },
-    "Assertion Explaination": "if second request input equals 0 then second grant output equals 0 SINCE THE CURRENT CLOCK CYCLE"
+    "Assertion Explaination": "if request signal from client 2 equals 0 then grant signal for client 2 equals 0 SINCE THE SAME CLOCK CYCLE"
   },
   "Assertion 8": {
     "clock signal condition": "@(posedge clk)",
-    "disable condition": "default disable iff (rst)",
+    "disable condition": "",
     "logical expression": "(req2 == 1 & req1 == 0) |-> (gnt2 == 1)",
     "Signals": ["req2", "req1", "gnt2"],
     "Signal Explanations": {
-      "req2": "second request input",
-      "req1": "first request input",
-      "gnt2": "second grant output"
+      "req2": "request signal from client 2",
+      "req1": "request signal from client 1",
+      "gnt2": "grant signal for client 2"
     },
     "Logical Operators": ["==", "&", "|->"],
     "Logical Operators Explanation": {
       "==": "equal",
       "&": "logical AND",
-      "|->": "if the conditions on the left are met then the condition on the right must hold SINCE THE CURRENT CLOCK CYCLE"
+      "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"
     },
-    "Assertion Explaination": "if second request input equals 1 and first request input equals 0 then second grant output equals 1 SINCE THE CURRENT CLOCK CYCLE"
+    "Assertion Explaination": "if request signal from client 2 equals 1 and request signal from client 1 equals 0 then grant signal for client 2 equals 1 SINCE THE SAME CLOCK CYCLE"
   }
 }

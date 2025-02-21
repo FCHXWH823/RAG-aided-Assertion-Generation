@@ -1,116 +1,168 @@
 {
-"Assertion 1": {
-"clock signal condition": "@(posedge PCLK)",
-"disable condition": "",
-"logical expression": "(fifo_rx_f_empty == 1) |-> (RX_EMPTY == 1)",
-"Signals": ["fifo_rx_f_empty", "RX_EMPTY"],
-"Signal Explanations": {
-"fifo_rx_f_empty": "a flag input indicating whether the FIFO receiver is empty",
-"RX_EMPTY": "an output flag that reflects the emptiness status of the receiver interface"
-},
-"Logical Operators": ["==", "|->"],
-"Logical Operators Explanation": {
-"==": "equality comparison which tests if both sides have the same value",
-"|->": "an overlapping implication operator meaning that if the condition on the left holds then the condition on the right must hold since the current clock cycle"
-},
-"Assertion Explaination": "if the FIFO receiver empty flag is equal to 1 then the receiver empty output must also be equal to 1 since the current clock cycle"
-},
-"Assertion 2": {
-"clock signal condition": "@(posedge PCLK)",
-"disable condition": "",
-"logical expression": "(fifo_rx_f_empty == 0) |-> (RX_EMPTY == 0)",
-"Signals": ["fifo_rx_f_empty", "RX_EMPTY"],
-"Signal Explanations": {
-"fifo_rx_f_empty": "a flag input indicating whether the FIFO receiver is empty",
-"RX_EMPTY": "an output flag that reflects the emptiness status of the receiver interface"
-},
-"Logical Operators": ["==", "|->"],
-"Logical Operators Explanation": {
-"==": "equality comparison which tests if both sides have the same value",
-"|->": "an overlapping implication operator meaning that if the condition on the left holds then the condition on the right must hold since the current clock cycle"
-},
-"Assertion Explaination": "if the FIFO receiver empty flag is equal to 0 then the receiver empty output must also be equal to 0 since the current clock cycle"
-},
-"Assertion 3": {
-"clock signal condition": "@(posedge PCLK)",
-"disable condition": "",
-"logical expression": "(fifo_rx_f_empty == 1) |-> (RX_EMPTY == 1)",
-"Signals": ["fifo_rx_f_empty", "RX_EMPTY"],
-"Signal Explanations": {
-"fifo_rx_f_empty": "a flag input indicating whether the FIFO receiver is empty",
-"RX_EMPTY": "an output flag that reflects the emptiness status of the receiver interface"
-},
-"Logical Operators": ["==", "|->"],
-"Logical Operators Explanation": {
-"==": "equality comparison which tests if both sides have the same value",
-"|->": "an overlapping implication operator meaning that if the condition on the left holds then the condition on the right must hold since the current clock cycle"
-},
-"Assertion Explaination": "if the FIFO receiver empty flag is equal to 1 then the receiver empty output must also be equal to 1 since the current clock cycle"
-},
-"Assertion 4": {
-"clock signal condition": "@(posedge PCLK)",
-"disable condition": "",
-"logical expression": "(fifo_rx_f_empty == 0) |-> (RX_EMPTY == 0)",
-"Signals": ["fifo_rx_f_empty", "RX_EMPTY"],
-"Signal Explanations": {
-"fifo_rx_f_empty": "a flag input indicating whether the FIFO receiver is empty",
-"RX_EMPTY": "an output flag that reflects the emptiness status of the receiver interface"
-},
-"Logical Operators": ["==", "|->"],
-"Logical Operators Explanation": {
-"==": "equality comparison which tests if both sides have the same value",
-"|->": "an overlapping implication operator meaning that if the condition on the left holds then the condition on the right must hold since the current clock cycle"
-},
-"Assertion Explaination": "if the FIFO receiver empty flag is equal to 0 then the receiver empty output must also be equal to 0 since the current clock cycle"
-},
-"Assertion 5": {
-"clock signal condition": "@(posedge PCLK)",
-"disable condition": "",
-"logical expression": "(DATA_CONFIG_REG[1] == 0) |-> (ERROR == 0)",
-"Signals": ["DATA_CONFIG_REG[1]", "ERROR"],
-"Signal Explanations": {
-"DATA_CONFIG_REG[1]": "the second bit of the configuration register that controls I2C operation parameters",
-"ERROR": "an output signal which indicates an error condition, based on the configuration bits of the module"
-},
-"Logical Operators": ["==", "|->"],
-"Logical Operators Explanation": {
-"==": "equality comparison which tests if both sides have the same value",
-"|->": "an overlapping implication operator meaning that if the condition on the left holds then the condition on the right must hold since the current clock cycle"
-},
-"Assertion Explaination": "if the second configuration register bit is equal to 0 then the error indicator must be equal to 0 since the current clock cycle"
-},
-"Assertion 6": {
-"clock signal condition": "@(posedge PCLK)",
-"disable condition": "",
-"logical expression": "(DATA_CONFIG_REG[0] == 0) |-> (ERROR == 0)",
-"Signals": ["DATA_CONFIG_REG[0]", "ERROR"],
-"Signal Explanations": {
-"DATA_CONFIG_REG[0]": "the first bit of the configuration register that controls I2C operation parameters",
-"ERROR": "an output signal which indicates an error condition, based on the configuration bits of the module"
-},
-"Logical Operators": ["==", "|->"],
-"Logical Operators Explanation": {
-"==": "equality comparison which tests if both sides have the same value",
-"|->": "an overlapping implication operator meaning that if the condition on the left holds then the condition on the right must hold since the current clock cycle"
-},
-"Assertion Explaination": "if the first configuration register bit is equal to 0 then the error indicator must be equal to 0 since the current clock cycle"
-},
-"Assertion 7": {
-"clock signal condition": "@(posedge PCLK)",
-"disable condition": "",
-"logical expression": "(DATA_CONFIG_REG[0] == 1 & DATA_CONFIG_REG[1] == 1) |-> (ERROR == 1)",
-"Signals": ["DATA_CONFIG_REG[0]", "DATA_CONFIG_REG[1]", "ERROR"],
-"Signal Explanations": {
-"DATA_CONFIG_REG[0]": "the first bit of the configuration register that controls I2C operation parameters",
-"DATA_CONFIG_REG[1]": "the second bit of the configuration register that controls I2C operation parameters",
-"ERROR": "an output signal which indicates an error condition, based on the configuration bits of the module"
-},
-"Logical Operators": ["==", "&", "|->"],
-"Logical Operators Explanation": {
-"==": "equality comparison which tests if both sides have the same value",
-"&": "a logical AND that combines conditions of multiple signals",
-"|->": "an overlapping implication operator meaning that if the combined condition on the left holds then the condition on the right must hold since the current clock cycle"
-},
-"Assertion Explaination": "if both the first and second configuration register bits are equal to 1 then the error indicator must be equal to 1 since the current clock cycle"
-}
+  "Assertion 1": {
+    "clock signal condition": "@(posedge PCLK)",
+    "disable condition": "",
+    "logical expression": "(fifo_rx_f_empty == 1) |-> (RX_EMPTY == 1)",
+    "Signals": [
+      "fifo_rx_f_empty",
+      "RX_EMPTY"
+    ],
+    "Signal Explanations": {
+      "fifo_rx_f_empty": "indicator signal that shows if the FIFO receiver is empty",
+      "RX_EMPTY": "output signal representing the empty status of the FIFO receiver"
+    },
+    "Logical Operators": [
+      "==",
+      "|->",
+      "=="
+    ],
+    "Logical Operators Explanation": {
+      "==": "equal",
+      "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"
+    },
+    "Assertion Explaination": "if the FIFO receiver empty indicator equals 1 then the FIFO receiver empty output equals 1 SINCE THE SAME CLOCK CYCLE"
+  },
+  "Assertion 2": {
+    "clock signal condition": "@(posedge PCLK)",
+    "disable condition": "",
+    "logical expression": "(fifo_rx_f_empty == 0) |-> (RX_EMPTY == 0)",
+    "Signals": [
+      "fifo_rx_f_empty",
+      "RX_EMPTY"
+    ],
+    "Signal Explanations": {
+      "fifo_rx_f_empty": "indicator signal that shows if the FIFO receiver is empty",
+      "RX_EMPTY": "output signal representing the empty status of the FIFO receiver"
+    },
+    "Logical Operators": [
+      "==",
+      "|->",
+      "=="
+    ],
+    "Logical Operators Explanation": {
+      "==": "equal",
+      "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"
+    },
+    "Assertion Explaination": "if the FIFO receiver empty indicator equals 0 then the FIFO receiver empty output equals 0 SINCE THE SAME CLOCK CYCLE"
+  },
+  "Assertion 3": {
+    "clock signal condition": "@(posedge PCLK)",
+    "disable condition": "",
+    "logical expression": "(fifo_rx_f_empty == 1) |-> (RX_EMPTY == 1)",
+    "Signals": [
+      "fifo_rx_f_empty",
+      "RX_EMPTY"
+    ],
+    "Signal Explanations": {
+      "fifo_rx_f_empty": "indicator signal that shows if the FIFO receiver is empty",
+      "RX_EMPTY": "output signal representing the empty status of the FIFO receiver"
+    },
+    "Logical Operators": [
+      "==",
+      "|->",
+      "=="
+    ],
+    "Logical Operators Explanation": {
+      "==": "equal",
+      "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"
+    },
+    "Assertion Explaination": "if the FIFO receiver empty indicator equals 1 then the FIFO receiver empty output equals 1 SINCE THE SAME CLOCK CYCLE"
+  },
+  "Assertion 4": {
+    "clock signal condition": "@(posedge PCLK)",
+    "disable condition": "",
+    "logical expression": "(fifo_rx_f_empty == 0) |-> (RX_EMPTY == 0)",
+    "Signals": [
+      "fifo_rx_f_empty",
+      "RX_EMPTY"
+    ],
+    "Signal Explanations": {
+      "fifo_rx_f_empty": "indicator signal that shows if the FIFO receiver is empty",
+      "RX_EMPTY": "output signal representing the empty status of the FIFO receiver"
+    },
+    "Logical Operators": [
+      "==",
+      "|->",
+      "=="
+    ],
+    "Logical Operators Explanation": {
+      "==": "equal",
+      "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"
+    },
+    "Assertion Explaination": "if the FIFO receiver empty indicator equals 0 then the FIFO receiver empty output equals 0 SINCE THE SAME CLOCK CYCLE"
+  },
+  "Assertion 5": {
+    "clock signal condition": "@(posedge PCLK)",
+    "disable condition": "",
+    "logical expression": "(DATA_CONFIG_REG[1] == 0) |-> (ERROR == 0)",
+    "Signals": [
+      "DATA_CONFIG_REG[1]",
+      "ERROR"
+    ],
+    "Signal Explanations": {
+      "DATA_CONFIG_REG[1]": "the second bit (bit 1) of the configuration register",
+      "ERROR": "error indicator signal"
+    },
+    "Logical Operators": [
+      "==",
+      "|->",
+      "=="
+    ],
+    "Logical Operators Explanation": {
+      "==": "equal",
+      "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"
+    },
+    "Assertion Explaination": "if the second bit of the configuration register equals 0 then the error signal equals 0 SINCE THE SAME CLOCK CYCLE"
+  },
+  "Assertion 6": {
+    "clock signal condition": "@(posedge PCLK)",
+    "disable condition": "",
+    "logical expression": "(DATA_CONFIG_REG[0] == 0) |-> (ERROR == 0)",
+    "Signals": [
+      "DATA_CONFIG_REG[0]",
+      "ERROR"
+    ],
+    "Signal Explanations": {
+      "DATA_CONFIG_REG[0]": "the first bit (bit 0) of the configuration register",
+      "ERROR": "error indicator signal"
+    },
+    "Logical Operators": [
+      "==",
+      "|->",
+      "=="
+    ],
+    "Logical Operators Explanation": {
+      "==": "equal",
+      "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"
+    },
+    "Assertion Explaination": "if the first bit of the configuration register equals 0 then the error signal equals 0 SINCE THE SAME CLOCK CYCLE"
+  },
+  "Assertion 7": {
+    "clock signal condition": "@(posedge PCLK)",
+    "disable condition": "",
+    "logical expression": "(DATA_CONFIG_REG[0] == 1 & DATA_CONFIG_REG[1] == 1) |-> (ERROR == 1)",
+    "Signals": [
+      "DATA_CONFIG_REG[0]",
+      "DATA_CONFIG_REG[1]",
+      "ERROR"
+    ],
+    "Signal Explanations": {
+      "DATA_CONFIG_REG[0]": "the first bit (bit 0) of the configuration register",
+      "DATA_CONFIG_REG[1]": "the second bit (bit 1) of the configuration register",
+      "ERROR": "error indicator signal"
+    },
+    "Logical Operators": [
+      "==",
+      "&",
+      "==",
+      "|->",
+      "=="
+    ],
+    "Logical Operators Explanation": {
+      "==": "equal",
+      "&": "logical and",
+      "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"
+    },
+    "Assertion Explaination": "if the first bit of the configuration register equals 1 and the second bit of the configuration register equals 1 then the error signal equals 1 SINCE THE SAME CLOCK CYCLE"
+  }
 }

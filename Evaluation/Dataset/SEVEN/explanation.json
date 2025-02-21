@@ -1,50 +1,36 @@
 {
-  "Assertion 1": {
-    "clock signal condition": "@(posedge clk)",
-    "disable condition": "none",
-    "logical expression": "s_eventually rst == 1 || digit_select == 1",
-    "Signals": [
-      "rst",
-      "digit_select"
-    ],
-    "Signal Explanations": {
-      "rst": "an input reset signal that, when asserted, initializes the counter, digit selection, and output segment",
-      "digit_select": "an internal control signal that alternates the active digit of the 7-segment display"
-    },
-    "Logical Operators": [
-      "s_eventually",
-      "||",
-      "=="
-    ],
-    "Logical Operators Explanation": {
-      "s_eventually": "a temporal operator indicating that the contained condition must eventually hold at some future clock cycle",
-      "||": "logical OR operator meaning that at least one of the conditions must be true",
-      "==": "equality operator checking if two values are equal"
-    },
-    "Assertion Explaination": "eventually, either the condition that the reset signal is asserted holds or the condition that the control signal for selecting the display digit is set holds, meaning that one of these situations must occur at some future clock cycle"
+"Assertion 1": {
+  "clock signal condition": "@(posedge clk)",
+  "disable condition": "",
+  "logical expression": "s_eventually rst == 1 || digit_select == 1",
+  "Signals": ["rst", "digit_select"],
+  "Signal Explanations": {
+    "rst": "reset signal for the module",
+    "digit_select": "digit selection register that toggles between the two seven-segment digits"
   },
-  "Assertion 2": {
-    "clock signal condition": "@(posedge clk)",
-    "disable condition": "none",
-    "logical expression": "s_eventually rst == 1 || digit_select == 0",
-    "Signals": [
-      "rst",
-      "digit_select"
-    ],
-    "Signal Explanations": {
-      "rst": "an input reset signal that, when asserted, initializes the counter, digit selection, and output segment",
-      "digit_select": "an internal control signal that alternates the active digit of the 7-segment display"
-    },
-    "Logical Operators": [
-      "s_eventually",
-      "||",
-      "=="
-    ],
-    "Logical Operators Explanation": {
-      "s_eventually": "a temporal operator indicating that the contained condition must eventually hold at some future clock cycle",
-      "||": "logical OR operator meaning that at least one of the conditions must be true",
-      "==": "equality operator checking if two values are equal"
-    },
-    "Assertion Explaination": "eventually, either the condition that the reset signal is asserted holds or the condition that the control signal for selecting the display digit is cleared holds, meaning that at some future clock cycle one of these situations must be true"
-  }
+  "Logical Operators": ["s_eventually", "==", "||", "=="],
+  "Logical Operators Explanation": {
+    "s_eventually": "a temporal operator indicating that the contained condition is required to occur at some future clock cycle (eventually)",
+    "==": "equal",
+    "||": "or"
+  },
+  "Assertion Explaination": "eventually reset signal equals 1 or digit selection register equals 1"
+},
+"Assertion 2": {
+  "clock signal condition": "@(posedge clk)",
+  "disable condition": "",
+  "logical expression": "s_eventually rst == 1 || digit_select == 0",
+  "Signals": ["rst", "digit_select"],
+  "Signal Explanations": {
+    "rst": "reset signal for the module",
+    "digit_select": "digit selection register that toggles between the two seven-segment digits"
+  },
+  "Logical Operators": ["s_eventually", "==", "||", "=="],
+  "Logical Operators Explanation": {
+    "s_eventually": "a temporal operator indicating that the contained condition is required to occur at some future clock cycle (eventually)",
+    "==": "equal",
+    "||": "or"
+  },
+  "Assertion Explaination": "eventually reset signal equals 1 or digit selection register equals 0"
+}
 }

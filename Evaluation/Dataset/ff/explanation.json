@@ -11,11 +11,11 @@
     },
     "Logical Operators": ["|=>", "==", "$past"],
     "Logical Operators Explanation": {
-      "|=>": "a non-overlapping implication operator meaning that if the condition on the left is met then the condition on the right must hold SINCE NEXT CLOCK CYCLE",
+      "|=>": "if the conditions on the left are met then the condition on the right must hold SINCE NEXT CLOCK CYCLE",
       "==": "equal",
-      "$past": "the value of a signal in the previous clock cycle"
+      "$past": "the value of the signal in the specified previous clock cycle(s)"
     },
-    "Assertion Explaination": "if enable signal is active (1), then output signal equals the input signal's value from the previous clock cycle SINCE NEXT CLOCK CYCLE"
+    "Assertion Explaination": "if enable signal is set (1), output signal equals the last one clock cycle's input signal SINCE NEXT CLOCK CYCLE"
   },
   "Assertion 2": {
     "clock signal condition": "@(posedge clk)",
@@ -29,10 +29,10 @@
     "Logical Operators": ["!", "|=>", "==", "$past"],
     "Logical Operators Explanation": {
       "!": "the value of a signal is reset (0)",
-      "|=>": "a non-overlapping implication operator meaning that if the condition on the left is met then the condition on the right must hold SINCE NEXT CLOCK CYCLE",
+      "|=>": "if the conditions on the left are met then the condition on the right must hold SINCE NEXT CLOCK CYCLE",
       "==": "equal",
-      "$past": "the value of a signal in the previous clock cycle"
+      "$past": "the value of the signal in the specified previous clock cycle(s)"
     },
-    "Assertion Explaination": "if enable signal is not active (0), then output signal equals its value from the previous clock cycle SINCE NEXT CLOCK CYCLE"
+    "Assertion Explaination": "if enable signal is reset (0), output signal equals the last one clock cycle's output signal SINCE NEXT CLOCK CYCLE"
   }
 }

@@ -16,7 +16,7 @@ module delay2
 
 assert property(@(posedge clk) s_eventually (rst || sig == 1));
 
-assert property (@(posedge clk)  (rst |=> sig));
-assert property (@(posedge clk)  (s_eventually (rst || sig == 1)) iff (rst |=> sig));
+assert property (@(posedge clk)  (rst |=> sig == 1));
+assert property (@(posedge clk)  (s_eventually (rst || sig == 1)) iff (rst |=> sig == 1));
 
 endmodule

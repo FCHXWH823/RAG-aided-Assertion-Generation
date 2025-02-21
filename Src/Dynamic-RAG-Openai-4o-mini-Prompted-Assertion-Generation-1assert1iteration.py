@@ -6,6 +6,7 @@ from PyMuPDF import *
 import yaml
 from langchain.chains.retrieval import create_retrieval_chain
 from langchain.chains.combine_documents import create_stuff_documents_chain
+from langchain.retrievers.multi_query import MultiQueryRetriever
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_openai import ChatOpenAI
 import json
@@ -79,6 +80,18 @@ prompt = ChatPromptTemplate.from_messages(
     ]
 )
 
+system_prompt_checker = (
+    "You are a helpful bot that check the syntax correctness of the given assertion and corret it if there exist syntaxs error."
+    "Use the following pieces of retrieved context to help answer the question. "
+    "\n\n"
+    "{context}"
+)
+prompt_checker = ChatPromptTemplate.from_messages(
+    [
+        ("system", system_prompt_checker),
+        ("human","{input}"),
+    ]
+)
 
 # retriever = vector_store.as_retriever(search_kwargs={'k': 3})
 
@@ -94,6 +107,13 @@ llm = ChatOpenAI(
 question_answer_chain = create_stuff_documents_chain(llm,prompt)
 rag_chain = create_retrieval_chain(code_retriever,question_answer_chain)
 
+question_answer_chain_checker = create_stuff_documents_chain(llm,prompt_checker)
+rag_chain_checker = create_retrieval_chain(code_retriever,question_answer_chain_checker)
+
+
+# query_from_llm = MultiQueryRetriever.from_llm(
+#     retriever=text_retriever, llm=llm
+# )
 # question = "Show me the usage of the always block in the code"
 
 
@@ -159,8 +179,8 @@ with open(f'Results/Dynamic-RAG-Openai-4o-mini-Prompted-Assertion-Generation-Res
     csv_writer = csv.writer(csv_file)
     csv_writer.writerow(['Master Module','Code','golden_assertions','llm_assertions'])
     for folder in os.listdir("Evaluation/Dataset/"):
-        # if "delay2" not in folder:
-        #     continue 
+        if "arb2" not in folder:
+            continue 
         folder_path = os.path.join("Evaluation/Dataset/",folder)
         if os.path.isdir(folder_path):
             with open(folder_path+"/"+folder+".sv","r") as file:
@@ -176,7 +196,8 @@ with open(f'Results/Dynamic-RAG-Openai-4o-mini-Prompted-Assertion-Generation-Res
 
             llm_responses = []
             for assertion, details in explanation_json.items():
-                explanation = details.get("Assertion Explaination", "No explanation provided")
+                explanation = details.get("Assertion Explaination", "No explanation provided").lower()
+
                 # clk_condition = "" if details.get("clock signal condition") is "none" else details.get("clock signal condition")
                 # reset_condition = "" if details.get("disable condition") is "none" else details.get("disable condition")
                 
@@ -192,7 +213,7 @@ with open(f'Results/Dynamic-RAG-Openai-4o-mini-Prompted-Assertion-Generation-Res
                 nItChecker = 3
                 for it in range(nItChecker):
                     checker_prompt = assertion_checker_prompt(llm_response,assertion_format)
-                    llm_response = rag_chain.invoke({"code":code,"input":explanation,"assertion_format":assertion_format})["answer"]
+                    llm_response = rag_chain_checker.invoke({"input":checker_prompt})["answer"]
 
                 i += 1
                 match = re.search(r'assert property\s*\(\s*(.*?)\s*\)\s*;', llm_response, re.DOTALL)
@@ -205,6 +226,8 @@ with open(f'Results/Dynamic-RAG-Openai-4o-mini-Prompted-Assertion-Generation-Res
                 llm_response += llm_responses[i]+",\n"
             llm_response +=llm_responses[-1]+"\n}"
             csv_writer.writerow([folder,code,explanation_origin,llm_response])
+
+            print(f"====================={folder} finished=====================")
 
             if config["JasperGold_VERIFY"] == 1:
                 llm_assertions = json.loads(llm_response)

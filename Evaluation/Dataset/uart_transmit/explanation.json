@@ -1,27 +1,19 @@
 {
   "Assertion 1": {
     "clock signal condition": "@(posedge clk)",
-    "disable condition": "default disable iff (rst)",
+    "disable condition": "",
     "logical expression": "s_eventually rst == 1 || tx_state == 0",
-    "Signals": [
-      "rst",
-      "tx_state"
-    ],
+    "Signals": ["rst", "tx_state"],
     "Signal Explanations": {
       "rst": "reset signal",
-      "tx_state": "transmission state indicator that is low (0) during idle and high (1) during active transmission"
+      "tx_state": "state of the UART transmitter indicating if it is transmitting (1) or idle (0)"
     },
-    "Logical Operators": [
-      "s_eventually",
-      "==",
-      "||",
-      "=="
-    ],
+    "Logical Operators": ["s_eventually", "==", "||"],
     "Logical Operators Explanation": {
-      "s_eventually": "a temporal operator indicating that the contained condition must occur at some future clock cycle (eventually)",
-      "==": "equal to",
-      "||": "logical OR operator meaning that at least one of the conditions must be satisfied"
+      "s_eventually": "a temporal operator indicating that the contained condition is required to occur at some future clock cycle (eventually)",
+      "==": "equal",
+      "||": "or"
     },
-    "Assertion Explaination": "Eventually, either the reset condition is asserted or the transmission state indicator shows that the module is idle"
+    "Assertion Explaination": "eventually reset signal equals 1 or transmitter state equals 0"
   }
 }

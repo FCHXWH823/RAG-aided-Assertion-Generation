@@ -1,30 +1,21 @@
 {
   "Assertion 1": {
     "clock signal condition": "@(posedge clk)",
-    "disable condition": "disable iff (~resetn)",
+    "disable condition": "default disable iff (~resetn)",
     "logical expression": "~v_f_q | (v_f_q & din_f_q[0] == dout)",
-    "Signals": [
-      "v_f_q",
-      "din_f_q[0]",
-      "dout"
-    ],
+    "Signals": ["v_f_q", "din_f_q[0]", "dout"],
     "Signal Explanations": {
-      "v_f_q": "a flag register that indicates when the parallel input data is valid (i.e. new data is loaded)",
-      "din_f_q[0]": "the least significant bit of the pipelined parallel input data register used for comparison",
-      "dout": "the serial output extracted from the shift register"
+      "v_f_q": "valid flag register indicating that the input data is valid",
+      "din_f_q[0]": "the least significant bit of the register that captures and shifts the input data",
+      "dout": "the serial output of the shift register"
     },
-    "Logical Operators": [
-      "~",
-      "|",
-      "&",
-      "=="
-    ],
+    "Logical Operators": ["~", "|", "&", "=="],
     "Logical Operators Explanation": {
-      "~": "the operator indicating the logical negation, meaning the signal is inactive (0)",
-      "|": "the logical OR operator, meaning that either the condition on the left or the condition on the right must hold",
-      "&": "the logical AND operator, meaning that the involved conditions are combined and both must be considered",
-      "==": "the equality operator, meaning that the two compared signals must be equal"
+      "~": "the value of a signal is reset (0)",
+      "|": "or",
+      "&": "and",
+      "==": "equal"
     },
-    "Assertion Explaination": "if the valid flag is inactive then the property holds immediately; otherwise, when the valid flag is active, the least significant bit from the pipelined input data must equal the serial output SINCE THE CURRENT CLOCK CYCLE"
+    "Assertion Explaination": "if valid flag register is reset (0), or if valid flag register is set (1) and the least significant bit of the register that captures and shifts the input data equals the serial output of the shift register"
   }
 }

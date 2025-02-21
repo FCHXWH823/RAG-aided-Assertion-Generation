@@ -1,26 +1,19 @@
 {
   "Assertion 1": {
     "clock signal condition": "@(posedge clk)",
-    "disable condition": "none",
+    "disable condition": "",
     "logical expression": "s_eventually (rst || sig == 1)",
-    "Signals": [
-      "rst",
-      "sig"
-    ],
+    "Signals": ["rst", "sig"],
     "Signal Explanations": {
-      "rst": "asynchronous reset of the verilog module",
-      "sig": "output signal of the verilog module, which is set high after the delay condition is met"
+      "rst": "reset signal of the verilog module",
+      "sig": "output signal of the verilog module that indicates when the delay period is complete"
     },
-    "Logical Operators": [
-      "s_eventually",
-      "||",
-      "=="
-    ],
+    "Logical Operators": ["s_eventually", "||", "=="],
     "Logical Operators Explanation": {
       "s_eventually": "a temporal operator indicating that the contained condition is required to occur at some future clock cycle (eventually)",
-      "||": "logical OR operator, meaning that if at least one of the conditions is true then the overall condition is satisfied",
-      "==": "equal comparison operator that verifies equality"
+      "||": "or",
+      "==": "equal"
     },
-    "Assertion Explaination": "eventually either the asynchronous reset of the verilog module is asserted or the output signal of the verilog module is equal to logical one"
+    "Assertion Explaination": "eventually reset signal is asserted or output signal equals 1"
   }
 }

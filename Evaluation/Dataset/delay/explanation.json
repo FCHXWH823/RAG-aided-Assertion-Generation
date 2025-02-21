@@ -1,58 +1,85 @@
 {
-"Assertion 1": {
-"clock signal condition": "@(posedge clk)",
-"disable condition": "disable iff (rst)",
-"logical expression": "count < CYCLES || out == $past(in, CYCLES, en)",
-"Signals": ["counter tracking cycles", "configured delay cycles count", "delayed output", "undelayed input", "enable control signal"],
-"Signal Explanations": {
-  "counter tracking cycles": "a variable that counts the number of clock cycles elapsed within the delay pipeline",
-  "configured delay cycles count": "a constant specifying the total number of delay cycles configured for the module",
-  "delayed output": "the output signal after passing through the delay registers",
-  "undelayed input": "the input signal provided to the delay module before any delay is applied",
-  "enable control signal": "a control signal that determines whether the delay registers update their outputs"
-},
-"Logical Operators": ["<", "||", "==", "$past"],
-"Logical Operators Explanation": {
-  "<": "checks if one value is strictly less than another",
-  "||": "a logical OR operator meaning that if either the left condition or the right condition is true then the entire expression is true",
-  "==": "compares two values for equality",
-  "$past": "a temporal function that returns the value of a signal from a specified number of past clock cycles subject to an enable condition"
-},
-"Assertion Explaination": "either the counter variable is strictly less than the configured delay cycles OR the delayed output is equal to the value of the undelayed input observed a specified number of past clock cycles when the enable control signal was active"
-},
-"Assertion 2": {
-"clock signal condition": "@(posedge clk)",
-"disable condition": "disable iff (rst)",
-"logical expression": "count == CYCLES || out == RESET_VALUE",
-"Signals": ["counter tracking cycles", "configured delay cycles count", "delayed output", "preset reset value"],
-"Signal Explanations": {
-  "counter tracking cycles": "a variable that counts the number of clock cycles elapsed within the delay pipeline",
-  "configured delay cycles count": "a constant specifying the total number of delay cycles configured for the module",
-  "delayed output": "the output signal after passing through the delay registers",
-  "preset reset value": "a constant value that the output is set to when a reset condition occurs"
-},
-"Logical Operators": ["==", "||"],
-"Logical Operators Explanation": {
-  "==": "compares two values for equality",
-  "||": "a logical OR operator meaning that if either the left condition or the right condition is true then the entire expression is true"
-},
-"Assertion Explaination": "either the counter variable has reached the configured delay cycles as verified by equality OR the delayed output is equal to the preset reset value as verified by equality"
-},
-"Assertion 3": {
-"clock signal condition": "@(posedge clk)",
-"disable condition": "disable iff (rst)",
-"logical expression": "!en |=> $stable(out)",
-"Signals": ["enable control signal", "delayed output"],
-"Signal Explanations": {
-  "enable control signal": "a control signal that determines whether the delay registers update their outputs",
-  "delayed output": "the output signal after passing through the delay registers"
-},
-"Logical Operators": ["!", "|=>", "$stable"],
-"Logical Operators Explanation": {
-  "!": "a logical negation operator that inverts the truth value of its operand",
-  "|=>": "a non-overlapping implication operator meaning that if the condition on the left is true then the condition on the right must hold starting from the next clock cycle",
-  "$stable": "a temporal operator indicating that a signal remains unchanged between clock cycles"
-},
-"Assertion Explaination": "if the enable control signal is inactive (false) then it is required, starting from the next clock cycle, that the delayed output remains unchanged"
-}
+  "Assertion 1": {
+    "clock signal condition": "@(posedge clk)",
+    "disable condition": "disable iff (rst)",
+    "logical expression": "count < CYCLES || out == $past(in, CYCLES, en)",
+    "Signals": [
+      "count",
+      "CYCLES",
+      "out",
+      "in",
+      "en"
+    ],
+    "Signal Explanations": {
+      "count": "register that counts cycles",
+      "CYCLES": "parameter specifying the number of delay cycles",
+      "out": "output delayed signal",
+      "in": "input signal to be delayed",
+      "en": "enable signal that stalls the delay when not asserted"
+    },
+    "Logical Operators": [
+      "<",
+      "||",
+      "==",
+      "$past"
+    ],
+    "Logical Operators Explanation": {
+      "<": "less than",
+      "||": "logical or",
+      "==": "equal",
+      "$past": "the last several clock cycles (returning the value of a signal from a specified number of cycles in the past under the given enable condition)"
+    },
+    "Assertion Explaination": "if the register counting cycles is less than the parameter specifying the number of delay cycles (less than) or the output delayed signal equals the value of the input signal from the last several clock cycles (with a delay of the specified number of cycles under the enable condition) since the same clock cycle"
+  },
+  "Assertion 2": {
+    "clock signal condition": "@(posedge clk)",
+    "disable condition": "disable iff (rst)",
+    "logical expression": "count == CYCLES || out == RESET_VALUE",
+    "Signals": [
+      "count",
+      "CYCLES",
+      "out",
+      "RESET_VALUE"
+    ],
+    "Signal Explanations": {
+      "count": "register that counts cycles",
+      "CYCLES": "parameter specifying the number of delay cycles",
+      "out": "output delayed signal",
+      "RESET_VALUE": "the constant value to which registers are reset"
+    },
+    "Logical Operators": [
+      "==",
+      "||",
+      "=="
+    ],
+    "Logical Operators Explanation": {
+      "==": "equal",
+      "||": "logical or"
+    },
+    "Assertion Explaination": "if the register counting cycles equals the parameter specifying the number of delay cycles (equal) or the output delayed signal equals the constant value used for reset (equal) since the same clock cycle"
+  },
+  "Assertion 3": {
+    "clock signal condition": "@(posedge clk)",
+    "disable condition": "disable iff (rst)",
+    "logical expression": "!en |=> $stable(out)",
+    "Signals": [
+      "en",
+      "out"
+    ],
+    "Signal Explanations": {
+      "en": "enable signal that stalls the delay when not asserted",
+      "out": "output delayed signal"
+    },
+    "Logical Operators": [
+      "!",
+      "|=>",
+      "$stable"
+    ],
+    "Logical Operators Explanation": {
+      "!": "the value of a signal is reset (0)",
+      "|=>": "a non-overlapping implication operator meaning that if the condition on the left is met then the condition on the right must hold since the next clock cycle",
+      "$stable": "indicates that the signal remains unchanged from one clock cycle to the next"
+    },
+    "Assertion Explaination": "if the enable signal is reset (0), then the output delayed signal remains unchanged since the next clock cycle"
+  }
 }

@@ -1,114 +1,156 @@
 {
   "Assertion 1": {
     "clock signal condition": "@(posedge clk)",
-    "disable condition": "none",
+    "disable condition": "",
     "logical expression": "(stateReg[0] == 0) |-> (rxDoneTick == 0)",
-    "Signals": ["stateReg", "rxDoneTick"],
+    "Signals": [
+      "stateReg",
+      "rxDoneTick"
+    ],
     "Signal Explanations": {
-      "stateReg": "the register holding the current state of the receiver finite state machine (FSM)",
-      "rxDoneTick": "the flag that indicates when the UART receiver has completed receiving data"
+      "stateReg": "current state register of the UART FSM",
+      "rxDoneTick": "flag indicating that UART reception is completed"
     },
-    "Logical Operators": ["==", "|->"],
+    "Logical Operators": [
+      "==",
+      "|->"
+    ],
     "Logical Operators Explanation": {
-      "==": "equals",
-      "|->": "if the condition on the left is met then the condition on the right must hold SINCE THE CURRENT CLOCK CYCLE"
+      "==": "equal",
+      "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the selected bit of the current state indicator is zero then the reception complete flag remains inactive SINCE THE CURRENT CLOCK CYCLE"
+    "Assertion Explaination": "if the least significant bit of the current state register is 0, then the flag indicating UART reception completion must be 0 SINCE THE SAME CLOCK CYCLE"
   },
   "Assertion 2": {
     "clock signal condition": "@(posedge clk)",
-    "disable condition": "none",
+    "disable condition": "",
     "logical expression": "(sReg[2] == 0) |=> (rxDoneTick == 0)",
-    "Signals": ["sReg", "rxDoneTick"],
+    "Signals": [
+      "sReg",
+      "rxDoneTick"
+    ],
     "Signal Explanations": {
-      "sReg": "the counter used for tracking the sampling progress within the UART receiver state machine",
-      "rxDoneTick": "the flag that indicates when the UART receiver has completed receiving data"
+      "sReg": "current sampling counter register in the UART receiver",
+      "rxDoneTick": "flag indicating that UART reception is completed"
     },
-    "Logical Operators": ["==", "|=>"],
+    "Logical Operators": [
+      "==",
+      "|=>"
+    ],
     "Logical Operators Explanation": {
-      "==": "equals",
-      "|=>": "if the condition on the left is met then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
+      "==": "equal",
+      "|=>": "a non-overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the designated bit of the sampling counter is zero then the reception complete flag will be inactive SINCE NEXT CLOCK CYCLE"
+    "Assertion Explaination": "if the third bit (bit index 2) of the sampling counter is 0, then the UART reception done flag must be 0 SINCE NEXT CLOCK CYCLE"
   },
   "Assertion 3": {
     "clock signal condition": "@(posedge clk)",
-    "disable condition": "none",
+    "disable condition": "",
     "logical expression": "(sReg[1] == 0) |=> (rxDoneTick == 0)",
-    "Signals": ["sReg", "rxDoneTick"],
+    "Signals": [
+      "sReg",
+      "rxDoneTick"
+    ],
     "Signal Explanations": {
-      "sReg": "the counter used for tracking the sampling progress within the UART receiver state machine",
-      "rxDoneTick": "the flag that indicates when the UART receiver has completed receiving data"
+      "sReg": "current sampling counter register in the UART receiver",
+      "rxDoneTick": "flag indicating that UART reception is completed"
     },
-    "Logical Operators": ["==", "|=>"],
+    "Logical Operators": [
+      "==",
+      "|=>"
+    ],
     "Logical Operators Explanation": {
-      "==": "equals",
-      "|=>": "if the condition on the left is met then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
+      "==": "equal",
+      "|=>": "a non-overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if another designated bit of the sampling counter is zero then the reception complete flag will be inactive SINCE NEXT CLOCK CYCLE"
+    "Assertion Explaination": "if the second bit (bit index 1) of the sampling counter is 0, then the UART reception done flag must be 0 SINCE NEXT CLOCK CYCLE"
   },
   "Assertion 4": {
     "clock signal condition": "@(posedge clk)",
-    "disable condition": "none",
+    "disable condition": "",
     "logical expression": "(nReg[1] == 0) |=> (rxDoneTick == 0)",
-    "Signals": ["nReg", "rxDoneTick"],
+    "Signals": [
+      "nReg",
+      "rxDoneTick"
+    ],
     "Signal Explanations": {
-      "nReg": "the counter that tracks the number of data bits that have been received",
-      "rxDoneTick": "the flag that indicates when the UART receiver has completed receiving data"
+      "nReg": "current bit counter register tracking the number of received data bits",
+      "rxDoneTick": "flag indicating that UART reception is completed"
     },
-    "Logical Operators": ["==", "|=>"],
+    "Logical Operators": [
+      "==",
+      "|=>"
+    ],
     "Logical Operators Explanation": {
-      "==": "equals",
-      "|=>": "if the condition on the left is met then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
+      "==": "equal",
+      "|=>": "a non-overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the designated bit of the received data bit counter is zero then the reception complete flag will be inactive SINCE NEXT CLOCK CYCLE"
+    "Assertion Explaination": "if the second bit (bit index 1) of the bit counter is 0, then the UART reception done flag must be 0 SINCE NEXT CLOCK CYCLE"
   },
   "Assertion 5": {
     "clock signal condition": "@(posedge clk)",
-    "disable condition": "none",
+    "disable condition": "",
     "logical expression": "(nReg[0] == 0) |=> (rxDoneTick == 0)",
-    "Signals": ["nReg", "rxDoneTick"],
+    "Signals": [
+      "nReg",
+      "rxDoneTick"
+    ],
     "Signal Explanations": {
-      "nReg": "the counter that tracks the number of data bits that have been received",
-      "rxDoneTick": "the flag that indicates when the UART receiver has completed receiving data"
+      "nReg": "current bit counter register tracking the number of received data bits",
+      "rxDoneTick": "flag indicating that UART reception is completed"
     },
-    "Logical Operators": ["==", "|=>"],
+    "Logical Operators": [
+      "==",
+      "|=>"
+    ],
     "Logical Operators Explanation": {
-      "==": "equals",
-      "|=>": "if the condition on the left is met then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
+      "==": "equal",
+      "|=>": "a non-overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the least significant bit of the received data bit counter is zero then the reception complete flag will be inactive SINCE NEXT CLOCK CYCLE"
+    "Assertion Explaination": "if the least significant bit (bit index 0) of the bit counter is 0, then the UART reception done flag must be 0 SINCE NEXT CLOCK CYCLE"
   },
   "Assertion 6": {
     "clock signal condition": "@(posedge clk)",
-    "disable condition": "none",
+    "disable condition": "",
     "logical expression": "(sTick == 0) |-> (rxDoneTick == 0)",
-    "Signals": ["sTick", "rxDoneTick"],
+    "Signals": [
+      "sTick",
+      "rxDoneTick"
+    ],
     "Signal Explanations": {
-      "sTick": "the sampling tick signal that indicates when it is time to sample the incoming serial data",
-      "rxDoneTick": "the flag that indicates when the UART receiver has completed receiving data"
+      "sTick": "the sampling tick signal used to trigger sampling in the UART receiver",
+      "rxDoneTick": "flag indicating that UART reception is completed"
     },
-    "Logical Operators": ["==", "|->"],
+    "Logical Operators": [
+      "==",
+      "|->"
+    ],
     "Logical Operators Explanation": {
-      "==": "equals",
-      "|->": "if the condition on the left is met then the condition on the right must hold SINCE THE CURRENT CLOCK CYCLE"
+      "==": "equal",
+      "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the sampling tick signal is inactive then the reception complete flag remains inactive SINCE THE CURRENT CLOCK CYCLE"
+    "Assertion Explaination": "if the sampling tick signal is 0, then the UART reception done flag must be 0 SINCE THE SAME CLOCK CYCLE"
   },
   "Assertion 7": {
     "clock signal condition": "@(posedge clk)",
-    "disable condition": "none",
+    "disable condition": "",
     "logical expression": "(sNext[0] == 0) |=> (rxDoneTick == 0)",
-    "Signals": ["sNext", "rxDoneTick"],
+    "Signals": [
+      "sNext",
+      "rxDoneTick"
+    ],
     "Signal Explanations": {
-      "sNext": "the next value for the sampling counter computed in the combinational logic",
-      "rxDoneTick": "the flag that indicates when the UART receiver has completed receiving data"
+      "sNext": "next value of the sampling counter register",
+      "rxDoneTick": "flag indicating that UART reception is completed"
     },
-    "Logical Operators": ["==", "|=>"],
+    "Logical Operators": [
+      "==",
+      "|=>"
+    ],
     "Logical Operators Explanation": {
-      "==": "equals",
-      "|=>": "if the condition on the left is met then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
+      "==": "equal",
+      "|=>": "a non-overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the designated bit of the upcoming sampling counter value is zero then the reception complete flag will be inactive SINCE NEXT CLOCK CYCLE"
+    "Assertion Explaination": "if the least significant bit of the next sampling counter value is 0, then the UART reception done flag must be 0 SINCE NEXT CLOCK CYCLE"
   }
 }

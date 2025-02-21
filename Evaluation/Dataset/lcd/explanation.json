@@ -5,15 +5,15 @@
     "logical expression": "s_eventually (lcd_enable == 0 || state == 2)",
     "Signals": ["lcd_enable", "state"],
     "Signal Explanations": {
-      "lcd_enable": "indicates whether an LCD command should be transmitted (active high triggers a new transfer)",
-      "state": "represents the current state of the LCD controller FSM, with a value of 2 meaning that initialization is complete and the module is ready to accept new commands"
+      "lcd_enable": "LCD enable control signal",
+      "state": "internal state variable representing the current state of the LCD initialization and command execution"
     },
-    "Logical Operators": ["s_eventually", "==", "||"],
+    "Logical Operators": ["s_eventually", "==", "||", "=="],
     "Logical Operators Explanation": {
-      "s_eventually": "a temporal operator indicating that the contained condition is required to occur at some future clock cycle",
-      "==": "evaluates equality between two values",
-      "||": "a logical OR operator that is true if at least one of its operands is true"
+      "s_eventually": "a temporal operator indicating that the contained condition is required to occur at some future clock cycle (eventually)",
+      "==": "equal",
+      "||": "or"
     },
-    "Assertion Explaination": "eventually the condition will be met that either the signal for triggering an LCD command is inactive (0) or the condition indicating that the controller is in the ready state (state equal to the ready value) holds"
+    "Assertion Explaination": "eventually, LCD enable control signal equals 0 or internal state variable equals 2"
   }
 }

@@ -1,24 +1,18 @@
 {
   "Assertion 1": {
     "clock signal condition": "@(posedge clk)",
-    "disable condition": "default disable iff (~resetn)",
+    "disable condition": "disable iff(~resetn)",
     "logical expression": "seen == (seq_q == init)",
-    "Signals": [
-      "seen",
-      "seq_q",
-      "init"
-    ],
+    "Signals": ["seen", "seq_q", "init"],
     "Signal Explanations": {
-      "seen": "output signal of the module indicating whether the current sequence matches the desired pattern",
-      "seq_q": "register holding the current sequence state of the detector",
-      "init": "input pattern representing the target sequence to detect"
+      "seen": "output signal indicating whether the current sequence equals the initialization sequence",
+      "seq_q": "register storing the current sequence bits",
+      "init": "initialization sequence to be detected"
     },
-    "Logical Operators": [
-      "=="
-    ],
+    "Logical Operators": ["=="],
     "Logical Operators Explanation": {
-      "==": "checks whether its left-hand side operand is equal to its right-hand side operand"
+      "==": "equal"
     },
-    "Assertion Explaination": "the output indicator must equal the result of comparing the detector's sequence state with the target pattern using the equality operator SINCE THE CURRENT CLOCK CYCLE"
+    "Assertion Explaination": "the output signal indicating whether the current sequence equals the initialization sequence must be equal to the result of comparing the register storing the current sequence bits with the initialization sequence"
   }
 }

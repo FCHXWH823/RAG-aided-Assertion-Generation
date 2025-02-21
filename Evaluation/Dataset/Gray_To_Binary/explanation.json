@@ -1,22 +1,17 @@
 {
   "Assertion 1": {
     "clock signal condition": "@(posedge clk)",
-    "disable condition": "default disable iff (~rst)",
+    "disable condition": "disable iff (~rst)",
     "logical expression": "gray_f == gray",
-    "Signals": [
-      "gray_f",
-      "gray"
-    ],
+    "Signals": ["gray_f", "gray"],
     "Signal Explanations": {
-      "gray_f": "wire holding the recomputed Gray code derived from the binary output using the expression (bin XOR (bin >> 1))",
-      "gray": "input vector representing the original Gray code"
+      "gray_f": "Gray code computed from the binary output by converting the binary value back to Gray code",
+      "gray": "input Gray code value"
     },
-    "Logical Operators": [
-      "=="
-    ],
+    "Logical Operators": ["=="],
     "Logical Operators Explanation": {
       "==": "equal"
     },
-    "Assertion Explaination": "the recomputed Gray code derived from the binary output equals the original Gray code SINCE THE CURRENT CLOCK CYCLE"
+    "Assertion Explaination": "the computed Gray code equals the input Gray code"
   }
 }

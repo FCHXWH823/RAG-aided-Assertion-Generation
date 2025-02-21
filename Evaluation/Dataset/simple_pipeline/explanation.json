@@ -1,39 +1,39 @@
 {
-"Assertion 1": {
-"clock signal condition": "@(posedge clk)",
-"disable condition": "disable iff (rst)",
-"logical expression": "count < LATENCY |-> valid_out == 1'b0",
-"Signals": ["count", "LATENCY", "valid_out"],
-"Signal Explanations": {
-  "count": "a counter that tracks the number of pipeline cycles elapsed",
-  "LATENCY": "a constant representing the pipeline stage latency",
-  "valid_out": "a flag indicating whether the module’s output data is valid"
-},
-"Logical Operators": ["<", "|->", "=="],
-"Logical Operators Explanation": {
-  "<": "a comparison operator meaning 'less than'",
-  "|->": "an overlapping implication operator meaning that if the condition on the left is met then the condition on the right must hold since the current clock cycle",
-  "==": "an equality comparison operator"
-},
-"Assertion Explaination": "if the counter that tracks the number of elapsed pipeline cycles is less than the constant representing pipeline latency, then the flag indicating the validity of the output data must be equal to zero since the current clock cycle"
-},
-"Assertion 2": {
-"clock signal condition": "@(posedge clk)",
-"disable condition": "disable iff (rst)",
-"logical expression": "count == LATENCY |-> valid_out == $past(valid_in, LATENCY)",
-"Signals": ["count", "LATENCY", "valid_out", "valid_in"],
-"Signal Explanations": {
-  "count": "a counter that tracks the number of pipeline cycles elapsed",
-  "LATENCY": "a constant representing the pipeline stage latency",
-  "valid_out": "a flag indicating whether the module’s output data is valid",
-  "valid_in": "a flag indicating whether the module’s input data is valid"
-},
-"Logical Operators": ["==", "|->", "==", "$past"],
-"Logical Operators Explanation": {
-  "==": "an equality comparison operator",
-  "|->": "an overlapping implication operator meaning that if the condition on the left is met then the condition on the right must hold since the current clock cycle",
-  "$past": "a temporal operator that returns the value of a signal from a specified number of clock cycles in the past"
-},
-"Assertion Explaination": "if the counter that tracks the number of elapsed pipeline cycles equals the constant representing pipeline latency, then the flag indicating the validity of the output data must be equal to the value of the flag indicating the validity of the input data from the specified number of clock cycles ago since the current clock cycle"
-}
+  "Assertion 1": {
+    "clock signal condition": "@(posedge clk)",
+    "disable condition": "disable iff (rst)",
+    "logical expression": "count < LATENCY |-> valid_out == 1'b0",
+    "Signals": ["count", "LATENCY", "valid_out"],
+    "Signal Explanations": {
+      "count": "an integer register used to count the number of cycles until the pipeline latency is reached",
+      "LATENCY": "the cycle latency of the pipeline",
+      "valid_out": "the valid output signal of the pipeline indicating that the output is valid"
+    },
+    "Logical Operators": ["<", "|->", "=="],
+    "Logical Operators Explanation": {
+      "<": "less-than comparison",
+      "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE",
+      "==": "equal"
+    },
+    "Assertion Explaination": "if the integer register used for counting is less than the cycle latency then the valid output signal equals 0 SINCE THE SAME CLOCK CYCLE"
+  },
+  "Assertion 2": {
+    "clock signal condition": "@(posedge clk)",
+    "disable condition": "disable iff (rst)",
+    "logical expression": "count == LATENCY |-> valid_out == $past(valid_in, LATENCY)",
+    "Signals": ["count", "LATENCY", "valid_out", "valid_in"],
+    "Signal Explanations": {
+      "count": "an integer register used to count the number of cycles until the pipeline latency is reached",
+      "LATENCY": "the cycle latency of the pipeline",
+      "valid_out": "the valid output signal of the pipeline indicating that the output is valid",
+      "valid_in": "the valid input signal, which is asserted when the input data is valid"
+    },
+    "Logical Operators": ["==", "|->", "$past"],
+    "Logical Operators Explanation": {
+      "==": "equal",
+      "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE",
+      "$past": "returns the value of a signal a specified number of clock cycles in the past"
+    },
+    "Assertion Explaination": "if the integer register used for counting equals the cycle latency then the valid output signal equals the valid input signal from the specified number of cycles in the past SINCE THE SAME CLOCK CYCLE"
+  }
 }

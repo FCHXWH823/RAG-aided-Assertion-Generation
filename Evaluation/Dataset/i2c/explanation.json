@@ -1,20 +1,28 @@
 {
   "Assertion 1": {
     "clock signal condition": "@(posedge clk)",
-    "disable condition": "none",
+    "disable condition": "",
     "logical expression": "s_eventually rst == 1 || scl_not_ena == 1 || stretch == 1",
-    "Signals": ["rst", "scl_not_ena", "stretch"],
+    "Signals": [
+      "rst",
+      "scl_not_ena",
+      "stretch"
+    ],
     "Signal Explanations": {
       "rst": "reset signal",
-      "scl_not_ena": "input signal indicating that the SCL line is not enabled",
-      "stretch": "signal indicating that clock stretching is active"
+      "scl_not_ena": "input signal indicating that scl is not enabled",
+      "stretch": "internal signal that indicates if clock stretching is occurring"
     },
-    "Logical Operators": ["s_eventually", "||", "=="],
+    "Logical Operators": [
+      "s_eventually",
+      "==",
+      "||"
+    ],
     "Logical Operators Explanation": {
       "s_eventually": "a temporal operator indicating that the contained condition is required to occur at some future clock cycle (eventually)",
-      "||": "logical OR, meaning at least one operand must be true",
-      "==": "equality comparison operator meaning that the value on the left-hand side equals the value on the right-hand side"
+      "==": "equal",
+      "||": "or"
     },
-    "Assertion Explaination": "eventually, either the reset condition becomes true, or the condition indicating that the SCL line is not enabled becomes true, or the condition that clock stretching is active becomes true"
+    "Assertion Explaination": "eventually reset signal equals 1 or input signal indicating that scl is not enabled equals 1 or internal signal that indicates if clock stretching is occurring equals 1"
   }
 }

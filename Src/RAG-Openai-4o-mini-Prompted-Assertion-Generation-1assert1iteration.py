@@ -97,6 +97,18 @@ prompt = ChatPromptTemplate.from_messages(
     ]
 )
 
+system_prompt_checker = (
+    "You are a helpful bot that check the syntax correctness of the given assertion and corret it if there exist syntaxs error."
+    "Use the following pieces of retrieved context to help answer the question. "
+    "\n\n"
+    "{context}"
+)
+prompt_checker = ChatPromptTemplate.from_messages(
+    [
+        ("system", system_prompt_checker),
+        ("human","{input}"),
+    ]
+)
 
 # retriever = vector_store.as_retriever(search_kwargs={'k': 3})
 
@@ -111,6 +123,9 @@ llm = ChatOpenAI(
 
 question_answer_chain = create_stuff_documents_chain(llm,prompt)
 rag_chain = create_retrieval_chain(retriever,question_answer_chain)
+
+question_answer_chain_checker = create_stuff_documents_chain(llm,prompt_checker)
+rag_chain_checker = create_retrieval_chain(retriever,question_answer_chain_checker)
 
 # results = rag_chain.invoke({"input": "Please explain different types of assertions."})
 
@@ -156,8 +171,7 @@ with open(f'Results/RAG-Openai-4o-mini-Prompted-Assertion-Generation-Results-{PD
                 nItChecker = 3
                 for it in range(nItChecker):
                     checker_prompt = assertion_checker_prompt(llm_response,assertion_format)
-                    # llm_response = rag_chain.invoke({"input":prompt})["answer"]
-                    llm_response = rag_chain.invoke({"code":code,"input":explanation,"assertion_format":assertion_format})["answer"]
+                    llm_response = rag_chain_checker.invoke({"input":checker_prompt})["answer"]
 
                 i += 1
                 match = re.search(r'assert property\s*\(\s*(.*?)\s*\)\s*;', llm_response, re.DOTALL)
@@ -170,6 +184,8 @@ with open(f'Results/RAG-Openai-4o-mini-Prompted-Assertion-Generation-Results-{PD
                 llm_response += llm_responses[i]+",\n"
             llm_response +=llm_responses[-1]+"\n}"
             csv_writer.writerow([folder,code,explanation_origin,llm_response])
+
+            print(f"====================={folder} finished=====================")
 
             if config["JasperGold_VERIFY"] == 1:
                 llm_assertions = json.loads(llm_response)
