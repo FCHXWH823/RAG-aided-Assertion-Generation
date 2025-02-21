@@ -1,0 +1,63 @@
+
+==============================================================
+    Jasper Verification Results
+==============================================================
+    2022.09p001 64 bits for Linux64 3.10.0-1062.1.2.el7.x86_64
+    Host Name: icpc
+    User Name: master
+    Printed on: Friday, Feb21, 2025 08:17:39 PM CST
+    Working Directory: /home/master/RAG-aided-Assertion-Generation/Evaluation/Dataset/BusArbiter
+
+
+==============================================================
+SUMMARY
+==============================================================
+    Total Tasks           : 1
+    Total Properties      : 19
+          assumptions     : 0                   
+           - approved     : 0                   
+           - temporary    : 0                   
+          assertions      : 10                  
+           - proven       : 10                  ( 100.0% )
+           - marked_proven: 0                   ( 0.0% )
+           - cex          : 0                   ( 0.0% )
+           - ar_cex       : 0                   ( 0.0% )
+           - undetermined : 0                   ( 0.0% )
+           - unprocessed  : 0                   ( 0.0% )
+           - error        : 0                   ( 0.0% )
+          covers          : 9                   
+           - unreachable  : 0                   ( 0.0% )
+           - covered      : 9                   ( 100.0% )
+           - ar_covered   : 0                   ( 0.0% )
+           - undetermined : 0                   ( 0.0% )
+           - unprocessed  : 0                   ( 0.0% )
+           - error        : 0                   ( 0.0% )
+
+==============================================================
+RESULTS
+==============================================================
+
+------------------------------------------------------------------------------------------------
+       Name                                    |    Result    |  Engine  |  Bound  |  Time    
+------------------------------------------------------------------------------------------------
+
+---[ <embedded> ]-------------------------------------------------------------------------------
+[1]   busarbiter._assert_1                          proven          N      Infinite    0.001 s      
+[2]   busarbiter._assert_2                          proven          Hp     Infinite    0.002 s      
+[3]   busarbiter._assert_2:precondition1            covered         PRE           2    0.000 s      
+[4]   busarbiter._assert_3                          proven          Hp     Infinite    0.002 s      
+[5]   busarbiter._assert_3:precondition1            covered         Hp            2    0.003 s      
+[6]   busarbiter._assert_4                          proven          Hp     Infinite    0.002 s      
+[7]   busarbiter._assert_4:precondition1            covered         Hp            2    0.003 s      
+[8]   busarbiter._assert_5                          proven          N      Infinite    0.000 s      
+[9]   busarbiter._assert_5:precondition1            covered         Hp            2    0.004 s      
+[10]  busarbiter._assert_6                          proven          Hp     Infinite    0.005 s      
+[11]  busarbiter._assert_6:precondition1            covered         PRE           1    0.000 s      
+[12]  busarbiter._assert_7                          proven          Hp     Infinite    0.005 s      
+[13]  busarbiter._assert_7:precondition1            covered         Hp            1    0.001 s      
+[14]  busarbiter._assert_8                          proven          Hp     Infinite    0.005 s      
+[15]  busarbiter._assert_8:precondition1            covered         Hp            1    0.002 s      
+[16]  busarbiter._assert_9                          proven          Hp     Infinite    0.002 s      
+[17]  busarbiter._assert_9:precondition1            covered         Hp            2    0.003 s      
+[18]  busarbiter._assert_10                         proven          Hp     Infinite    0.002 s      
+[19]  busarbiter._assert_10:precondition1           covered         Hp            2    0.003 s      

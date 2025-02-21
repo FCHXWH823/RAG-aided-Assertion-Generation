@@ -1,0 +1,65 @@
+
+==============================================================
+    Jasper Verification Results
+==============================================================
+    2022.09p001 64 bits for Linux64 3.10.0-1062.1.2.el7.x86_64
+    Host Name: icpc
+    User Name: master
+    Printed on: Friday, Feb21, 2025 08:38:24 PM CST
+    Working Directory: /home/master/RAG-aided-Assertion-Generation/Evaluation/Dataset/or1200_operandmuxes
+
+
+==============================================================
+SUMMARY
+==============================================================
+    Total Tasks           : 1
+    Total Properties      : 21
+          assumptions     : 0                   
+           - approved     : 0                   
+           - temporary    : 0                   
+          assertions      : 9                   
+           - proven       : 7                   ( 77.8% )
+           - marked_proven: 0                   ( 0.0% )
+           - cex          : 2                   ( 22.2% )
+           - ar_cex       : 0                   ( 0.0% )
+           - undetermined : 0                   ( 0.0% )
+           - unprocessed  : 0                   ( 0.0% )
+           - error        : 0                   ( 0.0% )
+          covers          : 12                  
+           - unreachable  : 0                   ( 0.0% )
+           - covered      : 12                  ( 100.0% )
+           - ar_covered   : 0                   ( 0.0% )
+           - undetermined : 0                   ( 0.0% )
+           - unprocessed  : 0                   ( 0.0% )
+           - error        : 0                   ( 0.0% )
+
+==============================================================
+RESULTS
+==============================================================
+
+--------------------------------------------------------------------------------------------------------
+       Name                                            |    Result    |  Engine  |  Bound  |  Time    
+--------------------------------------------------------------------------------------------------------
+
+---[ <embedded> ]---------------------------------------------------------------------------------------
+[1]   or1200_operandmuxes._assert_1                         proven          N      Infinite    0.001 s      
+[2]   or1200_operandmuxes._assert_1:precondition1           covered         N             2    0.002 s      
+[3]   or1200_operandmuxes._assert_2                         proven          N      Infinite    0.000 s      
+[4]   or1200_operandmuxes._assert_2:precondition1           covered         N             2    0.001 s      
+[5]   or1200_operandmuxes._assert_3                         proven          N      Infinite    0.001 s      
+[6]   or1200_operandmuxes._assert_3:precondition1           covered         N             2    0.001 s      
+[7]   or1200_operandmuxes._assert_4                         proven          Hp     Infinite    0.001 s      
+[8]   or1200_operandmuxes._assert_4:precondition1           covered         N             2    0.001 s      
+[9]   or1200_operandmuxes._assert_5                         proven          Hp     Infinite    0.001 s      
+[10]  or1200_operandmuxes._assert_5:precondition1           covered         N             2    0.001 s      
+[11]  or1200_operandmuxes._assert_6                         proven          Hp     Infinite    0.001 s      
+[12]  or1200_operandmuxes._assert_6:precondition1           covered         N             2    0.003 s      
+[13]  or1200_operandmuxes._assert_7                         proven          Hp     Infinite    0.001 s      
+[14]  or1200_operandmuxes._assert_7:precondition1           covered         N             2    0.001 s      
+[15]  or1200_operandmuxes._assert_8                         cex             N             2    0.002 s      
+[16]  or1200_operandmuxes._assert_8:precondition1           covered         N             1    0.002 s      
+[17]  or1200_operandmuxes._assert_9                         cex             N             2    0.002 s      
+[18]  or1200_operandmuxes._assert_9:precondition1           covered         PRE           1    0.000 s      
+[19]  or1200_operandmuxes._assert_9:precondition2           covered         Hp            2    0.027 s      
+[20]  or1200_operandmuxes._assert_9:precondition3           covered         PRE           1    0.000 s      
+[21]  or1200_operandmuxes._assert_9:precondition4           covered         N             1    0.002 s      

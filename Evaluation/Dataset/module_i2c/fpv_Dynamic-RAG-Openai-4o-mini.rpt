@@ -5,7 +5,7 @@
     2022.09p001 64 bits for Linux64 3.10.0-1062.1.2.el7.x86_64
     Host Name: icpc
     User Name: master
-    Printed on: Tuesday, Feb18, 2025 02:48:50 PM CST
+    Printed on: Friday, Feb21, 2025 08:34:42 PM CST
     Working Directory: /home/master/RAG-aided-Assertion-Generation/Evaluation/Dataset/module_i2c
 
 
@@ -18,9 +18,9 @@ SUMMARY
            - approved     : 0                   
            - temporary    : 0                   
           assertions      : 21                  
-           - proven       : 11                  ( 52.4% )
+           - proven       : 13                  ( 61.9% )
            - marked_proven: 0                   ( 0.0% )
-           - cex          : 10                  ( 47.6% )
+           - cex          : 8                   ( 38.1% )
            - ar_cex       : 0                   ( 0.0% )
            - undetermined : 0                   ( 0.0% )
            - unprocessed  : 0                   ( 0.0% )
@@ -56,52 +56,52 @@ RESULTS
 [12]  module_i2c._assert_6:precondition1            covered         PRE           1    0.000 s      
 [13]  module_i2c._assert_7                          proven          PRE    Infinite    0.000 s      
 [14]  module_i2c._assert_7:precondition1            covered         PRE           1    0.000 s      
-[15]  module_i2c._assert_8                          cex             N             2    0.001 s      
+[15]  module_i2c._assert_8                          cex             Hp            2    0.002 s      
 [16]  module_i2c._assert_8:precondition1            covered         PRE           1    0.000 s      
-[17]  module_i2c._assert_9                          cex             N             2    0.001 s      
+[17]  module_i2c._assert_9                          cex             Hp            2    0.002 s      
 [18]  module_i2c._assert_9:precondition1            covered         PRE           1    0.000 s      
 [19]  module_i2c._assert_9:precondition2            covered         PRE           1    0.000 s      
 [20]  module_i2c._assert_9:precondition3            covered         PRE           1    0.000 s      
 [21]  module_i2c._assert_9:precondition4            covered         PRE           1    0.000 s      
-[22]  module_i2c._assert_10                         proven          PRE    Infinite    0.000 s      
+[22]  module_i2c._assert_10                         cex             Hp            2    0.003 s      
 [23]  module_i2c._assert_10:precondition1           covered         PRE           1    0.000 s      
-[24]  module_i2c._assert_11                         proven          PRE    Infinite    0.000 s      
+[24]  module_i2c._assert_11                         cex             Hp            2    0.003 s      
 [25]  module_i2c._assert_11:precondition1           covered         PRE           1    0.000 s      
 [26]  module_i2c._assert_11:precondition2           covered         PRE           1    0.000 s      
 [27]  module_i2c._assert_11:precondition3           covered         PRE           1    0.000 s      
 [28]  module_i2c._assert_11:precondition4           covered         PRE           1    0.000 s      
-[29]  module_i2c._assert_12                         cex             N             2    0.001 s      
+[29]  module_i2c._assert_12                         cex             Hp            2    0.002 s      
 [30]  module_i2c._assert_12:precondition1           covered         PRE           1    0.000 s      
-[31]  module_i2c._assert_13                         cex             N             2    0.001 s      
+[31]  module_i2c._assert_13                         cex             Hp            2    0.002 s      
 [32]  module_i2c._assert_13:precondition1           covered         PRE           1    0.000 s      
 [33]  module_i2c._assert_13:precondition2           covered         PRE           1    0.000 s      
 [34]  module_i2c._assert_13:precondition3           covered         PRE           1    0.000 s      
 [35]  module_i2c._assert_13:precondition4           covered         PRE           1    0.000 s      
-[36]  module_i2c._assert_14                         proven          PRE    Infinite    0.000 s      
+[36]  module_i2c._assert_14                         cex             Hp            2    0.003 s      
 [37]  module_i2c._assert_14:precondition1           covered         PRE           1    0.000 s      
-[38]  module_i2c._assert_15                         proven          PRE    Infinite    0.000 s      
+[38]  module_i2c._assert_15                         cex             Hp            2    0.003 s      
 [39]  module_i2c._assert_15:precondition1           covered         PRE           1    0.000 s      
 [40]  module_i2c._assert_15:precondition2           covered         PRE           1    0.000 s      
 [41]  module_i2c._assert_15:precondition3           covered         PRE           1    0.000 s      
 [42]  module_i2c._assert_15:precondition4           covered         PRE           1    0.000 s      
-[43]  module_i2c._assert_16                         cex             N             2    0.001 s      
+[43]  module_i2c._assert_16                         proven          PRE    Infinite    0.000 s      
 [44]  module_i2c._assert_16:precondition1           covered         PRE           1    0.000 s      
-[45]  module_i2c._assert_17                         cex             N             2    0.001 s      
+[45]  module_i2c._assert_17                         proven          PRE    Infinite    0.000 s      
 [46]  module_i2c._assert_17:precondition1           covered         PRE           1    0.000 s      
 [47]  module_i2c._assert_17:precondition2           covered         PRE           1    0.000 s      
 [48]  module_i2c._assert_17:precondition3           covered         PRE           1    0.000 s      
 [49]  module_i2c._assert_17:precondition4           covered         PRE           1    0.000 s      
-[50]  module_i2c._assert_18                         cex             N             2    0.001 s      
+[50]  module_i2c._assert_18                         proven          PRE    Infinite    0.000 s      
 [51]  module_i2c._assert_18:precondition1           covered         PRE           1    0.000 s      
-[52]  module_i2c._assert_19                         cex             N             2    0.001 s      
+[52]  module_i2c._assert_19                         proven          PRE    Infinite    0.000 s      
 [53]  module_i2c._assert_19:precondition1           covered         PRE           1    0.000 s      
 [54]  module_i2c._assert_19:precondition2           covered         PRE           1    0.000 s      
 [55]  module_i2c._assert_19:precondition3           covered         PRE           1    0.000 s      
 [56]  module_i2c._assert_19:precondition4           covered         PRE           1    0.000 s      
-[57]  module_i2c._assert_20                         cex             Hp            2    0.002 s      
+[57]  module_i2c._assert_20                         proven          PRE    Infinite    0.000 s      
 [58]  module_i2c._assert_20:precondition1           covered         PRE           1    0.000 s      
-[59]  module_i2c._assert_21                         cex             Hp            2    0.002 s      
-[60]  module_i2c._assert_21:precondition1           covered         N             1    0.001 s      
+[59]  module_i2c._assert_21                         proven          PRE    Infinite    0.000 s      
+[60]  module_i2c._assert_21:precondition1           covered         PRE           1    0.000 s      
 [61]  module_i2c._assert_21:precondition2           covered         PRE           1    0.000 s      
 [62]  module_i2c._assert_21:precondition3           covered         PRE           1    0.000 s      
 [63]  module_i2c._assert_21:precondition4           covered         PRE           1    0.000 s      

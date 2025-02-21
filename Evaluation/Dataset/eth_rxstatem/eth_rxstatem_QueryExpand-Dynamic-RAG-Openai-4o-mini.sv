@@ -222,8 +222,8 @@ assert property(@(posedge MRxClk)  (StartPreamble == 1) |=> (StateIdle == 0));
 assert property(@(posedge MRxClk)  (MRxDV == 1) |=> (StateIdle == 0));  
 assert property(@(posedge MRxClk)  (MRxDV == 0) |=> (StateIdle == 1));
 
-assert property (@(posedge MRxClk)  (StartPreamble |-> next(StatePreamble)));
-assert property (@(posedge MRxClk)  ((StartPreamble == 1) |=> (StatePreamble == 1)) iff (StartPreamble |-> next(StatePreamble)));
+// assert property (@(posedge MRxClk)  (StartPreamble |-> next(StatePreamble)));
+// assert property (@(posedge MRxClk)  ((StartPreamble == 1) |=> (StatePreamble == 1)) iff (StartPreamble |-> next(StatePreamble)));
 assert property (@(posedge MRxClk)  (StartDrop == 1 |-> StatePreamble == 0));
 assert property (@(posedge MRxClk)  ((StartDrop == 1) |=> (StatePreamble == 0)) iff (StartDrop == 1 |-> StatePreamble == 0));
 assert property (@(posedge MRxClk)  (StateSFD == 1'b1 |-> StatePreamble == 1'b0));
@@ -234,8 +234,8 @@ assert property (@(posedge MRxClk)  (StateDrop == 1'b1 |-> StatePreamble == 1'b0
 assert property (@(posedge MRxClk)  ((StateDrop == 1) |=> (StatePreamble == 0)) iff (StateDrop == 1'b1 |-> StatePreamble == 1'b0));
 assert property (@(posedge MRxClk)  (StateData[1] == 1'b1 |-> StatePreamble == 1'b0));
 assert property (@(posedge MRxClk)  ((StateData1 == 1) |=> (StatePreamble == 0)) iff (StateData[1] == 1'b1 |-> StatePreamble == 1'b0));
-assert property (@(posedge MRxClk)  (StatePreamble == 1 && MRxDEq5 == 0 && MRxDV == 1 |=> (StatePreamble[1] == 1)));
-assert property (@(posedge MRxClk)  ((StatePreamble == 1 & MRxDEq5 == 0 & MRxDV == 1) |=> (StatePreamble == 1)) iff (StatePreamble == 1 && MRxDEq5 == 0 && MRxDV == 1 |=> (StatePreamble[1] == 1)));
+// assert property (@(posedge MRxClk)  (StatePreamble == 1 && MRxDEq5 == 0 && MRxDV == 1 |=> (StatePreamble[1] == 1)));
+// assert property (@(posedge MRxClk)  ((StatePreamble == 1 & MRxDEq5 == 0 & MRxDV == 1) |=> (StatePreamble == 1)) iff (StatePreamble == 1 && MRxDEq5 == 0 && MRxDV == 1 |=> (StatePreamble[1] == 1)));
 assert property (@(posedge MRxClk)  (MRxDEq5 |=> (StatePreamble == 1'b0)));
 assert property (@(posedge MRxClk)  ((MRxDEq5 == 1) |=> (StatePreamble == 0)) iff (MRxDEq5 |=> (StatePreamble == 1'b0)));
 assert property (@(posedge MRxClk)  (MRxDV == 1'b0 |=> StatePreamble == 1'b0));

@@ -261,10 +261,10 @@ assert property (@(posedge clk) disable iff (~rst_n) (gnt[3] && arb_type[0] |-> 
 assert property (@(posedge clk) disable iff (~rst_n) ((gnt[3] && $past(arb_type == 3'd0)) |-> $past(req[3] & ~req[2] & ~req[1] & ~req[0])) iff (gnt[3] && arb_type[0] |-> (req[3] && !req[2] && !req[1] && !req[0])));
 assert property (@(posedge clk) disable iff (~rst_n) (arb_type == 3'b001 && gnt[0] == 1'b1 |-> ($past(req[0]) && !$past(req[1]))));
 assert property (@(posedge clk) disable iff (~rst_n) ((gnt[0] && $past(arb_type == 3'd1)) |-> $past(req[0] & ~req[1])) iff (arb_type == 3'b001 && gnt[0] == 1'b1 |-> ($past(req[0]) && !$past(req[1]))));
-assert property (@(posedge clk) disable iff (~rst_n) (gnt[1] |-> $past(req[1]) when ($past(arb_type) == 3'b001)));
-assert property (@(posedge clk) disable iff (~rst_n) ((gnt[1] && $past(arb_type == 3'd1)) |-> $past(req[1])) iff (gnt[1] |-> $past(req[1]) when ($past(arb_type) == 3'b001)));
-assert property (@(posedge clk) disable iff (~rst_n) (arb_type[1] |-> (gnt[2] |-> (req[2] && !req[1] && !req[0])))));
-assert property (@(posedge clk) disable iff (~rst_n) ((gnt[2] && $past(arb_type == 3'd1)) |-> $past(req[2] & ~req[1] & ~req[0])) iff (arb_type[1] |-> (gnt[2] |-> (req[2] && !req[1] && !req[0])))));
+// assert property (@(posedge clk) disable iff (~rst_n) (gnt[1] |-> $past(req[1]) when ($past(arb_type) == 3'b001)));
+// assert property (@(posedge clk) disable iff (~rst_n) ((gnt[1] && $past(arb_type == 3'd1)) |-> $past(req[1])) iff (gnt[1] |-> $past(req[1]) when ($past(arb_type) == 3'b001)));
+// assert property (@(posedge clk) disable iff (~rst_n) (arb_type[1] |-> (gnt[2] |-> (req[2] && !req[1] && !req[0])))));
+// assert property (@(posedge clk) disable iff (~rst_n) ((gnt[2] && $past(arb_type == 3'd1)) |-> $past(req[2] & ~req[1] & ~req[0])) iff (arb_type[1] |-> (gnt[2] |-> (req[2] && !req[1] && !req[0])))));
 assert property (@(posedge clk) disable iff (~rst_n) (arb_type[1] && gnt[3] |-> (req[3] && !req[2] && !req[1] && !req[0])));
 assert property (@(posedge clk) disable iff (~rst_n) ((gnt[3] && $past(arb_type == 3'd1)) |-> $past(req[3] & ~req[2] & ~req[1] & ~req[0])) iff (arb_type[1] && gnt[3] |-> (req[3] && !req[2] && !req[1] && !req[0])));
 assert property (@(posedge clk) disable iff (~rst_n) (arb_type == 3'b010 && gnt[0] == 1'b1 |-> (req[0] == 1'b1 && req[2] == 1'b0)));

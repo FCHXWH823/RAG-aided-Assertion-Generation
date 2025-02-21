@@ -5,7 +5,7 @@
     2022.09p001 64 bits for Linux64 3.10.0-1062.1.2.el7.x86_64
     Host Name: icpc
     User Name: master
-    Printed on: Wednesday, Feb19, 2025 02:29:57 AM CST
+    Printed on: Friday, Feb21, 2025 08:53:23 PM CST
     Working Directory: /home/master/RAG-aided-Assertion-Generation/Evaluation/Dataset/SEVEN
 
 
@@ -18,9 +18,9 @@ SUMMARY
            - approved     : 0                   
            - temporary    : 0                   
           assertions      : 6                   
-           - proven       : 6                   ( 100.0% )
+           - proven       : 2                   ( 33.3% )
            - marked_proven: 0                   ( 0.0% )
-           - cex          : 0                   ( 0.0% )
+           - cex          : 4                   ( 66.7% )
            - ar_cex       : 0                   ( 0.0% )
            - undetermined : 0                   ( 0.0% )
            - unprocessed  : 0                   ( 0.0% )
@@ -42,13 +42,13 @@ RESULTS
 ------------------------------------------------------------------------------------------
 
 ---[ <embedded> ]-------------------------------------------------------------------------
-[1]   SEVEN._assert_1                         proven          Tri         (0)    1.071 s      
-[2]   SEVEN._assert_2                         proven          Tri         (0)    1.024 s      
-[3]   SEVEN._assert_3                         proven          Tri         (0)    1.015 s      
-[4]   SEVEN._assert_4                         proven          PRE         (0)    0.000 s      
-[5]   SEVEN._assert_4:precondition1           covered         Ht          251    0.003 s      
-[6]   SEVEN._assert_4:precondition2           covered         Ht          251    0.003 s      
-[7]   SEVEN._assert_5                         proven          Tri         (0)    1.018 s      
-[8]   SEVEN._assert_6                         proven          PRE         (0)    0.000 s      
+[1]   SEVEN._assert_1                         proven          Tri         (0)    1.672 s      
+[2]   SEVEN._assert_2                         proven          Tri         (0)    1.521 s      
+[3]   SEVEN._assert_3                         cex             PRE           1    0.000 s      
+[4]   SEVEN._assert_4                         cex             Ht     251 + 502   0.802 s      
+[5]   SEVEN._assert_4:precondition1           covered         Hp          251    0.150 s      
+[6]   SEVEN._assert_4:precondition2           covered         Hp          251    0.150 s      
+[7]   SEVEN._assert_5                         cex             Hp          251    0.150 s      
+[8]   SEVEN._assert_6                         cex             Ht     502 + 502   1.004 s      
 [9]   SEVEN._assert_6:precondition1           covered         PRE           1    0.000 s      
 [10]  SEVEN._assert_6:precondition2           covered         PRE           1    0.000 s      

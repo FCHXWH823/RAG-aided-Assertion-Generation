@@ -13,7 +13,7 @@ assert property(@(posedge clk) disable iff (rst) !en |=> out == $past(out,1));
 
 assert property (@(posedge clk) disable iff (rst) (en |-> out == $past(in)));
 assert property (@(posedge clk) disable iff (rst) (en |=> out == $past(in,1)) iff (en |-> out == $past(in)));
-assert property (@(posedge clk) disable iff (rst) (out == $past(out) when (!en)));
-assert property (@(posedge clk) disable iff (rst) (!en |=> out == $past(out,1)) iff (out == $past(out) when (!en)));
+// assert property (@(posedge clk) disable iff (rst) (out == $past(out) when (!en)));
+// assert property (@(posedge clk) disable iff (rst) (!en |=> out == $past(out,1)) iff (out == $past(out) when (!en)));
 
 endmodule

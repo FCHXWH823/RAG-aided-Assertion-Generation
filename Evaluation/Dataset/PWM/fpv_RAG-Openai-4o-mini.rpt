@@ -5,7 +5,7 @@
     2022.09p001 64 bits for Linux64 3.10.0-1062.1.2.el7.x86_64
     Host Name: icpc
     User Name: master
-    Printed on: Wednesday, Feb19, 2025 12:32:10 AM CST
+    Printed on: Friday, Feb21, 2025 08:46:39 PM CST
     Working Directory: /home/master/RAG-aided-Assertion-Generation/Evaluation/Dataset/PWM
 
 
@@ -42,10 +42,10 @@ RESULTS
 ----------------------------------------------------------------------------------------
 
 ---[ <embedded> ]-----------------------------------------------------------------------
-[1]   PWM._assert_1                         proven          Tri         (0)    1.216 s      
-[2]   PWM._assert_2                         cex             Hp            2    0.001 s      
+[1]   PWM._assert_1                         proven          Tri         (0)    1.523 s      
+[2]   PWM._assert_2                         cex             Hp            2    0.004 s      
 [3]   PWM._assert_2:precondition1           covered         PRE           1    0.000 s      
-[4]   PWM._assert_3                         cex             Tri    3 + 1024    1.005 s      
+[4]   PWM._assert_3                         cex             Tri    2 + 1024    4.871 s      
 [5]   PWM._assert_3:precondition1           covered         PRE           1    0.000 s      
 [6]   PWM._assert_3:precondition2           covered         PRE           1    0.000 s      
 [7]   PWM._assert_3:precondition3           covered         PRE           1    0.000 s      

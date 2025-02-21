@@ -316,8 +316,8 @@ assert property(@(posedge Hclk) disable iff (!Hresetn) PRESENT_STATE == ST_WENAB
 assert property(@(posedge Hclk) disable iff (!Hresetn) PRESENT_STATE == ST_WENABLEP && valid && Hwritereg |-> NEXT_STATE == ST_WRITEP);
 assert property(@(posedge Hclk) disable iff (!Hresetn) PRESENT_STATE == ST_WENABLEP && !Hwritereg |-> NEXT_STATE == ST_READ);
 
-assert property (@(posedge Hclk) disable iff (!Hresetn) (PRESENT_STATE == NEXT_STATE |-> [2]));
-assert property (@(posedge Hclk) disable iff (!Hresetn) (1 |-> ##2 PRESENT_STATE == $past(NEXT_STATE)) iff (PRESENT_STATE == NEXT_STATE |-> [2]));
+// assert property (@(posedge Hclk) disable iff (!Hresetn) (PRESENT_STATE == NEXT_STATE |-> [2]));
+// assert property (@(posedge Hclk) disable iff (!Hresetn) (1 |-> ##2 PRESENT_STATE == $past(NEXT_STATE)) iff (PRESENT_STATE == NEXT_STATE |-> [2]));
 assert property (@(posedge Hclk) disable iff (!Hresetn) (PRESENT_STATE == ST_IDLE && valid && Hwrite |-> NEXT_STATE == ST_WWAIT));
 assert property (@(posedge Hclk) disable iff (!Hresetn) ((PRESENT_STATE == ST_IDLE && valid && Hwrite) |-> (NEXT_STATE == ST_WWAIT)) iff (PRESENT_STATE == ST_IDLE && valid && Hwrite |-> NEXT_STATE == ST_WWAIT));
 assert property (@(posedge Hclk) disable iff (!Hresetn) (PRESENT_STATE == ST_IDLE && valid && ~Hwrite |-> NEXT_STATE == ST_READ));

@@ -5,7 +5,7 @@
     2022.09p001 64 bits for Linux64 3.10.0-1062.1.2.el7.x86_64
     Host Name: icpc
     User Name: master
-    Printed on: Wednesday, Feb19, 2025 12:31:11 AM CST
+    Printed on: Friday, Feb21, 2025 08:44:55 PM CST
     Working Directory: /home/master/RAG-aided-Assertion-Generation/Evaluation/Dataset/simple_req_ack
 
 
@@ -13,7 +13,7 @@
 SUMMARY
 ==============================================================
     Total Tasks           : 1
-    Total Properties      : 9
+    Total Properties      : 7
           assumptions     : 0                   
            - approved     : 0                   
            - temporary    : 0                   
@@ -25,9 +25,9 @@ SUMMARY
            - undetermined : 0                   ( 0.0% )
            - unprocessed  : 0                   ( 0.0% )
            - error        : 0                   ( 0.0% )
-          covers          : 6                   
+          covers          : 4                   
            - unreachable  : 0                   ( 0.0% )
-           - covered      : 6                   ( 100.0% )
+           - covered      : 4                   ( 100.0% )
            - ar_covered   : 0                   ( 0.0% )
            - undetermined : 0                   ( 0.0% )
            - unprocessed  : 0                   ( 0.0% )
@@ -42,12 +42,10 @@ RESULTS
 ---------------------------------------------------------------------------------------------------
 
 ---[ <embedded> ]----------------------------------------------------------------------------------
-[1]   simple_req_ack._assert_1                         proven          Hp     Infinite    0.002 s      
+[1]   simple_req_ack._assert_1                         proven          N      Infinite    0.001 s      
 [2]   simple_req_ack._assert_1:precondition1           covered         PRE           1    0.000 s      
-[3]   simple_req_ack._assert_2                         cex             PRE           2    0.000 s      
-[4]   simple_req_ack._assert_2:precondition1           covered         PRE           1    0.000 s      
-[5]   simple_req_ack._assert_3                         cex             Hp            2    0.002 s      
-[6]   simple_req_ack._assert_3:precondition1           covered         PRE           1    0.000 s      
-[7]   simple_req_ack._assert_3:precondition2           covered         PRE           1    0.000 s      
-[8]   simple_req_ack._assert_3:precondition3           covered         Hp            1    0.001 s      
-[9]   simple_req_ack._assert_3:precondition4           covered         PRE           1    0.000 s      
+[3]   simple_req_ack._assert_2                         cex             PRE           1    0.000 s      
+[4]   simple_req_ack._assert_3                         cex             PRE           1    0.000 s      
+[5]   simple_req_ack._assert_3:precondition1           covered         Hp            3    0.001 s      
+[6]   simple_req_ack._assert_3:precondition2           covered         PRE           1    0.000 s      
+[7]   simple_req_ack._assert_3:precondition3           covered         Hp            1    0.001 s      

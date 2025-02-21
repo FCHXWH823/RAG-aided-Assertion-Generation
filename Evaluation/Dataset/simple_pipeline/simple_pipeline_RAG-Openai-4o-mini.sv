@@ -87,7 +87,7 @@ assert property(@(posedge clk) disable iff (rst) count == LATENCY |-> valid_out 
 
 assert property (@(posedge clk) disable iff (rst) (valid_delay_r[LATENCY-1] == 0 |-> (valid_delay_r[0] == 0)));
 assert property (@(posedge clk) disable iff (rst) (count < LATENCY |-> valid_out == 1'b0) iff (valid_delay_r[LATENCY-1] == 0 |-> (valid_delay_r[0] == 0)));
-assert property (@(posedge clk) disable iff (rst) (valid_out |=> valid_in[$past(valid_delay_r[0], LATENCY)]));
-assert property (@(posedge clk) disable iff (rst) (count == LATENCY |-> valid_out == $past(valid_in, LATENCY)) iff (valid_out |=> valid_in[$past(valid_delay_r[0], LATENCY)]));
+// assert property (@(posedge clk) disable iff (rst) (valid_out |=> valid_in[$past(valid_delay_r[0], LATENCY)]));
+// assert property (@(posedge clk) disable iff (rst) (count == LATENCY |-> valid_out == $past(valid_in, LATENCY)) iff (valid_out |=> valid_in[$past(valid_delay_r[0], LATENCY)]));
 
 endmodule

@@ -1,0 +1,207 @@
+
+==============================================================
+    Jasper Verification Results
+==============================================================
+    2022.09p001 64 bits for Linux64 3.10.0-1062.1.2.el7.x86_64
+    Host Name: icpc
+    User Name: master
+    Printed on: Friday, Feb21, 2025 08:16:01 PM CST
+    Working Directory: /home/master/RAG-aided-Assertion-Generation/Evaluation/Dataset/APB_FSM_Controller
+
+
+==============================================================
+SUMMARY
+==============================================================
+    Total Tasks           : 1
+    Total Properties      : 163
+          assumptions     : 0                   
+           - approved     : 0                   
+           - temporary    : 0                   
+          assertions      : 55                  
+           - proven       : 53                  ( 96.4% )
+           - marked_proven: 0                   ( 0.0% )
+           - cex          : 2                   ( 3.6% )
+           - ar_cex       : 0                   ( 0.0% )
+           - undetermined : 0                   ( 0.0% )
+           - unprocessed  : 0                   ( 0.0% )
+           - error        : 0                   ( 0.0% )
+          covers          : 108                 
+           - unreachable  : 0                   ( 0.0% )
+           - covered      : 108                 ( 100.0% )
+           - ar_covered   : 0                   ( 0.0% )
+           - undetermined : 0                   ( 0.0% )
+           - unprocessed  : 0                   ( 0.0% )
+           - error        : 0                   ( 0.0% )
+
+==============================================================
+RESULTS
+==============================================================
+
+--------------------------------------------------------------------------------------------------------
+       Name                                            |    Result    |  Engine  |  Bound  |  Time    
+--------------------------------------------------------------------------------------------------------
+
+---[ <embedded> ]---------------------------------------------------------------------------------------
+[1]   APB_FSM_Controller._assert_1                          proven          N      Infinite    0.001 s      
+[2]   APB_FSM_Controller._assert_2                          proven          Hp     Infinite    0.005 s      
+[3]   APB_FSM_Controller._assert_2:precondition1            covered         PRE           1    0.000 s      
+[4]   APB_FSM_Controller._assert_3                          proven          Hp     Infinite    0.005 s      
+[5]   APB_FSM_Controller._assert_3:precondition1            covered         Hp            1    0.009 s      
+[6]   APB_FSM_Controller._assert_4                          proven          Hp     Infinite    0.005 s      
+[7]   APB_FSM_Controller._assert_4:precondition1            covered         PRE           1    0.000 s      
+[8]   APB_FSM_Controller._assert_5                          proven          Hp     Infinite    0.006 s      
+[9]   APB_FSM_Controller._assert_5:precondition1            covered         N             2    0.001 s      
+[10]  APB_FSM_Controller._assert_6                          proven          Hp     Infinite    0.006 s      
+[11]  APB_FSM_Controller._assert_6:precondition1            covered         Hp            2    0.012 s      
+[12]  APB_FSM_Controller._assert_7                          proven          Hp     Infinite    0.006 s      
+[13]  APB_FSM_Controller._assert_7:precondition1            covered         Hp            2    0.013 s      
+[14]  APB_FSM_Controller._assert_8                          proven          Hp     Infinite    0.006 s      
+[15]  APB_FSM_Controller._assert_8:precondition1            covered         N             3    0.001 s      
+[16]  APB_FSM_Controller._assert_9                          proven          Hp     Infinite    0.006 s      
+[17]  APB_FSM_Controller._assert_9:precondition1            covered         Hp            3    0.020 s      
+[18]  APB_FSM_Controller._assert_10                         proven          Hp     Infinite    0.007 s      
+[19]  APB_FSM_Controller._assert_10:precondition1           covered         Hp            3    0.022 s      
+[20]  APB_FSM_Controller._assert_11                         proven          Hp     Infinite    0.007 s      
+[21]  APB_FSM_Controller._assert_11:precondition1           covered         Hp            3    0.023 s      
+[22]  APB_FSM_Controller._assert_12                         proven          Hp     Infinite    0.007 s      
+[23]  APB_FSM_Controller._assert_12:precondition1           covered         Hp            3    0.024 s      
+[24]  APB_FSM_Controller._assert_13                         proven          Hp     Infinite    0.007 s      
+[25]  APB_FSM_Controller._assert_13:precondition1           covered         Hp            3    0.025 s      
+[26]  APB_FSM_Controller._assert_14                         proven          Hp     Infinite    0.008 s      
+[27]  APB_FSM_Controller._assert_14:precondition1           covered         Hp            4    0.032 s      
+[28]  APB_FSM_Controller._assert_15                         proven          Hp     Infinite    0.008 s      
+[29]  APB_FSM_Controller._assert_15:precondition1           covered         Hp            4    0.034 s      
+[30]  APB_FSM_Controller._assert_16                         proven          Hp     Infinite    0.008 s      
+[31]  APB_FSM_Controller._assert_16:precondition1           covered         Hp            4    0.035 s      
+[32]  APB_FSM_Controller._assert_17                         proven          Hp     Infinite    0.008 s      
+[33]  APB_FSM_Controller._assert_17:precondition1           covered         Hp            4    0.036 s      
+[34]  APB_FSM_Controller._assert_18                         proven          Hp     Infinite    0.008 s      
+[35]  APB_FSM_Controller._assert_18:precondition1           covered         Hp            4    0.037 s      
+[36]  APB_FSM_Controller._assert_19                         proven          Hp     Infinite    0.009 s      
+[37]  APB_FSM_Controller._assert_19:precondition1           covered         Hp            4    0.043 s      
+[38]  APB_FSM_Controller._assert_20                         proven          Hp     Infinite    0.005 s      
+[39]  APB_FSM_Controller._assert_20:precondition1           covered         PRE           1    0.000 s      
+[40]  APB_FSM_Controller._assert_21                         proven          PRE    Infinite    0.000 s      
+[41]  APB_FSM_Controller._assert_21:precondition1           covered         PRE           1    0.000 s      
+[42]  APB_FSM_Controller._assert_21:precondition2           covered         PRE           1    0.000 s      
+[43]  APB_FSM_Controller._assert_21:precondition3           covered         PRE           1    0.000 s      
+[44]  APB_FSM_Controller._assert_21:precondition4           covered         PRE           1    0.000 s      
+[45]  APB_FSM_Controller._assert_22                         proven          Hp     Infinite    0.005 s      
+[46]  APB_FSM_Controller._assert_22:precondition1           covered         Hp            1    0.009 s      
+[47]  APB_FSM_Controller._assert_23                         proven          PRE    Infinite    0.000 s      
+[48]  APB_FSM_Controller._assert_23:precondition1           covered         PRE           1    0.000 s      
+[49]  APB_FSM_Controller._assert_23:precondition2           covered         Hp            1    0.009 s      
+[50]  APB_FSM_Controller._assert_23:precondition3           covered         PRE           1    0.000 s      
+[51]  APB_FSM_Controller._assert_23:precondition4           covered         Hp            1    0.009 s      
+[52]  APB_FSM_Controller._assert_24                         proven          Hp     Infinite    0.005 s      
+[53]  APB_FSM_Controller._assert_24:precondition1           covered         PRE           1    0.000 s      
+[54]  APB_FSM_Controller._assert_25                         proven          PRE    Infinite    0.000 s      
+[55]  APB_FSM_Controller._assert_25:precondition1           covered         PRE           1    0.000 s      
+[56]  APB_FSM_Controller._assert_25:precondition2           covered         PRE           1    0.000 s      
+[57]  APB_FSM_Controller._assert_25:precondition3           covered         PRE           1    0.000 s      
+[58]  APB_FSM_Controller._assert_25:precondition4           covered         PRE           1    0.000 s      
+[59]  APB_FSM_Controller._assert_26                         proven          Hp     Infinite    0.006 s      
+[60]  APB_FSM_Controller._assert_26:precondition1           covered         N             2    0.001 s      
+[61]  APB_FSM_Controller._assert_27                         proven          PRE    Infinite    0.000 s      
+[62]  APB_FSM_Controller._assert_27:precondition1           covered         PRE           1    0.000 s      
+[63]  APB_FSM_Controller._assert_27:precondition2           covered         N             2    0.001 s      
+[64]  APB_FSM_Controller._assert_27:precondition3           covered         PRE           1    0.000 s      
+[65]  APB_FSM_Controller._assert_27:precondition4           covered         N             2    0.001 s      
+[66]  APB_FSM_Controller._assert_28                         proven          Hp     Infinite    0.006 s      
+[67]  APB_FSM_Controller._assert_28:precondition1           covered         Hp            2    0.012 s      
+[68]  APB_FSM_Controller._assert_29                         proven          PRE    Infinite    0.000 s      
+[69]  APB_FSM_Controller._assert_29:precondition1           covered         PRE           1    0.000 s      
+[70]  APB_FSM_Controller._assert_29:precondition2           covered         Hp            2    0.012 s      
+[71]  APB_FSM_Controller._assert_29:precondition3           covered         PRE           1    0.000 s      
+[72]  APB_FSM_Controller._assert_29:precondition4           covered         Hp            2    0.012 s      
+[73]  APB_FSM_Controller._assert_30                         proven          Hp     Infinite    0.006 s      
+[74]  APB_FSM_Controller._assert_30:precondition1           covered         Hp            2    0.013 s      
+[75]  APB_FSM_Controller._assert_31                         proven          PRE    Infinite    0.000 s      
+[76]  APB_FSM_Controller._assert_31:precondition1           covered         PRE           1    0.000 s      
+[77]  APB_FSM_Controller._assert_31:precondition2           covered         Hp            2    0.013 s      
+[78]  APB_FSM_Controller._assert_31:precondition3           covered         PRE           1    0.000 s      
+[79]  APB_FSM_Controller._assert_31:precondition4           covered         Hp            2    0.013 s      
+[80]  APB_FSM_Controller._assert_32                         proven          Hp     Infinite    0.006 s      
+[81]  APB_FSM_Controller._assert_32:precondition1           covered         N             3    0.001 s      
+[82]  APB_FSM_Controller._assert_33                         proven          PRE    Infinite    0.000 s      
+[83]  APB_FSM_Controller._assert_33:precondition1           covered         PRE           1    0.000 s      
+[84]  APB_FSM_Controller._assert_33:precondition2           covered         N             3    0.001 s      
+[85]  APB_FSM_Controller._assert_33:precondition3           covered         PRE           1    0.000 s      
+[86]  APB_FSM_Controller._assert_33:precondition4           covered         N             3    0.001 s      
+[87]  APB_FSM_Controller._assert_34                         cex             Hp            3    0.020 s      
+[88]  APB_FSM_Controller._assert_34:precondition1           covered         Hp            3    0.020 s      
+[89]  APB_FSM_Controller._assert_35                         cex             Hp            3    0.020 s      
+[90]  APB_FSM_Controller._assert_35:precondition1           covered         PRE           1    0.000 s      
+[91]  APB_FSM_Controller._assert_35:precondition2           covered         Hp            3    0.020 s      
+[92]  APB_FSM_Controller._assert_35:precondition3           covered         PRE           1    0.000 s      
+[93]  APB_FSM_Controller._assert_35:precondition4           covered         Hp            3    0.020 s      
+[94]  APB_FSM_Controller._assert_36                         proven          Hp     Infinite    0.007 s      
+[95]  APB_FSM_Controller._assert_36:precondition1           covered         Hp            3    0.022 s      
+[96]  APB_FSM_Controller._assert_37                         proven          PRE    Infinite    0.000 s      
+[97]  APB_FSM_Controller._assert_37:precondition1           covered         PRE           1    0.000 s      
+[98]  APB_FSM_Controller._assert_37:precondition2           covered         Hp            3    0.022 s      
+[99]  APB_FSM_Controller._assert_37:precondition3           covered         PRE           1    0.000 s      
+[100] APB_FSM_Controller._assert_37:precondition4           covered         Hp            3    0.022 s      
+[101] APB_FSM_Controller._assert_38                         proven          Hp     Infinite    0.007 s      
+[102] APB_FSM_Controller._assert_38:precondition1           covered         Hp            3    0.023 s      
+[103] APB_FSM_Controller._assert_39                         proven          PRE    Infinite    0.000 s      
+[104] APB_FSM_Controller._assert_39:precondition1           covered         PRE           1    0.000 s      
+[105] APB_FSM_Controller._assert_39:precondition2           covered         Hp            3    0.023 s      
+[106] APB_FSM_Controller._assert_39:precondition3           covered         PRE           1    0.000 s      
+[107] APB_FSM_Controller._assert_39:precondition4           covered         Hp            3    0.023 s      
+[108] APB_FSM_Controller._assert_40                         proven          Hp     Infinite    0.007 s      
+[109] APB_FSM_Controller._assert_40:precondition1           covered         Hp            3    0.024 s      
+[110] APB_FSM_Controller._assert_41                         proven          PRE    Infinite    0.000 s      
+[111] APB_FSM_Controller._assert_41:precondition1           covered         PRE           1    0.000 s      
+[112] APB_FSM_Controller._assert_41:precondition2           covered         Hp            3    0.024 s      
+[113] APB_FSM_Controller._assert_41:precondition3           covered         PRE           1    0.000 s      
+[114] APB_FSM_Controller._assert_41:precondition4           covered         Hp            3    0.024 s      
+[115] APB_FSM_Controller._assert_42                         proven          Hp     Infinite    0.007 s      
+[116] APB_FSM_Controller._assert_42:precondition1           covered         Hp            3    0.025 s      
+[117] APB_FSM_Controller._assert_43                         proven          PRE    Infinite    0.000 s      
+[118] APB_FSM_Controller._assert_43:precondition1           covered         PRE           1    0.000 s      
+[119] APB_FSM_Controller._assert_43:precondition2           covered         Hp            3    0.025 s      
+[120] APB_FSM_Controller._assert_43:precondition3           covered         PRE           1    0.000 s      
+[121] APB_FSM_Controller._assert_43:precondition4           covered         Hp            3    0.025 s      
+[122] APB_FSM_Controller._assert_44                         proven          Hp     Infinite    0.008 s      
+[123] APB_FSM_Controller._assert_44:precondition1           covered         Hp            4    0.032 s      
+[124] APB_FSM_Controller._assert_45                         proven          PRE    Infinite    0.000 s      
+[125] APB_FSM_Controller._assert_45:precondition1           covered         PRE           1    0.000 s      
+[126] APB_FSM_Controller._assert_45:precondition2           covered         Hp            4    0.032 s      
+[127] APB_FSM_Controller._assert_45:precondition3           covered         PRE           1    0.000 s      
+[128] APB_FSM_Controller._assert_45:precondition4           covered         Hp            4    0.032 s      
+[129] APB_FSM_Controller._assert_46                         proven          Hp     Infinite    0.008 s      
+[130] APB_FSM_Controller._assert_46:precondition1           covered         Hp            4    0.034 s      
+[131] APB_FSM_Controller._assert_47                         proven          PRE    Infinite    0.000 s      
+[132] APB_FSM_Controller._assert_47:precondition1           covered         PRE           1    0.000 s      
+[133] APB_FSM_Controller._assert_47:precondition2           covered         Hp            4    0.034 s      
+[134] APB_FSM_Controller._assert_47:precondition3           covered         PRE           1    0.000 s      
+[135] APB_FSM_Controller._assert_47:precondition4           covered         Hp            4    0.034 s      
+[136] APB_FSM_Controller._assert_48                         proven          Hp     Infinite    0.008 s      
+[137] APB_FSM_Controller._assert_48:precondition1           covered         Hp            4    0.035 s      
+[138] APB_FSM_Controller._assert_49                         proven          PRE    Infinite    0.000 s      
+[139] APB_FSM_Controller._assert_49:precondition1           covered         PRE           1    0.000 s      
+[140] APB_FSM_Controller._assert_49:precondition2           covered         Hp            4    0.035 s      
+[141] APB_FSM_Controller._assert_49:precondition3           covered         PRE           1    0.000 s      
+[142] APB_FSM_Controller._assert_49:precondition4           covered         Hp            4    0.035 s      
+[143] APB_FSM_Controller._assert_50                         proven          Hp     Infinite    0.008 s      
+[144] APB_FSM_Controller._assert_50:precondition1           covered         Hp            4    0.036 s      
+[145] APB_FSM_Controller._assert_51                         proven          PRE    Infinite    0.000 s      
+[146] APB_FSM_Controller._assert_51:precondition1           covered         PRE           1    0.000 s      
+[147] APB_FSM_Controller._assert_51:precondition2           covered         Hp            4    0.036 s      
+[148] APB_FSM_Controller._assert_51:precondition3           covered         PRE           1    0.000 s      
+[149] APB_FSM_Controller._assert_51:precondition4           covered         Hp            4    0.036 s      
+[150] APB_FSM_Controller._assert_52                         proven          Hp     Infinite    0.009 s      
+[151] APB_FSM_Controller._assert_52:precondition1           covered         Hp            4    0.037 s      
+[152] APB_FSM_Controller._assert_53                         proven          PRE    Infinite    0.000 s      
+[153] APB_FSM_Controller._assert_53:precondition1           covered         PRE           1    0.000 s      
+[154] APB_FSM_Controller._assert_53:precondition2           covered         Hp            4    0.037 s      
+[155] APB_FSM_Controller._assert_53:precondition3           covered         PRE           1    0.000 s      
+[156] APB_FSM_Controller._assert_53:precondition4           covered         Hp            4    0.037 s      
+[157] APB_FSM_Controller._assert_54                         proven          Hp     Infinite    0.009 s      
+[158] APB_FSM_Controller._assert_54:precondition1           covered         Hp            4    0.043 s      
+[159] APB_FSM_Controller._assert_55                         proven          PRE    Infinite    0.000 s      
+[160] APB_FSM_Controller._assert_55:precondition1           covered         PRE           1    0.000 s      
+[161] APB_FSM_Controller._assert_55:precondition2           covered         Hp            4    0.043 s      
+[162] APB_FSM_Controller._assert_55:precondition3           covered         PRE           1    0.000 s      
+[163] APB_FSM_Controller._assert_55:precondition4           covered         Hp            4    0.043 s      

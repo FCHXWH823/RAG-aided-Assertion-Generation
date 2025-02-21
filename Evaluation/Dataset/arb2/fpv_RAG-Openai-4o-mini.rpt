@@ -5,7 +5,7 @@
     2022.09p001 64 bits for Linux64 3.10.0-1062.1.2.el7.x86_64
     Host Name: icpc
     User Name: master
-    Printed on: Tuesday, Feb18, 2025 12:46:48 PM CST
+    Printed on: Friday, Feb21, 2025 08:16:23 PM CST
     Working Directory: /home/master/RAG-aided-Assertion-Generation/Evaluation/Dataset/arb2
 
 
@@ -18,9 +18,9 @@ SUMMARY
            - approved     : 0                   
            - temporary    : 0                   
           assertions      : 24                  
-           - proven       : 8                   ( 33.3% )
+           - proven       : 10                  ( 41.7% )
            - marked_proven: 0                   ( 0.0% )
-           - cex          : 16                  ( 66.7% )
+           - cex          : 14                  ( 58.3% )
            - ar_cex       : 0                   ( 0.0% )
            - undetermined : 0                   ( 0.0% )
            - unprocessed  : 0                   ( 0.0% )
@@ -43,74 +43,74 @@ RESULTS
 
 ---[ <embedded> ]-------------------------------------------------------------------------
 [1]   arb2._assert_1                          proven          PRE    Infinite    0.000 s      
-[2]   arb2._assert_1:precondition1            covered         N             2    0.001 s      
+[2]   arb2._assert_1:precondition1            covered         N             2    0.003 s      
 [3]   arb2._assert_2                          proven          PRE    Infinite    0.000 s      
 [4]   arb2._assert_2:precondition1            covered         PRE           1    0.000 s      
-[5]   arb2._assert_3                          proven          Hp     Infinite    0.008 s      
+[5]   arb2._assert_3                          proven          N      Infinite    0.000 s      
 [6]   arb2._assert_3:precondition1            covered         PRE           1    0.000 s      
-[7]   arb2._assert_4                          proven          Hp     Infinite    0.008 s      
-[8]   arb2._assert_4:precondition1            covered         N             1    0.001 s      
+[7]   arb2._assert_4                          proven          N      Infinite    0.001 s      
+[8]   arb2._assert_4:precondition1            covered         N             1    0.003 s      
 [9]   arb2._assert_5                          proven          PRE    Infinite    0.000 s      
 [10]  arb2._assert_5:precondition1            covered         PRE           1    0.000 s      
 [11]  arb2._assert_6                          proven          PRE    Infinite    0.000 s      
-[12]  arb2._assert_6:precondition1            covered         N             2    0.001 s      
-[13]  arb2._assert_7                          proven          Hp     Infinite    0.008 s      
+[12]  arb2._assert_6:precondition1            covered         N             2    0.003 s      
+[13]  arb2._assert_7                          proven          N      Infinite    0.000 s      
 [14]  arb2._assert_7:precondition1            covered         PRE           1    0.000 s      
-[15]  arb2._assert_8                          proven          Hp     Infinite    0.008 s      
-[16]  arb2._assert_8:precondition1            covered         Hp            1    0.009 s      
-[17]  arb2._assert_9                          cex             Hp            3    0.012 s      
-[18]  arb2._assert_9:precondition1            covered         N             2    0.001 s      
-[19]  arb2._assert_10                         cex             Hp            3    0.012 s      
+[15]  arb2._assert_8                          proven          Hp     Infinite    0.003 s      
+[16]  arb2._assert_8:precondition1            covered         Hp            1    0.003 s      
+[17]  arb2._assert_9                          cex             Hp            3    0.008 s      
+[18]  arb2._assert_9:precondition1            covered         N             2    0.003 s      
+[19]  arb2._assert_10                         cex             Hp            3    0.008 s      
 [20]  arb2._assert_10:precondition1           covered         PRE           1    0.000 s      
-[21]  arb2._assert_10:precondition2           covered         N             2    0.001 s      
+[21]  arb2._assert_10:precondition2           covered         N             2    0.003 s      
 [22]  arb2._assert_10:precondition3           covered         PRE           1    0.000 s      
-[23]  arb2._assert_10:precondition4           covered         N             2    0.001 s      
-[24]  arb2._assert_11                         cex             N             2    0.001 s      
+[23]  arb2._assert_10:precondition4           covered         N             2    0.003 s      
+[24]  arb2._assert_11                         cex             N             2    0.003 s      
 [25]  arb2._assert_11:precondition1           covered         PRE           1    0.000 s      
-[26]  arb2._assert_12                         cex             N             2    0.001 s      
+[26]  arb2._assert_12                         cex             N             2    0.003 s      
 [27]  arb2._assert_12:precondition1           covered         PRE           1    0.000 s      
 [28]  arb2._assert_12:precondition2           covered         PRE           1    0.000 s      
 [29]  arb2._assert_12:precondition3           covered         PRE           1    0.000 s      
 [30]  arb2._assert_12:precondition4           covered         PRE           1    0.000 s      
-[31]  arb2._assert_13                         cex             Hp            2    0.011 s      
+[31]  arb2._assert_13                         cex             Hp            2    0.006 s      
 [32]  arb2._assert_13:precondition1           covered         PRE           1    0.000 s      
-[33]  arb2._assert_14                         cex             Hp            2    0.011 s      
+[33]  arb2._assert_14                         cex             Hp            2    0.006 s      
 [34]  arb2._assert_14:precondition1           covered         PRE           1    0.000 s      
 [35]  arb2._assert_14:precondition2           covered         PRE           1    0.000 s      
 [36]  arb2._assert_14:precondition3           covered         PRE           1    0.000 s      
 [37]  arb2._assert_14:precondition4           covered         PRE           1    0.000 s      
-[38]  arb2._assert_15                         cex             N             2    0.001 s      
-[39]  arb2._assert_15:precondition1           covered         N             1    0.001 s      
-[40]  arb2._assert_16                         cex             N             2    0.001 s      
+[38]  arb2._assert_15                         cex             N             2    0.003 s      
+[39]  arb2._assert_15:precondition1           covered         N             1    0.003 s      
+[40]  arb2._assert_16                         cex             N             2    0.003 s      
 [41]  arb2._assert_16:precondition1           covered         PRE           1    0.000 s      
-[42]  arb2._assert_16:precondition2           covered         N             1    0.001 s      
+[42]  arb2._assert_16:precondition2           covered         N             1    0.003 s      
 [43]  arb2._assert_16:precondition3           covered         PRE           1    0.000 s      
-[44]  arb2._assert_16:precondition4           covered         N             1    0.001 s      
-[45]  arb2._assert_17                         cex             N             2    0.001 s      
+[44]  arb2._assert_16:precondition4           covered         N             1    0.003 s      
+[45]  arb2._assert_17                         proven          PRE    Infinite    0.000 s      
 [46]  arb2._assert_17:precondition1           covered         PRE           1    0.000 s      
-[47]  arb2._assert_18                         cex             N             2    0.001 s      
+[47]  arb2._assert_18                         proven          PRE    Infinite    0.000 s      
 [48]  arb2._assert_18:precondition1           covered         PRE           1    0.000 s      
 [49]  arb2._assert_18:precondition2           covered         PRE           1    0.000 s      
 [50]  arb2._assert_18:precondition3           covered         PRE           1    0.000 s      
 [51]  arb2._assert_18:precondition4           covered         PRE           1    0.000 s      
-[52]  arb2._assert_19                         cex             Hp            3    0.013 s      
-[53]  arb2._assert_19:precondition1           covered         N             2    0.001 s      
-[54]  arb2._assert_20                         cex             Hp            3    0.013 s      
+[52]  arb2._assert_19                         cex             Hp            3    0.009 s      
+[53]  arb2._assert_19:precondition1           covered         N             2    0.003 s      
+[54]  arb2._assert_20                         cex             Hp            3    0.009 s      
 [55]  arb2._assert_20:precondition1           covered         PRE           1    0.000 s      
-[56]  arb2._assert_20:precondition2           covered         N             2    0.001 s      
+[56]  arb2._assert_20:precondition2           covered         N             2    0.003 s      
 [57]  arb2._assert_20:precondition3           covered         PRE           1    0.000 s      
-[58]  arb2._assert_20:precondition4           covered         N             2    0.001 s      
-[59]  arb2._assert_21                         cex             N             2    0.001 s      
+[58]  arb2._assert_20:precondition4           covered         N             2    0.003 s      
+[59]  arb2._assert_21                         cex             N             2    0.003 s      
 [60]  arb2._assert_21:precondition1           covered         PRE           1    0.000 s      
-[61]  arb2._assert_22                         cex             N             2    0.001 s      
+[61]  arb2._assert_22                         cex             N             2    0.003 s      
 [62]  arb2._assert_22:precondition1           covered         PRE           1    0.000 s      
 [63]  arb2._assert_22:precondition2           covered         PRE           1    0.000 s      
 [64]  arb2._assert_22:precondition3           covered         PRE           1    0.000 s      
 [65]  arb2._assert_22:precondition4           covered         PRE           1    0.000 s      
-[66]  arb2._assert_23                         cex             Hp            2    0.011 s      
-[67]  arb2._assert_23:precondition1           covered         Hp            1    0.009 s      
-[68]  arb2._assert_24                         cex             Hp            2    0.011 s      
+[66]  arb2._assert_23                         cex             Hp            2    0.006 s      
+[67]  arb2._assert_23:precondition1           covered         Hp            1    0.003 s      
+[68]  arb2._assert_24                         cex             Hp            2    0.006 s      
 [69]  arb2._assert_24:precondition1           covered         PRE           1    0.000 s      
-[70]  arb2._assert_24:precondition2           covered         Hp            1    0.009 s      
+[70]  arb2._assert_24:precondition2           covered         Hp            1    0.003 s      
 [71]  arb2._assert_24:precondition3           covered         PRE           1    0.000 s      
-[72]  arb2._assert_24:precondition4           covered         Hp            1    0.009 s      
+[72]  arb2._assert_24:precondition4           covered         Hp            1    0.003 s      

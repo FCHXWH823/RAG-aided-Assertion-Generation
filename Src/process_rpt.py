@@ -49,10 +49,3 @@ with open("../Results/Prompted-Assertion-Generation-Results-over-New-Evaluation-
             sc_rag_openai_4o, fc_rag_openai_4o, fm_rag_openai_4o = get_num_sc_fc_fm(extract_data_rag_openai_4o,get_num_golden_assertions(folder_path))    
             extract_data_dynamic_rag_openai_4o = extract_rpt_data(folder_path,"fpv_Dynamic-RAG-Openai-4o-mini.rpt")    
             sc_dynamic_rag_openai_4o, fc_dynamic_rag_openai_4o, fm_dynamic_rag_openai_4o = get_num_sc_fc_fm(extract_data_dynamic_rag_openai_4o,get_num_golden_assertions(folder_path))    
-            csv_writer.writerow([folder.replace("/",""),get_num_golden_assertions(folder_path),sc_openai_4o, fc_openai_4o, fm_openai_4o,sc_rag_openai_4o, fc_rag_openai_4o, fm_rag_openai_4o,sc_dynamic_rag_openai_4o, fc_dynamic_rag_openai_4o, fm_dynamic_rag_openai_4o])
-# Extract data
-# dir_path = os.path.join("./",sys.argv[1])
-# print(f"#golden_assertions of {sys.argv[1]}: {get_num_golden_assertions(dir_path)}")
-# extracted_data = extract_rpt_data(dir_path)
-# sc, fc, fm = get_num_sc_fc_fm(extracted_data,get_num_golden_assertions(dir_path))
-# print(f"#sc:{sc}\t#fc:{fc}\t#fm:{fm}")

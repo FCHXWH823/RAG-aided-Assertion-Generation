@@ -337,7 +337,7 @@ assert property (@(posedge clk)  (bReg[0] == 0 |=> rxDoneTick == 0));
 assert property (@(posedge clk)  ((nReg[0] == 0) |=> (rxDoneTick == 0)) iff (bReg[0] == 0 |=> rxDoneTick == 0));
 assert property (@(posedge clk)  (sTick == 0 |-> rxDoneTick == 0));
 assert property (@(posedge clk)  ((sTick == 0) |-> (rxDoneTick == 0)) iff (sTick == 0 |-> rxDoneTick == 0));
-assert property (@(posedge clk)  (sNext[0] == 0 |-> (next(rxDoneTick) == 0)));
-assert property (@(posedge clk)  ((sNext[0] == 0) |=> (rxDoneTick == 0)) iff (sNext[0] == 0 |-> (next(rxDoneTick) == 0)));
+// assert property (@(posedge clk)  (sNext[0] == 0 |-> (next(rxDoneTick) == 0)));
+// assert property (@(posedge clk)  ((sNext[0] == 0) |=> (rxDoneTick == 0)) iff (sNext[0] == 0 |-> (next(rxDoneTick) == 0)));
 
 endmodule

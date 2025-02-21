@@ -93,14 +93,14 @@ def generate_fpv():
 
     for folder in os.listdir("Evaluation/Dataset"):
         folder_path = os.path.join("Evaluation/Dataset/",folder)
-        os.system(f"rm {folder_path}/fpv_Dynamic-RAG_Openai-4o-mini.tcl")
+        os.system(f"rm {folder_path}/fpv__QueryExpand-Dynamic-RAG-Openai-4o-mini.rpt")
         if os.path.isdir(folder_path):
             with open(f"{folder_path}/fpv.tcl","r") as file:
                 fpv_tcl = file.read()
             fpv_tcl_openai_4o = fpv_tcl.replace(f"./{folder}_assertion.sv",f"./{folder}_Openai-4o-mini.sv").replace("fpv.rpt","fpv_Openai-4o-mini.rpt")
             fpv_tcl_RAG_openai_4o = fpv_tcl.replace(f"./{folder}_assertion.sv",f"./{folder}_RAG-Openai-4o-mini.sv").replace("fpv.rpt","fpv_RAG-Openai-4o-mini.rpt")
             fpv_tcl_Dynamic_RAG_openai_4o = fpv_tcl.replace(f"./{folder}_assertion.sv",f"./{folder}_Dynamic-RAG-Openai-4o-mini.sv").replace("fpv.rpt","fpv_Dynamic-RAG-Openai-4o-mini.rpt")
-            fpv_tcl_QueryExpand_Dynamic_RAG_openai_4o = fpv_tcl.replace(f"./{folder}_assertion.sv",f"./{folder}_QueryExpand-Dynamic-RAG-Openai-4o-mini.sv").replace("fpv.rpt","fpv__QueryExpand-Dynamic-RAG-Openai-4o-mini.rpt")
+            fpv_tcl_QueryExpand_Dynamic_RAG_openai_4o = fpv_tcl.replace(f"./{folder}_assertion.sv",f"./{folder}_QueryExpand-Dynamic-RAG-Openai-4o-mini.sv").replace("fpv.rpt","fpv_QueryExpand-Dynamic-RAG-Openai-4o-mini.rpt")
 
             with open(f"{folder_path}/fpv_Openai-4o-mini.tcl","w") as file:
                 file.write(fpv_tcl_openai_4o)

@@ -5,7 +5,7 @@
     2022.09p001 64 bits for Linux64 3.10.0-1062.1.2.el7.x86_64
     Host Name: icpc
     User Name: master
-    Printed on: Tuesday, Feb18, 2025 03:06:53 PM CST
+    Printed on: Friday, Feb21, 2025 08:40:16 PM CST
     Working Directory: /home/master/RAG-aided-Assertion-Generation/Evaluation/Dataset/register
 
 
@@ -42,7 +42,7 @@ RESULTS
 ---------------------------------------------------------------------------------------------
 
 ---[ <embedded> ]----------------------------------------------------------------------------
-[1]   register._assert_1                         proven          N      Infinite    0.001 s      
+[1]   register._assert_1                         proven          Hp     Infinite    0.002 s      
 [2]   register._assert_1:precondition1           covered         PRE           1    0.000 s      
 [3]   register._assert_2                         proven          Hp     Infinite    0.002 s      
 [4]   register._assert_2:precondition1           covered         PRE           1    0.000 s      
@@ -53,9 +53,9 @@ RESULTS
 [9]   register._assert_4:precondition2           covered         PRE           1    0.000 s      
 [10]  register._assert_4:precondition3           covered         PRE           1    0.000 s      
 [11]  register._assert_4:precondition4           covered         PRE           1    0.000 s      
-[12]  register._assert_5                         cex             Hp            3    0.003 s      
+[12]  register._assert_5                         cex             Hp            2    0.003 s      
 [13]  register._assert_5:precondition1           covered         PRE           1    0.000 s      
-[14]  register._assert_6                         cex             Hp            3    0.003 s      
+[14]  register._assert_6                         cex             Hp            3    0.004 s      
 [15]  register._assert_6:precondition1           covered         PRE           1    0.000 s      
 [16]  register._assert_6:precondition2           covered         PRE           1    0.000 s      
 [17]  register._assert_6:precondition3           covered         PRE           1    0.000 s      
