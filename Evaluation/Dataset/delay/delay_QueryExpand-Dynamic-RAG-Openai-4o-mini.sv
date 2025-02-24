@@ -149,11 +149,11 @@ assert property(@(posedge clk) disable iff (rst) count == CYCLES || out == RESET
 
 assert property(@(posedge clk) disable iff (rst) !en |=> $stable(out));
 
-assert property (@(posedge clk) disable iff (rst) (en && ($countones($past(in, CYCLES)) < CYCLES || out == $past(in, CYCLES))));
-assert property (@(posedge clk) disable iff (rst) (count < CYCLES || out == $past(in, CYCLES, en)) iff (en && ($countones($past(in, CYCLES)) < CYCLES || out == $past(in, CYCLES))));
-// assert property (@(posedge clk) disable iff (rst) ((counting_cycles == CYCLES) || (out == RESET_VALUE)));
-// assert property (@(posedge clk) disable iff (rst) (count == CYCLES || out == RESET_VALUE) iff ((counting_cycles == CYCLES) || (out == RESET_VALUE)));
-assert property (@(posedge clk) disable iff (rst) (en == 0 |=> out == $past(out)));
-assert property (@(posedge clk) disable iff (rst) (!en |=> $stable(out)) iff (en == 0 |=> out == $past(out)));
+assert property (@(posedge clk) disable iff (rst) (CYCLES >= 0 && out == in[WIDTH-1:0] |-> en));
+assert property (@(posedge clk) disable iff (rst) (count < CYCLES || out == $past(in, CYCLES, en)) iff (CYCLES >= 0 && out == in[WIDTH-1:0] |-> en));
+assert property (@(posedge clk) disable iff (rst) ((count_cycles == CYCLES) || (out == RESET_VALUE)));
+assert property (@(posedge clk) disable iff (rst) (count == CYCLES || out == RESET_VALUE) iff ((count_cycles == CYCLES) || (out == RESET_VALUE)));
+assert property (@(posedge clk) disable iff (rst) (en == 0 |-> out == $past(out)));
+assert property (@(posedge clk) disable iff (rst) (!en |=> $stable(out)) iff (en == 0 |-> out == $past(out)));
 
 endmodule

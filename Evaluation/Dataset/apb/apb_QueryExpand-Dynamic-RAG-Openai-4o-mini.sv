@@ -176,17 +176,17 @@ assert property(@(posedge PCLK) (TX_EMPTY == 0) |-> (INT_TX == 0));
 assert property(@(posedge PCLK) (RX_EMPTY == 0) |-> (INT_RX == 0));  
 assert property(@(posedge PCLK) (RX_EMPTY == 1) |-> (INT_RX == 1));
 
-assert property (@(posedge PCLK)  (ERROR == 1'b0 |=> PSLVERR == 1'b0));
-assert property (@(posedge PCLK)  ((ERROR == 0) |-> (PSLVERR == 0)) iff (ERROR == 1'b0 |=> PSLVERR == 1'b0));
-// assert property (@(posedge PCLK)  (error_indicator == 1 |-> error_signal_output == 1));
-// assert property (@(posedge PCLK)  ((ERROR == 1) |-> (PSLVERR == 1)) iff (error_indicator == 1 |-> error_signal_output == 1));
+assert property (@(posedge PCLK)  (ERROR == 1'b0 |-> PSLVERR == 1'b0));
+assert property (@(posedge PCLK)  ((ERROR == 0) |-> (PSLVERR == 0)) iff (ERROR == 1'b0 |-> PSLVERR == 1'b0));
+assert property (@(posedge PCLK)  (ERROR == 1'b1 |-> PSLVERR == 1'b1));
+assert property (@(posedge PCLK)  ((ERROR == 1) |-> (PSLVERR == 1)) iff (ERROR == 1'b1 |-> PSLVERR == 1'b1));
 assert property (@(posedge PCLK)  (TX_EMPTY == 1'b1 |=> INT_TX == 1'b1));
 assert property (@(posedge PCLK)  ((TX_EMPTY == 1) |-> (INT_TX == 1)) iff (TX_EMPTY == 1'b1 |=> INT_TX == 1'b1));
-assert property (@(posedge PCLK)  (TX_EMPTY == 1'b0 |=> INT_TX == 1'b0));
-assert property (@(posedge PCLK)  ((TX_EMPTY == 0) |-> (INT_TX == 0)) iff (TX_EMPTY == 1'b0 |=> INT_TX == 1'b0));
-assert property (@(posedge PCLK)  (RX_EMPTY == 1'b0 |=> INT_RX == 1'b0));
-assert property (@(posedge PCLK)  ((RX_EMPTY == 0) |-> (INT_RX == 0)) iff (RX_EMPTY == 1'b0 |=> INT_RX == 1'b0));
-// assert property (@(posedge PCLK)  (receive_fifo_empty_indicator == 1 |=> receive_interrupt_signal == 1));
-// assert property (@(posedge PCLK)  ((RX_EMPTY == 1) |-> (INT_RX == 1)) iff (receive_fifo_empty_indicator == 1 |=> receive_interrupt_signal == 1));
+assert property (@(posedge PCLK)  (TX_EMPTY == 1'b0 |-> INT_TX == 1'b0));
+assert property (@(posedge PCLK)  ((TX_EMPTY == 0) |-> (INT_TX == 0)) iff (TX_EMPTY == 1'b0 |-> INT_TX == 1'b0));
+assert property (@(posedge PCLK)  (RX_EMPTY == 1'b0 |-> (INT_RX == 1'b0)));
+assert property (@(posedge PCLK)  ((RX_EMPTY == 0) |-> (INT_RX == 0)) iff (RX_EMPTY == 1'b0 |-> (INT_RX == 1'b0)));
+assert property (@(posedge PCLK)  (RX_EMPTY == 1'b1 |-> INT_RX == 1'b1));
+assert property (@(posedge PCLK)  ((RX_EMPTY == 1) |-> (INT_RX == 1)) iff (RX_EMPTY == 1'b1 |-> INT_RX == 1'b1));
 
 endmodule

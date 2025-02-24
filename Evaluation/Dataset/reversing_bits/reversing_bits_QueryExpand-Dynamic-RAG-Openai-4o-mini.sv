@@ -18,7 +18,7 @@ endgenerate
 
 assert property(@(posedge clk) disable iff (~rst) dout[0] == din[DATA_WIDTH-1]);
 
-assert property (@(posedge clk) disable iff (~rst) (dout == {din[0], din[1], din[2]}));
-assert property (@(posedge clk) disable iff (~rst) (dout[0] == din[DATA_WIDTH-1]) iff (dout == {din[0], din[1], din[2]}));
+assert property (@(posedge clk) disable iff (~rst) (dout[i] == din[DATA_WIDTH-i-1]));
+assert property (@(posedge clk) disable iff (~rst) (dout[0] == din[DATA_WIDTH-1]) iff (dout[i] == din[DATA_WIDTH-i-1]));
 
 endmodule

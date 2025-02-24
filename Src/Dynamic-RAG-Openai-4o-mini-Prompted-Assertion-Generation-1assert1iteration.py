@@ -19,18 +19,70 @@ with open("Src/Config.yml") as file:
 # Load your PDFs
 # PDF_Name = "CernyDudani-SVA- The Power of Assertions in SystemVerilog"
 PDF_Name = config["PDF_Name"]
+PDF_Txt = config["PDF_Txt"]
 OpenAI_API_Key = config["Openai_API_Key"]
 Folder_Name = f"Book1-{PDF_Name}"
 
-def build_rag_system(pdf_path):
+# def build_rag_system(pdf_path):
+#     """
+#     1. Extract code blocks and text blocks from the PDF.
+#     2. Store code blocks in a 'code_db' (Chroma).
+#     3. Store text blocks in a 'text_db' (Chroma).
+#     4. Return the two vector stores for retrieval.
+#     """
+#     # 1) Get all blocks from PDF
+#     blocks = get_pdf_blocks(pdf_path)
+
+#     # 2) Separate code vs. text
+#     code_docs = []
+#     text_docs = []
+#     for idx, block in enumerate(blocks):
+#         content = block_to_text(block)
+#         # Create a LangChain "Document" object with page_content plus metadata
+#         if block["type"] == "code":
+#             last_content = "" if idx == 0 else block_to_text(blocks[idx-1])
+#             next_content = "" if idx == len(blocks)-1 else block_to_text(blocks[idx+1])
+#             content = f"{last_content}\n\n{content}\n\n{next_content}"
+#             print(content+"\n-----------------------\n\n")
+#         doc = Document(page_content=content, metadata={"type": block["type"], "block_index": idx})
+#         if block["type"] == "code":
+#             code_docs.append(doc)
+#         else:
+#             text_docs.append(doc)
+
+#     # 3) Build embeddings
+#     embedding_fn = OpenAIEmbeddings(openai_api_key=OpenAI_API_Key)  # or HuggingFaceEmbeddings(), etc.
+
+#     # 4) Create code vector store
+#     code_db = Chroma.from_documents(code_docs, embedding=embedding_fn, collection_name="code_blocks")
+
+#     # 5) Create text vector store
+#     text_db = Chroma.from_documents(text_docs, embedding=embedding_fn, collection_name="text_blocks")
+
+#     return code_db, text_db
+
+
+def build_rag_system():
     """
     1. Extract code blocks and text blocks from the PDF.
     2. Store code blocks in a 'code_db' (Chroma).
     3. Store text blocks in a 'text_db' (Chroma).
     4. Return the two vector stores for retrieval.
     """
+    pdf_names = []
+
+    with open(f"VerilogTextBooks/{PDF_Txt}") as file:
+        pdf_names = file.readlines()
+
+    pdf_names = [pdf_name.strip() for pdf_name in pdf_names]
+
+    # Loop over each PDF name provided in the list
+    blocks = []
+    for pdf_name in pdf_names:
+        # Construct the file path for the current PDF
+        pdf_path = f"VerilogTextBooks/{pdf_name}.pdf"
     # 1) Get all blocks from PDF
-    blocks = get_pdf_blocks(pdf_path)
+        blocks += get_pdf_blocks(pdf_path)
 
     # 2) Separate code vs. text
     code_docs = []
@@ -59,9 +111,9 @@ def build_rag_system(pdf_path):
     text_db = Chroma.from_documents(text_docs, embedding=embedding_fn, collection_name="text_blocks")
 
     return code_db, text_db
-    
+ 
 
-code_store, text_store = build_rag_system(f"VerilogTextBooks/{PDF_Name}.pdf")
+code_store, text_store = build_rag_system()
 
 code_retriever = code_store.as_retriever()
 text_retriever = text_store.as_retriever()
@@ -179,8 +231,8 @@ with open(f'Results/Dynamic-RAG-Openai-4o-mini-Prompted-Assertion-Generation-Res
     csv_writer = csv.writer(csv_file)
     csv_writer.writerow(['Master Module','Code','golden_assertions','llm_assertions'])
     for folder in os.listdir("Evaluation/Dataset/"):
-        if "arb2" not in folder:
-            continue 
+        # if "arb2" not in folder:
+        #     continue 
         folder_path = os.path.join("Evaluation/Dataset/",folder)
         if os.path.isdir(folder_path):
             with open(folder_path+"/"+folder+".sv","r") as file:

@@ -29,7 +29,7 @@ assign seen = seq_q == init;
 
 assert property(@(posedge clk) disable iff(~resetn) seen == (seq_q == init));
 
-assert property (@(posedge clk) disable iff(~resetn) (seen == 1'b1) |-> (seq_q == init));
-assert property (@(posedge clk) disable iff(~resetn) (seen == (seq_q == init)) iff ((seen == 1'b1) |-> (seq_q == init)));
+assert property (@(posedge clk) disable iff(~resetn) (seen == (seq_q == init)));
+assert property (@(posedge clk) disable iff(~resetn) (seen == (seq_q == init)) iff (seen == (seq_q == init)));
 
 endmodule
