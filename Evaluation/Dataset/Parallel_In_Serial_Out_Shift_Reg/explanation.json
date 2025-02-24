@@ -1,7 +1,7 @@
 {
   "Assertion 1": {
     "clock signal condition": "@(posedge clk)",
-    "disable condition": "default disable iff (~resetn)",
+    "disable condition": "disable iff (~resetn)",
     "logical expression": "~v_f_q | (v_f_q & din_f_q[0] == dout)",
     "Signals": ["v_f_q", "din_f_q[0]", "dout"],
     "Signal Explanations": {

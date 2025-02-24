@@ -38,14 +38,19 @@ def get_num_sc_fc_fm(results, num_golden_assertions):
 
 
 
-with open("../Results/Prompted-Assertion-Generation-Results-over-New-Evaluation-Dataset.csv","w") as file:
+with open("../Results/Prompted-Assertion-Generation-Results-over-10-textbooks.csv","w") as file:
     csv_writer = csv.writer(file)
     for folder in os.listdir("../Evaluation/Dataset"):
         folder_path = os.path.join("../Evaluation/Dataset/",folder)
         if os.path.isdir(folder_path):
+            # print(folder_path)
             extract_data_openai_4o = extract_rpt_data(folder_path,"fpv_Openai-4o-mini.rpt")
             sc_openai_4o, fc_openai_4o, fm_openai_4o = get_num_sc_fc_fm(extract_data_openai_4o,get_num_golden_assertions(folder_path))    
             extract_data_rag_openai_4o = extract_rpt_data(folder_path,"fpv_RAG-Openai-4o-mini.rpt")    
             sc_rag_openai_4o, fc_rag_openai_4o, fm_rag_openai_4o = get_num_sc_fc_fm(extract_data_rag_openai_4o,get_num_golden_assertions(folder_path))    
             extract_data_dynamic_rag_openai_4o = extract_rpt_data(folder_path,"fpv_Dynamic-RAG-Openai-4o-mini.rpt")    
             sc_dynamic_rag_openai_4o, fc_dynamic_rag_openai_4o, fm_dynamic_rag_openai_4o = get_num_sc_fc_fm(extract_data_dynamic_rag_openai_4o,get_num_golden_assertions(folder_path))    
+            extract_data_queryexpand_dynamic_rag_openai_4o = extract_rpt_data(folder_path,"fpv_QueryExpand-Dynamic-RAG-Openai-4o-mini.rpt")    
+            sc_queryexpand_dynamic_rag_openai_4o, fc_queryexpand_dynamic_rag_openai_4o, fm_queryexpand_dynamic_rag_openai_4o = get_num_sc_fc_fm(extract_data_queryexpand_dynamic_rag_openai_4o,get_num_golden_assertions(folder_path))    
+            # print([get_num_golden_assertions(folder_path),sc_openai_4o, fc_openai_4o, fm_openai_4o,sc_rag_openai_4o, fc_rag_openai_4o, fm_rag_openai_4o,sc_dynamic_rag_openai_4o, fc_dynamic_rag_openai_4o, fm_dynamic_rag_openai_4o,sc_queryexpand_dynamic_rag_openai_4o, fc_queryexpand_dynamic_rag_openai_4o, fm_queryexpand_dynamic_rag_openai_4o])
+            csv_writer.writerow([get_num_golden_assertions(folder_path),sc_openai_4o, fc_openai_4o, fm_openai_4o,sc_rag_openai_4o, fc_rag_openai_4o, fm_rag_openai_4o,sc_dynamic_rag_openai_4o, fc_dynamic_rag_openai_4o, fm_dynamic_rag_openai_4o,sc_queryexpand_dynamic_rag_openai_4o, fc_queryexpand_dynamic_rag_openai_4o, fm_queryexpand_dynamic_rag_openai_4o])

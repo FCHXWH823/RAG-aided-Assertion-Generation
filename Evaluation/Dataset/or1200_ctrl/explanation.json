@@ -33,7 +33,7 @@
   },
   "Assertion 2": {
     "clock signal condition": "@(posedge clk)",
-    "disable condition": "diable iff (rst)",
+    "disable condition": "disable iff (rst)",
     "logical expression": "(!ex_freeze & id_freeze | ex_flushpipe) |-> ##1 (ex_macrc_op == 0)",
     "Signals": [
       "ex_freeze",
@@ -65,7 +65,7 @@
   },
   "Assertion 3": {
     "clock signal condition": "@(posedge clk)",
-    "disable condition": "diable iff (rst)",
+    "disable condition": "disable iff (rst)",
     "logical expression": "(id_flushpipe) |-> ##1 (id_insn == {`OR1200_OR32_NOP, 26'h041_0000})",
     "Signals": [
       "id_flushpipe",
@@ -89,7 +89,7 @@
   },
   "Assertion 4": {
     "clock signal condition": "@(posedge clk)",
-    "disable condition": "diable iff (rst)",
+    "disable condition": "disable iff (rst)",
     "logical expression": "(!ex_freeze & id_freeze | ex_flushpipe) |-> ##1 (ex_insn == {`OR1200_OR32_NOP, 26'h041_0000})",
     "Signals": [
       "ex_freeze",
@@ -121,7 +121,7 @@
   },
   "Assertion 5": {
     "clock signal condition": "@(posedge clk)",
-    "disable condition": "diable iff (rst)",
+    "disable condition": "disable iff (rst)",
     "logical expression": "(!id_freeze && if_insn[31:26] == `OR1200_OR32_JALR) |-> ##1 (sel_imm ==  1'b0)",
     "Signals": [
       "id_freeze",
@@ -151,7 +151,7 @@
   },
   "Assertion 6": {
     "clock signal condition": "@(posedge clk)",
-    "disable condition": "diable iff (rst)",
+    "disable condition": "disable iff (rst)",
     "logical expression": "(!id_freeze && if_insn[31:26] == `OR1200_OR32_JR) |-> ##1 (sel_imm ==  1'b0)",
     "Signals": [
       "id_freeze",
@@ -181,7 +181,7 @@
   },
   "Assertion 7": {
     "clock signal condition": "@(posedge clk)",
-    "disable condition": "diable iff (rst)",
+    "disable condition": "disable iff (rst)",
     "logical expression": "(!id_freeze && if_insn[31:26] == `OR1200_OR32_RFE) |-> ##1 (sel_imm ==  1'b0)",
     "Signals": [
       "id_freeze",
@@ -211,7 +211,7 @@
   },
   "Assertion 8": {
     "clock signal condition": "@(posedge clk)",
-    "disable condition": "diable iff (rst)",
+    "disable condition": "disable iff (rst)",
     "logical expression": "(!id_freeze && if_insn[31:26] == `OR1200_OR32_MFSPR) |-> ##1 (sel_imm ==  1'b0)",
     "Signals": [
       "id_freeze",
@@ -241,7 +241,7 @@
   },
   "Assertion 9": {
     "clock signal condition": "@(posedge clk)",
-    "disable condition": "diable iff (rst)",
+    "disable condition": "disable iff (rst)",
     "logical expression": "(!id_freeze && if_insn[31:26] == `OR1200_OR32_MTSPR) |-> ##1 (sel_imm ==  1'b0)",
     "Signals": [
       "id_freeze",
@@ -271,7 +271,7 @@
   },
   "Assertion 10": {
     "clock signal condition": "@(posedge clk)",
-    "disable condition": "diable iff (rst)",
+    "disable condition": "disable iff (rst)",
     "logical expression": "(!id_freeze && if_insn[31:26] == `OR1200_OR32_XSYNC) |-> ##1 (sel_imm ==  1'b0)",
     "Signals": [
       "id_freeze",
@@ -301,7 +301,7 @@
   },
   "Assertion 11": {
     "clock signal condition": "@(posedge clk)",
-    "disable condition": "diable iff (rst)",
+    "disable condition": "disable iff (rst)",
     "logical expression": "(!id_freeze && if_insn[31:26] == `OR1200_OR32_SW) |-> ##1 (sel_imm ==  1'b0)",
     "Signals": [
       "id_freeze",
@@ -331,7 +331,7 @@
   },
   "Assertion 12": {
     "clock signal condition": "@(posedge clk)",
-    "disable condition": "diable iff (rst)",
+    "disable condition": "disable iff (rst)",
     "logical expression": "(!id_freeze && if_insn[31:26] == `OR1200_OR32_SB) |-> ##1 (sel_imm ==  1'b0)",
     "Signals": [
       "id_freeze",
@@ -361,7 +361,7 @@
   },
   "Assertion 13": {
     "clock signal condition": "@(posedge clk)",
-    "disable condition": "diable iff (rst)",
+    "disable condition": "disable iff (rst)",
     "logical expression": "(!id_freeze && if_insn[31:26] == `OR1200_OR32_ALU) |-> ##1 (sel_imm ==  1'b0)",
     "Signals": [
       "id_freeze",
@@ -391,7 +391,7 @@
   },
   "Assertion 14": {
     "clock signal condition": "@(posedge clk)",
-    "disable condition": "diable iff (rst)",
+    "disable condition": "disable iff (rst)",
     "logical expression": "(!id_freeze && if_insn[31:26] == `OR1200_OR32_SFXX) |-> ##1 (sel_imm ==  1'b0)",
     "Signals": [
       "id_freeze",

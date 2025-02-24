@@ -5,7 +5,7 @@
     2022.09p001 64 bits for Linux64 3.10.0-1062.1.2.el7.x86_64
     Host Name: icpc
     User Name: master
-    Printed on: Friday, Feb21, 2025 08:40:47 PM CST
+    Printed on: Monday, Feb24, 2025 11:58:11 PM CST
     Working Directory: /home/master/RAG-aided-Assertion-Generation/Evaluation/Dataset/register
 
 
@@ -18,9 +18,9 @@ SUMMARY
            - approved     : 0                   
            - temporary    : 0                   
           assertions      : 6                   
-           - proven       : 2                   ( 33.3% )
+           - proven       : 4                   ( 66.7% )
            - marked_proven: 0                   ( 0.0% )
-           - cex          : 4                   ( 66.7% )
+           - cex          : 2                   ( 33.3% )
            - ar_cex       : 0                   ( 0.0% )
            - undetermined : 0                   ( 0.0% )
            - unprocessed  : 0                   ( 0.0% )
@@ -42,20 +42,20 @@ RESULTS
 ---------------------------------------------------------------------------------------------
 
 ---[ <embedded> ]----------------------------------------------------------------------------
-[1]   register._assert_1                         proven          Hp     Infinite    0.002 s      
+[1]   register._assert_1                         proven          N      Infinite    0.004 s      
 [2]   register._assert_1:precondition1           covered         PRE           1    0.000 s      
-[3]   register._assert_2                         proven          Hp     Infinite    0.002 s      
+[3]   register._assert_2                         proven          Hp     Infinite    0.001 s      
 [4]   register._assert_2:precondition1           covered         PRE           1    0.000 s      
-[5]   register._assert_3                         cex             PRE           1    0.000 s      
+[5]   register._assert_3                         proven          N      Infinite    0.004 s      
 [6]   register._assert_3:precondition1           covered         PRE           1    0.000 s      
-[7]   register._assert_4                         cex             Hp            2    0.002 s      
-[8]   register._assert_4:precondition1           covered         Hp            1    0.001 s      
+[7]   register._assert_4                         proven          PRE    Infinite    0.000 s      
+[8]   register._assert_4:precondition1           covered         PRE           1    0.000 s      
 [9]   register._assert_4:precondition2           covered         PRE           1    0.000 s      
 [10]  register._assert_4:precondition3           covered         PRE           1    0.000 s      
 [11]  register._assert_4:precondition4           covered         PRE           1    0.000 s      
-[12]  register._assert_5                         cex             Hp            2    0.003 s      
+[12]  register._assert_5                         cex             Hp            2    0.001 s      
 [13]  register._assert_5:precondition1           covered         PRE           1    0.000 s      
-[14]  register._assert_6                         cex             Hp            3    0.004 s      
+[14]  register._assert_6                         cex             Hp            3    0.002 s      
 [15]  register._assert_6:precondition1           covered         PRE           1    0.000 s      
 [16]  register._assert_6:precondition2           covered         PRE           1    0.000 s      
 [17]  register._assert_6:precondition3           covered         PRE           1    0.000 s      

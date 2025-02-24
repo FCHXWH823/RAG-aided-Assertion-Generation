@@ -5,7 +5,7 @@
     2022.09p001 64 bits for Linux64 3.10.0-1062.1.2.el7.x86_64
     Host Name: icpc
     User Name: master
-    Printed on: Friday, Feb21, 2025 08:15:31 PM CST
+    Printed on: Monday, Feb24, 2025 03:06:30 PM CST
     Working Directory: /home/master/RAG-aided-Assertion-Generation/Evaluation/Dataset/apb
 
 
@@ -18,9 +18,9 @@ SUMMARY
            - approved     : 0                   
            - temporary    : 0                   
           assertions      : 18                  
-           - proven       : 10                  ( 55.6% )
+           - proven       : 18                  ( 100.0% )
            - marked_proven: 0                   ( 0.0% )
-           - cex          : 8                   ( 44.4% )
+           - cex          : 0                   ( 0.0% )
            - ar_cex       : 0                   ( 0.0% )
            - undetermined : 0                   ( 0.0% )
            - unprocessed  : 0                   ( 0.0% )
@@ -61,30 +61,30 @@ RESULTS
 [17]  apb._assert_8:precondition2            covered         PRE           1    0.000 s      
 [18]  apb._assert_8:precondition3            covered         PRE           1    0.000 s      
 [19]  apb._assert_8:precondition4            covered         PRE           1    0.000 s      
-[20]  apb._assert_9                          cex             N             2    0.001 s      
+[20]  apb._assert_9                          proven          PRE    Infinite    0.000 s      
 [21]  apb._assert_9:precondition1            covered         PRE           1    0.000 s      
-[22]  apb._assert_10                         cex             N             2    0.001 s      
+[22]  apb._assert_10                         proven          PRE    Infinite    0.000 s      
 [23]  apb._assert_10:precondition1           covered         PRE           1    0.000 s      
 [24]  apb._assert_10:precondition2           covered         PRE           1    0.000 s      
 [25]  apb._assert_10:precondition3           covered         PRE           1    0.000 s      
 [26]  apb._assert_10:precondition4           covered         PRE           1    0.000 s      
-[27]  apb._assert_11                         cex             Hp            2    0.001 s      
+[27]  apb._assert_11                         proven          PRE    Infinite    0.000 s      
 [28]  apb._assert_11:precondition1           covered         PRE           1    0.000 s      
-[29]  apb._assert_12                         cex             Hp            2    0.001 s      
+[29]  apb._assert_12                         proven          PRE    Infinite    0.000 s      
 [30]  apb._assert_12:precondition1           covered         PRE           1    0.000 s      
 [31]  apb._assert_12:precondition2           covered         PRE           1    0.000 s      
 [32]  apb._assert_12:precondition3           covered         PRE           1    0.000 s      
 [33]  apb._assert_12:precondition4           covered         PRE           1    0.000 s      
-[34]  apb._assert_13                         cex             Hp            2    0.001 s      
+[34]  apb._assert_13                         proven          PRE    Infinite    0.000 s      
 [35]  apb._assert_13:precondition1           covered         PRE           1    0.000 s      
-[36]  apb._assert_14                         cex             Hp            2    0.001 s      
+[36]  apb._assert_14                         proven          PRE    Infinite    0.000 s      
 [37]  apb._assert_14:precondition1           covered         PRE           1    0.000 s      
 [38]  apb._assert_14:precondition2           covered         PRE           1    0.000 s      
 [39]  apb._assert_14:precondition3           covered         PRE           1    0.000 s      
 [40]  apb._assert_14:precondition4           covered         PRE           1    0.000 s      
-[41]  apb._assert_15                         cex             Hp            2    0.002 s      
+[41]  apb._assert_15                         proven          PRE    Infinite    0.000 s      
 [42]  apb._assert_15:precondition1           covered         PRE           1    0.000 s      
-[43]  apb._assert_16                         cex             Hp            2    0.002 s      
+[43]  apb._assert_16                         proven          PRE    Infinite    0.000 s      
 [44]  apb._assert_16:precondition1           covered         PRE           1    0.000 s      
 [45]  apb._assert_16:precondition2           covered         PRE           1    0.000 s      
 [46]  apb._assert_16:precondition3           covered         PRE           1    0.000 s      

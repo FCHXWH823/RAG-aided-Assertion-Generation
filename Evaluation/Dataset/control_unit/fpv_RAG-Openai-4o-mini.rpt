@@ -5,7 +5,7 @@
     2022.09p001 64 bits for Linux64 3.10.0-1062.1.2.el7.x86_64
     Host Name: icpc
     User Name: master
-    Printed on: Friday, Feb21, 2025 08:17:55 PM CST
+    Printed on: Monday, Feb24, 2025 03:20:51 PM CST
     Working Directory: /home/master/RAG-aided-Assertion-Generation/Evaluation/Dataset/control_unit
 
 
@@ -18,9 +18,9 @@ SUMMARY
            - approved     : 0                   
            - temporary    : 0                   
           assertions      : 12                  
-           - proven       : 10                  ( 83.3% )
+           - proven       : 12                  ( 100.0% )
            - marked_proven: 0                   ( 0.0% )
-           - cex          : 2                   ( 16.7% )
+           - cex          : 0                   ( 0.0% )
            - ar_cex       : 0                   ( 0.0% )
            - undetermined : 0                   ( 0.0% )
            - unprocessed  : 0                   ( 0.0% )
@@ -64,9 +64,9 @@ RESULTS
 [20]  control_unit._assert_8:precondition2            covered         PRE           1    0.000 s      
 [21]  control_unit._assert_8:precondition3            covered         PRE           1    0.000 s      
 [22]  control_unit._assert_8:precondition4            covered         PRE           1    0.000 s      
-[23]  control_unit._assert_9                          cex             N             2    0.001 s      
+[23]  control_unit._assert_9                          proven          PRE    Infinite    0.000 s      
 [24]  control_unit._assert_9:precondition1            covered         PRE           1    0.000 s      
-[25]  control_unit._assert_10                         cex             N             2    0.001 s      
+[25]  control_unit._assert_10                         proven          PRE    Infinite    0.000 s      
 [26]  control_unit._assert_10:precondition1           covered         PRE           1    0.000 s      
 [27]  control_unit._assert_10:precondition2           covered         PRE           1    0.000 s      
 [28]  control_unit._assert_10:precondition3           covered         PRE           1    0.000 s      

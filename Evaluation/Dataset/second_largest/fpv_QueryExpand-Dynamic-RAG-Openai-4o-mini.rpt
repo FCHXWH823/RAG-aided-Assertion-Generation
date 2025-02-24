@@ -5,7 +5,7 @@
     2022.09p001 64 bits for Linux64 3.10.0-1062.1.2.el7.x86_64
     Host Name: icpc
     User Name: master
-    Printed on: Friday, Feb21, 2025 08:43:16 PM CST
+    Printed on: Tuesday, Feb25, 2025 12:03:09 AM CST
     Working Directory: /home/master/RAG-aided-Assertion-Generation/Evaluation/Dataset/second_largest
 
 
@@ -42,6 +42,6 @@ RESULTS
 -------------------------------------------------------------------------------------
 
 ---[ <embedded> ]--------------------------------------------------------------------
-[1]   second_largest._assert_1           proven          Hp     Infinite    0.010 s      
-[2]   second_largest._assert_2           proven          Hp     Infinite    0.010 s      
+[1]   second_largest._assert_1           proven          Hp     Infinite    0.001 s      
+[2]   second_largest._assert_2           proven          Hp     Infinite    0.001 s      
 [3]   second_largest._assert_3           proven          PRE    Infinite    0.000 s      

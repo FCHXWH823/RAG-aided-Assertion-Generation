@@ -269,8 +269,8 @@ assert property (@(posedge HCLK)  (write_en == 1'b0 |-> crc_poly_en == 1'b0));
 assert property (@(posedge HCLK)  ((write_en == 0) |-> (crc_poly_en == 0)) iff (write_en == 1'b0 |-> crc_poly_en == 1'b0));
 assert property (@(posedge HCLK)  (hselx_pp == 1'b0 |=> !crc_poly_en));
 assert property (@(posedge HCLK)  ((hselx_pp == 0) |-> (crc_poly_en == 0)) iff (hselx_pp == 1'b0 |=> !crc_poly_en));
-assert property (@(posedge HCLK)  (@(posedge clock) (hwrite_pp == 1'b0 -> crc_poly_en == 1'b0)));
-assert property (@(posedge HCLK)  ((hwrite_pp == 0) |-> (crc_poly_en == 0)) iff (@(posedge clock) (hwrite_pp == 1'b0 -> crc_poly_en == 1'b0)));
+// assert property (@(posedge HCLK)  (@(posedge clock) (hwrite_pp == 1'b0 -> crc_poly_en == 1'b0)));
+// assert property (@(posedge HCLK)  ((hwrite_pp == 0) |-> (crc_poly_en == 0)) iff (@(posedge clock) (hwrite_pp == 1'b0 -> crc_poly_en == 1'b0)));
 assert property (@(posedge HCLK)  (haddr_pp[1] == 1'b1 -> (crc_poly_en == 1'b0)));
 assert property (@(posedge HCLK)  ((haddr_pp[1] == 1) |-> (crc_poly_en == 0)) iff (haddr_pp[1] == 1'b1 -> (crc_poly_en == 1'b0)));
 

@@ -5,7 +5,7 @@
     2022.09p001 64 bits for Linux64 3.10.0-1062.1.2.el7.x86_64
     Host Name: icpc
     User Name: master
-    Printed on: Friday, Feb21, 2025 08:56:45 PM CST
+    Printed on: Tuesday, Feb25, 2025 12:28:58 AM CST
     Working Directory: /home/master/RAG-aided-Assertion-Generation/Evaluation/Dataset/SEVEN
 
 
@@ -42,13 +42,13 @@ RESULTS
 ------------------------------------------------------------------------------------------
 
 ---[ <embedded> ]-------------------------------------------------------------------------
-[1]   SEVEN._assert_1                         proven          Tri         (0)    1.478 s      
-[2]   SEVEN._assert_2                         proven          Tri         (0)    1.632 s      
+[1]   SEVEN._assert_1                         proven          Tri         (0)    1.016 s      
+[2]   SEVEN._assert_2                         proven          Tri         (0)    0.992 s      
 [3]   SEVEN._assert_3                         cex             PRE           1    0.000 s      
-[4]   SEVEN._assert_4                         cex             Ht     251 + 502   0.583 s      
-[5]   SEVEN._assert_4:precondition1           covered         Hp          251    0.140 s      
-[6]   SEVEN._assert_4:precondition2           covered         Hp          251    0.140 s      
-[7]   SEVEN._assert_5                         cex             Hp          251    0.140 s      
-[8]   SEVEN._assert_6                         cex             Ht     502 + 502   1.532 s      
+[4]   SEVEN._assert_4                         cex             Ht     251 + 502   0.888 s      
+[5]   SEVEN._assert_4:precondition1           covered         Hp          251    0.066 s      
+[6]   SEVEN._assert_4:precondition2           covered         Hp          251    0.066 s      
+[7]   SEVEN._assert_5                         cex             Hp          251    0.066 s      
+[8]   SEVEN._assert_6                         cex             Ht     502 + 502   0.969 s      
 [9]   SEVEN._assert_6:precondition1           covered         PRE           1    0.000 s      
 [10]  SEVEN._assert_6:precondition2           covered         PRE           1    0.000 s      

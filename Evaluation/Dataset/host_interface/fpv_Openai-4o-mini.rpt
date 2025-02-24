@@ -5,7 +5,7 @@
     2022.09p001 64 bits for Linux64 3.10.0-1062.1.2.el7.x86_64
     Host Name: icpc
     User Name: master
-    Printed on: Friday, Feb21, 2025 08:25:13 PM CST
+    Printed on: Monday, Feb24, 2025 03:59:34 PM CST
     Working Directory: /home/master/RAG-aided-Assertion-Generation/Evaluation/Dataset/host_interface
 
 
@@ -13,21 +13,21 @@
 SUMMARY
 ==============================================================
     Total Tasks           : 1
-    Total Properties      : 101
+    Total Properties      : 87
           assumptions     : 0                   
            - approved     : 0                   
            - temporary    : 0                   
-          assertions      : 34                  
-           - proven       : 22                  ( 64.7% )
+          assertions      : 30                  
+           - proven       : 24                  ( 80.0% )
            - marked_proven: 0                   ( 0.0% )
-           - cex          : 12                  ( 35.3% )
+           - cex          : 6                   ( 20.0% )
            - ar_cex       : 0                   ( 0.0% )
            - undetermined : 0                   ( 0.0% )
            - unprocessed  : 0                   ( 0.0% )
            - error        : 0                   ( 0.0% )
-          covers          : 67                  
+          covers          : 57                  
            - unreachable  : 0                   ( 0.0% )
-           - covered      : 67                  ( 100.0% )
+           - covered      : 57                  ( 100.0% )
            - ar_covered   : 0                   ( 0.0% )
            - undetermined : 0                   ( 0.0% )
            - unprocessed  : 0                   ( 0.0% )
@@ -45,26 +45,26 @@ RESULTS
 [1]   host_interface._assert_1                          proven          PRE    Infinite    0.000 s      
 [2]   host_interface._assert_1:precondition1            covered         PRE           1    0.000 s      
 [3]   host_interface._assert_2                          proven          N      Infinite    0.001 s      
-[4]   host_interface._assert_2:precondition1            covered         N             2    0.001 s      
-[5]   host_interface._assert_3                          proven          N      Infinite    0.000 s      
+[4]   host_interface._assert_2:precondition1            covered         Hp            2    0.004 s      
+[5]   host_interface._assert_3                          proven          Hp     Infinite    0.001 s      
 [6]   host_interface._assert_3:precondition1            covered         PRE           1    0.000 s      
 [7]   host_interface._assert_4                          proven          PRE    Infinite    0.000 s      
 [8]   host_interface._assert_4:precondition1            covered         PRE           1    0.000 s      
 [9]   host_interface._assert_5                          proven          PRE    Infinite    0.000 s      
-[10]  host_interface._assert_5:precondition1            covered         N             2    0.001 s      
+[10]  host_interface._assert_5:precondition1            covered         Hp            2    0.005 s      
 [11]  host_interface._assert_6                          proven          PRE    Infinite    0.000 s      
 [12]  host_interface._assert_6:precondition1            covered         PRE           1    0.000 s      
-[13]  host_interface._assert_7                          proven          N      Infinite    0.000 s      
+[13]  host_interface._assert_7                          proven          Hp     Infinite    0.002 s      
 [14]  host_interface._assert_7:precondition1            covered         PRE           1    0.000 s      
-[15]  host_interface._assert_8                          proven          N      Infinite    0.000 s      
+[15]  host_interface._assert_8                          proven          Hp     Infinite    0.002 s      
 [16]  host_interface._assert_8:precondition1            covered         PRE           1    0.000 s      
 [17]  host_interface._assert_9                          proven          PRE    Infinite    0.000 s      
 [18]  host_interface._assert_9:precondition1            covered         PRE           1    0.000 s      
-[19]  host_interface._assert_10                         proven          N      Infinite    0.001 s      
+[19]  host_interface._assert_10                         proven          Hp     Infinite    0.003 s      
 [20]  host_interface._assert_10:precondition1           covered         PRE           1    0.000 s      
-[21]  host_interface._assert_11                         proven          N      Infinite    0.000 s      
+[21]  host_interface._assert_11                         proven          Hp     Infinite    0.003 s      
 [22]  host_interface._assert_11:precondition1           covered         PRE           1    0.000 s      
-[23]  host_interface._assert_12                         proven          N      Infinite    0.000 s      
+[23]  host_interface._assert_12                         proven          Hp     Infinite    0.003 s      
 [24]  host_interface._assert_12:precondition1           covered         PRE           1    0.000 s      
 [25]  host_interface._assert_13                         proven          PRE    Infinite    0.000 s      
 [26]  host_interface._assert_13:precondition1           covered         PRE           1    0.000 s      
@@ -74,72 +74,58 @@ RESULTS
 [30]  host_interface._assert_14:precondition3           covered         PRE           1    0.000 s      
 [31]  host_interface._assert_14:precondition4           covered         PRE           1    0.000 s      
 [32]  host_interface._assert_15                         proven          N      Infinite    0.001 s      
-[33]  host_interface._assert_15:precondition1           covered         N             2    0.001 s      
+[33]  host_interface._assert_15:precondition1           covered         Hp            2    0.004 s      
 [34]  host_interface._assert_16                         proven          PRE    Infinite    0.000 s      
 [35]  host_interface._assert_16:precondition1           covered         PRE           1    0.000 s      
-[36]  host_interface._assert_16:precondition2           covered         N             2    0.001 s      
+[36]  host_interface._assert_16:precondition2           covered         Hp            2    0.004 s      
 [37]  host_interface._assert_16:precondition3           covered         PRE           1    0.000 s      
-[38]  host_interface._assert_16:precondition4           covered         N             2    0.001 s      
-[39]  host_interface._assert_17                         cex             N             2    0.001 s      
+[38]  host_interface._assert_16:precondition4           covered         Hp            2    0.004 s      
+[39]  host_interface._assert_17                         proven          Hp     Infinite    0.002 s      
 [40]  host_interface._assert_17:precondition1           covered         PRE           1    0.000 s      
-[41]  host_interface._assert_18                         cex             N             2    0.001 s      
-[42]  host_interface._assert_18:precondition1           covered         N         1 - 2    0.001 s      
+[41]  host_interface._assert_18                         proven          PRE    Infinite    0.000 s      
+[42]  host_interface._assert_18:precondition1           covered         PRE           1    0.000 s      
 [43]  host_interface._assert_18:precondition2           covered         PRE           1    0.000 s      
 [44]  host_interface._assert_18:precondition3           covered         PRE           1    0.000 s      
 [45]  host_interface._assert_18:precondition4           covered         PRE           1    0.000 s      
-[46]  host_interface._assert_19                         proven          PRE    Infinite    0.000 s      
+[46]  host_interface._assert_19                         cex             Hp            2    0.005 s      
 [47]  host_interface._assert_19:precondition1           covered         PRE           1    0.000 s      
-[48]  host_interface._assert_20                         proven          PRE    Infinite    0.000 s      
-[49]  host_interface._assert_20:precondition1           covered         PRE           1    0.000 s      
+[48]  host_interface._assert_20                         cex             Hp            2    0.005 s      
+[49]  host_interface._assert_20:precondition1           covered         Hp            2    0.004 s      
 [50]  host_interface._assert_20:precondition2           covered         PRE           1    0.000 s      
 [51]  host_interface._assert_20:precondition3           covered         PRE           1    0.000 s      
 [52]  host_interface._assert_20:precondition4           covered         PRE           1    0.000 s      
 [53]  host_interface._assert_21                         proven          PRE    Infinite    0.000 s      
-[54]  host_interface._assert_21:precondition1           covered         N             2    0.001 s      
+[54]  host_interface._assert_21:precondition1           covered         PRE           1    0.000 s      
 [55]  host_interface._assert_22                         proven          PRE    Infinite    0.000 s      
 [56]  host_interface._assert_22:precondition1           covered         PRE           1    0.000 s      
-[57]  host_interface._assert_22:precondition2           covered         N             2    0.001 s      
+[57]  host_interface._assert_22:precondition2           covered         PRE           1    0.000 s      
 [58]  host_interface._assert_22:precondition3           covered         PRE           1    0.000 s      
-[59]  host_interface._assert_22:precondition4           covered         N             2    0.001 s      
-[60]  host_interface._assert_23                         proven          PRE    Infinite    0.000 s      
+[59]  host_interface._assert_22:precondition4           covered         PRE           1    0.000 s      
+[60]  host_interface._assert_23                         proven          Hp     Infinite    0.002 s      
 [61]  host_interface._assert_23:precondition1           covered         PRE           1    0.000 s      
 [62]  host_interface._assert_24                         proven          PRE    Infinite    0.000 s      
 [63]  host_interface._assert_24:precondition1           covered         PRE           1    0.000 s      
 [64]  host_interface._assert_24:precondition2           covered         PRE           1    0.000 s      
 [65]  host_interface._assert_24:precondition3           covered         PRE           1    0.000 s      
 [66]  host_interface._assert_24:precondition4           covered         PRE           1    0.000 s      
-[67]  host_interface._assert_25                         cex             N             2    0.001 s      
+[67]  host_interface._assert_25                         proven          PRE    Infinite    0.000 s      
 [68]  host_interface._assert_25:precondition1           covered         PRE           1    0.000 s      
-[69]  host_interface._assert_26                         cex             N             2    0.001 s      
-[70]  host_interface._assert_26:precondition1           covered         N             2    0.001 s      
+[69]  host_interface._assert_26                         proven          PRE    Infinite    0.000 s      
+[70]  host_interface._assert_26:precondition1           covered         PRE           1    0.000 s      
 [71]  host_interface._assert_26:precondition2           covered         PRE           1    0.000 s      
 [72]  host_interface._assert_26:precondition3           covered         PRE           1    0.000 s      
 [73]  host_interface._assert_26:precondition4           covered         PRE           1    0.000 s      
-[74]  host_interface._assert_27                         cex             Hp            3    0.006 s      
+[74]  host_interface._assert_27                         cex             Hp            2    0.008 s      
 [75]  host_interface._assert_27:precondition1           covered         PRE           1    0.000 s      
-[76]  host_interface._assert_28                         cex             Hp            3    0.007 s      
+[76]  host_interface._assert_28                         cex             Hp            2    0.008 s      
 [77]  host_interface._assert_28:precondition1           covered         PRE           1    0.000 s      
 [78]  host_interface._assert_28:precondition2           covered         PRE           1    0.000 s      
 [79]  host_interface._assert_28:precondition3           covered         PRE           1    0.000 s      
 [80]  host_interface._assert_28:precondition4           covered         PRE           1    0.000 s      
-[81]  host_interface._assert_29                         cex             Hp            2    0.004 s      
+[81]  host_interface._assert_29                         cex             Hp            2    0.008 s      
 [82]  host_interface._assert_29:precondition1           covered         PRE           1    0.000 s      
-[83]  host_interface._assert_30                         cex             Hp            2    0.004 s      
-[84]  host_interface._assert_30:precondition1           covered         N             2    0.001 s      
+[83]  host_interface._assert_30                         cex             Hp            2    0.008 s      
+[84]  host_interface._assert_30:precondition1           covered         PRE           1    0.000 s      
 [85]  host_interface._assert_30:precondition2           covered         PRE           1    0.000 s      
 [86]  host_interface._assert_30:precondition3           covered         PRE           1    0.000 s      
 [87]  host_interface._assert_30:precondition4           covered         PRE           1    0.000 s      
-[88]  host_interface._assert_31                         cex             Hp            2    0.005 s      
-[89]  host_interface._assert_31:precondition1           covered         PRE           1    0.000 s      
-[90]  host_interface._assert_32                         cex             Hp            2    0.005 s      
-[91]  host_interface._assert_32:precondition1           covered         PRE           1    0.000 s      
-[92]  host_interface._assert_32:precondition2           covered         PRE           1    0.000 s      
-[93]  host_interface._assert_32:precondition3           covered         PRE           1    0.000 s      
-[94]  host_interface._assert_32:precondition4           covered         PRE           1    0.000 s      
-[95]  host_interface._assert_33                         cex             Hp            2    0.004 s      
-[96]  host_interface._assert_33:precondition1           covered         PRE           1    0.000 s      
-[97]  host_interface._assert_34                         cex             Hp            2    0.004 s      
-[98]  host_interface._assert_34:precondition1           covered         PRE           1    0.000 s      
-[99]  host_interface._assert_34:precondition2           covered         PRE           1    0.000 s      
-[100] host_interface._assert_34:precondition3           covered         PRE           1    0.000 s      
-[101] host_interface._assert_34:precondition4           covered         PRE           1    0.000 s      

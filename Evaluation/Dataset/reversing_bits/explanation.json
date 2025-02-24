@@ -12,6 +12,6 @@
     "Logical Operators Explanation": {
       "==": "equal"
     },
-    "Assertion Explaination": "reversed output bus signal's selected bit equals input bus signal's selected bit"
+    "Assertion Explaination": "reversed output bus signal's first bit equals input bus signal's DATA_WIDTH-1-th bit"
   }
 }

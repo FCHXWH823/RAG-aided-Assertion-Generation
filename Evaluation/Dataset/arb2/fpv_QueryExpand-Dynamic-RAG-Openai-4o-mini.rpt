@@ -5,7 +5,7 @@
     2022.09p001 64 bits for Linux64 3.10.0-1062.1.2.el7.x86_64
     Host Name: icpc
     User Name: master
-    Printed on: Friday, Feb21, 2025 08:16:30 PM CST
+    Printed on: Monday, Feb24, 2025 03:15:39 PM CST
     Working Directory: /home/master/RAG-aided-Assertion-Generation/Evaluation/Dataset/arb2
 
 
@@ -56,7 +56,7 @@ RESULTS
 [12]  arb2._assert_6:precondition1            covered         Hp            2    0.005 s      
 [13]  arb2._assert_7                          proven          Hp     Infinite    0.002 s      
 [14]  arb2._assert_7:precondition1            covered         PRE           1    0.000 s      
-[15]  arb2._assert_8                          proven          Hp     Infinite    0.002 s      
+[15]  arb2._assert_8                          proven          Hp     Infinite    0.003 s      
 [16]  arb2._assert_8:precondition1            covered         Hp            1    0.004 s      
 [17]  arb2._assert_9                          cex             Hp            3    0.006 s      
 [18]  arb2._assert_9:precondition1            covered         Hp            2    0.005 s      

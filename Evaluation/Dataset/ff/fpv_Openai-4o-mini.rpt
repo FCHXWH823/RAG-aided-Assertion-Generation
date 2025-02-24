@@ -5,7 +5,7 @@
     2022.09p001 64 bits for Linux64 3.10.0-1062.1.2.el7.x86_64
     Host Name: icpc
     User Name: master
-    Printed on: Friday, Feb21, 2025 08:20:17 PM CST
+    Printed on: Monday, Feb24, 2025 03:41:55 PM CST
     Working Directory: /home/master/RAG-aided-Assertion-Generation/Evaluation/Dataset/ff
 
 
@@ -13,7 +13,7 @@
 SUMMARY
 ==============================================================
     Total Tasks           : 1
-    Total Properties      : 11
+    Total Properties      : 9
           assumptions     : 0                   
            - approved     : 0                   
            - temporary    : 0                   
@@ -25,9 +25,9 @@ SUMMARY
            - undetermined : 0                   ( 0.0% )
            - unprocessed  : 0                   ( 0.0% )
            - error        : 0                   ( 0.0% )
-          covers          : 7                   
+          covers          : 5                   
            - unreachable  : 0                   ( 0.0% )
-           - covered      : 7                   ( 100.0% )
+           - covered      : 5                   ( 100.0% )
            - ar_covered   : 0                   ( 0.0% )
            - undetermined : 0                   ( 0.0% )
            - unprocessed  : 0                   ( 0.0% )
@@ -42,14 +42,12 @@ RESULTS
 ---------------------------------------------------------------------------------------
 
 ---[ <embedded> ]----------------------------------------------------------------------
-[1]   ff._assert_1                         proven          Hp     Infinite    0.001 s      
+[1]   ff._assert_1                         proven          Hp     Infinite    0.000 s      
 [2]   ff._assert_1:precondition1           covered         PRE           1    0.000 s      
-[3]   ff._assert_2                         proven          Hp     Infinite    0.002 s      
+[3]   ff._assert_2                         proven          Hp     Infinite    0.001 s      
 [4]   ff._assert_2:precondition1           covered         PRE           1    0.000 s      
 [5]   ff._assert_3                         cex             PRE           1    0.000 s      
-[6]   ff._assert_3:precondition1           covered         PRE           1    0.000 s      
-[7]   ff._assert_4                         cex             Hp            2    0.002 s      
-[8]   ff._assert_4:precondition1           covered         Hp            1    0.001 s      
-[9]   ff._assert_4:precondition2           covered         PRE           1    0.000 s      
-[10]  ff._assert_4:precondition3           covered         PRE           1    0.000 s      
-[11]  ff._assert_4:precondition4           covered         PRE           1    0.000 s      
+[6]   ff._assert_4                         cex             PRE           1    0.000 s      
+[7]   ff._assert_4:precondition1           covered         Hp            2    0.001 s      
+[8]   ff._assert_4:precondition2           covered         PRE           1    0.000 s      
+[9]   ff._assert_4:precondition3           covered         PRE           1    0.000 s      

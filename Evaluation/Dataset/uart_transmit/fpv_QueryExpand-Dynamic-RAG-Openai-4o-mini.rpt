@@ -5,7 +5,7 @@
     2022.09p001 64 bits for Linux64 3.10.0-1062.1.2.el7.x86_64
     Host Name: icpc
     User Name: master
-    Printed on: Friday, Feb21, 2025 08:46:55 PM CST
+    Printed on: Tuesday, Feb25, 2025 12:10:21 AM CST
     Working Directory: /home/master/RAG-aided-Assertion-Generation/Evaluation/Dataset/uart_transmit
 
 
@@ -42,7 +42,7 @@ RESULTS
 --------------------------------------------------------------------------------------------------
 
 ---[ <embedded> ]---------------------------------------------------------------------------------
-[1]   uart_transmit._assert_1                         proven          N          (14)    0.043 s      
+[1]   uart_transmit._assert_1                         proven          N          (14)    0.002 s      
 [2]   uart_transmit._assert_2                         cex             PRE           1    0.000 s      
 [3]   uart_transmit._assert_3                         cex             N         9 + 1    0.001 s      
 [4]   uart_transmit._assert_3:precondition1           covered         PRE           1    0.000 s      

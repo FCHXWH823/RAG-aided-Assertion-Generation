@@ -5,7 +5,7 @@
     2022.09p001 64 bits for Linux64 3.10.0-1062.1.2.el7.x86_64
     Host Name: icpc
     User Name: master
-    Printed on: Friday, Feb21, 2025 08:18:23 PM CST
+    Printed on: Monday, Feb24, 2025 03:25:01 PM CST
     Working Directory: /home/master/RAG-aided-Assertion-Generation/Evaluation/Dataset/delay
 
 
@@ -18,9 +18,9 @@ SUMMARY
            - approved     : 0                   
            - temporary    : 0                   
           assertions      : 7                   
-           - proven       : 5                   ( 71.4% )
+           - proven       : 3                   ( 42.9% )
            - marked_proven: 0                   ( 0.0% )
-           - cex          : 2                   ( 28.6% )
+           - cex          : 4                   ( 57.1% )
            - ar_cex       : 0                   ( 0.0% )
            - undetermined : 0                   ( 0.0% )
            - unprocessed  : 0                   ( 0.0% )
@@ -42,15 +42,15 @@ RESULTS
 ------------------------------------------------------------------------------------------
 
 ---[ <embedded> ]-------------------------------------------------------------------------
-[1]   delay._assert_1                         proven          Hp     Infinite    0.092 s      
-[2]   delay._assert_2                         proven          N      Infinite    0.017 s      
-[3]   delay._assert_3                         proven          Hp     Infinite    0.003 s      
+[1]   delay._assert_1                         proven          Hp     Infinite    0.113 s      
+[2]   delay._assert_2                         proven          N      Infinite    0.028 s      
+[3]   delay._assert_3                         proven          Hp     Infinite    0.008 s      
 [4]   delay._assert_3:precondition1           covered         PRE           1    0.000 s      
 [5]   delay._assert_4                         cex             Ht            5    0.001 s      
 [6]   delay._assert_5                         cex             Ht            5    0.001 s      
-[7]   delay._assert_6                         proven          Hp     Infinite    0.003 s      
+[7]   delay._assert_6                         cex             Ht            5    0.002 s      
 [8]   delay._assert_6:precondition1           covered         PRE           1    0.000 s      
-[9]   delay._assert_7                         proven          PRE    Infinite    0.000 s      
+[9]   delay._assert_7                         cex             Ht            6    0.003 s      
 [10]  delay._assert_7:precondition1           covered         PRE           1    0.000 s      
 [11]  delay._assert_7:precondition2           covered         PRE           1    0.000 s      
 [12]  delay._assert_7:precondition3           covered         PRE           1    0.000 s      

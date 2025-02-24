@@ -5,7 +5,7 @@
     2022.09p001 64 bits for Linux64 3.10.0-1062.1.2.el7.x86_64
     Host Name: icpc
     User Name: master
-    Printed on: Friday, Feb21, 2025 08:49:07 PM CST
+    Printed on: Tuesday, Feb25, 2025 12:13:32 AM CST
     Working Directory: /home/master/RAG-aided-Assertion-Generation/Evaluation/Dataset/uartTrans
 
 
@@ -43,20 +43,20 @@ RESULTS
 
 ---[ <embedded> ]------------------------------------------------------------------------------
 [1]   uartTrans._assert_1                          proven          PRE    Infinite    0.000 s      
-[2]   uartTrans._assert_1:precondition1            covered         N             2    0.002 s      
+[2]   uartTrans._assert_1:precondition1            covered         N             2    0.001 s      
 [3]   uartTrans._assert_2                          proven          PRE    Infinite    0.000 s      
 [4]   uartTrans._assert_2:precondition1            covered         PRE           1    0.000 s      
-[5]   uartTrans._assert_3                          proven          N      Infinite    0.001 s      
+[5]   uartTrans._assert_3                          proven          N      Infinite    0.000 s      
 [6]   uartTrans._assert_3:precondition1            covered         PRE           2    0.000 s      
 [7]   uartTrans._assert_4                          proven          PRE    Infinite    0.000 s      
 [8]   uartTrans._assert_4:precondition1            covered         PRE           1    0.000 s      
-[9]   uartTrans._assert_5                          cex             PRE           1    0.000 s      
-[10]  uartTrans._assert_5:precondition1            covered         PRE           1    0.000 s      
-[11]  uartTrans._assert_6                          cex             PRE           1    0.000 s      
-[12]  uartTrans._assert_6:precondition1            covered         N             2    0.002 s      
-[13]  uartTrans._assert_6:precondition2            covered         N             2    0.002 s      
+[9]   uartTrans._assert_5                          cex             N             2    0.001 s      
+[10]  uartTrans._assert_5:precondition1            covered         N             1    0.001 s      
+[11]  uartTrans._assert_6                          cex             N             2    0.001 s      
+[12]  uartTrans._assert_6:precondition1            covered         PRE           1    0.000 s      
+[13]  uartTrans._assert_6:precondition2            covered         N             2    0.001 s      
 [14]  uartTrans._assert_6:precondition3            covered         PRE           1    0.000 s      
-[15]  uartTrans._assert_6:precondition4            covered         PRE           1    0.000 s      
+[15]  uartTrans._assert_6:precondition4            covered         N             1    0.001 s      
 [16]  uartTrans._assert_7                          proven          N      Infinite    0.001 s      
 [17]  uartTrans._assert_7:precondition1            covered         PRE           2    0.000 s      
 [18]  uartTrans._assert_8                          proven          PRE    Infinite    0.000 s      

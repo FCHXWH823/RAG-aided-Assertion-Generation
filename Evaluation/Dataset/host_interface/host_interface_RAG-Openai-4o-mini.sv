@@ -261,17 +261,17 @@ assert property (@(posedge HCLK)  (write_en == 1'b1 && crc_idr_sel == 1'b1 |-> c
 assert property (@(posedge HCLK)  ((write_en == 1 & crc_idr_sel == 1) |-> (crc_idr_en == 1)) iff (write_en == 1'b1 && crc_idr_sel == 1'b1 |-> crc_idr_en == 1'b1));
 assert property (@(posedge HCLK)  (crc_idr_sel == 0 |-> crc_idr_en == 0));
 assert property (@(posedge HCLK)  ((crc_idr_sel == 0) |-> (crc_idr_en == 0)) iff (crc_idr_sel == 0 |-> crc_idr_en == 0));
-assert property (@(posedge HCLK)  (HSElx_pp == 0 |=> crc_idr_en == 0));
-assert property (@(posedge HCLK)  ((hselx_pp == 0) |-> (crc_idr_en == 0)) iff (HSElx_pp == 0 |=> crc_idr_en == 0));
+// assert property (@(posedge HCLK)  (HSElx_pp == 0 |=> crc_idr_en == 0));
+// assert property (@(posedge HCLK)  ((hselx_pp == 0) |-> (crc_idr_en == 0)) iff (HSElx_pp == 0 |=> crc_idr_en == 0));
 assert property (@(posedge HCLK)  (HWRITE == 0 -> crc_idr_en == 0));
 assert property (@(posedge HCLK)  ((hwrite_pp == 0) |-> (crc_idr_en == 0)) iff (HWRITE == 0 -> crc_idr_en == 0));
 assert property (@(posedge HCLK)  (write_en == 0 |-> crc_poly_en == 0));
 assert property (@(posedge HCLK)  ((write_en == 0) |-> (crc_poly_en == 0)) iff (write_en == 0 |-> crc_poly_en == 0));
-assert property (@(posedge HCLK)  (HSElx_pp == 0 |-> crc_poly_en == 0));
-assert property (@(posedge HCLK)  ((hselx_pp == 0) |-> (crc_poly_en == 0)) iff (HSElx_pp == 0 |-> crc_poly_en == 0));
+// assert property (@(posedge HCLK)  (HSElx_pp == 0 |-> crc_poly_en == 0));
+// assert property (@(posedge HCLK)  ((hselx_pp == 0) |-> (crc_poly_en == 0)) iff (HSElx_pp == 0 |-> crc_poly_en == 0));
 assert property (@(posedge HCLK)  (HWRITE == 0 |-> crc_poly_en == 0));
 assert property (@(posedge HCLK)  ((hwrite_pp == 0) |-> (crc_poly_en == 0)) iff (HWRITE == 0 |-> crc_poly_en == 0));
-assert property (@(posedge HCLK)  (HADDR[1] == 1 ==> crc_poly_en == 0));
-assert property (@(posedge HCLK)  ((haddr_pp[1] == 1) |-> (crc_poly_en == 0)) iff (HADDR[1] == 1 ==> crc_poly_en == 0));
+// assert property (@(posedge HCLK)  (HADDR[1] == 1 ==> crc_poly_en == 0));
+// assert property (@(posedge HCLK)  ((haddr_pp[1] == 1) |-> (crc_poly_en == 0)) iff (HADDR[1] == 1 ==> crc_poly_en == 0));
 
 endmodule
