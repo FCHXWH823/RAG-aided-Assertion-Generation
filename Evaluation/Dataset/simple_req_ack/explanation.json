@@ -14,6 +14,6 @@
   "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE",
   "##2": "a delay operator indicating that the condition following it should occur after 2 clock cycles"
 },
-"Assertion Explaination": "if request signal is detected to have a rising edge then after a delay of 2 clock cycles the acknowledge signal is detected to have a rising edge"
+"Assertion Explaination": "when request signal is detected to have a rising edge, then after a delay of 2 clock cycles the acknowledge signal is detected to have a rising edge"
 }
 }

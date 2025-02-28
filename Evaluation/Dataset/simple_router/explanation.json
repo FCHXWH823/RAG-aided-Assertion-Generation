@@ -40,7 +40,7 @@
       "==": "equal",
       "|": "or"
     },
-    "Assertion Explaination": "if the data input enable signal is asserted and the 2-bit address signal equals 0 then the data output signal for address 0 equals the data input signal and the data output signals for addresses 1, 2, and 3 are equal to zero"
+    "Assertion Explaination": "when the data input enable signal is asserted and the address signal equals 0, then the data output signal for address 0 equals the data input signal and the data output signals for addresses 1, 2, and 3 are equal to zero from the current clock cycle"
   },
   "Assertion 3": {
     "clock signal condition": "",
@@ -63,7 +63,7 @@
       "==": "equal",
       "|": "or"
     },
-    "Assertion Explaination": "if the data input enable signal is asserted and the 2-bit address signal equals 1 then the data output signal for address 1 equals the data input signal and the data output signals for addresses 0, 2, and 3 are equal to zero"
+    "Assertion Explaination": "when the data input enable signal is asserted and the address signal equals 1, then the data output signal for address 1 equals the data input signal and the data output signals for addresses 0, 2, and 3 are equal to zero from the current clock cycle"
   },
   "Assertion 4": {
     "clock signal condition": "",
@@ -86,7 +86,7 @@
       "==": "equal",
       "|": "or"
     },
-    "Assertion Explaination": "if the data input enable signal is asserted and the 2-bit address signal equals 2 then the data output signal for address 2 equals the data input signal and the data output signals for addresses 0, 1, and 3 are equal to zero"
+    "Assertion Explaination": "when the data input enable signal is asserted and the address signal equals 2, then the data output signal for address 2 equals the data input signal and the data output signals for addresses 0, 1, and 3 are equal to zero from the current clock cycle"
   },
   "Assertion 5": {
     "clock signal condition": "",
@@ -109,6 +109,6 @@
       "==": "equal",
       "|": "or"
     },
-    "Assertion Explaination": "if the data input enable signal is asserted and the 2-bit address signal equals 3 then the data output signal for address 3 equals the data input signal and the data output signals for addresses 0, 1, and 2 are equal to zero"
+    "Assertion Explaination": "when the data input enable signal is asserted and the address signal equals 3, then the data output signal for address 3 equals the data input signal and the data output signals for addresses 0, 1, and 2 are equal to zero from the current clock cycle"
   }
 }

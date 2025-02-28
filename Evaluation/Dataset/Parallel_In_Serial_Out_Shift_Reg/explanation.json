@@ -16,6 +16,6 @@
       "&": "and",
       "==": "equal"
     },
-    "Assertion Explaination": "if valid flag register is reset (0), or if valid flag register is set (1) and the least significant bit of the register that captures and shifts the input data equals the serial output of the shift register"
+    "Assertion Explaination": "when valid flag register is reset (0), valid flag register is set (1) and the first bit of the register that captures and shifts the input data equals the output signal"
   }
 }

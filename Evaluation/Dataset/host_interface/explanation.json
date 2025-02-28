@@ -13,7 +13,7 @@
     "==": "equal",
     "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"
   },
-  "Assertion Explaination": "if signal to control sampling of bus equals 1 then HREADY signal outputed to Master equals 1 SINCE THE SAME CLOCK CYCLE"
+  "Assertion Explaination": "when signal to control sampling of bus equals 1, then HREADY signal outputed to Master equals 1 from the current clock cycle"
 },
 "Assertion 2": {
   "clock signal condition": "@(posedge HCLK)",
@@ -31,7 +31,7 @@
     "&": "logical and",
     "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"
   },
-  "Assertion Explaination": "if reading operation request to CRC_DR register equals 1 and read_wait equals 1 then HREADY signal outputed to Master equals 0 SINCE THE SAME CLOCK CYCLE"
+  "Assertion Explaination": "when reading operation request to CRC_DR register equals 1 and read_wait equals 1, then HREADY signal outputed to Master equals 0 from the current clock cycle"
 },
 "Assertion 3": {
   "clock signal condition": "@(posedge HCLK)",
@@ -47,7 +47,7 @@
     "==": "equal",
     "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"
   },
-  "Assertion Explaination": "if AHB enable signal equals 0 then HREADY signal outputed to Master equals 1 SINCE THE SAME CLOCK CYCLE"
+  "Assertion Explaination": "when AHB enable signal equals 0, then HREADY signal outputed to Master equals 1 from the current clock cycle"
 },
 "Assertion 4": {
   "clock signal condition": "@(posedge HCLK)",
@@ -63,7 +63,7 @@
     "==": "equal",
     "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"
   },
-  "Assertion Explaination": "if write enable signal equals 0 then write enable for CRC_IDR register equals 0 SINCE THE SAME CLOCK CYCLE"
+  "Assertion Explaination": "when write enable signal equals 0, then write enable for CRC_IDR register equals 0 from the current clock cycle"
 },
 "Assertion 5": {
   "clock signal condition": "@(posedge HCLK)",
@@ -81,7 +81,7 @@
     "&": "logical and",
     "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"
   },
-  "Assertion Explaination": "if write enable signal equals 1 and CRC_IDR selection equals 1 then write enable for CRC_IDR register equals 1 SINCE THE SAME CLOCK CYCLE"
+  "Assertion Explaination": "when write enable signal equals 1 and CRC_IDR selection equals 1, then write enable for CRC_IDR register equals 1 from the current clock cycle"
 },
 "Assertion 6": {
   "clock signal condition": "@(posedge HCLK)",
@@ -97,7 +97,7 @@
     "==": "equal",
     "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"
   },
-  "Assertion Explaination": "if CRC_IDR selection equals 0 then write enable for CRC_IDR register equals 0 SINCE THE SAME CLOCK CYCLE"
+  "Assertion Explaination": "when CRC_IDR selection equals 0, then write enable for CRC_IDR register equals 0 from the current clock cycle"
 },
 "Assertion 7": {
   "clock signal condition": "@(posedge HCLK)",
@@ -113,7 +113,7 @@
     "==": "equal",
     "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"
   },
-  "Assertion Explaination": "if pipeline HSElx signal equals 0 then write enable for CRC_IDR register equals 0 SINCE THE SAME CLOCK CYCLE"
+  "Assertion Explaination": "when pipeline HSElx signal equals 0, then write enable for CRC_IDR register equals 0 from the current clock cycle"
 },
 "Assertion 8": {
   "clock signal condition": "@(posedge HCLK)",
@@ -129,7 +129,7 @@
     "==": "equal",
     "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"
   },
-  "Assertion Explaination": "if pipeline HWRITE signal equals 0 then write enable for CRC_IDR register equals 0 SINCE THE SAME CLOCK CYCLE"
+  "Assertion Explaination": "when pipeline HWRITE signal equals 0, then write enable for CRC_IDR register equals 0 from the current clock cycle"
 },
 "Assertion 9": {
   "clock signal condition": "@(posedge HCLK)",
@@ -145,7 +145,7 @@
     "==": "equal",
     "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"
   },
-  "Assertion Explaination": "if write enable signal equals 0 then write enable for CRC_POL register equals 0 SINCE THE SAME CLOCK CYCLE"
+  "Assertion Explaination": "when write enable signal equals 0, then write enable for CRC_POL register equals 0 from the current clock cycle"
 },
 "Assertion 10": {
   "clock signal condition": "@(posedge HCLK)",
@@ -161,7 +161,7 @@
     "==": "equal",
     "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"
   },
-  "Assertion Explaination": "if pipeline HSElx signal equals 0 then write enable for CRC_POL register equals 0 SINCE THE SAME CLOCK CYCLE"
+  "Assertion Explaination": "when pipeline HSElx signal equals 0, then write enable for CRC_POL register equals 0 from the current clock cycle"
 },
 "Assertion 11": {
   "clock signal condition": "@(posedge HCLK)",
@@ -177,7 +177,7 @@
     "==": "equal",
     "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"
   },
-  "Assertion Explaination": "if pipeline HWRITE signal equals 0 then write enable for CRC_POL register equals 0 SINCE THE SAME CLOCK CYCLE"
+  "Assertion Explaination": "when pipeline HWRITE signal equals 0, then write enable for CRC_POL register equals 0 from the current clock cycle"
 },
 "Assertion 12": {
   "clock signal condition": "@(posedge HCLK)",
@@ -193,6 +193,6 @@
     "==": "equal",
     "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"
   },
-  "Assertion Explaination": "if bit 1 of the pipeline HADDR signal equals 1 then write enable for CRC_POL register equals 0 SINCE THE SAME CLOCK CYCLE"
+  "Assertion Explaination": "when the second bit of the pipeline HADDR signal equals 1, then write enable for CRC_POL register equals 0 from the current clock cycle"
 }
 }

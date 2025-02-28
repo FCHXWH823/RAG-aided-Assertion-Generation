@@ -20,7 +20,7 @@
       "==": "equal",
       "|=>": "a non-overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if next value of the transmit register is equal to 0, then the transmit bit-stream output should be equal to 0 SINCE NEXT CLOCK CYCLE"
+    "Assertion Explaination": "when the signal holding the next value of the transmit register is equal to 0, then the transmit bit-stream output should be equal to 0 from the next clock cycle"
   },
   "Assertion 2": {
     "clock signal condition": "@(posedge clk)",
@@ -43,7 +43,7 @@
       "==": "equal",
       "|=>": "a non-overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if next value of the transmit register is equal to 1, then the transmit bit-stream output should be equal to 1 SINCE NEXT CLOCK CYCLE"
+    "Assertion Explaination": "when the signal holding the next value of the transmit register is equal to 1, then the transmit bit-stream output should be equal to 1 from the next clock cycle"
   },
   "Assertion 3": {
     "clock signal condition": "@(posedge clk)",
@@ -66,7 +66,7 @@
       "==": "equal",
       "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the least significant bit of the current state register is equal to 1, then the transmit done tick signal should be equal to 0 SINCE THE SAME CLOCK CYCLE"
+    "Assertion Explaination": "when the first bit of the current state register is equal to 1, then the transmit done tick signal should be equal to 0 from the current clock cycle"
   },
   "Assertion 4": {
     "clock signal condition": "@(posedge clk)",
@@ -89,6 +89,6 @@
       "==": "equal",
       "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the transmit start signal is equal to 0, then the transmit done tick signal should be equal to 0 SINCE THE SAME CLOCK CYCLE"
+    "Assertion Explaination": "when the transmit start signal is equal to 0, then the transmit done tick signal should be equal to 0 from the current clock cycle"
   }
 }

@@ -20,7 +20,7 @@
       "==": "equal",
       "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the FIFO receiver empty indicator equals 1 then the FIFO receiver empty output equals 1 SINCE THE SAME CLOCK CYCLE"
+    "Assertion Explaination": "when the FIFO receiver empty indicator equals 1, then the FIFO receiver empty output equals 1 from the current clock cycle"
   },
   "Assertion 2": {
     "clock signal condition": "@(posedge PCLK)",
@@ -43,7 +43,7 @@
       "==": "equal",
       "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the FIFO receiver empty indicator equals 0 then the FIFO receiver empty output equals 0 SINCE THE SAME CLOCK CYCLE"
+    "Assertion Explaination": "when the FIFO receiver empty indicator equals 0, then the FIFO receiver empty output equals 0 from the current clock cycle"
   },
   "Assertion 3": {
     "clock signal condition": "@(posedge PCLK)",
@@ -66,7 +66,7 @@
       "==": "equal",
       "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the FIFO receiver empty indicator equals 1 then the FIFO receiver empty output equals 1 SINCE THE SAME CLOCK CYCLE"
+    "Assertion Explaination": "when the FIFO receiver empty indicator equals 1, then the FIFO receiver empty output equals 1 from the current clock cycle"
   },
   "Assertion 4": {
     "clock signal condition": "@(posedge PCLK)",
@@ -89,7 +89,7 @@
       "==": "equal",
       "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the FIFO receiver empty indicator equals 0 then the FIFO receiver empty output equals 0 SINCE THE SAME CLOCK CYCLE"
+    "Assertion Explaination": "when the FIFO receiver empty indicator equals 0, then the FIFO receiver empty output equals 0 from the current clock cycle"
   },
   "Assertion 5": {
     "clock signal condition": "@(posedge PCLK)",
@@ -112,7 +112,7 @@
       "==": "equal",
       "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the second bit of the configuration register equals 0 then the error signal equals 0 SINCE THE SAME CLOCK CYCLE"
+    "Assertion Explaination": "when the second bit of the configuration register equals 0, then the error signal equals 0 from the current clock cycle"
   },
   "Assertion 6": {
     "clock signal condition": "@(posedge PCLK)",
@@ -135,7 +135,7 @@
       "==": "equal",
       "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the first bit of the configuration register equals 0 then the error signal equals 0 SINCE THE SAME CLOCK CYCLE"
+    "Assertion Explaination": "when the first bit of the configuration register equals 0, then the error signal equals 0 from the current clock cycle"
   },
   "Assertion 7": {
     "clock signal condition": "@(posedge PCLK)",
@@ -163,6 +163,6 @@
       "&": "logical and",
       "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the first bit of the configuration register equals 1 and the second bit of the configuration register equals 1 then the error signal equals 1 SINCE THE SAME CLOCK CYCLE"
+    "Assertion Explaination": "when the first bit of the configuration register equals 1 and the second bit of the configuration register equals 1, then the error signal equals 1 from the current clock cycle"
   }
 }

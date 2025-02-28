@@ -23,7 +23,7 @@
       "&": "logical and operator meaning that the conditions on both sides must hold",
       "|": "logical or operator meaning that at least one of the conditions must hold"
     },
-    "Assertion Explaination": "if read operation signal and write operation signal are both active then error flag output must be active SINCE THE SAME CLOCK CYCLE; otherwise, the condition holds automatically"
+    "Assertion Explaination": "if read operation signal and write operation signal are both active, then error signal should be active from the current clock cycle"
   },
   "Assertion 2": {
     "clock signal condition": "@(posedge clk)",
@@ -51,7 +51,7 @@
       "|": "logical or operator meaning that at least one of the conditions must hold",
       "==": "equality comparison operator meaning that the two values are equal"
     },
-    "Assertion Explaination": "if the condition where data valid indicator is not active and read enable is active holds then data output must equal zero SINCE THE SAME CLOCK CYCLE; otherwise, the condition holds automatically"
+    "Assertion Explaination": "if the condition where data valid indicator is not active and read enable is active holds, then data output must equal zero from the current clock cycle"
   },
   "Assertion 3": {
     "clock signal condition": "@(posedge clk)",
@@ -69,6 +69,6 @@
     "Logical Operators Explanation": {
       "$onehot0": "a function that checks that the vector has either no bits set or exactly one bit set"
     },
-    "Assertion Explaination": "the read valid signal must have at most one bit active SINCE THE SAME CLOCK CYCLE"
+    "Assertion Explaination": "the read valid signal must have at most one bit active"
   }
 }

@@ -21,7 +21,7 @@
       "+": "arithmetic addition",
       "<": "less than"
     },
-    "Assertion Explaination": "the arithmetic addition of the first output grant bit, the second output grant bit, and the third output grant bit is computed and the result must be less than 2, ensuring that at most one grant signal is active SINCE THE SAME CLOCK CYCLE"
+    "Assertion Explaination": "the arithmetic addition of the first output grant bit, the second output grant bit, and the third output grant bit is computed and the result must be less than 2"
   },
   "Assertion 2": {
     "clock signal condition": "@(posedge clk)",
@@ -47,7 +47,7 @@
       "!": "the value of a signal is reset (0)",
       "&&": "logical and"
     },
-    "Assertion Explaination": "if the first output grant bit is asserted then the second output grant bit and the third output grant bit must be reset (0) SINCE THE SAME CLOCK CYCLE"
+    "Assertion Explaination": "When the first output grant bit is asserted, then the second output grant bit and the third output grant bit must be reset (0) from the current clock cycle"
   },
   "Assertion 3": {
     "clock signal condition": "@(posedge clk)",
@@ -73,7 +73,7 @@
       "!": "the value of a signal is reset (0)",
       "&&": "logical and"
     },
-    "Assertion Explaination": "if the second output grant bit is asserted then the first output grant bit and the third output grant bit must be reset (0) SINCE THE SAME CLOCK CYCLE"
+    "Assertion Explaination": "When the second output grant bit is asserted, then the first output grant bit and the third output grant bit must be reset (0) from the current clock cycle"
   },
   "Assertion 4": {
     "clock signal condition": "@(posedge clk)",
@@ -99,7 +99,7 @@
       "!": "the value of a signal is reset (0)",
       "&&": "logical and"
     },
-    "Assertion Explaination": "if the third output grant bit is asserted then the second output grant bit and the first output grant bit must be reset (0) SINCE THE SAME CLOCK CYCLE"
+    "Assertion Explaination": "When the third output grant bit is asserted, then the second output grant bit and the first output grant bit must be reset (0) from the current clock cycle"
   },
   "Assertion 5": {
     "clock signal condition": "@(posedge clk)",
@@ -127,7 +127,7 @@
       "|=>": "a non-overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE NEXT CLOCK CYCLE",
       "$stable": "indicates that the signal remains constant for at least one clock cycle"
     },
-    "Assertion Explaination": "if the output bus grant vector is not equal to the constant vector representing no grant and the bus acknowledge signal is not asserted, then the output bus grant vector must remain constant SINCE NEXT CLOCK CYCLE"
+    "Assertion Explaination": "when the output bus grant vector is not equal to the constant vector representing no grant and the bus acknowledge signal is not asserted, then the output bus grant vector must remain constant from the next clock cycle"
   },
   "Assertion 6": {
     "clock signal condition": "@(posedge clk)",
@@ -166,7 +166,7 @@
       "|=>": "a non-overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE NEXT CLOCK CYCLE",
       "!": "the value of a signal is reset (0)"
     },
-    "Assertion Explaination": "if either the first bus request is asserted while the output bus grant vector equals the constant vector representing no grant, or the bus acknowledge signal is asserted along with the first bus request being asserted, then in the next clock cycle the first output grant bit must be asserted and the second and third output grant bits must be reset (0)"
+    "Assertion Explaination": "when either the first bit of bus request signal is asserted and the output bus grant vector equals the constant vector representing no grant, or the bus acknowledge signal and the first bit of bus request signal are asserted, then the first output grant bit must be asserted and the second and third output grant bits must be reset (0) from the next clock cycle "
   },
   "Assertion 7": {
     "clock signal condition": "@(posedge clk)",
@@ -207,7 +207,7 @@
       "||": "or",
       "|=>": "a non-overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if either the second bus request is asserted with the first bus request reset and the output bus grant vector equals the constant vector representing no grant, or the bus acknowledge signal is asserted along with the second bus request being asserted and the first bus request reset, then in the next clock cycle the second output grant bit must be asserted while the first and third output grant bits must be reset (0)"
+    "Assertion Explaination": "when either the second bit of bus request signal is asserted and the first bit of bus request signal is reset and the output bus grant vector equals the constant vector representing no grant, or the bus acknowledge signal is asserted and the second bit of bus request signal is asserted and the first bit of bus request signal is reset, then the second output grant bit must be asserted and the first and third output grant bits must be reset (0) from the next clock cycle"
   },
   "Assertion 8": {
     "clock signal condition": "@(posedge clk)",
@@ -250,7 +250,7 @@
       "||": "or",
       "|=>": "a non-overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if either the third bus request is asserted with the second and first bus requests reset and the output bus grant vector equals the constant vector representing no grant, or the bus acknowledge signal is asserted along with the third bus request being asserted and the first and second bus requests reset, then in the next clock cycle the third output grant bit must be asserted while the first and second output grant bits must be reset (0)"
+    "Assertion Explaination": "when either the third bus request bit is asserted and the second and first bus request bits are reset and the output bus grant vector equals the constant vector representing no grant, or the bus acknowledge signal is asserted and the third bus request bit is asserted and the first and second bus request bits are reset, then the third output grant bit must be asserted and the first and second output grant bits must be reset (0) from the next clock cycle "
   },
   "Assertion 9": {
     "clock signal condition": "@(posedge clk)",
@@ -280,7 +280,7 @@
       "&&": "logical and",
       "!": "the value of a signal is reset (0)"
     },
-    "Assertion Explaination": "if a rising edge is detected on the second output grant bit then in the same clock cycle the previous clock cycle's second bus request was asserted and the previous clock cycle's first bus request was reset (0)"
+    "Assertion Explaination": "when a rising edge is detected on the second output grant bit, then the second bus request bit in the last clock cycle was asserted and the first bus request bit in the last clock cycle was reset (0) from the current clock cycle "
   },
   "Assertion 10": {
     "clock signal condition": "@(posedge clk)",
@@ -312,6 +312,6 @@
       "&&": "logical and",
       "!": "the value of a signal is reset (0)"
     },
-    "Assertion Explaination": "if a rising edge is detected on the third output grant bit then in the same clock cycle the previous clock cycle's third bus request was asserted while the previous clock cycle's second and first bus requests were reset (0)"
+    "Assertion Explaination": "when a rising edge is detected on the third output grant bit, then the third bus request bit in the last clock cycle was asserted and the second and first bus request bits in the last clock cycle were reset (0) from the current clock cycle "
   }
 }

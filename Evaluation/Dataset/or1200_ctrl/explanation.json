@@ -29,7 +29,7 @@
       "==": "equal",
       "&&": "logical AND"
     },
-    "Assertion Explaination": "if the freeze signal for the EX stage is reset (0) and the signal indicating that a delay slot instruction is in the EX stage is set (1) and the signal indicating that a filler nop instruction is in the EX stage is reset (0), then after one clock cycle the signal indicating that a filler nop instruction is in the EX stage equals 0 and the signal indicating that a delay slot instruction is in the EX stage equals 0"
+    "Assertion Explaination": "when the freeze signal for the EX stage is reset (0) and the signal indicating that a delay slot instruction is in the EX stage is set (1) and the signal indicating that a filler nop instruction is in the EX stage is reset (0), then the signal indicating that a filler nop instruction is in the EX stage equals 0 and the signal indicating that a delay slot instruction is in the EX stage equals 0 from the next clock cycle"
   },
   "Assertion 2": {
     "clock signal condition": "@(posedge clk)",
@@ -61,7 +61,7 @@
       "##1": "the condition on the right must hold after one clock cycle",
       "==": "equal"
     },
-    "Assertion Explaination": "if the freeze signal for the EX stage is reset (0) and either the freeze signal for the ID stage is set (1) or the pipeline flush signal for the EX stage is set (1), then after one clock cycle the signal indicating a MAC read operation in the EX stage equals 0"
+    "Assertion Explaination": "when the freeze signal for the EX stage is reset (0) and either the freeze signal for the ID stage is set (1) or the pipeline flush signal for the EX stage is set (1), then the signal indicating a MAC read operation in the EX stage equals 0 from the next clock cycle"
   },
   "Assertion 3": {
     "clock signal condition": "@(posedge clk)",
@@ -85,7 +85,7 @@
       "##1": "the condition on the right must hold after one clock cycle",
       "==": "equal"
     },
-    "Assertion Explaination": "if the pipeline flush signal for the ID stage is set (1), then after one clock cycle the instruction signal in the ID stage equals the constant NOP value"
+    "Assertion Explaination": "when the pipeline flush signal for the ID stage is set (1), then the instruction signal in the ID stage equals the constant NOP value from the next clock cycle"
   },
   "Assertion 4": {
     "clock signal condition": "@(posedge clk)",
@@ -117,7 +117,7 @@
       "##1": "the condition on the right must hold after one clock cycle",
       "==": "equal"
     },
-    "Assertion Explaination": "if the freeze signal for the EX stage is reset (0) and either the freeze signal for the ID stage is set (1) or the pipeline flush signal for the EX stage is set (1), then after one clock cycle the instruction signal in the EX stage equals the constant NOP value"
+    "Assertion Explaination": "when the freeze signal for the EX stage is reset (0) and either the freeze signal for the ID stage is set (1) or the pipeline flush signal for the EX stage is set (1), then the instruction signal in the EX stage equals the constant NOP value from the next clock cycle"
   },
   "Assertion 5": {
     "clock signal condition": "@(posedge clk)",
@@ -147,7 +147,7 @@
       "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE",
       "##1": "the condition on the right must hold after one clock cycle"
     },
-    "Assertion Explaination": "if the freeze signal for the ID stage is reset (0) and the opcode field of the instruction in the IF stage equals the JALR opcode, then after one clock cycle the signal controlling immediate value selection equals 0"
+    "Assertion Explaination": "when the freeze signal for the ID stage is reset (0) and the opcode field of the instruction in the IF stage equals the JALR opcode `OR1200_OR32_JALR, then the signal controlling immediate value selection equals 0 from the next clock cycle"
   },
   "Assertion 6": {
     "clock signal condition": "@(posedge clk)",
@@ -177,7 +177,7 @@
       "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE",
       "##1": "the condition on the right must hold after one clock cycle"
     },
-    "Assertion Explaination": "if the freeze signal for the ID stage is reset (0) and the opcode field of the instruction in the IF stage equals the JR opcode, then after one clock cycle the signal controlling immediate value selection equals 0"
+    "Assertion Explaination": "when the freeze signal for the ID stage is reset (0) and the opcode field of the instruction in the IF stage equals the JR opcode `OR1200_OR32_JR, then the signal controlling immediate value selection equals 0 from the next clock cycle"
   },
   "Assertion 7": {
     "clock signal condition": "@(posedge clk)",
@@ -207,7 +207,7 @@
       "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE",
       "##1": "the condition on the right must hold after one clock cycle"
     },
-    "Assertion Explaination": "if the freeze signal for the ID stage is reset (0) and the opcode field of the instruction in the IF stage equals the RFE opcode, then after one clock cycle the signal controlling immediate value selection equals 0"
+    "Assertion Explaination": "when the freeze signal for the ID stage is reset (0) and the opcode field of the instruction in the IF stage equals the RFE opcode `OR1200_OR32_RFE, then the signal controlling immediate value selection equals 0 from the next clock cycle"
   },
   "Assertion 8": {
     "clock signal condition": "@(posedge clk)",
@@ -237,7 +237,7 @@
       "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE",
       "##1": "the condition on the right must hold after one clock cycle"
     },
-    "Assertion Explaination": "if the freeze signal for the ID stage is reset (0) and the opcode field of the instruction in the IF stage equals the MFSPR opcode, then after one clock cycle the signal controlling immediate value selection equals 0"
+    "Assertion Explaination": "when the freeze signal for the ID stage is reset (0) and the opcode field of the instruction in the IF stage equals the MFSPR opcode `OR1200_OR32_MFSPR, then the signal controlling immediate value selection equals 0 from the next clock cycle"
   },
   "Assertion 9": {
     "clock signal condition": "@(posedge clk)",
@@ -267,7 +267,7 @@
       "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE",
       "##1": "the condition on the right must hold after one clock cycle"
     },
-    "Assertion Explaination": "if the freeze signal for the ID stage is reset (0) and the opcode field of the instruction in the IF stage equals the MTSPR opcode, then after one clock cycle the signal controlling immediate value selection equals 0"
+    "Assertion Explaination": "if the freeze signal for the ID stage is reset (0) and the opcode field of the instruction in the IF stage equals the MTSPR opcode `OR1200_OR32_MTSPR, then the signal controlling immediate value selection equals 0 from the next clock cycle"
   },
   "Assertion 10": {
     "clock signal condition": "@(posedge clk)",
@@ -297,7 +297,7 @@
       "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE",
       "##1": "the condition on the right must hold after one clock cycle"
     },
-    "Assertion Explaination": "if the freeze signal for the ID stage is reset (0) and the opcode field of the instruction in the IF stage equals the XSYNC opcode, then after one clock cycle the signal controlling immediate value selection equals 0"
+    "Assertion Explaination": "when the freeze signal for the ID stage is reset (0) and the opcode field of the instruction in the IF stage equals the XSYNC opcode `OR1200_OR32_XSYNC, then the signal controlling immediate value selection equals 0 from the next clock cycle"
   },
   "Assertion 11": {
     "clock signal condition": "@(posedge clk)",
@@ -327,7 +327,7 @@
       "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE",
       "##1": "the condition on the right must hold after one clock cycle"
     },
-    "Assertion Explaination": "if the freeze signal for the ID stage is reset (0) and the opcode field of the instruction in the IF stage equals the SW opcode, then after one clock cycle the signal controlling immediate value selection equals 0"
+    "Assertion Explaination": "when the freeze signal for the ID stage is reset (0) and the opcode field of the instruction in the IF stage equals the SW opcode `OR1200_OR32_S, then the signal controlling immediate value selection equals 0 from the next clock cycle"
   },
   "Assertion 12": {
     "clock signal condition": "@(posedge clk)",
@@ -357,7 +357,7 @@
       "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE",
       "##1": "the condition on the right must hold after one clock cycle"
     },
-    "Assertion Explaination": "if the freeze signal for the ID stage is reset (0) and the opcode field of the instruction in the IF stage equals the SB opcode, then after one clock cycle the signal controlling immediate value selection equals 0"
+    "Assertion Explaination": "when the freeze signal for the ID stage is reset (0) and the opcode field of the instruction in the IF stage equals the SB opcode `OR1200_OR32_SB, then the signal controlling immediate value selection equals 0 from the next clock cycle"
   },
   "Assertion 13": {
     "clock signal condition": "@(posedge clk)",
@@ -387,7 +387,7 @@
       "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE",
       "##1": "the condition on the right must hold after one clock cycle"
     },
-    "Assertion Explaination": "if the freeze signal for the ID stage is reset (0) and the opcode field of the instruction in the IF stage equals the ALU opcode, then after one clock cycle the signal controlling immediate value selection equals 0"
+    "Assertion Explaination": "when the freeze signal for the ID stage is reset (0) and the opcode field of the instruction in the IF stage equals the ALU opcode `OR1200_OR32_ALU, then the signal controlling immediate value selection equals 0 from the next clock cycle"
   },
   "Assertion 14": {
     "clock signal condition": "@(posedge clk)",
@@ -417,6 +417,6 @@
       "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE",
       "##1": "the condition on the right must hold after one clock cycle"
     },
-    "Assertion Explaination": "if the freeze signal for the ID stage is reset (0) and the opcode field of the instruction in the IF stage equals the SFXX opcode, then after one clock cycle the signal controlling immediate value selection equals 0"
+    "Assertion Explaination": "when the freeze signal for the ID stage is reset (0) and the opcode field of the instruction in the IF stage equals the SFXX opcode `OR1200_OR32_SFXX, then the signal controlling immediate value selection equals 0 from the next clock cycle"
   }
 }

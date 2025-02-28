@@ -6,6 +6,7 @@ import yaml
 import os
 import json
 import re
+import yaml
 #client = OpenAI()
 
 
@@ -33,6 +34,7 @@ with open("Src/Config.yml") as file:
     config = yaml.safe_load(file)
 
 OpenAI_API_Key = config["Openai_API_Key"]
+Model_Name = config["Model_Name"]
 
 client = OpenAI(
         api_key=OpenAI_API_Key
@@ -95,7 +97,7 @@ with open("Evaluation/Dataset/Ripple_Carry_Adder/explanation.json") as jsonfile:
     data = json.load(jsonfile)
 
 # NYU CCS's key
-model_name = "gpt-4o-mini-2024-07-18"
+model_name = Model_Name
 checker_model_name = "o3-mini"
 
 eval_num = 100
@@ -103,6 +105,8 @@ with open('Results/Openai-4o-mini-Prompted-Assertion-Generation-Results-for-New-
     csv_writer = csv.writer(csv_file)
     csv_writer.writerow(['Master Module','Code','golden_assertions','llm_assertions'])
     for folder in os.listdir("Evaluation/Dataset/"):
+        if "a25_wishbone" not in folder:
+            continue
         folder_path = os.path.join("Evaluation/Dataset/",folder)
         if os.path.isdir(folder_path):
             with open(folder_path+"/"+folder+".sv","r") as file:

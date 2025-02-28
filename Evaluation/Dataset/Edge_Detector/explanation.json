@@ -13,6 +13,6 @@
       "$rose": "a function that detects a rising edge (transition from 0 to 1) of a signal in the current clock cycle",
       "==": "equal"
     },
-    "Assertion Explaination": "the result of detecting a rising edge on the delayed version of the input signal is equal to the output signal in the current clock cycle"
+    "Assertion Explaination": "the output signal indicates whether a rising edge can be detected on the delayed version of the input signal"
   }
 }

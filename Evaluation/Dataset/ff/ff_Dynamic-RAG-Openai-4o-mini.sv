@@ -11,9 +11,9 @@ module ff
 assert property(@(posedge clk) disable iff (rst) en |=> out == $past(in,1));
 assert property(@(posedge clk) disable iff (rst) !en |=> out == $past(out,1));
 
-assert property (@(posedge clk) disable iff (rst) (en |=> out == $past(in)));
-assert property (@(posedge clk) disable iff (rst) (en |=> out == $past(in,1)) iff (en |=> out == $past(in)));
-// assert property (@(posedge clk) disable iff (rst) (out == $past(out) unless (en == 1'b0)));
-// assert property (@(posedge clk) disable iff (rst) (!en |=> out == $past(out,1)) iff (out == $past(out) unless (en == 1'b0)));
+assert property (@(posedge clk) disable iff (rst) (out == $past(in, 1)));
+assert property (@(posedge clk) disable iff (rst) (en |=> out == $past(in,1)) iff (out == $past(in, 1)));
+assert property (@(posedge clk) disable iff (rst) (en |=> $stable(out)));
+assert property (@(posedge clk) disable iff (rst) (!en |=> out == $past(out,1)) iff (en |=> $stable(out)));
 
 endmodule

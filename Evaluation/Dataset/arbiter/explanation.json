@@ -16,7 +16,7 @@
       "$past": "the value of a signal in the previous clock cycle",
       "==": "equal"
     },
-    "Assertion Explaination": "if grant output for request 0 is asserted and if in the previous clock cycle the arbitration type selector signal was equal to 0, then in the previous clock cycle the request input signal for request 0 must be asserted SINCE THE SAME CLOCK CYCLE"
+    "Assertion Explaination": "Property for checking the priority scheme that when the first bit of grant output is asserted and in the previous clock cycle the arbitration type selector signal was equal to 0, then in the previous clock cycle the first bit of request input signal must be asserted from the current clock cycle"
   },
   "Assertion 2": {
     "clock signal condition": "@(posedge clk)",
@@ -38,7 +38,7 @@
       "~": "the value of a signal is inverted (logical not)",
       "==": "equal"
     },
-    "Assertion Explaination": "if grant output for request 1 is asserted and if in the previous clock cycle the arbitration type selector signal was equal to 0, then in the previous clock cycle the request input signal for request 1 must be asserted and the request input signal for request 0 must not be asserted SINCE THE SAME CLOCK CYCLE"
+    "Assertion Explaination": "Property for checking the priority scheme that when the second bit of grant output is asserted and in the previous clock cycle the arbitration type selector signal was equal to 0, then in the previous clock cycle the second bit of request input signal must be asserted and the first bit of request input signal must not be asserted from the current clock cycle"
   },
   "Assertion 3": {
     "clock signal condition": "@(posedge clk)",
@@ -61,7 +61,7 @@
       "~": "the value of a signal is inverted (logical not)",
       "==": "equal"
     },
-    "Assertion Explaination": "if grant output for request 2 is asserted and if in the previous clock cycle the arbitration type selector signal was equal to 0, then in the previous clock cycle the request input signal for request 2 must be asserted and the request input signals for request 1 and request 0 must not be asserted SINCE THE SAME CLOCK CYCLE"
+    "Assertion Explaination": "Property for checking the priority scheme that when the third bit of grant output is asserted and in the previous clock cycle the arbitration type selector signal was equal to 0, then in the previous clock cycle the third bit of request input signal must be asserted and the first and second bits of request input signal must not be asserted from the current clock cycle"
   },
   "Assertion 4": {
     "clock signal condition": "@(posedge clk)",
@@ -85,7 +85,7 @@
       "~": "the value of a signal is inverted (logical not)",
       "==": "equal"
     },
-    "Assertion Explaination": "if grant output for request 3 is asserted and if in the previous clock cycle the arbitration type selector signal was equal to 0, then in the previous clock cycle the request input signal for request 3 must be asserted and the request input signals for request 2, request 1, and request 0 must not be asserted SINCE THE SAME CLOCK CYCLE"
+    "Assertion Explaination": "Property for checking the priority scheme that when the fourth bit of grant output is asserted and in the previous clock cycle the arbitration type selector signal was equal to 0, then in the previous clock cycle the fourth bit of request input signal must be asserted and the first, second, and third bits of request input signal must not be asserted from the current clock cycle"
   },
   "Assertion 5": {
     "clock signal condition": "@(posedge clk)",
@@ -107,7 +107,7 @@
       "~": "the value of a signal is inverted (logical not)",
       "==": "equal"
     },
-    "Assertion Explaination": "if grant output for request 0 is asserted and if in the previous clock cycle the arbitration type selector signal was equal to 1, then in the previous clock cycle the request input signal for request 0 must be asserted and the request input signal for request 1 must not be asserted SINCE THE SAME CLOCK CYCLE"
+    "Assertion Explaination": "Property for checking the priority scheme that when the first bit of grant output is asserted and in the previous clock cycle the arbitration type selector signal was equal to 1, then in the previous clock cycle the first bit of request input signal must be asserted and the second bit of request input signal must not be asserted from the current clock cycle"
   },
   "Assertion 6": {
     "clock signal condition": "@(posedge clk)",
@@ -126,7 +126,7 @@
       "$past": "the value of a signal in the previous clock cycle",
       "==": "equal"
     },
-    "Assertion Explaination": "if grant output for request 1 is asserted and if in the previous clock cycle the arbitration type selector signal was equal to 1, then in the previous clock cycle the request input signal for request 1 must be asserted SINCE THE SAME CLOCK CYCLE"
+    "Assertion Explaination": "Property for checking the priority scheme that when the second bit of grant output is asserted and in the previous clock cycle the arbitration type selector signal was equal to 1, then in the previous clock cycle the second bit of request input signal must be asserted from the current clock cycle"
   },
   "Assertion 7": {
     "clock signal condition": "@(posedge clk)",
@@ -149,7 +149,7 @@
       "~": "the value of a signal is inverted (logical not)",
       "==": "equal"
     },
-    "Assertion Explaination": "if grant output for request 2 is asserted and if in the previous clock cycle the arbitration type selector signal was equal to 1, then in the previous clock cycle the request input signal for request 2 must be asserted and the request input signals for request 1 and request 0 must not be asserted SINCE THE SAME CLOCK CYCLE"
+    "Assertion Explaination": "Property for checking the priority scheme that when the third bit of grant output is asserted and in the previous clock cycle the arbitration type selector signal was equal to 1, then in the previous clock cycle the third bit of request input signal must be asserted and the first and second bits of request input signal must not be asserted from the current clock cycle"
   },
   "Assertion 8": {
     "clock signal condition": "@(posedge clk)",
@@ -173,7 +173,7 @@
       "~": "the value of a signal is inverted (logical not)",
       "==": "equal"
     },
-    "Assertion Explaination": "if grant output for request 3 is asserted and if in the previous clock cycle the arbitration type selector signal was equal to 1, then in the previous clock cycle the request input signal for request 3 must be asserted and the request input signals for request 2, request 1, and request 0 must not be asserted SINCE THE SAME CLOCK CYCLE"
+    "Assertion Explaination": "Property for checking the priority scheme that when the fourth bit of grant output is asserted and in the previous clock cycle the arbitration type selector signal was equal to 1, then in the previous clock cycle the fourth bit of request input signal must be asserted and the third, second and first bits of request input signal must not be asserted from the current clock cycle"
   },
   "Assertion 9": {
     "clock signal condition": "@(posedge clk)",
@@ -195,7 +195,7 @@
       "~": "the value of a signal is inverted (logical not)",
       "==": "equal"
     },
-    "Assertion Explaination": "if grant output for request 0 is asserted and if in the previous clock cycle the arbitration type selector signal was equal to 2, then in the previous clock cycle the request input signal for request 0 must be asserted and the request input signal for request 2 must not be asserted SINCE THE SAME CLOCK CYCLE"
+    "Assertion Explaination": "Property for checking the priority scheme that when the first bit of grant output is asserted and in the previous clock cycle the arbitration type selector signal was equal to 2, then in the previous clock cycle the first bit of request input signal must be asserted and the third bit of request input signal must not be asserted from the current clock cycle"
   },
   "Assertion 10": {
     "clock signal condition": "@(posedge clk)",
@@ -218,7 +218,7 @@
       "~": "the value of a signal is inverted (logical not)",
       "==": "equal"
     },
-    "Assertion Explaination": "if grant output for request 1 is asserted and if in the previous clock cycle the arbitration type selector signal was equal to 2, then in the previous clock cycle the request input signal for request 1 must be asserted and the request input signals for request 2 and request 0 must not be asserted SINCE THE SAME CLOCK CYCLE"
+    "Assertion Explaination": "Property for checking the priority scheme that when the second bit of grant output is asserted and in the previous clock cycle the arbitration type selector signal was equal to 2, then in the previous clock cycle the second bit of request input signal must be asserted and the third and first bits of request input signal must not be asserted from the current clock cycle"
   },
   "Assertion 11": {
     "clock signal condition": "@(posedge clk)",
@@ -237,7 +237,7 @@
       "$past": "the value of a signal in the previous clock cycle",
       "==": "equal"
     },
-    "Assertion Explaination": "if grant output for request 2 is asserted and if in the previous clock cycle the arbitration type selector signal was equal to 2, then in the previous clock cycle the request input signal for request 2 must be asserted SINCE THE SAME CLOCK CYCLE"
+    "Assertion Explaination": "Property for checking the priority scheme that when the third bit of grant output is asserted and in the previous clock cycle the arbitration type selector signal was equal to 2, then in the previous clock cycle the third bit of request input signal must be asserted from the current clock cycle"
   },
   "Assertion 12": {
     "clock signal condition": "@(posedge clk)",
@@ -261,7 +261,7 @@
       "~": "the value of a signal is inverted (logical not)",
       "==": "equal"
     },
-    "Assertion Explaination": "if grant output for request 3 is asserted and if in the previous clock cycle the arbitration type selector signal was equal to 2, then in the previous clock cycle the request input signal for request 3 must be asserted and the request input signals for request 2, request 1, and request 0 must not be asserted SINCE THE SAME CLOCK CYCLE"
+    "Assertion Explaination": "Property for checking the priority scheme that when the fourth bit of grant output is asserted and in the previous clock cycle the arbitration type selector signal was equal to 2, then in the previous clock cycle the fourth bit of request input signal must be asserted and the third, second and first bits of request input signal must not be asserted from the current clock cycle"
   },
   "Assertion 13": {
     "clock signal condition": "@(posedge clk)",
@@ -283,7 +283,7 @@
       "~": "the value of a signal is inverted (logical not)",
       "==": "equal"
     },
-    "Assertion Explaination": "if grant output for request 0 is asserted and if in the previous clock cycle the arbitration type selector signal was equal to 3, then in the previous clock cycle the request input signal for request 0 must be asserted and the request input signal for request 3 must not be asserted SINCE THE SAME CLOCK CYCLE"
+    "Assertion Explaination": "Property for checking the priority scheme that when the first bit of grant output is asserted and in the previous clock cycle the arbitration type selector signal was equal to 3, then in the previous clock cycle the first bit of request input signal must be asserted and the fourth bit of request input signal must not be asserted from the current clock cycle"
   },
   "Assertion 14": {
     "clock signal condition": "@(posedge clk)",
@@ -306,7 +306,7 @@
       "~": "the value of a signal is inverted (logical not)",
       "==": "equal"
     },
-    "Assertion Explaination": "if grant output for request 1 is asserted and if in the previous clock cycle the arbitration type selector signal was equal to 3, then in the previous clock cycle the request input signal for request 1 must be asserted and the request input signals for request 3 and request 0 must not be asserted SINCE THE SAME CLOCK CYCLE"
+    "Assertion Explaination": "Property for checking the priority scheme that when the second bit of grant output is asserted and in the previous clock cycle the arbitration type selector signal was equal to 3, then in the previous clock cycle the second bit of request input signal must be asserted and the fourth and first bits of request input signal must not be asserted from the current clock cycle"
   },
   "Assertion 15": {
     "clock signal condition": "@(posedge clk)",
@@ -330,7 +330,7 @@
       "~": "the value of a signal is inverted (logical not)",
       "==": "equal"
     },
-    "Assertion Explaination": "if grant output for request 2 is asserted and if in the previous clock cycle the arbitration type selector signal was equal to 3, then in the previous clock cycle the request input signal for request 2 must be asserted and the request input signals for request 3, request 0, and request 1 must not be asserted SINCE THE SAME CLOCK CYCLE"
+    "Assertion Explaination": "Property for checking the priority scheme that when the third bit of grant output is asserted and in the previous clock cycle the arbitration type selector signal was equal to 3, then in the previous clock cycle the third bit of request input signal must be asserted and the fourth, second and first bits of request input signal must not be asserted from the current clock cycle"
   },
   "Assertion 16": {
     "clock signal condition": "@(posedge clk)",
@@ -349,6 +349,6 @@
       "$past": "the value of a signal in the previous clock cycle",
       "==": "equal"
     },
-    "Assertion Explaination": "if grant output for request 3 is asserted and if in the previous clock cycle the arbitration type selector signal was equal to 3, then in the previous clock cycle the request input signal for request 3 must be asserted SINCE THE SAME CLOCK CYCLE"
+    "Assertion Explaination": "Property for checking the priority scheme that when the fourth bit of grant output is asserted and in the previous clock cycle the arbitration type selector signal was equal to 3, then in the previous clock cycle the fourth bit of request input signal must be asserted from the current clock cycle"
   }
 }

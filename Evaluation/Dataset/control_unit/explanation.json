@@ -13,7 +13,7 @@
       "==": "equal",
       "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the least significant bit of the aes_mode input equals 1 then the signal indicating whether the CTR mode is active equals 0 SINCE THE SAME CLOCK CYCLE"
+    "Assertion Explaination": "when the least significant bit of the aes_mode input equals 1, then the signal indicating whether the CTR mode is active equals 0 from the current clock cycle"
   },
   "Assertion 2": {
     "clock signal condition": "@(posedge clk)",
@@ -29,7 +29,7 @@
       "==": "equal",
       "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the least significant bit of the aes_mode input equals 0 then the signal indicating whether the CBC mode is active equals 0 SINCE THE SAME CLOCK CYCLE"
+    "Assertion Explaination": "when the least significant bit of the aes_mode input equals 0, then the signal indicating whether the CBC mode is active equals 0 from the current clock cycle"
   },
   "Assertion 3": {
     "clock signal condition": "@(posedge clk)",
@@ -45,7 +45,7 @@
       "==": "equal",
       "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the signal that indicates the beginning of an AES operation equals 0 then the signal used to initialize the key generation process equals 0 SINCE THE SAME CLOCK CYCLE"
+    "Assertion Explaination": "when the signal that indicates the beginning of an AES operation equals 0, then the signal used to initialize the key generation process equals 0 from the current clock cycle"
   },
   "Assertion 4": {
     "clock signal condition": "@(posedge clk)",
@@ -61,6 +61,6 @@
       "==": "equal",
       "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the signal that indicates the beginning of an AES operation equals 1 then the signal used to initialize the key generation process equals 1 SINCE THE SAME CLOCK CYCLE"
+    "Assertion Explaination": "when the signal that indicates the beginning of an AES operation equals 1, then the signal used to initialize the key generation process equals 1 from the current clock cycle"
   }
 }

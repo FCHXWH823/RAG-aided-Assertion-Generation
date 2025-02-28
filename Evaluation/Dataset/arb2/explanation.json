@@ -15,7 +15,7 @@
       "&": "logical AND",
       "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"
     },
-    "Assertion Explaination": "if internal state signal equals 1 and request signal from client 2 equals 1 then grant signal for client 1 equals 0 SINCE THE SAME CLOCK CYCLE"
+    "Assertion Explaination": "when internal state signal equals 1 and request signal from client 2 equals 1, then grant signal for client 1 equals 0 from the current clock cycle"
   },
   "Assertion 2": {
     "clock signal condition": "@(posedge clk)",
@@ -33,7 +33,7 @@
       "&": "logical AND",
       "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"
     },
-    "Assertion Explaination": "if request signal from client 1 equals 1 and internal state signal equals 0 then grant signal for client 1 equals 1 SINCE THE SAME CLOCK CYCLE"
+    "Assertion Explaination": "when request signal from client 1 equals 1 and internal state signal equals 0, then grant signal for client 1 equals 1 from the current clock cycle"
   },
   "Assertion 3": {
     "clock signal condition": "@(posedge clk)",
@@ -49,7 +49,7 @@
       "==": "equal",
       "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"
     },
-    "Assertion Explaination": "if request signal from client 1 equals 0 then grant signal for client 1 equals 0 SINCE THE SAME CLOCK CYCLE"
+    "Assertion Explaination": "when request signal from client 1 equals 0, then grant signal for client 1 equals 0 from the current clock cycle"
   },
   "Assertion 4": {
     "clock signal condition": "@(posedge clk)",
@@ -67,7 +67,7 @@
       "&": "logical AND",
       "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"
     },
-    "Assertion Explaination": "if request signal from client 1 equals 1 and request signal from client 2 equals 0 then grant signal for client 1 equals 1 SINCE THE SAME CLOCK CYCLE"
+    "Assertion Explaination": "when request signal from client 1 equals 1 and request signal from client 2 equals 0, then grant signal for client 1 equals 1 from the current clock cycle"
   },
   "Assertion 5": {
     "clock signal condition": "@(posedge clk)",
@@ -85,7 +85,7 @@
       "&": "logical AND",
       "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"
     },
-    "Assertion Explaination": "if request signal from client 1 equals 1 and internal state signal equals 0 then grant signal for client 2 equals 0 SINCE THE SAME CLOCK CYCLE"
+    "Assertion Explaination": "when request signal from client 1 equals 1 and internal state signal equals 0, then grant signal for client 2 equals 0 from the current clock cycle"
   },
   "Assertion 6": {
     "clock signal condition": "@(posedge clk)",
@@ -103,7 +103,7 @@
       "&": "logical AND",
       "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"
     },
-    "Assertion Explaination": "if request signal from client 2 equals 1 and internal state signal equals 1 then grant signal for client 2 equals 1 SINCE THE SAME CLOCK CYCLE"
+    "Assertion Explaination": "when request signal from client 2 equals 1 and internal state signal equals 1, then grant signal for client 2 equals 1 from the current clock cycle"
   },
   "Assertion 7": {
     "clock signal condition": "@(posedge clk)",
@@ -119,7 +119,7 @@
       "==": "equal",
       "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"
     },
-    "Assertion Explaination": "if request signal from client 2 equals 0 then grant signal for client 2 equals 0 SINCE THE SAME CLOCK CYCLE"
+    "Assertion Explaination": "when request signal from client 2 equals 0, then grant signal for client 2 equals 0 from the current clock cycle"
   },
   "Assertion 8": {
     "clock signal condition": "@(posedge clk)",
@@ -137,6 +137,6 @@
       "&": "logical AND",
       "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"
     },
-    "Assertion Explaination": "if request signal from client 2 equals 1 and request signal from client 1 equals 0 then grant signal for client 2 equals 1 SINCE THE SAME CLOCK CYCLE"
+    "Assertion Explaination": "when request signal from client 2 equals 1 and request signal from client 1 equals 0, then grant signal for client 2 equals 1 from the current clock cycle"
   }
 }

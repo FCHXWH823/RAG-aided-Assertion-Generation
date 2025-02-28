@@ -19,7 +19,7 @@
       "==": "equal",
       "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"
     },
-    "Assertion Explaination": "if error indicator from the I2C core equals 0 then error signal output to the APB interface equals 0 SINCE THE SAME CLOCK CYCLE"
+    "Assertion Explaination": "When error indicator from the I2C core equals 0, then error signal output to the APB interface equals 0 from the current clock cycle"
   },
   "Assertion 2": {
     "clock signal condition": "@(posedge PCLK)",
@@ -41,7 +41,7 @@
       "==": "equal",
       "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"
     },
-    "Assertion Explaination": "if error indicator from the I2C core equals 1 then error signal output to the APB interface equals 1 SINCE THE SAME CLOCK CYCLE"
+    "Assertion Explaination": "When error indicator from the I2C core equals 1, then error signal output to the APB interface equals 1 from the current clock cycle"
   },
   "Assertion 3": {
     "clock signal condition": "@(posedge PCLK)",
@@ -63,7 +63,7 @@
       "==": "equal",
       "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"
     },
-    "Assertion Explaination": "if transmit FIFO empty indicator equals 1 then transmit interrupt signal equals 1 SINCE THE SAME CLOCK CYCLE"
+    "Assertion Explaination": "When transmit FIFO empty indicator equals 1, then transmit interrupt signal equals 1 from the current clock cycle"
   },
   "Assertion 4": {
     "clock signal condition": "@(posedge PCLK)",
@@ -85,7 +85,7 @@
       "==": "equal",
       "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"
     },
-    "Assertion Explaination": "if transmit FIFO empty indicator equals 0 then transmit interrupt signal equals 0 SINCE THE SAME CLOCK CYCLE"
+    "Assertion Explaination": "When transmit FIFO empty indicator equals 0, then transmit interrupt signal equals 0 from the current clock cycle"
   },
   "Assertion 5": {
     "clock signal condition": "@(posedge PCLK)",
@@ -107,7 +107,7 @@
       "==": "equal",
       "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"
     },
-    "Assertion Explaination": "if receive FIFO empty indicator equals 0 then receive interrupt signal equals 0 SINCE THE SAME CLOCK CYCLE"
+    "Assertion Explaination": "When receive FIFO empty indicator equals 0, then receive interrupt signal equals 0 from the current clock cycle"
   },
   "Assertion 6": {
     "clock signal condition": "@(posedge PCLK)",
@@ -129,6 +129,6 @@
       "==": "equal",
       "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"
     },
-    "Assertion Explaination": "if receive FIFO empty indicator equals 1 then receive interrupt signal equals 1 SINCE THE SAME CLOCK CYCLE"
+    "Assertion Explaination": "When receive FIFO empty indicator equals 1, then receive interrupt signal equals 1 from the current clock cycle"
   }
 }

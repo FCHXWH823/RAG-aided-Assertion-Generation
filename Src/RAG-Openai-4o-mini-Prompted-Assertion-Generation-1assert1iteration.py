@@ -74,7 +74,7 @@ with open("Src/Config.yml") as file:
 
 PDF_Name = config["PDF_Name"]
 Folder_Name = f"Book1-{PDF_Name}"
-
+Model_Name = config["Model_Name"]
 OpenAI_API_Key = config["Openai_API_Key"]
 # Initialize embeddings
 vector_store = collect_RAG_database()
@@ -116,7 +116,7 @@ prompt_checker = ChatPromptTemplate.from_messages(
 # from langchain.chains import RetrievalQA
 
 llm = ChatOpenAI(
-    model="gpt-4o-mini-2024-07-18",
+    model=Model_Name,
     # model="o3-mini",
     api_key=OpenAI_API_Key
     )
@@ -139,6 +139,8 @@ with open(f'Results/RAG-Openai-4o-mini-Prompted-Assertion-Generation-Results-{PD
     csv_writer = csv.writer(csv_file)
     csv_writer.writerow(['Master Module','Code','golden_assertions','llm_assertions'])
     for folder in os.listdir("Evaluation/Dataset/"):
+        if "a25_wishbone" not in folder:
+            continue
         folder_path = os.path.join("Evaluation/Dataset/",folder)
         if os.path.isdir(folder_path):
             with open(folder_path+"/"+folder+".sv","r") as file:

@@ -13,7 +13,7 @@
       "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE",
       "!": "the value of a signal is reset (0)"
     },
-    "Assertion Explaination": "if the derived valid write signal is set (1), then the FIFO full indicator is reset (0) SINCE THE SAME CLOCK CYCLE"
+    "Assertion Explaination": "when the derived valid write signal is set (1), then the FIFO full indicator is reset (0) from the current clock cycle"
   },
   "Assertion 2": {
     "clock signal condition": "@(posedge clk)",
@@ -29,6 +29,6 @@
       "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE",
       "!": "the value of a signal is reset (0)"
     },
-    "Assertion Explaination": "if the derived valid read signal is set (1), then the FIFO empty indicator is reset (0) SINCE THE SAME CLOCK CYCLE"
+    "Assertion Explaination": "when the derived valid read signal is set (1), then the FIFO empty indicator is reset (0) from the current clock cycle"
   }
 }

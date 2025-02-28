@@ -23,6 +23,6 @@
       "$onehot": "a function that verifies that exactly one bit in its operand is set to 1",
       "^": "XOR operator returning 1 if the compared bits differ and 0 if they are the same"
     },
-    "Assertion Explaination": "if the signal representing the carry-out from the binary increment is set OR the function that verifies exactly one bit is active in the result of the bitwise XOR between the next Gray code value and the current Gray code value holds true"
+    "Assertion Explaination": "there is only 1 bit difference between 2 consequtive gray code's or we have overflown"
   }
 }

@@ -15,7 +15,7 @@
           "==": "equal",
           "$past": "the last one clock cycle's value"
 },
-"Assertion Explaination": "if enable signal is set (1), output signal equals the last one clock cycle's input signal SINCE NEXT CLOCK CYCLE"
+"Assertion Explaination": "when enable signal is set (1), output signal equals the last one clock cycle's input signal from the next clock cycle"
 },
 "Assertion 2": {
 "clock signal condition": "@(posedge clk)",
@@ -33,6 +33,6 @@
           "==": "equal",
           "$past": "the last one clock cycle's value"
 },
-"Assertion Explaination": "if enable signal is reset (0), output signal equals the last one clock cycle's output signal SINCE NEXT CLOCK CYCLE"
+"Assertion Explaination": "when enable signal is reset (0), output signal equals the last one clock cycle's output signal from the next clock cycle"
 }
 }

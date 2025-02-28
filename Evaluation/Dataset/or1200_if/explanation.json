@@ -16,7 +16,7 @@
       "==": "equal",
       "&&": "and"
     },
-    "Assertion Explaination": "if no delay slot instruction signal is true then ITLB miss exception equals 0 and immediate fault exception equals 0 and instruction bus error exception equals 0 SINCE THE SAME CLOCK CYCLE"
+    "Assertion Explaination": "when no delay slot instruction signal is true, then ITLB miss exception equals 0 and immediate fault exception equals 0 and instruction bus error exception equals 0 from the current clock cycle"
   },
   "Assertion 2": {
     "clock signal condition": "@(posedge clk)",
@@ -36,7 +36,7 @@
       "##1": "a temporal delay operator indicating that the consequent is checked SINCE NEXT CLOCK CYCLE",
       "==": "equal"
     },
-    "Assertion Explaination": "if pipeline flush signal is reset (0) and save instruction condition is true then saved flag equals 1 SINCE NEXT CLOCK CYCLE"
+    "Assertion Explaination": "when pipeline flush signal is reset (0) and save instruction condition is true, then saved flag equals 1 from the next clock cycle"
   },
   "Assertion 3": {
     "clock signal condition": "@(posedge clk)",
@@ -58,7 +58,7 @@
       "##1": "a temporal delay operator indicating that the consequent is checked SINCE NEXT CLOCK CYCLE",
       "==": "equal"
     },
-    "Assertion Explaination": "if pipeline flush signal is true or both save instruction condition is reset (0) and pipeline freeze is reset (0) then saved flag equals 0 SINCE NEXT CLOCK CYCLE"
+    "Assertion Explaination": "when pipeline flush signal is true or both save instruction condition is reset (0) and pipeline freeze is reset (0), then saved flag equals 0 from the next clock cycle"
   },
   "Assertion 4": {
     "clock signal condition": "@(posedge clk)",
@@ -81,7 +81,7 @@
       "==": "equal",
       "$past": "the value from the previous clock cycle"
     },
-    "Assertion Explaination": "if pipeline flush signal is reset (0) and save instruction condition is true and instruction cache error signal is reset (0) then insn_saved equals the previous clock cycle's instruction cache data SINCE NEXT CLOCK CYCLE"
+    "Assertion Explaination": "when pipeline flush signal is reset (0) and save instruction condition is true and instruction cache error signal is reset (0), then insn_saved equals the previous clock cycle's instruction cache data from the next clock cycle"
   },
   "Assertion 5": {
     "clock signal condition": "@(posedge clk)",
@@ -104,7 +104,7 @@
       "##1": "a temporal delay operator indicating that the consequent is checked SINCE NEXT CLOCK CYCLE",
       "==": "equal"
     },
-    "Assertion Explaination": "if pipeline flush signal is true or both save instruction condition is reset (0) and pipeline freeze is reset (0) and instruction cache error is reset (0) then insn_saved equals the constant value {6'b000101, 26'h041_0000} SINCE NEXT CLOCK CYCLE"
+    "Assertion Explaination": "when pipeline flush signal is true or both save instruction condition is reset (0) and pipeline freeze is reset (0) and instruction cache error is reset (0), then insn_saved equals the constant value {6'b000101, 26'h041_0000} from the next clock cycle"
   },
   "Assertion 6": {
     "clock signal condition": "@(posedge clk)",
@@ -128,7 +128,7 @@
       "==": "equal",
       "$past": "the value from the previous clock cycle"
     },
-    "Assertion Explaination": "if pipeline flush signal is reset (0) and either save instruction is true or pipeline freeze is reset (0) then addr_saved equals the previous clock cycle's instruction cache address with its lower two bits set to 0 SINCE NEXT CLOCK CYCLE"
+    "Assertion Explaination": "when pipeline flush signal is reset (0) and either save instruction is true or pipeline freeze is reset (0), then addr_saved equals the previous clock cycle's instruction cache address with its lower two bits set to 0 from the next clock cycle"
   },
   "Assertion 7": {
     "clock signal condition": "@(posedge clk)",
@@ -145,7 +145,7 @@
       "##1": "a temporal delay operator indicating that the consequent is checked SINCE NEXT CLOCK CYCLE",
       "==": "equal"
     },
-    "Assertion Explaination": "if pipeline flush signal is true then addr_saved equals 32'h00000000 SINCE NEXT CLOCK CYCLE"
+    "Assertion Explaination": "when pipeline flush signal is true then addr_saved equals 32'h00000000 from the next clock cycle"
   },
   "Assertion 8": {
     "clock signal condition": "@(posedge clk)",
@@ -169,7 +169,7 @@
       "&": "and",
       "$past": "the value from the previous clock cycle"
     },
-    "Assertion Explaination": "if pipeline flush signal is reset (0) and save instruction condition is true then bit 0 of the saved error register equals the logical AND of the previous clock cycle's instruction cache error signal and the result of comparing the previous clock cycle's instruction cache tag signal equal to 4'hd SINCE NEXT CLOCK CYCLE"
+    "Assertion Explaination": "when pipeline flush signal is reset (0) and save instruction condition is true, then the first bit of the saved error register equals the logical AND of the previous clock cycle's instruction cache error signal and the result of comparing the previous clock cycle's instruction cache tag signal equal to 4'hd from the next clock cycle"
   },
   "Assertion 9": {
     "clock signal condition": "@(posedge clk)",
@@ -193,7 +193,7 @@
       "&": "and",
       "$past": "the value from the previous clock cycle"
     },
-    "Assertion Explaination": "if pipeline flush signal is reset (0) and save instruction condition is true then bit 1 of the saved error register equals the logical AND of the previous clock cycle's instruction cache error signal and the result of comparing the previous clock cycle's instruction cache tag signal equal to 4'hc SINCE NEXT CLOCK CYCLE"
+    "Assertion Explaination": "when pipeline flush signal is reset (0) and save instruction condition is true, then the second bit of the saved error register equals the logical AND of the previous clock cycle's instruction cache error signal and the result of comparing the previous clock cycle's instruction cache tag signal equal to 4'hc from the next clock cycle"
   },
   "Assertion 10": {
     "clock signal condition": "@(posedge clk)",
@@ -217,7 +217,7 @@
       "&": "and",
       "$past": "the value from the previous clock cycle"
     },
-    "Assertion Explaination": "if pipeline flush signal is reset (0) and save instruction condition is true then bit 2 of the saved error register equals the logical AND of the previous clock cycle's instruction cache error signal and the result of comparing the previous clock cycle's instruction cache tag signal equal to 4'hb SINCE NEXT CLOCK CYCLE"
+    "Assertion Explaination": "when pipeline flush signal is reset (0) and save instruction condition is true, then the third bit of the saved error register equals the logical AND of the previous clock cycle's instruction cache error signal and the result of comparing the previous clock cycle's instruction cache tag signal equal to 4'hb from the next clock cycle"
   },
   "Assertion 11": {
     "clock signal condition": "@(posedge clk)",
@@ -239,6 +239,6 @@
       "##1": "a temporal delay operator indicating that the consequent is checked SINCE NEXT CLOCK CYCLE",
       "==": "equal"
     },
-    "Assertion Explaination": "if pipeline flush signal is true or both save instruction condition is reset (0) and pipeline freeze is reset (0) then err_saved equals 3'b000 SINCE NEXT CLOCK CYCLE"
+    "Assertion Explaination": "when pipeline flush signal is true or both save instruction condition is reset (0) and pipeline freeze is reset (0), then err_saved equals 3'b000 from the next clock cycle"
   }
 }

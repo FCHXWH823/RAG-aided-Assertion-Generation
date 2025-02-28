@@ -22,7 +22,7 @@ PDF_Name = config["PDF_Name"]
 PDF_Txt = config["PDF_Txt"]
 OpenAI_API_Key = config["Openai_API_Key"]
 Folder_Name = f"Book1-{PDF_Name}"
-
+Model_Name = config["Model_Name"]
 # def build_rag_system(pdf_path):
 #     """
 #     1. Extract code blocks and text blocks from the PDF.
@@ -163,7 +163,7 @@ prompt_queryexpand = ChatPromptTemplate.from_messages(
 # from langchain.chains import RetrievalQA
 
 llm = ChatOpenAI(
-    model="gpt-4o-mini-2024-07-18",
+    model=Model_Name,
     # model="o3-mini",
     api_key=OpenAI_API_Key
     )
@@ -175,7 +175,7 @@ question_answer_chain_checker = create_stuff_documents_chain(llm,prompt_checker)
 rag_chain_checker = create_retrieval_chain(code_retriever,question_answer_chain_checker)
 
 question_answer_chain_queryexpand = create_stuff_documents_chain(llm,prompt_queryexpand)
-rag_chain_queryexpand = create_retrieval_chain(text_retriever,question_answer_chain_queryexpand)
+rag_chain_queryexpand = create_retrieval_chain(code_retriever,question_answer_chain_queryexpand)
 
 
 # query_from_llm = MultiQueryRetriever.from_llm(
@@ -246,8 +246,8 @@ with open(f'Results/Dynamic-RAG-Openai-4o-mini-Prompted-Assertion-Generation-Res
     csv_writer = csv.writer(csv_file)
     csv_writer.writerow(['Master Module','Code','golden_assertions','llm_assertions'])
     for folder in os.listdir("Evaluation/Dataset/"):
-        if "arb2" in folder:
-            continue 
+        if "a25_wishbone" not in folder:
+            continue
         folder_path = os.path.join("Evaluation/Dataset/",folder)
         if os.path.isdir(folder_path):
             with open(folder_path+"/"+folder+".sv","r") as file:

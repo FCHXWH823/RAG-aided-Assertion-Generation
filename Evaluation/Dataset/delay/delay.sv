@@ -140,5 +140,9 @@ module delay
       
    end       
 
+int count;    
+always_ff @(posedge clk or posedge rst)
+if (rst) count = 0;
+else if (en == 1'b1 && count < CYCLES) count ++;
 endmodule
 

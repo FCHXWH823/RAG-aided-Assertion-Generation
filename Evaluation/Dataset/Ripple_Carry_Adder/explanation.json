@@ -12,6 +12,6 @@
     "Logical Operators Explanation": {
       "==": "equal"
     },
-    "Assertion Explaination": "if the result of addition of a and b is equal to the computed sum output from the ripple-carry adder"
+    "Assertion Explaination": "the result of addition of a and b is equal to the computed sum output from the ripple-carry adder"
   }
 }

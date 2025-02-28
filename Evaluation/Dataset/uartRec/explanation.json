@@ -19,7 +19,7 @@
       "==": "equal",
       "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the least significant bit of the current state register is 0, then the flag indicating UART reception completion must be 0 SINCE THE SAME CLOCK CYCLE"
+    "Assertion Explaination": "when the least significant bit of the current state register is 0, then the flag indicating UART reception completion must be 0 from the current clock cycle"
   },
   "Assertion 2": {
     "clock signal condition": "@(posedge clk)",
@@ -41,7 +41,7 @@
       "==": "equal",
       "|=>": "a non-overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the third bit (bit index 2) of the sampling counter is 0, then the UART reception done flag must be 0 SINCE NEXT CLOCK CYCLE"
+    "Assertion Explaination": "when the third bit of the sampling counter is 0, then the UART reception done flag must be 0 from the next clock cycle"
   },
   "Assertion 3": {
     "clock signal condition": "@(posedge clk)",
@@ -63,7 +63,7 @@
       "==": "equal",
       "|=>": "a non-overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the second bit (bit index 1) of the sampling counter is 0, then the UART reception done flag must be 0 SINCE NEXT CLOCK CYCLE"
+    "Assertion Explaination": "when the second bit of the sampling counter is 0, then the UART reception done flag signal must be 0 from the next clock cycle"
   },
   "Assertion 4": {
     "clock signal condition": "@(posedge clk)",
@@ -85,7 +85,7 @@
       "==": "equal",
       "|=>": "a non-overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the second bit (bit index 1) of the bit counter is 0, then the UART reception done flag must be 0 SINCE NEXT CLOCK CYCLE"
+    "Assertion Explaination": "when the second bit of the bit counter is 0, then the UART reception done flag signal must be 0 from the next clock cycle"
   },
   "Assertion 5": {
     "clock signal condition": "@(posedge clk)",
@@ -107,7 +107,7 @@
       "==": "equal",
       "|=>": "a non-overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the least significant bit (bit index 0) of the bit counter is 0, then the UART reception done flag must be 0 SINCE NEXT CLOCK CYCLE"
+    "Assertion Explaination": "when the least significant bit of the bit counter is 0, then the UART reception done flag signal must be 0 from the next clock cycle"
   },
   "Assertion 6": {
     "clock signal condition": "@(posedge clk)",
@@ -129,7 +129,7 @@
       "==": "equal",
       "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the sampling tick signal is 0, then the UART reception done flag must be 0 SINCE THE SAME CLOCK CYCLE"
+    "Assertion Explaination": "when the sampling tick signal is 0, then the UART reception done flag signal must be 0 from the next clock cycle"
   },
   "Assertion 7": {
     "clock signal condition": "@(posedge clk)",
@@ -151,6 +151,6 @@
       "==": "equal",
       "|=>": "a non-overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the least significant bit of the next sampling counter value is 0, then the UART reception done flag must be 0 SINCE NEXT CLOCK CYCLE"
+    "Assertion Explaination": "when the first bit of the next sampling counter value is 0, then the UART reception done flag signal must be 0 from the next clock cycle"
   }
 }

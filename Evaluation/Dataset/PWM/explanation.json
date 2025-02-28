@@ -13,6 +13,6 @@
       "s_eventually": "a temporal operator indicating that the contained condition is required to occur at some future clock cycle (eventually)",
       "~": "the inversion (logical NOT) of the value of the signal"
     },
-    "Assertion Explaination": "if the constant logic high condition holds, then eventually the inversion of the output signal becomes true SINCE THE SAME CLOCK CYCLE"
+    "Assertion Explaination": "eventually the inversion of the output signal becomes true"
   }
 }

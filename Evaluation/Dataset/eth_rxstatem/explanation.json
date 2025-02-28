@@ -20,7 +20,7 @@
       "==": "equal",
       "|=>": "if the conditions on the left are met then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if a wire signal indicating the start of the preamble state is equal to 1 then a register bit representing the preamble state is equal to 1 SINCE NEXT CLOCK CYCLE"
+    "Assertion Explaination": "when a wire signal indicating the start of the preamble state is equal to 1, then a register bit representing the preamble state is equal to 1 from the next clock cycle"
   },
   "Assertion 2": {
     "clock signal condition": "@(posedge MRxClk)",
@@ -43,7 +43,7 @@
       "==": "equal",
       "|=>": "if the conditions on the left are met then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if a wire signal indicating the start of the drop state is equal to 1 then a register bit representing the preamble state is equal to 0 SINCE NEXT CLOCK CYCLE"
+    "Assertion Explaination": "when a wire signal indicating the start of the drop state is equal to 1, then a register bit representing the preamble state is equal to 0 from the next clock cycle"
   },
   "Assertion 3": {
     "clock signal condition": "@(posedge MRxClk)",
@@ -66,7 +66,7 @@
       "==": "equal",
       "|=>": "if the conditions on the left are met then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if a register bit representing the SFD state is equal to 1 then a register bit representing the preamble state is equal to 0 SINCE NEXT CLOCK CYCLE"
+    "Assertion Explaination": "when a register bit representing the SFD state is equal to 1, then a register bit representing the preamble state is equal to 0 from the next clock cycle"
   },
   "Assertion 4": {
     "clock signal condition": "@(posedge MRxClk)",
@@ -89,7 +89,7 @@
       "==": "equal",
       "|=>": "if the conditions on the left are met then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the lower bit of the data state is equal to 1 then a register bit representing the preamble state is equal to 0 SINCE NEXT CLOCK CYCLE"
+    "Assertion Explaination": "when the lower bit of the data state is equal to 1, then a register bit representing the preamble state is equal to 0 from the next clock cycle"
   },
   "Assertion 5": {
     "clock signal condition": "@(posedge MRxClk)",
@@ -112,7 +112,7 @@
       "==": "equal",
       "|=>": "if the conditions on the left are met then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if a register bit representing the drop state is equal to 1 then a register bit representing the preamble state is equal to 0 SINCE NEXT CLOCK CYCLE"
+    "Assertion Explaination": "when a register bit representing the drop state is equal to 1, then a register bit representing the preamble state is equal to 0 from the next clock cycle"
   },
   "Assertion 6": {
     "clock signal condition": "@(posedge MRxClk)",
@@ -135,7 +135,7 @@
       "==": "equal",
       "|=>": "if the conditions on the left are met then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if a register bit representing data state one is equal to 1 then a register bit representing the preamble state is equal to 0 SINCE NEXT CLOCK CYCLE"
+    "Assertion Explaination": "when a register bit representing data state one is equal to 1, then a register bit representing the preamble state is equal to 0 from the next clock cycle"
   },
   "Assertion 7": {
     "clock signal condition": "@(posedge MRxClk)",
@@ -165,7 +165,7 @@
       "&": "logical and",
       "|=>": "if the conditions on the left are met then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if a register bit representing the preamble state is equal to 1 and a signal indicating that the receive data equals 5 is equal to 0 and the receive data valid signal is equal to 1 then a register bit representing the preamble state is equal to 1 SINCE NEXT CLOCK CYCLE"
+    "Assertion Explaination": "when a register bit representing the preamble state is equal to 1 and a signal indicating that the receive data equals 5 is equal to 0 and the receive data valid signal is equal to 1, then a register bit representing the preamble state is equal to 1 from the next clock cycle"
   },
   "Assertion 8": {
     "clock signal condition": "@(posedge MRxClk)",
@@ -188,7 +188,7 @@
       "==": "equal",
       "|=>": "if the conditions on the left are met then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if a signal indicating that the receive data equals 5 is equal to 1 then a register bit representing the preamble state is equal to 0 SINCE NEXT CLOCK CYCLE"
+    "Assertion Explaination": "when a signal indicating that the receive data equals 5 is equal to 1, then a register bit representing the preamble state is equal to 0 from the next clock cycle"
   },
   "Assertion 9": {
     "clock signal condition": "@(posedge MRxClk)",
@@ -211,7 +211,7 @@
       "==": "equal",
       "|=>": "if the conditions on the left are met then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the receive data valid signal is equal to 0 then a register bit representing the preamble state is equal to 0 SINCE NEXT CLOCK CYCLE"
+    "Assertion Explaination": "when the receive data valid signal is equal to 0, then a register bit representing the preamble state is equal to 0 from the next clock cycle"
   },
   "Assertion 10": {
     "clock signal condition": "@(posedge MRxClk)",
@@ -234,7 +234,7 @@
       "==": "equal",
       "|=>": "if the conditions on the left are met then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if a wire signal indicating the start of the SFD state is equal to 1 then a register bit representing the SFD state is equal to 1 SINCE NEXT CLOCK CYCLE"
+    "Assertion Explaination": "when a wire signal indicating the start of the SFD state is equal to 1, then a register bit representing the SFD state is equal to 1 from the next clock cycle"
   },
   "Assertion 11": {
     "clock signal condition": "@(posedge MRxClk)",
@@ -257,7 +257,7 @@
       "==": "equal",
       "|=>": "if the conditions on the left are met then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if a wire signal indicating the start of the idle state is equal to 1 then a register bit representing the SFD state is equal to 0 SINCE NEXT CLOCK CYCLE"
+    "Assertion Explaination": "when a wire signal indicating the start of the idle state is equal to 1, then a register bit representing the SFD state is equal to 0 from the next clock cycle"
   },
   "Assertion 12": {
     "clock signal condition": "@(posedge MRxClk)",
@@ -280,7 +280,7 @@
       "==": "equal",
       "|=>": "if the conditions on the left are met then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if a wire signal indicating the start of the drop state is equal to 1 then a register bit representing the SFD state is equal to 0 SINCE NEXT CLOCK CYCLE"
+    "Assertion Explaination": "when a wire signal indicating the start of the drop state is equal to 1, then a register bit representing the SFD state is equal to 0 from the next clock cycle"
   },
   "Assertion 13": {
     "clock signal condition": "@(posedge MRxClk)",
@@ -303,7 +303,7 @@
       "==": "equal",
       "|=>": "if the conditions on the left are met then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if a wire signal indicating the start of data state 0 is equal to 1 then a register bit representing the SFD state is equal to 0 SINCE NEXT CLOCK CYCLE"
+    "Assertion Explaination": "when a wire signal indicating the start of data state 0 is equal to 1, then a register bit representing the SFD state is equal to 0 from the next clock cycle"
   },
   "Assertion 14": {
     "clock signal condition": "@(posedge MRxClk)",
@@ -326,7 +326,7 @@
       "==": "equal",
       "|=>": "if the conditions on the left are met then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if a wire signal indicating the start of the preamble state is equal to 1 then a register bit representing the SFD state is equal to 0 SINCE NEXT CLOCK CYCLE"
+    "Assertion Explaination": "when a wire signal indicating the start of the preamble state is equal to 1, then a register bit representing the SFD state is equal to 0 from the next clock cycle"
   },
   "Assertion 15": {
     "clock signal condition": "@(posedge MRxClk)",
@@ -356,7 +356,7 @@
       "&": "logical and",
       "|=>": "if the conditions on the left are met then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if a register bit representing the SFD state is equal to 1 and a wire signal indicating the start of the idle state is equal to 0 and a signal indicating that the receive data equals D is equal to 0 then a register bit representing the SFD state is equal to 1 SINCE NEXT CLOCK CYCLE"
+    "Assertion Explaination": "when a register bit representing the SFD state is equal to 1 and a wire signal indicating the start of the idle state is equal to 0 and a signal indicating that the receive data equals D is equal to 0, then a register bit representing the SFD state is equal to 1 from the next clock cycle"
   },
   "Assertion 16": {
     "clock signal condition": "@(posedge MRxClk)",
@@ -379,7 +379,7 @@
       "==": "equal",
       "|=>": "if the conditions on the left are met then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the lower bit of the data state is equal to 1 then a register bit representing the SFD state is equal to 0 SINCE NEXT CLOCK CYCLE"
+    "Assertion Explaination": "when the lower bit of the data state is equal to 1, then a register bit representing the SFD state is equal to 0 from the next clock cycle"
   },
   "Assertion 17": {
     "clock signal condition": "@(posedge MRxClk)",
@@ -402,7 +402,7 @@
       "==": "equal",
       "|=>": "if the conditions on the left are met then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if a register bit representing the drop state is equal to 1 then a register bit representing the SFD state is equal to 0 SINCE NEXT CLOCK CYCLE"
+    "Assertion Explaination": "when a register bit representing the drop state is equal to 1, then a register bit representing the SFD state is equal to 0 from the next clock cycle"
   },
   "Assertion 18": {
     "clock signal condition": "@(posedge MRxClk)",
@@ -430,7 +430,7 @@
       "&": "logical and",
       "|=>": "if the conditions on the left are met then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if a signal indicating that the receive data equals 5 is equal to 0 and a register bit representing the preamble state is equal to 1 then a register bit representing the SFD state is equal to 0 SINCE NEXT CLOCK CYCLE"
+    "Assertion Explaination": "when a signal indicating that the receive data equals 5 is equal to 0 and a register bit representing the preamble state is equal to 1, then a register bit representing the SFD state is equal to 0 from the next clock cycle"
   },
   "Assertion 19": {
     "clock signal condition": "@(posedge MRxClk)",
@@ -453,7 +453,7 @@
       "==": "equal",
       "|=>": "if the conditions on the left are met then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the receive data valid signal is equal to 0 then a register bit representing the SFD state is equal to 0 SINCE NEXT CLOCK CYCLE"
+    "Assertion Explaination": "when the receive data valid signal is equal to 0, then a register bit representing the SFD state is equal to 0 from the next clock cycle"
   },
   "Assertion 20": {
     "clock signal condition": "@(posedge MRxClk)",
@@ -476,7 +476,7 @@
       "==": "equal",
       "|=>": "if the conditions on the left are met then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if a wire signal indicating the start of the idle state is equal to 1 then a register bit representing the drop state is equal to 0 SINCE NEXT CLOCK CYCLE"
+    "Assertion Explaination": "when a wire signal indicating the start of the idle state is equal to 1, then a register bit representing the drop state is equal to 0 from the current clock cycle"
   },
   "Assertion 21": {
     "clock signal condition": "@(posedge MRxClk)",
@@ -499,7 +499,7 @@
       "==": "equal",
       "|=>": "if the conditions on the left are met then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if a wire signal indicating the start of the drop state is equal to 1 then a register bit representing the drop state is equal to 1 SINCE NEXT CLOCK CYCLE"
+    "Assertion Explaination": "when a wire signal indicating the start of the drop state is equal to 1, then a register bit representing the drop state is equal to 1 from the current clock cycle"
   },
   "Assertion 22": {
     "clock signal condition": "@(posedge MRxClk)",
@@ -525,7 +525,7 @@
       "&": "logical and",
       "|=>": "if the conditions on the left are met then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if a register bit representing the drop state is equal to 1 and a wire signal indicating the start of the idle state is equal to 0 then a register bit representing the drop state is equal to 1 SINCE NEXT CLOCK CYCLE"
+    "Assertion Explaination": "when a register bit representing the drop state is equal to 1 and a wire signal indicating the start of the idle state is equal to 0, then a register bit representing the drop state is equal to 1 from the next clock cycle"
   },
   "Assertion 23": {
     "clock signal condition": "@(posedge MRxClk)",
@@ -553,7 +553,7 @@
       "&": "logical and",
       "|=>": "if the conditions on the left are met then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if a register bit representing the SFD state is equal to 1 and a wire signal indicating the start of the drop state is equal to 0 then a register bit representing the drop state is equal to 0 SINCE NEXT CLOCK CYCLE"
+    "Assertion Explaination": "when a register bit representing the SFD state is equal to 1 and a wire signal indicating the start of the drop state is equal to 0, then a register bit representing the drop state is equal to 0 from the next clock cycle"
   },
   "Assertion 24": {
     "clock signal condition": "@(posedge MRxClk)",
@@ -581,7 +581,7 @@
       "&": "logical and",
       "|=>": "if the conditions on the left are met then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the lower bit of the data state is equal to 1 and a wire signal indicating the start of the drop state is equal to 0 then a register bit representing the drop state is equal to 0 SINCE NEXT CLOCK CYCLE"
+    "Assertion Explaination": "when the lower bit of the data state is equal to 1 and a wire signal indicating the start of the drop state is equal to 0, then a register bit representing the drop state is equal to 0 from the next clock cycle"
   },
   "Assertion 25": {
     "clock signal condition": "@(posedge MRxClk)",
@@ -604,7 +604,7 @@
       "==": "equal",
       "|=>": "if the conditions on the left are met then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if a register bit representing the preamble state is equal to 1 then a register bit representing the drop state is equal to 0 SINCE NEXT CLOCK CYCLE"
+    "Assertion Explaination": "when a register bit representing the preamble state is equal to 1, then a register bit representing the drop state is equal to 0 from the next clock cycle"
   },
   "Assertion 26": {
     "clock signal condition": "@(posedge MRxClk)",
@@ -627,7 +627,7 @@
       "==": "equal",
       "|=>": "if the conditions on the left are met then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if a register bit representing data state one is equal to 1 then a register bit representing the drop state is equal to 0 SINCE NEXT CLOCK CYCLE"
+    "Assertion Explaination": "when a register bit representing data state one is equal to 1, then a register bit representing the drop state is equal to 0 from the next clock cycle"
   },
   "Assertion 27": {
     "clock signal condition": "@(posedge MRxClk)",
@@ -650,7 +650,7 @@
       "==": "equal",
       "|=>": "if the conditions on the left are met then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the receive data valid signal is equal to 0 then a register bit representing the drop state is equal to 0 SINCE NEXT CLOCK CYCLE"
+    "Assertion Explaination": "when the receive data valid signal is equal to 0, then a register bit representing the drop state is equal to 0 from the next clock cycle"
   },
   "Assertion 28": {
     "clock signal condition": "@(posedge MRxClk)",
@@ -678,7 +678,7 @@
       "&": "logical and",
       "|=>": "if the conditions on the left are met then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if a signal indicating that the transmitter is active is equal to 0 and a register bit representing the idle state is equal to 1 then a register bit representing the drop state is equal to 0 SINCE NEXT CLOCK CYCLE"
+    "Assertion Explaination": "when a signal indicating that the transmitter is active is equal to 0 and a register bit representing the idle state is equal to 1, then a register bit representing the drop state is equal to 0 from the next clock cycle"
   },
   "Assertion 29": {
     "clock signal condition": "@(posedge MRxClk)",
@@ -701,7 +701,7 @@
       "==": "equal",
       "|=>": "if the conditions on the left are met then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if a wire signal indicating the start of the idle state is equal to 1 then a register bit representing the idle state is equal to 1 SINCE NEXT CLOCK CYCLE"
+    "Assertion Explaination": "when a wire signal indicating the start of the idle state is equal to 1, then a register bit representing the idle state is equal to 1 from the next clock cycle"
   },
   "Assertion 30": {
     "clock signal condition": "@(posedge MRxClk)",
@@ -724,7 +724,7 @@
       "==": "equal",
       "|=>": "if the conditions on the left are met then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if a wire signal indicating the start of the drop state is equal to 1 then a register bit representing the idle state is equal to 0 SINCE NEXT CLOCK CYCLE"
+    "Assertion Explaination": "when a wire signal indicating the start of the drop state is equal to 1, then a register bit representing the idle state is equal to 0 from the next clock cycle"
   },
   "Assertion 31": {
     "clock signal condition": "@(posedge MRxClk)",
@@ -747,7 +747,7 @@
       "==": "equal",
       "|=>": "if the conditions on the left are met then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if a wire signal indicating the start of the SFD state is equal to 1 then a register bit representing the idle state is equal to 0 SINCE NEXT CLOCK CYCLE"
+    "Assertion Explaination": "when a wire signal indicating the start of the SFD state is equal to 1, then a register bit representing the idle state is equal to 0 from the next clock cycle"
   },
   "Assertion 32": {
     "clock signal condition": "@(posedge MRxClk)",
@@ -770,7 +770,7 @@
       "==": "equal",
       "|=>": "if the conditions on the left are met then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if a wire signal indicating the start of the preamble state is equal to 1 then a register bit representing the idle state is equal to 0 SINCE NEXT CLOCK CYCLE"
+    "Assertion Explaination": "when a wire signal indicating the start of the preamble state is equal to 1, then a register bit representing the idle state is equal to 0 from the next clock cycle"
   },
   "Assertion 33": {
     "clock signal condition": "@(posedge MRxClk)",
@@ -793,7 +793,7 @@
       "==": "equal",
       "|=>": "if the conditions on the left are met then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the receive data valid signal is equal to 1 then a register bit representing the idle state is equal to 0 SINCE NEXT CLOCK CYCLE"
+    "Assertion Explaination": "when the receive data valid signal is equal to 1, then a register bit representing the idle state is equal to 0 from the next clock cycle"
   },
   "Assertion 34": {
     "clock signal condition": "@(posedge MRxClk)",
@@ -816,6 +816,6 @@
       "==": "equal",
       "|=>": "if the conditions on the left are met then the condition on the right must hold SINCE NEXT CLOCK CYCLE"
     },
-    "Assertion Explaination": "if the receive data valid signal is equal to 0 then a register bit representing the idle state is equal to 1 SINCE NEXT CLOCK CYCLE"
+    "Assertion Explaination": "when the receive data valid signal is equal to 0, then a register bit representing the idle state is equal to 1 from the next clock cycle"
   }
 }

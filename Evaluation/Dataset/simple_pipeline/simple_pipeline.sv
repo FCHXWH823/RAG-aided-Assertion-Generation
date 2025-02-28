@@ -77,5 +77,10 @@ module simple_pipeline
    end
 
    assign valid_out = valid_delay_r[LATENCY-1];   
+
+int count;    
+always_ff @(posedge clk or posedge rst)
+if (rst) count = 0;
+else if (count < LATENCY) count ++;
 endmodule
 

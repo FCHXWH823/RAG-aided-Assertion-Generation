@@ -21,7 +21,7 @@
       "$stable": "ensures that the signal value remains unchanged during the evaluation cycle",
       "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"
     },
-    "Assertion Explaination": "if a rising edge is detected on the condition that the execution stage freeze signal is not active and the instruction decode stage freeze signal is not active, then after a one clock cycle delay if the execution stage freeze signal remains not active, the instruction decode stage freeze signal remains not active, the selection signal for operand A indicates the constant value corresponding to 2'd2, and both the execution forwarding data for operand A and the selection signal for operand A remain stable, the operand A multiplexer output equals the execution forwarding data for operand A"
+    "Assertion Explaination": "when a rising edge is detected on the condition that the execution stage freeze signal is not active and the instruction decode stage freeze signal is not active, and after a one clock cycle delay the execution stage freeze signal remains not active, the instruction decode stage freeze signal remains not active, the selection signal for operand A indicates the constant value corresponding to 2'd2, and both the execution forwarding data for operand A and the selection signal for operand A remain stable, then the operand A multiplexer output equals the execution forwarding data for operand A from the current clock cycle"
   },
   "Assertion 2": {
     "clock signal condition": "@(posedge clk)",
@@ -45,7 +45,7 @@
       "$stable": "ensures that the signal value remains unchanged during the evaluation cycle",
       "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"
     },
-    "Assertion Explaination": "if a rising edge is detected on the condition that the execution stage freeze signal is not active and the instruction decode stage freeze signal is not active, then after a one clock cycle delay if the execution stage freeze signal remains not active, the instruction decode stage freeze signal remains not active, the selection signal for operand A indicates the constant value corresponding to 2'd3, and both the write-back forwarding data for operand A and the selection signal for operand A remain stable, the operand A multiplexer output equals the write-back forwarding data for operand A"
+    "Assertion Explaination": "when a rising edge is detected on the condition that the execution stage freeze signal is not active and the instruction decode stage freeze signal is not active, and after a one clock cycle delay the execution stage freeze signal remains not active, the instruction decode stage freeze signal remains not active, the selection signal for operand A indicates the constant value corresponding to 2'd3, and both the write-back forwarding data for operand A and the selection signal for operand A remain stable, then the operand A multiplexer output equals the write-back forwarding data for operand A from the current clock cycle"
   },
   "Assertion 3": {
     "clock signal condition": "@(posedge clk)",
@@ -72,7 +72,7 @@
       "$isunknown": "checks if a signal has an unknown (X or Z) value",
       "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"
     },
-    "Assertion Explaination": "if a rising edge is detected on the condition that the execution stage freeze signal is not active and the instruction decode stage freeze signal is not active, then after a one clock cycle delay if the execution stage freeze signal remains not active, the instruction decode stage freeze signal remains not active, the selection signal for operand A does not indicate the constant values corresponding to 2'd2 or 2'd3, the register file data for operand A and the selection signal for operand A remain stable, and the stored operand A value is known, the operand A multiplexer output equals the register file data for operand A"
+    "Assertion Explaination": "when a rising edge is detected on the condition that the execution stage freeze signal is not active and the instruction decode stage freeze signal is not active, and after a one clock cycle delay the execution stage freeze signal remains not active, the instruction decode stage freeze signal remains not active, the selection signal for operand A does not indicate the constant values corresponding to 2'd2 or 2'd3, the register file data for operand A and the selection signal for operand A remain stable, and the stored operand A value is known, then the operand A multiplexer output equals the register file data for operand A from the current clock cycle"
   },
   "Assertion 4": {
     "clock signal condition": "@(posedge clk)",
@@ -96,7 +96,7 @@
       "$stable": "ensures that the signal value remains unchanged during the evaluation cycle",
       "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"
     },
-    "Assertion Explaination": "if a rising edge is detected on the condition that the execution stage freeze signal is not active and the instruction decode stage freeze signal is not active, then after a one clock cycle delay if the execution stage freeze signal remains not active, the instruction decode stage freeze signal remains not active, the selection signal for operand B indicates the constant value corresponding to 2'd1, and both the signed immediate value and the selection signal for operand B remain stable, the operand B multiplexer output equals the signed immediate value"
+    "Assertion Explaination": "when a rising edge is detected on the condition that the execution stage freeze signal is not active and the instruction decode stage freeze signal is not active, and after a one clock cycle delay if the execution stage freeze signal remains not active, the instruction decode stage freeze signal remains not active, the selection signal for operand B indicates the constant value corresponding to 2'd1, and both the signed immediate value and the selection signal for operand B remain stable, then the operand B multiplexer output equals the signed immediate value from the current clock cycle"
   },
   "Assertion 5": {
     "clock signal condition": "@(posedge clk)",
@@ -120,7 +120,7 @@
       "$stable": "ensures that the signal value remains unchanged during the evaluation cycle",
       "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"
     },
-    "Assertion Explaination": "if a rising edge is detected on the condition that the execution stage freeze signal is not active and the instruction decode stage freeze signal is not active, then after a one clock cycle delay if the execution stage freeze signal remains not active, the instruction decode stage freeze signal remains not active, the selection signal for operand B indicates the constant value corresponding to 2'd2, and both the execution forwarding data for operand B and the selection signal for operand B remain stable, the operand B multiplexer output equals the execution forwarding data for operand B"
+    "Assertion Explaination": "when a rising edge is detected on the condition that the execution stage freeze signal is not active and the instruction decode stage freeze signal is not active, and after a one clock cycle delay the execution stage freeze signal remains not active, the instruction decode stage freeze signal remains not active, the selection signal for operand B indicates the constant value corresponding to 2'd2, and both the execution forwarding data for operand B and the selection signal for operand B remain stable, then the operand B multiplexer output equals the execution forwarding data for operand B from the current clock cycle"
   },
   "Assertion 6": {
     "clock signal condition": "@(posedge clk)",
@@ -144,7 +144,7 @@
       "$stable": "ensures that the signal value remains unchanged during the evaluation cycle",
       "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"
     },
-    "Assertion Explaination": "if a rising edge is detected on the condition that the execution stage freeze signal is not active and the instruction decode stage freeze signal is not active, then after a one clock cycle delay if the execution stage freeze signal remains not active, the instruction decode stage freeze signal remains not active, the selection signal for operand B indicates the constant value corresponding to 2'd3, and both the write-back forwarding data for operand B and the selection signal for operand B remain stable, the operand B multiplexer output equals the write-back forwarding data for operand B"
+    "Assertion Explaination": "when a rising edge is detected on the condition that the execution stage freeze signal is not active and the instruction decode stage freeze signal is not active, and after a one clock cycle delay the execution stage freeze signal remains not active, the instruction decode stage freeze signal remains not active, the selection signal for operand B indicates the constant value corresponding to 2'd3, and both the write-back forwarding data for operand B and the selection signal for operand B remain stable, then the operand B multiplexer output equals the write-back forwarding data for operand B from the current clock cycle"
   },
   "Assertion 7": {
     "clock signal condition": "@(posedge clk)",
@@ -169,6 +169,6 @@
       "||": "logical OR",
       "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"
     },
-    "Assertion Explaination": "if a rising edge is detected on the condition that the execution stage freeze signal is not active and the instruction decode stage freeze signal is not active, then after a one clock cycle delay if the execution stage freeze signal remains not active, the instruction decode stage freeze signal remains not active, the selection signal for operand B does not indicate the constant values corresponding to 2'd1, 2'd2, or 2'd3, and both the register file data for operand B and the selection signal for operand B remain stable, the operand B multiplexer output equals the register file data for operand B"
+    "Assertion Explaination": "when a rising edge is detected on the condition that the execution stage freeze signal is not active and the instruction decode stage freeze signal is not active, and after a one clock cycle delay the execution stage freeze signal remains not active, the instruction decode stage freeze signal remains not active, the selection signal for operand B does not indicate the constant values corresponding to 2'd1, 2'd2, or 2'd3, and both the register file data for operand B and the selection signal for operand B remain stable, then the operand B multiplexer output equals the register file data for operand B from the current clock cycle"
   }
 }

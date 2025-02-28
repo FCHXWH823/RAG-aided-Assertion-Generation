@@ -15,6 +15,6 @@
       "|": "or",
       ">": "greater-than"
     },
-    "Assertion Explaination": "if the reset signal is not active (i.e. the system is operational) then the maximum value held equals 0 or the maximum value held is greater-than the second largest value held, evaluated at the same clock cycle"
+    "Assertion Explaination": "the maximum value held equals 0 or the maximum value held is greater-than the second largest value held"
   }
 }

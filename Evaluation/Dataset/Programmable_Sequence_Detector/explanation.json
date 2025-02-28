@@ -13,6 +13,6 @@
     "Logical Operators Explanation": {
       "==": "equal"
     },
-    "Assertion Explaination": "the output signal indicating whether the current sequence equals the initialization sequence must be equal to the result of comparing the register storing the current sequence bits with the initialization sequence"
+    "Assertion Explaination": "the output is asserted whenever a specified target sequence is detected on the input"
   }
 }

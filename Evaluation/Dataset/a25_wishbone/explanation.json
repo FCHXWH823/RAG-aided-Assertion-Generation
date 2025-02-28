@@ -21,7 +21,7 @@
       "##1": "a temporal delay operator indicating that the condition on the right must hold one clock cycle later",
       "|": "or"
     },
-    "Assertion Explaination": "if the wishbone bus state equals WB_IDLE, then after one clock cycle delay the wishbone bus state equals WB_IDLE or WB_BURST1 or WB_WAIT_ACK"
+    "Assertion Explaination": "When the wishbone bus state equals WB_IDLE, then the wishbone bus state equals WB_IDLE or WB_BURST1 or WB_WAIT_ACK from the next clock cycle"
   },
   "Assertion 2": {
     "clock signal condition": "@(posedge i_clk)",
@@ -47,7 +47,7 @@
       "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE",
       "##1": "a temporal delay operator indicating that the condition on the right must hold one clock cycle later"
     },
-    "Assertion Explaination": "if the wishbone bus state equals WB_BURST1 and the acknowledgement signal is asserted, then after one clock cycle delay the wishbone bus state equals WB_BURST2"
+    "Assertion Explaination": "When the wishbone bus state equals WB_BURST1 and the acknowledgement signal is asserted, then the wishbone bus state equals WB_BURST2 from the next clock cycle"
   },
   "Assertion 3": {
     "clock signal condition": "@(posedge i_clk)",
@@ -73,7 +73,7 @@
       "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE",
       "##1": "a temporal delay operator indicating that the condition on the right must hold one clock cycle later"
     },
-    "Assertion Explaination": "if the wishbone bus state equals WB_BURST2 and the acknowledgement signal is asserted, then after one clock cycle delay the wishbone bus state equals WB_BURST3"
+    "Assertion Explaination": "When the wishbone bus state equals WB_BURST2 and the acknowledgement signal is asserted, then the wishbone bus state equals WB_BURST3 from the next clock cycle"
   },
   "Assertion 4": {
     "clock signal condition": "@(posedge i_clk)",
@@ -99,7 +99,7 @@
       "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE",
       "##1": "a temporal delay operator indicating that the condition on the right must hold one clock cycle later"
     },
-    "Assertion Explaination": "if the wishbone bus state equals WB_BURST3 and the acknowledgement signal is asserted, then after one clock cycle delay the wishbone bus state equals WB_WAIT_ACK"
+    "Assertion Explaination": "When the wishbone bus state equals WB_BURST3 and the acknowledgement signal is asserted, then the wishbone bus state equals WB_WAIT_ACK from the next clock cycle"
   },
   "Assertion 5": {
     "clock signal condition": "@(posedge i_clk)",
@@ -131,7 +131,7 @@
       "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE",
       "##1": "a temporal delay operator indicating that the condition on the right must hold one clock cycle later"
     },
-    "Assertion Explaination": "if the wishbone bus state equals WB_WAIT_ACK and either the extra write flag is set or the acknowledgement signal is not asserted, then after one clock cycle delay the wishbone bus state equals WB_WAIT_ACK"
+    "Assertion Explaination": "When the wishbone bus state equals WB_WAIT_ACK and either the extra write flag is set or the acknowledgement signal is not asserted, then the wishbone bus state equals WB_WAIT_ACK from the next clock cycle"
   },
   "Assertion 6": {
     "clock signal condition": "@(posedge i_clk)",
@@ -163,6 +163,6 @@
       "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE",
       "##1": "a temporal delay operator indicating that the condition on the right must hold one clock cycle later"
     },
-    "Assertion Explaination": "if the wishbone bus state equals WB_WAIT_ACK and the extra write flag is not set and the acknowledgement signal is asserted, then after one clock cycle delay the wishbone bus state equals WB_IDLE"
+    "Assertion Explaination": "When the wishbone bus state equals WB_WAIT_ACK and the extra write flag is not set and the acknowledgement signal is asserted, then the wishbone bus state equals WB_IDLE from the next clock cycle"
   }
 }

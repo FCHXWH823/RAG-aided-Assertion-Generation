@@ -15,7 +15,7 @@
       "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE",
       "==": "equal"
     },
-    "Assertion Explaination": "if the integer register used for counting is less than the cycle latency then the valid output signal equals 0 SINCE THE SAME CLOCK CYCLE"
+    "Assertion Explaination": "when the integer register used for counting cycles is less than the cycle latency, then the valid output signal equals 0 from the current clock cycle"
   },
   "Assertion 2": {
     "clock signal condition": "@(posedge clk)",
@@ -34,6 +34,6 @@
       "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE",
       "$past": "returns the value of a signal a specified number of clock cycles in the past"
     },
-    "Assertion Explaination": "if the integer register used for counting equals the cycle latency then the valid output signal equals the valid input signal from the specified number of cycles in the past SINCE THE SAME CLOCK CYCLE"
+    "Assertion Explaination": "when the integer register used for counting cycles equals the cycle latency, then the valid output signal equals the valid input signal LATENCY cycles in the past from the current clock cycle"
   }
 }

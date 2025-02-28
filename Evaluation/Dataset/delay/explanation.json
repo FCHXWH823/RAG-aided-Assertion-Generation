@@ -29,7 +29,7 @@
       "==": "equal",
       "$past": "the last several clock cycles (returning the value of a signal from a specified number of cycles in the past under the given enable condition)"
     },
-    "Assertion Explaination": "if the register counting cycles is less than the parameter specifying the number of delay cycles (less than) or the output delayed signal equals the value of the input signal from the last several clock cycles (with a delay of the specified number of cycles under the enable condition) since the same clock cycle"
+    "Assertion Explaination": "the register counting cycles is less than the parameter specifying the number of delay cycles or the output delayed signal equals the value of the input signal from the last several clock cycles (with a delay of the specified number of cycles under the enable condition)"
   },
   "Assertion 2": {
     "clock signal condition": "@(posedge clk)",
@@ -56,7 +56,7 @@
       "==": "equal",
       "||": "logical or"
     },
-    "Assertion Explaination": "if the register counting cycles equals the parameter specifying the number of delay cycles (equal) or the output delayed signal equals the constant value used for reset (equal) since the same clock cycle"
+    "Assertion Explaination": "the register counting cycles equals the parameter specifying the number of delay cycles or the output delayed signal equals the constant value used for reset"
   },
   "Assertion 3": {
     "clock signal condition": "@(posedge clk)",
@@ -80,6 +80,6 @@
       "|=>": "a non-overlapping implication operator meaning that if the condition on the left is met then the condition on the right must hold since the next clock cycle",
       "$stable": "indicates that the signal remains unchanged from one clock cycle to the next"
     },
-    "Assertion Explaination": "if the enable signal is reset (0), then the output delayed signal remains unchanged since the next clock cycle"
+    "Assertion Explaination": "when the enable signal is reset (0), then the output delayed signal remains unchanged from the next clock cycle"
   }
 }
