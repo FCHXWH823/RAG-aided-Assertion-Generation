@@ -151,8 +151,8 @@ assert property(@(posedge clk) disable iff (rst) !en |=> $stable(out));
 
 assert property (@(posedge clk) disable iff (rst) (count < CYCLES || out == $past(in, CYCLES)));
 assert property (@(posedge clk) disable iff (rst) (count < CYCLES || out == $past(in, CYCLES, en)) iff (count < CYCLES || out == $past(in, CYCLES)));
-assert property (@(posedge clk) disable iff (rst) ((count == CYCLES) || (out == RESET_VALUE)));
-assert property (@(posedge clk) disable iff (rst) (count == CYCLES || out == RESET_VALUE) iff ((count == CYCLES) || (out == RESET_VALUE)));
+assert property (@(posedge clk) disable iff (rst) (count == CYCLES || out == RESET_VALUE));
+assert property (@(posedge clk) disable iff (rst) (count == CYCLES || out == RESET_VALUE) iff (count == CYCLES || out == RESET_VALUE));
 assert property (@(posedge clk) disable iff (rst) (en == 0 |=> out == $past(out)));
 assert property (@(posedge clk) disable iff (rst) (!en |=> $stable(out)) iff (en == 0 |=> out == $past(out)));
 

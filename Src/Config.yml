@@ -1,5 +1,6 @@
 Openai_API_Key: 
-PDF_Name: CernyDudani-SVA- The Power of Assertions in SystemVerilog
+PDF_Name: The Power of Assertions in SystemVerilog
 PDF_Txt: AllTextbooks.txt
 JasperGold_VERIFY: 1
 Model_Name: gpt-4o-mini
+Excute_Folder: ALL_DESIGNS

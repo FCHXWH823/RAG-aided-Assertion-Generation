@@ -42,7 +42,7 @@ begin
 end
 assert property(@(posedge clk) disable iff (~resetn) ~v_f_q | (v_f_q & din_f_q[0] == dout));
 
-assert property (@(posedge clk) disable iff (~resetn) (v_f_q == 0 |-> ((v_f_next == 1) && (din_f_q[0] == dout))));
-assert property (@(posedge clk) disable iff (~resetn) (~v_f_q | (v_f_q & din_f_q[0] == dout)) iff (v_f_q == 0 |-> ((v_f_next == 1) && (din_f_q[0] == dout))));
+assert property (@(posedge clk) disable iff (~resetn) (v_f_q == 0 |-> ((v_f_q == 1) && (data_q[0] == dout))));
+assert property (@(posedge clk) disable iff (~resetn) (~v_f_q | (v_f_q & din_f_q[0] == dout)) iff (v_f_q == 0 |-> ((v_f_q == 1) && (data_q[0] == dout))));
 
 endmodule

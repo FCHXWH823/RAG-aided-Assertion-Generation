@@ -206,25 +206,25 @@ assert property (@(posedge clk) disable iff (rst) (if_flushpipe | (!save_insn &&
 
 assert property (@(posedge clk)  (no_more_dslot -> (except_itlbmiss == 0) && (except_immufault == 0) && (except_ibuserr == 0)));
 assert property (@(posedge clk)  (no_more_dslot |-> (except_itlbmiss == 0 && except_immufault == 0 && except_ibuserr == 0)) iff (no_more_dslot -> (except_itlbmiss == 0) && (except_immufault == 0) && (except_ibuserr == 0)));
-assert property (@(posedge clk) disable iff (rst) (save_instruction |=> nexttime saved == 1));
-assert property (@(posedge clk) disable iff (rst) ((!if_flushpipe && save_insn) |-> ##1 saved == 1) iff (save_instruction |=> nexttime saved == 1));
-assert property (@(posedge clk) disable iff (rst) ((save_instruction == 0 && pipeline_freeze == 0) implies (saved_flag == 0)));
-assert property (@(posedge clk) disable iff (rst) ((if_flushpipe | (!save_insn && !if_freeze)) |-> ##1 saved == 0) iff ((save_instruction == 0 && pipeline_freeze == 0) implies (saved_flag == 0)));
-assert property (@(posedge clk) disable iff (rst) (if_flushpipe == 0 && save_insn && icpu_err_i == 0 |=> insn_saved == $past(icpu_dat_i)));
-assert property (@(posedge clk) disable iff (rst) ((!if_flushpipe && save_insn && !icpu_err_i) |-> ##1 (insn_saved == $past(icpu_dat_i))) iff (if_flushpipe == 0 && save_insn && icpu_err_i == 0 |=> insn_saved == $past(icpu_dat_i)));
-assert property (@(posedge clk) disable iff (rst) ((if_flushpipe || (save_insn == 1'b0 && if_freeze == 1'b0 && icpu_err_i == 1'b0))      |=> (insn_saved == {6'b000101, 26'h0410000})));
-assert property (@(posedge clk) disable iff (rst) ((if_flushpipe | (!save_insn && !if_freeze) && !icpu_err_i) |-> ##1 (insn_saved == {6'b000101, 26'h041_0000})) iff ((if_flushpipe || (save_insn == 1'b0 && if_freeze == 1'b0 && icpu_err_i == 1'b0))      |=> (insn_saved == {6'b000101, 26'h0410000})));
-assert property (@(posedge clk) disable iff (rst) ((save_instruction == 1 || freeze == 0)  => (addr_saved == {addr_cache[ADDR_WIDTH-1:2], 2'b00})));
-assert property (@(posedge clk) disable iff (rst) ((!if_flushpipe && (save_insn | !if_freeze)) |-> ##1 (addr_saved == {$past(icpu_adr_i[31:2]), 2'b00})) iff ((save_instruction == 1 || freeze == 0)  => (addr_saved == {addr_cache[ADDR_WIDTH-1:2], 2'b00})));
-assert property (@(posedge clk) disable iff (rst) (addr_saved == 32'h00000000));
-assert property (@(posedge clk) disable iff (rst) ((if_flushpipe) |-> ##1 (addr_saved == 32'h00000000)) iff (addr_saved == 32'h00000000));
-assert property (@(posedge clk) disable iff (rst) (if_flushpipe == 0 && save_insn |-> (err_saved[0] == ($past(icpu_err_i) & ($past(icpu_tag_i) == 4'hd)))));
-assert property (@(posedge clk) disable iff (rst) ((!if_flushpipe && save_insn) |-> ##1 (err_saved[0] == ($past(icpu_err_i) & ($past(icpu_tag_i) == 4'hd)))) iff (if_flushpipe == 0 && save_insn |-> (err_saved[0] == ($past(icpu_err_i) & ($past(icpu_tag_i) == 4'hd)))));
-assert property (@(posedge clk) disable iff (rst) (if_flushpipe == 1'b0 && save_insn |-> (err_saved[1] == (icpu_err_i[$past] & (icpu_tag_i[$past] == 4'hc)))));
-assert property (@(posedge clk) disable iff (rst) ((!if_flushpipe && save_insn) |-> ##1 (err_saved[1] == ($past(icpu_err_i) & ($past(icpu_tag_i) == 4'hc)))) iff (if_flushpipe == 1'b0 && save_insn |-> (err_saved[1] == (icpu_err_i[$past] & (icpu_tag_i[$past] == 4'hc)))));
+assert property (@(posedge clk) disable iff (rst) (save_instruction_condition -> nexttime(saved_flag == 1)));
+assert property (@(posedge clk) disable iff (rst) ((!if_flushpipe && save_insn) |-> ##1 saved == 1) iff (save_instruction_condition -> nexttime(saved_flag == 1)));
+assert property (@(posedge clk) disable iff (rst) (if_flushpipe | (!save_insn & !if_freeze) |=> (saved == 0)));
+assert property (@(posedge clk) disable iff (rst) ((if_flushpipe | (!save_insn && !if_freeze)) |-> ##1 saved == 0) iff (if_flushpipe | (!save_insn & !if_freeze) |=> (saved == 0)));
+assert property (@(posedge clk) disable iff (rst) (if_flushpipe == 0 && save_insn && icpu_err_i == 0 |=> (insn_saved == $past(icpu_dat_i))));
+assert property (@(posedge clk) disable iff (rst) ((!if_flushpipe && save_insn && !icpu_err_i) |-> ##1 (insn_saved == $past(icpu_dat_i))) iff (if_flushpipe == 0 && save_insn && icpu_err_i == 0 |=> (insn_saved == $past(icpu_dat_i))));
+assert property (@(posedge clk) disable iff (rst) ((if_flushpipe ||      (save_insn == 1'b0 &&      if_freeze == 1'b0 &&      icpu_err_i == 1'b0))      -> (insn_saved == {6'b000101, 26'h041_0000})));
+assert property (@(posedge clk) disable iff (rst) ((if_flushpipe | (!save_insn && !if_freeze) && !icpu_err_i) |-> ##1 (insn_saved == {6'b000101, 26'h041_0000})) iff ((if_flushpipe ||      (save_insn == 1'b0 &&      if_freeze == 1'b0 &&      icpu_err_i == 1'b0))      -> (insn_saved == {6'b000101, 26'h041_0000})));
+assert property (@(posedge clk) disable iff (rst) ((save_instruction == 1 || freeze_signal == 0)  => (addr_saved == { $past(icpu_adr_i[31:2]), 2'b00 })));
+assert property (@(posedge clk) disable iff (rst) ((!if_flushpipe && (save_insn | !if_freeze)) |-> ##1 (addr_saved == {$past(icpu_adr_i[31:2]), 2'b00})) iff ((save_instruction == 1 || freeze_signal == 0)  => (addr_saved == { $past(icpu_adr_i[31:2]), 2'b00 })));
+assert property (@(posedge clk) disable iff (rst) (addr_saved == 32'h00000000 when (if_flushpipe)));
+assert property (@(posedge clk) disable iff (rst) ((if_flushpipe) |-> ##1 (addr_saved == 32'h00000000)) iff (addr_saved == 32'h00000000 when (if_flushpipe)));
+assert property (@(posedge clk) disable iff (rst) (if_flushpipe == 1'b0 && save_insn |=> (err_saved[0] == (icpu_err_i && (icpu_tag_i == 4'hd)))));
+assert property (@(posedge clk) disable iff (rst) ((!if_flushpipe && save_insn) |-> ##1 (err_saved[0] == ($past(icpu_err_i) & ($past(icpu_tag_i) == 4'hd)))) iff (if_flushpipe == 1'b0 && save_insn |=> (err_saved[0] == (icpu_err_i && (icpu_tag_i == 4'hd)))));
+assert property (@(posedge clk) disable iff (rst) (saved == 1'b0 && !if_flushpipe && save_insn || (err_saved[1] == icpu_err_i && (icpu_tag_i == 4'hc))));
+assert property (@(posedge clk) disable iff (rst) ((!if_flushpipe && save_insn) |-> ##1 (err_saved[1] == ($past(icpu_err_i) & ($past(icpu_tag_i) == 4'hc)))) iff (saved == 1'b0 && !if_flushpipe && save_insn || (err_saved[1] == icpu_err_i && (icpu_tag_i == 4'hc))));
 assert property (@(posedge clk) disable iff (rst) (if_flushpipe == 1'b0 && save_insn |-> (err_saved[2] == (icpu_err_i && (icpu_tag_i == 4'hb)))));
 assert property (@(posedge clk) disable iff (rst) ((!if_flushpipe && save_insn) |-> ##1 (err_saved[2] == ($past(icpu_err_i) & ($past(icpu_tag_i) == 4'hb)))) iff (if_flushpipe == 1'b0 && save_insn |-> (err_saved[2] == (icpu_err_i && (icpu_tag_i == 4'hb)))));
-assert property (@(posedge clk) disable iff (rst) ((if_flushpipe == 1'b1 || (save_insn == 1'b0 && if_freeze == 1'b0))    |=> nexttime (err_saved == 3'b000)));
-assert property (@(posedge clk) disable iff (rst) ((if_flushpipe | (!save_insn && !if_freeze)) |-> ##1 (err_saved == 3'b000)) iff ((if_flushpipe == 1'b1 || (save_insn == 1'b0 && if_freeze == 1'b0))    |=> nexttime (err_saved == 3'b000)));
+assert property (@(posedge clk) disable iff (rst) (flush_signal == 1 || (save_instruction_condition == 0 && pipeline_freeze == 0) |=> (err_saved == 3'b000)));
+assert property (@(posedge clk) disable iff (rst) ((if_flushpipe | (!save_insn && !if_freeze)) |-> ##1 (err_saved == 3'b000)) iff (flush_signal == 1 || (save_instruction_condition == 0 && pipeline_freeze == 0) |=> (err_saved == 3'b000)));
 
 endmodule

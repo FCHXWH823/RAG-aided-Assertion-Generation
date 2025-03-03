@@ -178,15 +178,15 @@ assert property(@(posedge PCLK) (RX_EMPTY == 1) |-> (INT_RX == 1));
 
 assert property (@(posedge PCLK)  ((ERROR == 0) |-> (PSLVERR == 0)));
 assert property (@(posedge PCLK)  ((ERROR == 0) |-> (PSLVERR == 0)) iff ((ERROR == 0) |-> (PSLVERR == 0)));
-assert property (@(posedge PCLK)  ((ERROR == 1) |-> (PSLVERR == 1)));
-assert property (@(posedge PCLK)  ((ERROR == 1) |-> (PSLVERR == 1)) iff ((ERROR == 1) |-> (PSLVERR == 1)));
-assert property (@(posedge PCLK)  (fifo_empty == 1 |-> INT_TX == 1));
-assert property (@(posedge PCLK)  ((TX_EMPTY == 1) |-> (INT_TX == 1)) iff (fifo_empty == 1 |-> INT_TX == 1));
+assert property (@(posedge PCLK)  (ERROR == 1'b1 |-> PSLVERR == 1'b1));
+assert property (@(posedge PCLK)  ((ERROR == 1) |-> (PSLVERR == 1)) iff (ERROR == 1'b1 |-> PSLVERR == 1'b1));
+assert property (@(posedge PCLK)  (TX_EMPTY == 1 |-> INT_TX == 1));
+assert property (@(posedge PCLK)  ((TX_EMPTY == 1) |-> (INT_TX == 1)) iff (TX_EMPTY == 1 |-> INT_TX == 1));
 assert property (@(posedge PCLK)  (TX_EMPTY == 0 |-> INT_TX == 0));
 assert property (@(posedge PCLK)  ((TX_EMPTY == 0) |-> (INT_TX == 0)) iff (TX_EMPTY == 0 |-> INT_TX == 0));
-assert property (@(posedge PCLK)  (TX_EMPTY == 1'b0 |=> INT_RX == 1'b0));
-assert property (@(posedge PCLK)  ((RX_EMPTY == 0) |-> (INT_RX == 0)) iff (TX_EMPTY == 1'b0 |=> INT_RX == 1'b0));
-assert property (@(posedge PCLK)  (TX_EMPTY == 1 |-> INT_RX == 1));
-assert property (@(posedge PCLK)  ((RX_EMPTY == 1) |-> (INT_RX == 1)) iff (TX_EMPTY == 1 |-> INT_RX == 1));
+assert property (@(posedge PCLK)  (TX_EMPTY == 0 |=> INT_RX == 0));
+assert property (@(posedge PCLK)  ((RX_EMPTY == 0) |-> (INT_RX == 0)) iff (TX_EMPTY == 0 |=> INT_RX == 0));
+assert property (@(posedge PCLK)  (TX_EMPTY == 1 |=> INT_RX == 1));
+assert property (@(posedge PCLK)  ((RX_EMPTY == 1) |-> (INT_RX == 1)) iff (TX_EMPTY == 1 |=> INT_RX == 1));
 
 endmodule

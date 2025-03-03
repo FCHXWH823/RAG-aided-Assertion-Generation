@@ -17,17 +17,20 @@ PDF_Txt = config["PDF_Txt"]
 OpenAI_API_Key = config["Openai_API_Key"]
 Folder_Name = f"Book1-{PDF_Name}"
 
-# def collect_RAG_database():
-#     pdf_loader = PyMuPDFLoader(f"VerilogTextBooks/{PDF_Name}.pdf")
-#     documents = pdf_loader.load()
-#     print(len(documents))
-#     print(documents[0].page_content[0:100])
-#     print(documents[0].metadata)
-    
-#     text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
-#     chunks = text_splitter.split_documents(documents)
-#     vector_store = Chroma.from_documents(documents=chunks, embedding=OpenAIEmbeddings(openai_api_key=OpenAI_API_Key))
-#     return vector_store
+def collect_single_PDF_RAG_database():
+    pdf_loader = PyMuPDFLoader(f"VerilogTextBooks/{PDF_Name}.pdf")
+    documents = pdf_loader.load()
+    print(len(documents))
+    print(documents[0].page_content[0:100])
+    print(documents[0].metadata)
+    document = [documents[23]]
+    text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
+    chunks = text_splitter.split_documents(document)
+    for chunk in chunks:
+        print(chunk.page_content)
+        print("=======================")
+    vector_store = Chroma.from_documents(documents=chunks, embedding=OpenAIEmbeddings(openai_api_key=OpenAI_API_Key))
+    return vector_store
 
 
 def collect_RAG_database():
@@ -69,4 +72,4 @@ def collect_RAG_database():
     return vector_store
 
 
-collect_RAG_database()
+# collect_single_PDF_RAG_database()

@@ -23,6 +23,7 @@ PDF_Txt = config["PDF_Txt"]
 OpenAI_API_Key = config["Openai_API_Key"]
 Folder_Name = f"Book1-{PDF_Name}"
 Model_Name = config["Model_Name"]
+Excute_Folder = config["Excute_Folder"]
 # def build_rag_system(pdf_path):
 #     """
 #     1. Extract code blocks and text blocks from the PDF.
@@ -246,7 +247,7 @@ with open(f'Results/Dynamic-RAG-Openai-4o-mini-Prompted-Assertion-Generation-Res
     csv_writer = csv.writer(csv_file)
     csv_writer.writerow(['Master Module','Code','golden_assertions','llm_assertions'])
     for folder in os.listdir("Evaluation/Dataset/"):
-        if "a25_wishbone" not in folder:
+        if Excute_Folder != 'ALL_DESIGNS' and Excute_Folder not in folder:
             continue
         folder_path = os.path.join("Evaluation/Dataset/",folder)
         if os.path.isdir(folder_path):
@@ -272,7 +273,7 @@ with open(f'Results/Dynamic-RAG-Openai-4o-mini-Prompted-Assertion-Generation-Res
                 assertion_format = f"assert property (ONLY logical expression WITHOUT clock signal condition @(posedge clock) and WITHOUT disable condition disable iff(...));"
                 
 
-                prompt = f"Given Verilog code snippet as below: \n{code}\n Please generate such an assertion for it following the description:{explanation}\nThe output format should STRICTLY follow :\n{assertion_format}\nWITHOUT other things."
+                prompt = f"Given Verilog code snippet as below: \n{code}\n Please generate such a systemverilog assertion for it following the description:{explanation}. Ensure the syntax correctness and the used signals should be from the verilog code.\nThe output format should STRICTLY follow :\n{assertion_format}\nWITHOUT other things."
 
                 llm_result = rag_chain.invoke({"code":code,"input":explanation_queryexpand,"assertion_format":assertion_format})
                 llm_response = llm_result["answer"]

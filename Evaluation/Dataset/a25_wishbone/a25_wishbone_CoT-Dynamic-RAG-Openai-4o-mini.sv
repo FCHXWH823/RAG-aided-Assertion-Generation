@@ -452,17 +452,17 @@ assert property (@(posedge i_clk) (wishbone_st == WB_BURST3)&i_wb_ack |->##1 ( w
 assert property (@(posedge i_clk) (wishbone_st == WB_WAIT_ACK)&(extra_write_r || !i_wb_ack) |->##1 (wishbone_st == WB_WAIT_ACK));
 assert property (@(posedge i_clk) (wishbone_st == WB_WAIT_ACK)&(!extra_write_r && i_wb_ack) |->##1 (wishbone_st == WB_IDLE));
 
-assert property (@(posedge i_clk)  (wb_state == WB_IDLE |-> ##1 (wb_state == WB_IDLE || wb_state == WB_BURST1 || wb_state == WB_WAIT_ACK)));
-assert property (@(posedge i_clk)  ((wishbone_st == WB_IDLE) |-> ##1 (wishbone_st == WB_IDLE) | (wishbone_st == WB_BURST1) | (wishbone_st == WB_WAIT_ACK)) iff (wb_state == WB_IDLE |-> ##1 (wb_state == WB_IDLE || wb_state == WB_BURST1 || wb_state == WB_WAIT_ACK)));
-assert property (@(posedge i_clk)  ((wishbone_st == WB_BURST1 && i_wb_ack) |=> (wishbone_st == WB_BURST2)));
-assert property (@(posedge i_clk)  ((wishbone_st == WB_BURST1) & i_wb_ack |-> ##1 (wishbone_st == WB_BURST2)) iff ((wishbone_st == WB_BURST1 && i_wb_ack) |=> (wishbone_st == WB_BURST2)));
+assert property (@(posedge i_clk)  (wishbone_st == WB_IDLE |-> ##1 (wishbone_st == WB_IDLE || wishbone_st == WB_BURST1 || wishbone_st == WB_WAIT_ACK)));
+assert property (@(posedge i_clk)  ((wishbone_st == WB_IDLE) |-> ##1 (wishbone_st == WB_IDLE) | (wishbone_st == WB_BURST1) | (wishbone_st == WB_WAIT_ACK)) iff (wishbone_st == WB_IDLE |-> ##1 (wishbone_st == WB_IDLE || wishbone_st == WB_BURST1 || wishbone_st == WB_WAIT_ACK)));
+assert property (@(posedge i_clk)  (wishbone_st == WB_BURST1 && i_wb_ack |-> (wishbone_st == WB_BURST2)));
+assert property (@(posedge i_clk)  ((wishbone_st == WB_BURST1) & i_wb_ack |-> ##1 (wishbone_st == WB_BURST2)) iff (wishbone_st == WB_BURST1 && i_wb_ack |-> (wishbone_st == WB_BURST2)));
 assert property (@(posedge i_clk)  (wishbone_st == WB_BURST2 && i_wb_ack |-> (wishbone_st == WB_BURST3)));
 assert property (@(posedge i_clk)  ((wishbone_st == WB_BURST2) & i_wb_ack |->##1 (wishbone_st == WB_BURST3)) iff (wishbone_st == WB_BURST2 && i_wb_ack |-> (wishbone_st == WB_BURST3)));
-assert property (@(posedge i_clk)  (wb_st == WB_BURST3 && i_wb_ack |=> next(wb_st == WB_WAIT_ACK)));
-assert property (@(posedge i_clk)  ((wishbone_st == WB_BURST3) & i_wb_ack |->##1 ( wishbone_st == WB_WAIT_ACK)) iff (wb_st == WB_BURST3 && i_wb_ack |=> next(wb_st == WB_WAIT_ACK)));
-assert property (@(posedge i_clk)  ((wishbone_st == WB_WAIT_ACK && (extra_write_r || !i_wb_ack)) |=> (wishbone_st == WB_WAIT_ACK)));
-assert property (@(posedge i_clk)  ((wishbone_st == WB_WAIT_ACK) & (extra_write_r || !i_wb_ack) |->##1 (wishbone_st == WB_WAIT_ACK)) iff ((wishbone_st == WB_WAIT_ACK && (extra_write_r || !i_wb_ack)) |=> (wishbone_st == WB_WAIT_ACK)));
-assert property (@(posedge i_clk)  (wb_state == WB_WAIT_ACK && !extra_write_r && i_wb_ack |-> ##1 (wb_state == WB_IDLE) @(posedge clk) disable iff(...)));
-assert property (@(posedge i_clk)  ((wishbone_st == WB_WAIT_ACK) & (!extra_write_r && i_wb_ack) |->##1 (wishbone_st == WB_IDLE)) iff (wb_state == WB_WAIT_ACK && !extra_write_r && i_wb_ack |-> ##1 (wb_state == WB_IDLE) @(posedge clk) disable iff(...)));
+assert property (@(posedge i_clk)  (wishbone_st == WB_BURST3 && i_wb_ack |-> ##1 (wishbone_st == WB_WAIT_ACK)));
+assert property (@(posedge i_clk)  ((wishbone_st == WB_BURST3) & i_wb_ack |->##1 ( wishbone_st == WB_WAIT_ACK)) iff (wishbone_st == WB_BURST3 && i_wb_ack |-> ##1 (wishbone_st == WB_WAIT_ACK)));
+assert property (@(posedge i_clk)  ((wishbone_st == WB_WAIT_ACK) && (extra_write_r || !i_wb_ack) |-> (wishbone_st == WB_WAIT_ACK)));
+assert property (@(posedge i_clk)  ((wishbone_st == WB_WAIT_ACK) & (extra_write_r || !i_wb_ack) |->##1 (wishbone_st == WB_WAIT_ACK)) iff ((wishbone_st == WB_WAIT_ACK) && (extra_write_r || !i_wb_ack) |-> (wishbone_st == WB_WAIT_ACK)));
+assert property (@(posedge i_clk)  (wishbone_st == WB_WAIT_ACK && !extra_write_r && i_wb_ack |-> (wishbone_st == WB_IDLE)));
+assert property (@(posedge i_clk)  ((wishbone_st == WB_WAIT_ACK) & (!extra_write_r && i_wb_ack) |->##1 (wishbone_st == WB_IDLE)) iff (wishbone_st == WB_WAIT_ACK && !extra_write_r && i_wb_ack |-> (wishbone_st == WB_IDLE)));
 
 endmodule
