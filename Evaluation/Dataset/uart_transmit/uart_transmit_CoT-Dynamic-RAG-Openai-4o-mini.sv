@@ -36,7 +36,7 @@ module uart_transmit #(localparam d_width = 4, localparam c_width = 3) (input cl
 
 assert property(@(posedge clk) s_eventually rst == 1 || tx_state == 0);
 
-assert property (@(posedge clk)  (s_eventually (rst == 1) || s_eventually (tx_state == 0)));
-assert property (@(posedge clk)  (s_eventually rst == 1 || tx_state == 0) iff (s_eventually (rst == 1) || s_eventually (tx_state == 0)));
+assert property (@(posedge clk)  (rst == 1 || tx_state == 0));
+assert property (@(posedge clk)  (s_eventually rst == 1 || tx_state == 0) iff (rst == 1 || tx_state == 0));
 
 endmodule

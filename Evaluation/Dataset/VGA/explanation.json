@@ -14,6 +14,6 @@
     "||": "logical OR, evaluating to true if at least one operand is true",
     "==": "equality comparison operator"
   },
-  "Assertion Explaination": "eventually reset signal equals 1 or display enable signal equals 1"
+  "Assertion Explaination": "eventually, the reset signal equal 1 or the display enable signal equals 1"
 }
 }

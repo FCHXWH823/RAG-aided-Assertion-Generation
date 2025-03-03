@@ -14,6 +14,6 @@
       "==": "equal",
       "||": "or"
     },
-    "Assertion Explaination": "eventually reset signal equals 1 or transmitter state equals 0"
+    "Assertion Explaination": "eventually, reset signal equals 1 or transmitter state equals 0"
   }
 }

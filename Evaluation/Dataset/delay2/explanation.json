@@ -14,6 +14,6 @@
       "||": "or",
       "==": "equal"
     },
-    "Assertion Explaination": "eventually reset signal is asserted or output signal equals 1"
+    "Assertion Explaination": "eventually, reset signal is asserted or output signal equals 1"
   }
 }

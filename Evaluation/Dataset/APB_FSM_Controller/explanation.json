@@ -15,7 +15,7 @@
       "==": "equal",
       "$past": "the value from previous clock cycle(s)"
     },
-    "Assertion Explaination": "Property to verify that PRESENT_STATE becomes NEXT_STATE one cycle later"
+    "Assertion Explaination": "Property to verify that PRESENT_STATE becomes NEXT_STATE two cycles later"
   },
   "Assertion 2": {
     "clock signal condition": "@(posedge Hclk)",

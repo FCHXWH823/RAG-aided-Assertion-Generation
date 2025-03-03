@@ -23,6 +23,6 @@
       "==": "equal",
       "||": "or"
     },
-    "Assertion Explaination": "eventually reset signal equals 1 or input signal indicating that scl is not enabled equals 1 or internal signal that indicates if clock stretching is occurring equals 1"
+    "Assertion Explaination": "eventually, reset signal equals 1 or input signal indicating that scl is not enabled equals 1 or internal signal that indicates if clock stretching is occurring equals 1"
   }
 }

@@ -14,7 +14,7 @@
     "==": "equal",
     "||": "or"
   },
-  "Assertion Explaination": "eventually reset signal equals 1 or digit selection register equals 1"
+  "Assertion Explaination": "eventually, reset signal equals 1 or digit selection register equals 1"
 },
 "Assertion 2": {
   "clock signal condition": "@(posedge clk)",
@@ -31,6 +31,6 @@
     "==": "equal",
     "||": "or"
   },
-  "Assertion Explaination": "eventually reset signal equals 1 or digit selection register equals 0"
+  "Assertion Explaination": "eventually, reset signal equals 1 or digit selection register equals 0"
 }
 }

@@ -14,6 +14,6 @@
       "||": "or",
       "==": "equal"
     },
-    "Assertion Explaination": "eventually reset signal is set or signal that indicates when the computed Gray code counter equals 0 is set (1)"
+    "Assertion Explaination": "eventually, the reset signal equals 1 or the signal that indicates when the Gray code counter equals 0 equals 1"
   }
 }

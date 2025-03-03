@@ -130,7 +130,7 @@ system_prompt = (
 prompt = ChatPromptTemplate.from_messages(
     [
         ("system", system_prompt),
-        ("human","Given Verilog code snippet as below: \n{code}\n Use these property operations:\n{property_operators},\nto generate a systemverilog assertion following the description:\n{input}\nfor the given verilog code. Ensure the systemverilog syntax correctness and the used signals should be from the verilog code.\nThe output format should STRICTLY follow :\n{assertion_format}\nWITHOUT other things."),
+        ("human","Given Verilog code snippet as below: \n{code}\n Use these property operators:\n{property_operators},\nto generate a systemverilog assertion following the description:\n{input}\nfor the given verilog code. Ensure the systemverilog syntax correctness and the used signals should be from the verilog code.\nThe output format should STRICTLY follow :\n{assertion_format}\nWITHOUT other things."),
     ]
 )
 
@@ -148,7 +148,7 @@ prompt_checker = ChatPromptTemplate.from_messages(
 )
 
 system_prompt_operation_extractor = (
-    "You are a helpful bot that extract the property operation description from the given natural language."
+    "You are a helpful bot that extract the property operations from the given natural language."
     "Use the following pieces of retrieved context to help answer the question. "
     "\n\n"
     "{context}"
@@ -156,7 +156,7 @@ system_prompt_operation_extractor = (
 prompt_operation_extractor = ChatPromptTemplate.from_messages(
     [
         ("system", system_prompt_operation_extractor),
-        ("human","{input}"),
+        ("human","Please get all needed property operations for implementing the systemverilog assertion following the given natural language description: \n{input}\nThe output format should follow the format as follows:\nproperty operation 1: ...\nproperty operation 2: ...\n...\nFor example, given the natural language description of a systemverilog assertion as follows:\n`when enable signal is set (1), then output signal equals the last one clock cycle's input signal from the next clock cycle`\nThe property operations should be:\nproperty operation 1: when ..., then ... (|->)\nproperty operation 2: last one cycle’s input signal ($past())\nproperty operation 3: from the next clock cycle (##1)"),
     ]
 )
 
@@ -270,10 +270,9 @@ def Property_Operation_Prompt(assertion_explanation):
     property operation 2: ...
     ...
     For example, given the natural language description of a systemverilog assertion as follows:
-    `when enable signal is set (1), then eventually output signal equals the last one clock cycle's input signal from the next clock cycle`
+    `when enable signal is set (1), then output signal equals the last one clock cycle's input signal from the next clock cycle`
     The property operations should be:
     property operation 1: when ..., then ... (|->)
-    property operation 2: eventually... (s_eventually)
     property operation 2: last one cycle’s input signal ($past())
     property operation 3: from the next clock cycle (##1)
     '''
@@ -306,7 +305,9 @@ with open(f'Results/Dynamic-RAG-Openai-4o-mini-Prompted-Assertion-Generation-Res
     csv_writer = csv.writer(csv_file)
     csv_writer.writerow(['Master Module','Code','golden_assertions','llm_assertions'])
     for folder in os.listdir("Evaluation/Dataset/"):
-        if Excute_Folder != 'ALL_DESIGNS' and Excute_Folder not in folder:
+        # if Excute_Folder != 'ALL_DESIGNS' and Excute_Folder not in folder:
+        #     continue
+        if "VGA" not in folder:
             continue
         folder_path = os.path.join("Evaluation/Dataset/",folder)
         if os.path.isdir(folder_path):
@@ -343,7 +344,7 @@ with open(f'Results/Dynamic-RAG-Openai-4o-mini-Prompted-Assertion-Generation-Res
                 # ]
                 # )
                 # operations = completion.choices[0].message.content
-                operations = rag_chain_operation_extractor.invoke({"input":operation_extraction_prompt})["answer"]
+                operations = rag_chain_operation_extractor.invoke({"input":explanation})["answer"]
         
                 # systemverilog property operator matching
                 operator_match_prompt = Property_Operator_Prompt(explanation,operations)

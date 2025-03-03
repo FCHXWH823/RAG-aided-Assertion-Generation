@@ -50,8 +50,8 @@ assert property(@(posedge clk) disable iff (rst) valid_wr |-> !full);
 
 assert property(@(posedge clk) disable iff (rst) valid_rd |-> !empty);
 
-assert property (@(posedge clk) disable iff (rst) (valid_wr == 1 |=> full == 0));
-assert property (@(posedge clk) disable iff (rst) (valid_wr |-> !full) iff (valid_wr == 1 |=> full == 0));
+assert property (@(posedge clk) disable iff (rst) (valid_wr |-> !full));
+assert property (@(posedge clk) disable iff (rst) (valid_wr |-> !full) iff (valid_wr |-> !full));
 assert property (@(posedge clk) disable iff (rst) (valid_rd |=> !empty));
 assert property (@(posedge clk) disable iff (rst) (valid_rd |-> !empty) iff (valid_rd |=> !empty));
 
