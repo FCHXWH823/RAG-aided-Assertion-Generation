@@ -1,6 +1,6 @@
-Openai_API_Key: 
+Openai_API_Key: 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
 PDF_Name: The Power of Assertions in SystemVerilog
 PDF_Txt: AllTextbooks.txt
 JasperGold_VERIFY: 1
 Model_Name: gpt-4o-mini
-Excute_Folder: ALL_DESIGNS
+Excute_Folder: gray
