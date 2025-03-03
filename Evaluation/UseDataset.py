@@ -101,6 +101,7 @@ def generate_fpv():
             fpv_tcl_RAG_openai_4o = fpv_tcl.replace(f"./{folder}_assertion.sv",f"./{folder}_RAG-Openai-4o-mini.sv").replace("fpv.rpt","fpv_RAG-Openai-4o-mini.rpt")
             fpv_tcl_Dynamic_RAG_openai_4o = fpv_tcl.replace(f"./{folder}_assertion.sv",f"./{folder}_Dynamic-RAG-Openai-4o-mini.sv").replace("fpv.rpt","fpv_Dynamic-RAG-Openai-4o-mini.rpt")
             fpv_tcl_QueryExpand_Dynamic_RAG_openai_4o = fpv_tcl.replace(f"./{folder}_assertion.sv",f"./{folder}_QueryExpand-Dynamic-RAG-Openai-4o-mini.sv").replace("fpv.rpt","fpv_QueryExpand-Dynamic-RAG-Openai-4o-mini.rpt")
+            fpv_tcl_CoT_Dynamic_RAG_openai_4o = fpv_tcl.replace(f"./{folder}_assertion.sv",f"./{folder}_CoT-Dynamic-RAG-Openai-4o-mini.sv").replace("fpv.rpt","fpv_CoT-Dynamic-RAG-Openai-4o-mini.rpt")
 
             with open(f"{folder_path}/fpv_Openai-4o-mini.tcl","w") as file:
                 file.write(fpv_tcl_openai_4o)
@@ -113,6 +114,9 @@ def generate_fpv():
 
             with open(f"{folder_path}/fpv_QueryExpand_Dynamic_RAG_Openai-4o-mini.tcl","w") as file:
                 file.write(fpv_tcl_QueryExpand_Dynamic_RAG_openai_4o)
+            
+            with open(f"{folder_path}/fpv_CoT_Dynamic_RAG_Openai-4o-mini.tcl","w") as file:
+                file.write(fpv_tcl_CoT_Dynamic_RAG_openai_4o)
             
             
             
