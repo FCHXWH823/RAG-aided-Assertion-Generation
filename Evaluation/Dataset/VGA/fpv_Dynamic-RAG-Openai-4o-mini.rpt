@@ -5,7 +5,7 @@
     2022.09p001 64 bits for Linux64 3.10.0-1062.1.2.el7.x86_64
     Host Name: icpc
     User Name: master
-    Printed on: Tuesday, Feb25, 2025 12:22:50 AM CST
+    Printed on: Tuesday, Mar 4, 2025 04:14:01 PM CST
     Working Directory: /home/master/RAG-aided-Assertion-Generation/Evaluation/Dataset/VGA
 
 
@@ -42,8 +42,8 @@ RESULTS
 ----------------------------------------------------------------------------------------
 
 ---[ <embedded> ]-----------------------------------------------------------------------
-[1]   VGA._assert_1                         proven          Tri         (0)    1.492 s      
+[1]   VGA._assert_1                         proven          Tri         (0)    1.451 s      
 [2]   VGA._assert_2                         cex             PRE           1    0.000 s      
-[3]   VGA._assert_3                         cex             Ht     2 + 1848    9.262 s      
+[3]   VGA._assert_3                         cex             Ht     2 + 1848    11.466 s     
 [4]   VGA._assert_3:precondition1           covered         PRE           2    0.000 s      
 [5]   VGA._assert_3:precondition2           covered         PRE           2    0.000 s      

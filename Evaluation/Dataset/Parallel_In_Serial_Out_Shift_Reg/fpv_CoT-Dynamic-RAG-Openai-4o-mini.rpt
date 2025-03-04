@@ -1,0 +1,53 @@
+
+==============================================================
+    Jasper Verification Results
+==============================================================
+    2022.09p001 64 bits for Linux64 3.10.0-1062.1.2.el7.x86_64
+    Host Name: icpc
+    User Name: master
+    Printed on: Tuesday, Mar 4, 2025 03:30:56 PM CST
+    Working Directory: /home/master/RAG-aided-Assertion-Generation/Evaluation/Dataset/Parallel_In_Serial_Out_Shift_Reg
+
+
+==============================================================
+SUMMARY
+==============================================================
+    Total Tasks           : 1
+    Total Properties      : 9
+          assumptions     : 0                   
+           - approved     : 0                   
+           - temporary    : 0                   
+          assertions      : 3                   
+           - proven       : 3                   ( 100.0% )
+           - marked_proven: 0                   ( 0.0% )
+           - cex          : 0                   ( 0.0% )
+           - ar_cex       : 0                   ( 0.0% )
+           - undetermined : 0                   ( 0.0% )
+           - unprocessed  : 0                   ( 0.0% )
+           - error        : 0                   ( 0.0% )
+          covers          : 6                   
+           - unreachable  : 4                   ( 66.7% )
+           - covered      : 2                   ( 33.3% )
+           - ar_covered   : 0                   ( 0.0% )
+           - undetermined : 0                   ( 0.0% )
+           - unprocessed  : 0                   ( 0.0% )
+           - error        : 0                   ( 0.0% )
+
+==============================================================
+RESULTS
+==============================================================
+
+---------------------------------------------------------------------------------------------------------------------
+       Name                                                         |    Result    |  Engine  |  Bound  |  Time    
+---------------------------------------------------------------------------------------------------------------------
+
+---[ <embedded> ]----------------------------------------------------------------------------------------------------
+[1]   Parallel_In_Serial_Out_Shift_Reg._assert_1                         proven          N      Infinite    0.001 s      
+[2]   Parallel_In_Serial_Out_Shift_Reg._assert_2                         proven          PRE    Infinite    0.000 s      
+[3]   Parallel_In_Serial_Out_Shift_Reg._assert_2:precondition1           unreachable     PRE    Infinite    0.000 s      
+[4]   Parallel_In_Serial_Out_Shift_Reg._assert_2:precondition2           unreachable     PRE    Infinite    0.000 s      
+[5]   Parallel_In_Serial_Out_Shift_Reg._assert_3                         proven          N      Infinite    0.001 s      
+[6]   Parallel_In_Serial_Out_Shift_Reg._assert_3:precondition1           covered         PRE           1    0.000 s      
+[7]   Parallel_In_Serial_Out_Shift_Reg._assert_3:precondition2           covered         PRE           1    0.000 s      
+[8]   Parallel_In_Serial_Out_Shift_Reg._assert_3:precondition3           unreachable     PRE    Infinite    0.000 s      
+[9]   Parallel_In_Serial_Out_Shift_Reg._assert_3:precondition4           unreachable     PRE    Infinite    0.000 s      

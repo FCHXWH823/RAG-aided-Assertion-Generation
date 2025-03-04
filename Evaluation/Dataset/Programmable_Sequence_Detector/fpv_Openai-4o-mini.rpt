@@ -5,7 +5,7 @@
     2022.09p001 64 bits for Linux64 3.10.0-1062.1.2.el7.x86_64
     Host Name: icpc
     User Name: master
-    Printed on: Monday, Feb24, 2025 11:45:10 PM CST
+    Printed on: Tuesday, Mar 4, 2025 04:34:04 PM CST
     Working Directory: /home/master/RAG-aided-Assertion-Generation/Evaluation/Dataset/Programmable_Sequence_Detector
 
 
@@ -13,7 +13,7 @@
 SUMMARY
 ==============================================================
     Total Tasks           : 1
-    Total Properties      : 3
+    Total Properties      : 7
           assumptions     : 0                   
            - approved     : 0                   
            - temporary    : 0                   
@@ -25,23 +25,27 @@ SUMMARY
            - undetermined : 0                   ( 0.0% )
            - unprocessed  : 0                   ( 0.0% )
            - error        : 0                   ( 0.0% )
-          covers          : 0                   
-           - unreachable  : 0                   
-           - covered      : 0                   
-           - ar_covered   : 0                   
-           - undetermined : 0                   
-           - unprocessed  : 0                   
-           - error        : 0                   
+          covers          : 4                   
+           - unreachable  : 0                   ( 0.0% )
+           - covered      : 4                   ( 100.0% )
+           - ar_covered   : 0                   ( 0.0% )
+           - undetermined : 0                   ( 0.0% )
+           - unprocessed  : 0                   ( 0.0% )
+           - error        : 0                   ( 0.0% )
 
 ==============================================================
 RESULTS
 ==============================================================
 
------------------------------------------------------------------------------------------------------
-       Name                                         |    Result    |  Engine  |  Bound  |  Time    
------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------
+       Name                                                       |    Result    |  Engine  |  Bound  |  Time    
+-------------------------------------------------------------------------------------------------------------------
 
----[ <embedded> ]------------------------------------------------------------------------------------
-[1]   Programmable_Sequence_Detector._assert_1           proven          PRE    Infinite    0.000 s      
-[2]   Programmable_Sequence_Detector._assert_2           proven          PRE    Infinite    0.000 s      
-[3]   Programmable_Sequence_Detector._assert_3           proven          PRE    Infinite    0.000 s      
+---[ <embedded> ]--------------------------------------------------------------------------------------------------
+[1]   Programmable_Sequence_Detector._assert_1                         proven          PRE    Infinite    0.000 s      
+[2]   Programmable_Sequence_Detector._assert_2                         proven          PRE    Infinite    0.000 s      
+[3]   Programmable_Sequence_Detector._assert_3                         proven          PRE    Infinite    0.000 s      
+[4]   Programmable_Sequence_Detector._assert_3:precondition1           covered         PRE           1    0.000 s      
+[5]   Programmable_Sequence_Detector._assert_3:precondition2           covered         N             1    0.001 s      
+[6]   Programmable_Sequence_Detector._assert_3:precondition3           covered         PRE           1    0.000 s      
+[7]   Programmable_Sequence_Detector._assert_3:precondition4           covered         PRE           1    0.000 s      

@@ -5,7 +5,7 @@
     2022.09p001 64 bits for Linux64 3.10.0-1062.1.2.el7.x86_64
     Host Name: icpc
     User Name: master
-    Printed on: Tuesday, Feb25, 2025 12:08:28 AM CST
+    Printed on: Tuesday, Mar 4, 2025 03:45:02 PM CST
     Working Directory: /home/master/RAG-aided-Assertion-Generation/Evaluation/Dataset/simple_router
 
 
@@ -18,9 +18,9 @@ SUMMARY
            - approved     : 0                   
            - temporary    : 0                   
           assertions      : 15                  
-           - proven       : 13                  ( 86.7% )
+           - proven       : 15                  ( 100.0% )
            - marked_proven: 0                   ( 0.0% )
-           - cex          : 2                   ( 13.3% )
+           - cex          : 0                   ( 0.0% )
            - ar_cex       : 0                   ( 0.0% )
            - undetermined : 0                   ( 0.0% )
            - unprocessed  : 0                   ( 0.0% )
@@ -43,31 +43,31 @@ RESULTS
 
 ---[ <embedded> ]----------------------------------------------------------------------------------
 [1]   simple_router._assert_1                          proven          N      Infinite    0.001 s      
-[2]   simple_router._assert_2                          proven          N      Infinite    0.000 s      
-[3]   simple_router._assert_3                          proven          Hp     Infinite    0.001 s      
-[4]   simple_router._assert_4                          proven          Hp     Infinite    0.001 s      
-[5]   simple_router._assert_5                          proven          Hp     Infinite    0.002 s      
+[2]   simple_router._assert_2                          proven          N      Infinite    0.001 s      
+[3]   simple_router._assert_3                          proven          N      Infinite    0.000 s      
+[4]   simple_router._assert_4                          proven          N      Infinite    0.001 s      
+[5]   simple_router._assert_5                          proven          N      Infinite    0.001 s      
 [6]   simple_router._assert_6                          proven          N      Infinite    0.001 s      
 [7]   simple_router._assert_7                          proven          PRE    Infinite    0.000 s      
-[8]   simple_router._assert_8                          cex             Hp            2    0.005 s      
-[9]   simple_router._assert_8:precondition1            covered         Hp            1    0.003 s      
-[10]  simple_router._assert_9                          cex             Hp            2    0.005 s      
+[8]   simple_router._assert_8                          proven          N      Infinite    0.001 s      
+[9]   simple_router._assert_8:precondition1            covered         N             1    0.000 s      
+[10]  simple_router._assert_9                          proven          PRE    Infinite    0.000 s      
 [11]  simple_router._assert_9:precondition1            covered         PRE           1    0.000 s      
 [12]  simple_router._assert_9:precondition2            covered         PRE           1    0.000 s      
-[13]  simple_router._assert_9:precondition3            covered         Hp            1    0.003 s      
-[14]  simple_router._assert_10                         proven          Hp     Infinite    0.001 s      
-[15]  simple_router._assert_10:precondition1           covered         Hp            1    0.003 s      
+[13]  simple_router._assert_9:precondition3            covered         N             1    0.000 s      
+[14]  simple_router._assert_10                         proven          N      Infinite    0.001 s      
+[15]  simple_router._assert_10:precondition1           covered         N             1    0.000 s      
 [16]  simple_router._assert_11                         proven          PRE    Infinite    0.000 s      
 [17]  simple_router._assert_11:precondition1           covered         PRE           1    0.000 s      
 [18]  simple_router._assert_11:precondition2           covered         PRE           1    0.000 s      
-[19]  simple_router._assert_11:precondition3           covered         Hp            1    0.003 s      
-[20]  simple_router._assert_12                         proven          Hp     Infinite    0.002 s      
-[21]  simple_router._assert_12:precondition1           covered         Hp            1    0.004 s      
+[19]  simple_router._assert_11:precondition3           covered         N             1    0.000 s      
+[20]  simple_router._assert_12                         proven          N      Infinite    0.001 s      
+[21]  simple_router._assert_12:precondition1           covered         N             1    0.000 s      
 [22]  simple_router._assert_13                         proven          PRE    Infinite    0.000 s      
 [23]  simple_router._assert_13:precondition1           covered         PRE           1    0.000 s      
 [24]  simple_router._assert_13:precondition2           covered         PRE           1    0.000 s      
-[25]  simple_router._assert_13:precondition3           covered         Hp            1    0.004 s      
-[26]  simple_router._assert_14                         proven          Hp     Infinite    0.002 s      
+[25]  simple_router._assert_13:precondition3           covered         N             1    0.000 s      
+[26]  simple_router._assert_14                         proven          N      Infinite    0.001 s      
 [27]  simple_router._assert_14:precondition1           covered         PRE           1    0.000 s      
 [28]  simple_router._assert_15                         proven          PRE    Infinite    0.000 s      
 [29]  simple_router._assert_15:precondition1           covered         PRE           1    0.000 s      

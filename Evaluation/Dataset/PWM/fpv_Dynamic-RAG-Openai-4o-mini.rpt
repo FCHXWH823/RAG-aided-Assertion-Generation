@@ -5,7 +5,7 @@
     2022.09p001 64 bits for Linux64 3.10.0-1062.1.2.el7.x86_64
     Host Name: icpc
     User Name: master
-    Printed on: Tuesday, Feb25, 2025 12:06:58 AM CST
+    Printed on: Tuesday, Mar 4, 2025 03:53:11 PM CST
     Working Directory: /home/master/RAG-aided-Assertion-Generation/Evaluation/Dataset/PWM
 
 
@@ -13,7 +13,7 @@
 SUMMARY
 ==============================================================
     Total Tasks           : 1
-    Total Properties      : 7
+    Total Properties      : 5
           assumptions     : 0                   
            - approved     : 0                   
            - temporary    : 0                   
@@ -25,9 +25,9 @@ SUMMARY
            - undetermined : 0                   ( 0.0% )
            - unprocessed  : 0                   ( 0.0% )
            - error        : 0                   ( 0.0% )
-          covers          : 4                   
+          covers          : 2                   
            - unreachable  : 0                   ( 0.0% )
-           - covered      : 4                   ( 100.0% )
+           - covered      : 2                   ( 100.0% )
            - ar_covered   : 0                   ( 0.0% )
            - undetermined : 0                   ( 0.0% )
            - unprocessed  : 0                   ( 0.0% )
@@ -42,10 +42,8 @@ RESULTS
 ----------------------------------------------------------------------------------------
 
 ---[ <embedded> ]-----------------------------------------------------------------------
-[1]   PWM._assert_1                         proven          Tri         (0)    0.940 s      
-[2]   PWM._assert_2                         cex             Tri    2 + 1024    1.067 s      
-[3]   PWM._assert_2:precondition1           covered         PRE           1    0.000 s      
-[4]   PWM._assert_3                         cex             Tri    2 + 1024    1.079 s      
-[5]   PWM._assert_3:precondition1           covered         PRE           1    0.000 s      
-[6]   PWM._assert_3:precondition2           covered         PRE           1    0.000 s      
-[7]   PWM._assert_3:precondition3           covered         PRE           1    0.000 s      
+[1]   PWM._assert_1                         proven          Tri         (0)    1.189 s      
+[2]   PWM._assert_2                         cex             PRE           1    0.000 s      
+[3]   PWM._assert_3                         cex             Tri    1 + 1024    1.049 s      
+[4]   PWM._assert_3:precondition1           covered         Hp            2    0.000 s      
+[5]   PWM._assert_3:precondition2           covered         PRE           1    0.000 s      

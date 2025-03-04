@@ -5,7 +5,7 @@
     2022.09p001 64 bits for Linux64 3.10.0-1062.1.2.el7.x86_64
     Host Name: icpc
     User Name: master
-    Printed on: Monday, Feb24, 2025 04:03:02 PM CST
+    Printed on: Tuesday, Mar 4, 2025 02:27:15 PM CST
     Working Directory: /home/master/RAG-aided-Assertion-Generation/Evaluation/Dataset/i2c
 
 
@@ -42,8 +42,8 @@ RESULTS
 ----------------------------------------------------------------------------------------
 
 ---[ <embedded> ]-----------------------------------------------------------------------
-[1]   i2c._assert_1                         proven          Tri         (0)    1.179 s      
+[1]   i2c._assert_1                         proven          Tri         (0)    1.351 s      
 [2]   i2c._assert_2                         cex             PRE           1    0.000 s      
-[3]   i2c._assert_3                         cex             Ht      2 + 500    0.402 s      
+[3]   i2c._assert_3                         cex             Ht      2 + 500    0.355 s      
 [4]   i2c._assert_3:precondition1           covered         PRE           1    0.000 s      
 [5]   i2c._assert_3:precondition2           covered         PRE           1    0.000 s      

@@ -5,7 +5,7 @@
     2022.09p001 64 bits for Linux64 3.10.0-1062.1.2.el7.x86_64
     Host Name: icpc
     User Name: master
-    Printed on: Friday, Feb21, 2025 08:22:00 PM CST
+    Printed on: Tuesday, Mar 4, 2025 01:54:05 PM CST
     Working Directory: /home/master/RAG-aided-Assertion-Generation/Evaluation/Dataset/Flip_Flop_Array
 
 
@@ -13,21 +13,21 @@
 SUMMARY
 ==============================================================
     Total Tasks           : 1
-    Total Properties      : 12
+    Total Properties      : 17
           assumptions     : 0                   
            - approved     : 0                   
            - temporary    : 0                   
-          assertions      : 7                   
-           - proven       : 7                   ( 100.0% )
+          assertions      : 9                   
+           - proven       : 9                   ( 100.0% )
            - marked_proven: 0                   ( 0.0% )
            - cex          : 0                   ( 0.0% )
            - ar_cex       : 0                   ( 0.0% )
            - undetermined : 0                   ( 0.0% )
            - unprocessed  : 0                   ( 0.0% )
            - error        : 0                   ( 0.0% )
-          covers          : 5                   
+          covers          : 8                   
            - unreachable  : 0                   ( 0.0% )
-           - covered      : 5                   ( 100.0% )
+           - covered      : 8                   ( 100.0% )
            - ar_covered   : 0                   ( 0.0% )
            - undetermined : 0                   ( 0.0% )
            - unprocessed  : 0                   ( 0.0% )
@@ -48,9 +48,14 @@ RESULTS
 [4]   Flip_Flop_Array._assert_4                         proven          PRE    Infinite    0.000 s      
 [5]   Flip_Flop_Array._assert_4:precondition1           covered         PRE           1    0.000 s      
 [6]   Flip_Flop_Array._assert_5                         proven          PRE    Infinite    0.000 s      
-[7]   Flip_Flop_Array._assert_6                         proven          PRE    Infinite    0.000 s      
-[8]   Flip_Flop_Array._assert_6:precondition1           covered         PRE           1    0.000 s      
-[9]   Flip_Flop_Array._assert_7                         proven          PRE    Infinite    0.000 s      
-[10]  Flip_Flop_Array._assert_7:precondition1           covered         Hp            1    0.001 s      
-[11]  Flip_Flop_Array._assert_7:precondition2           covered         PRE           1    0.000 s      
-[12]  Flip_Flop_Array._assert_7:precondition3           covered         PRE           1    0.000 s      
+[7]   Flip_Flop_Array._assert_5:precondition1           covered         PRE           1    0.000 s      
+[8]   Flip_Flop_Array._assert_5:precondition2           covered         PRE           1    0.000 s      
+[9]   Flip_Flop_Array._assert_5:precondition3           covered         PRE           1    0.000 s      
+[10]  Flip_Flop_Array._assert_6                         proven          PRE    Infinite    0.000 s      
+[11]  Flip_Flop_Array._assert_6:precondition1           covered         PRE           1    0.000 s      
+[12]  Flip_Flop_Array._assert_7                         proven          PRE    Infinite    0.000 s      
+[13]  Flip_Flop_Array._assert_7:precondition1           covered         PRE           1    0.000 s      
+[14]  Flip_Flop_Array._assert_7:precondition2           covered         PRE           1    0.000 s      
+[15]  Flip_Flop_Array._assert_7:precondition3           covered         PRE           1    0.000 s      
+[16]  Flip_Flop_Array._assert_8                         proven          PRE    Infinite    0.000 s      
+[17]  Flip_Flop_Array._assert_9                         proven          PRE    Infinite    0.000 s      

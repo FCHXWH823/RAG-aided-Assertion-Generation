@@ -1,0 +1,104 @@
+
+==============================================================
+    Jasper Verification Results
+==============================================================
+    2022.09p001 64 bits for Linux64 3.10.0-1062.1.2.el7.x86_64
+    Host Name: icpc
+    User Name: master
+    Printed on: Tuesday, Mar 4, 2025 01:40:29 PM CST
+    Working Directory: /home/master/RAG-aided-Assertion-Generation/Evaluation/Dataset/arbiter
+
+
+==============================================================
+SUMMARY
+==============================================================
+    Total Tasks           : 1
+    Total Properties      : 60
+          assumptions     : 0                   
+           - approved     : 0                   
+           - temporary    : 0                   
+          assertions      : 24                  
+           - proven       : 16                  ( 66.7% )
+           - marked_proven: 0                   ( 0.0% )
+           - cex          : 8                   ( 33.3% )
+           - ar_cex       : 0                   ( 0.0% )
+           - undetermined : 0                   ( 0.0% )
+           - unprocessed  : 0                   ( 0.0% )
+           - error        : 0                   ( 0.0% )
+          covers          : 36                  
+           - unreachable  : 0                   ( 0.0% )
+           - covered      : 36                  ( 100.0% )
+           - ar_covered   : 0                   ( 0.0% )
+           - undetermined : 0                   ( 0.0% )
+           - unprocessed  : 0                   ( 0.0% )
+           - error        : 0                   ( 0.0% )
+
+==============================================================
+RESULTS
+==============================================================
+
+---------------------------------------------------------------------------------------------
+       Name                                 |    Result    |  Engine  |  Bound  |  Time    
+---------------------------------------------------------------------------------------------
+
+---[ <embedded> ]----------------------------------------------------------------------------
+[1]   arbiter._assert_1                          proven          N      Infinite    0.001 s      
+[2]   arbiter._assert_1:precondition1            covered         N             2    0.001 s      
+[3]   arbiter._assert_2                          proven          N      Infinite    0.000 s      
+[4]   arbiter._assert_2:precondition1            covered         Hp            2    0.009 s      
+[5]   arbiter._assert_3                          proven          Hp     Infinite    0.007 s      
+[6]   arbiter._assert_3:precondition1            covered         Hp            2    0.009 s      
+[7]   arbiter._assert_4                          proven          Hp     Infinite    0.007 s      
+[8]   arbiter._assert_4:precondition1            covered         Hp            2    0.010 s      
+[9]   arbiter._assert_5                          proven          Hp     Infinite    0.007 s      
+[10]  arbiter._assert_5:precondition1            covered         Hp            2    0.011 s      
+[11]  arbiter._assert_6                          proven          Hp     Infinite    0.007 s      
+[12]  arbiter._assert_6:precondition1            covered         Hp            2    0.011 s      
+[13]  arbiter._assert_7                          proven          Hp     Infinite    0.007 s      
+[14]  arbiter._assert_7:precondition1            covered         Hp            2    0.018 s      
+[15]  arbiter._assert_8                          proven          Hp     Infinite    0.007 s      
+[16]  arbiter._assert_8:precondition1            covered         Hp            2    0.020 s      
+[17]  arbiter._assert_9                          proven          Hp     Infinite    0.007 s      
+[18]  arbiter._assert_9:precondition1            covered         Hp            2    0.021 s      
+[19]  arbiter._assert_10                         proven          Hp     Infinite    0.007 s      
+[20]  arbiter._assert_10:precondition1           covered         Hp            2    0.024 s      
+[21]  arbiter._assert_11                         proven          Hp     Infinite    0.007 s      
+[22]  arbiter._assert_11:precondition1           covered         Hp            2    0.025 s      
+[23]  arbiter._assert_12                         proven          Hp     Infinite    0.008 s      
+[24]  arbiter._assert_12:precondition1           covered         Hp            2    0.028 s      
+[25]  arbiter._assert_13                         proven          Hp     Infinite    0.008 s      
+[26]  arbiter._assert_13:precondition1           covered         Hp            2    0.029 s      
+[27]  arbiter._assert_14                         proven          Hp     Infinite    0.008 s      
+[28]  arbiter._assert_14:precondition1           covered         Hp            2    0.030 s      
+[29]  arbiter._assert_15                         proven          Hp     Infinite    0.008 s      
+[30]  arbiter._assert_15:precondition1           covered         Hp            2    0.032 s      
+[31]  arbiter._assert_16                         proven          Hp     Infinite    0.008 s      
+[32]  arbiter._assert_16:precondition1           covered         Hp            2    0.033 s      
+[33]  arbiter._assert_17                         cex             Hp            2    0.011 s      
+[34]  arbiter._assert_17:precondition1           covered         N             2    0.001 s      
+[35]  arbiter._assert_18                         cex             Hp            2    0.011 s      
+[36]  arbiter._assert_18:precondition1           covered         PRE           1    0.000 s      
+[37]  arbiter._assert_18:precondition2           covered         N             2    0.001 s      
+[38]  arbiter._assert_18:precondition3           covered         PRE           1    0.000 s      
+[39]  arbiter._assert_18:precondition4           covered         N             2    0.001 s      
+[40]  arbiter._assert_19                         cex             Hp            2    0.020 s      
+[41]  arbiter._assert_19:precondition1           covered         Hp            2    0.020 s      
+[42]  arbiter._assert_20                         cex             Hp            2    0.020 s      
+[43]  arbiter._assert_20:precondition1           covered         PRE           1    0.000 s      
+[44]  arbiter._assert_20:precondition2           covered         Hp            2    0.020 s      
+[45]  arbiter._assert_20:precondition3           covered         PRE           1    0.000 s      
+[46]  arbiter._assert_20:precondition4           covered         Hp            2    0.020 s      
+[47]  arbiter._assert_21                         cex             Hp            2    0.021 s      
+[48]  arbiter._assert_21:precondition1           covered         Hp            2    0.021 s      
+[49]  arbiter._assert_22                         cex             Hp            2    0.021 s      
+[50]  arbiter._assert_22:precondition1           covered         PRE           1    0.000 s      
+[51]  arbiter._assert_22:precondition2           covered         Hp            2    0.021 s      
+[52]  arbiter._assert_22:precondition3           covered         PRE           1    0.000 s      
+[53]  arbiter._assert_22:precondition4           covered         Hp            2    0.021 s      
+[54]  arbiter._assert_23                         cex             Hp            2    0.028 s      
+[55]  arbiter._assert_23:precondition1           covered         Hp            2    0.028 s      
+[56]  arbiter._assert_24                         cex             Hp            2    0.028 s      
+[57]  arbiter._assert_24:precondition1           covered         PRE           1    0.000 s      
+[58]  arbiter._assert_24:precondition2           covered         Hp            2    0.028 s      
+[59]  arbiter._assert_24:precondition3           covered         PRE           1    0.000 s      
+[60]  arbiter._assert_24:precondition4           covered         Hp            2    0.028 s      

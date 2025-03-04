@@ -5,7 +5,7 @@
     2022.09p001 64 bits for Linux64 3.10.0-1062.1.2.el7.x86_64
     Host Name: icpc
     User Name: master
-    Printed on: Monday, Feb24, 2025 04:11:14 PM CST
+    Printed on: Tuesday, Mar 4, 2025 02:00:40 PM CST
     Working Directory: /home/master/RAG-aided-Assertion-Generation/Evaluation/Dataset/gray
 
 
@@ -42,8 +42,8 @@ RESULTS
 -----------------------------------------------------------------------------------------
 
 ---[ <embedded> ]------------------------------------------------------------------------
-[1]   gray._assert_1                         proven          Tri         (0)    1.306 s      
+[1]   gray._assert_1                         proven          Tri         (0)    1.585 s      
 [2]   gray._assert_2                         cex             PRE           1    0.000 s      
-[3]   gray._assert_3                         cex             Ht     257 + 256   0.266 s      
+[3]   gray._assert_3                         cex             Ht     257 + 256   0.202 s      
 [4]   gray._assert_3:precondition1           covered         PRE           1    0.000 s      
 [5]   gray._assert_3:precondition2           covered         PRE           1    0.000 s      

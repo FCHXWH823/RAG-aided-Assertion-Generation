@@ -25,7 +25,7 @@ wire [DATA_WIDTH-1:0] gray_f;
 assign gray_f = bin ^ ( bin >> 1 );
 assert property(@(posedge clk) disable iff (~rst) gray_f == gray);
 
-assert property (@(posedge clk) disable iff (~rst) (gray(bin) == gray));
-assert property (@(posedge clk) disable iff (~rst) (gray_f == gray) iff (gray(bin) == gray));
+assert property (@(posedge clk) disable iff (~rst) (bin ^ (bin >> 1) == gray));
+assert property (@(posedge clk) disable iff (~rst) (gray_f == gray) iff (bin ^ (bin >> 1) == gray));
 
 endmodule

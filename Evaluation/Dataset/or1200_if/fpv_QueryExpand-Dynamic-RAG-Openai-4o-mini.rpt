@@ -5,7 +5,7 @@
     2022.09p001 64 bits for Linux64 3.10.0-1062.1.2.el7.x86_64
     Host Name: icpc
     User Name: master
-    Printed on: Monday, Feb24, 2025 04:41:01 PM CST
+    Printed on: Tuesday, Mar 4, 2025 02:35:01 PM CST
     Working Directory: /home/master/RAG-aided-Assertion-Generation/Evaluation/Dataset/or1200_if
 
 
@@ -13,7 +13,7 @@
 SUMMARY
 ==============================================================
     Total Tasks           : 1
-    Total Properties      : 71
+    Total Properties      : 69
           assumptions     : 0                   
            - approved     : 0                   
            - temporary    : 0                   
@@ -25,9 +25,9 @@ SUMMARY
            - undetermined : 0                   ( 0.0% )
            - unprocessed  : 0                   ( 0.0% )
            - error        : 0                   ( 0.0% )
-          covers          : 46                  
+          covers          : 44                  
            - unreachable  : 0                   ( 0.0% )
-           - covered      : 46                  ( 100.0% )
+           - covered      : 44                  ( 100.0% )
            - ar_covered   : 0                   ( 0.0% )
            - undetermined : 0                   ( 0.0% )
            - unprocessed  : 0                   ( 0.0% )
@@ -45,24 +45,24 @@ RESULTS
 [1]   or1200_if._assert_1                          proven          PRE    Infinite    0.000 s      
 [2]   or1200_if._assert_1:precondition1            covered         PRE           1    0.000 s      
 [3]   or1200_if._assert_2                          proven          PRE    Infinite    0.000 s      
-[4]   or1200_if._assert_2:precondition1            covered         N             1    0.002 s      
-[5]   or1200_if._assert_3                          proven          Hp     Infinite    0.009 s      
+[4]   or1200_if._assert_2:precondition1            covered         Hp            1    0.004 s      
+[5]   or1200_if._assert_3                          proven          Hp     Infinite    0.010 s      
 [6]   or1200_if._assert_3:precondition1            covered         PRE           1    0.000 s      
-[7]   or1200_if._assert_4                          proven          Hp     Infinite    0.009 s      
-[8]   or1200_if._assert_4:precondition1            covered         N             1    0.002 s      
+[7]   or1200_if._assert_4                          proven          Hp     Infinite    0.010 s      
+[8]   or1200_if._assert_4:precondition1            covered         Hp            1    0.006 s      
 [9]   or1200_if._assert_5                          proven          Hp     Infinite    0.010 s      
-[10]  or1200_if._assert_5:precondition1            covered         Hp            1    0.002 s      
-[11]  or1200_if._assert_6                          proven          Hp     Infinite    0.010 s      
-[12]  or1200_if._assert_6:precondition1            covered         N             1    0.002 s      
-[13]  or1200_if._assert_7                          proven          Hp     Infinite    0.010 s      
+[10]  or1200_if._assert_5:precondition1            covered         Hp            1    0.008 s      
+[11]  or1200_if._assert_6                          proven          Hp     Infinite    0.011 s      
+[12]  or1200_if._assert_6:precondition1            covered         Hp            1    0.004 s      
+[13]  or1200_if._assert_7                          proven          Hp     Infinite    0.024 s      
 [14]  or1200_if._assert_7:precondition1            covered         PRE           1    0.000 s      
-[15]  or1200_if._assert_8                          proven          Hp     Infinite    0.010 s      
-[16]  or1200_if._assert_8:precondition1            covered         N             1    0.002 s      
-[17]  or1200_if._assert_9                          proven          Hp     Infinite    0.010 s      
-[18]  or1200_if._assert_9:precondition1            covered         N             1    0.002 s      
-[19]  or1200_if._assert_10                         proven          Hp     Infinite    0.010 s      
-[20]  or1200_if._assert_10:precondition1           covered         N             1    0.002 s      
-[21]  or1200_if._assert_11                         proven          Hp     Infinite    0.010 s      
+[15]  or1200_if._assert_8                          proven          Hp     Infinite    0.024 s      
+[16]  or1200_if._assert_8:precondition1            covered         Hp            1    0.004 s      
+[17]  or1200_if._assert_9                          proven          Hp     Infinite    0.024 s      
+[18]  or1200_if._assert_9:precondition1            covered         Hp            1    0.004 s      
+[19]  or1200_if._assert_10                         proven          Hp     Infinite    0.024 s      
+[20]  or1200_if._assert_10:precondition1           covered         Hp            1    0.004 s      
+[21]  or1200_if._assert_11                         proven          Hp     Infinite    0.024 s      
 [22]  or1200_if._assert_11:precondition1           covered         PRE           1    0.000 s      
 [23]  or1200_if._assert_12                         proven          PRE    Infinite    0.000 s      
 [24]  or1200_if._assert_12:precondition1           covered         PRE           1    0.000 s      
@@ -71,45 +71,43 @@ RESULTS
 [27]  or1200_if._assert_13:precondition2           covered         PRE           1    0.000 s      
 [28]  or1200_if._assert_13:precondition3           covered         PRE           1    0.000 s      
 [29]  or1200_if._assert_13:precondition4           covered         PRE           1    0.000 s      
-[30]  or1200_if._assert_14                         cex             N             1    0.002 s      
-[31]  or1200_if._assert_14:precondition1           covered         N             1    0.002 s      
-[32]  or1200_if._assert_15                         cex             Hp            2    0.012 s      
-[33]  or1200_if._assert_15:precondition1           covered         PRE           1    0.000 s      
-[34]  or1200_if._assert_15:precondition2           covered         N             1    0.002 s      
-[35]  or1200_if._assert_15:precondition3           covered         PRE           1    0.000 s      
-[36]  or1200_if._assert_15:precondition4           covered         N             1    0.002 s      
-[37]  or1200_if._assert_16                         cex             Hp            2    0.012 s      
-[38]  or1200_if._assert_16:precondition1           covered         PRE           1    0.000 s      
-[39]  or1200_if._assert_17                         cex             Hp            3    0.016 s      
+[30]  or1200_if._assert_14                         proven          Hp     Infinite    0.024 s      
+[31]  or1200_if._assert_14:precondition1           covered         PRE           1    0.000 s      
+[32]  or1200_if._assert_15                         proven          PRE    Infinite    0.000 s      
+[33]  or1200_if._assert_15:precondition1           covered         Hp            1    0.004 s      
+[34]  or1200_if._assert_15:precondition2           covered         PRE           1    0.000 s      
+[35]  or1200_if._assert_15:precondition3           covered         Hp            1    0.004 s      
+[36]  or1200_if._assert_15:precondition4           covered         PRE           1    0.000 s      
+[37]  or1200_if._assert_16                         proven          Hp     Infinite    0.025 s      
+[38]  or1200_if._assert_16:precondition1           covered         Hp            1    0.006 s      
+[39]  or1200_if._assert_17                         proven          PRE    Infinite    0.000 s      
 [40]  or1200_if._assert_17:precondition1           covered         PRE           1    0.000 s      
-[41]  or1200_if._assert_17:precondition2           covered         PRE           1    0.000 s      
-[42]  or1200_if._assert_17:precondition3           covered         N             1    0.002 s      
-[43]  or1200_if._assert_17:precondition4           covered         PRE           1    0.000 s      
-[44]  or1200_if._assert_18                         proven          Hp     Infinite    0.011 s      
-[45]  or1200_if._assert_18:precondition1           covered         N             1    0.002 s      
-[46]  or1200_if._assert_19                         proven          PRE    Infinite    0.000 s      
+[41]  or1200_if._assert_17:precondition2           covered         Hp            1    0.006 s      
+[42]  or1200_if._assert_17:precondition3           covered         PRE           1    0.000 s      
+[43]  or1200_if._assert_17:precondition4           covered         Hp            1    0.006 s      
+[44]  or1200_if._assert_18                         cex             Hp            2    0.026 s      
+[45]  or1200_if._assert_18:precondition1           covered         PRE           1    0.000 s      
+[46]  or1200_if._assert_19                         cex             Hp            2    0.026 s      
 [47]  or1200_if._assert_19:precondition1           covered         PRE           1    0.000 s      
-[48]  or1200_if._assert_19:precondition2           covered         N             1    0.002 s      
+[48]  or1200_if._assert_19:precondition2           covered         Hp            1    0.008 s      
 [49]  or1200_if._assert_19:precondition3           covered         PRE           1    0.000 s      
-[50]  or1200_if._assert_19:precondition4           covered         N             1    0.002 s      
-[51]  or1200_if._assert_20                         proven          Hp     Infinite    0.011 s      
-[52]  or1200_if._assert_20:precondition1           covered         PRE           1    0.000 s      
-[53]  or1200_if._assert_21                         proven          Hp     Infinite    0.011 s      
-[54]  or1200_if._assert_21:precondition1           covered         N             1    0.002 s      
-[55]  or1200_if._assert_21:precondition2           covered         Hp            1    0.002 s      
+[50]  or1200_if._assert_19:precondition4           covered         PRE           1    0.000 s      
+[51]  or1200_if._assert_20                         cex             Hp            2    0.027 s      
+[52]  or1200_if._assert_20:precondition1           covered         Hp            1    0.004 s      
+[53]  or1200_if._assert_21                         cex             Hp            2    0.027 s      
+[54]  or1200_if._assert_21:precondition1           covered         PRE           1    0.000 s      
+[55]  or1200_if._assert_21:precondition2           covered         Hp            1    0.004 s      
 [56]  or1200_if._assert_21:precondition3           covered         PRE           1    0.000 s      
-[57]  or1200_if._assert_21:precondition4           covered         PRE           1    0.000 s      
-[58]  or1200_if._assert_22                         cex             Hp            2    0.012 s      
-[59]  or1200_if._assert_22:precondition1           covered         PRE           1    0.000 s      
-[60]  or1200_if._assert_23                         cex             Hp            3    0.017 s      
-[61]  or1200_if._assert_23:precondition1           covered         PRE           1    0.000 s      
-[62]  or1200_if._assert_23:precondition2           covered         PRE           1    0.000 s      
-[63]  or1200_if._assert_23:precondition3           covered         PRE           1    0.000 s      
-[64]  or1200_if._assert_23:precondition4           covered         PRE           1    0.000 s      
-[65]  or1200_if._assert_24                         cex             Hp            2    0.014 s      
-[66]  or1200_if._assert_24:precondition1           covered         PRE           1    0.000 s      
-[67]  or1200_if._assert_25                         cex             Hp            3    0.020 s      
-[68]  or1200_if._assert_25:precondition1           covered         PRE           1    0.000 s      
-[69]  or1200_if._assert_25:precondition2           covered         PRE           1    0.000 s      
-[70]  or1200_if._assert_25:precondition3           covered         N             1    0.002 s      
-[71]  or1200_if._assert_25:precondition4           covered         PRE           1    0.000 s      
+[57]  or1200_if._assert_21:precondition4           covered         Hp            1    0.004 s      
+[58]  or1200_if._assert_22                         cex             PRE           1    0.000 s      
+[59]  or1200_if._assert_23                         cex             PRE           1    0.000 s      
+[60]  or1200_if._assert_23:precondition1           covered         Hp            1    0.004 s      
+[61]  or1200_if._assert_23:precondition2           covered         Hp            1    0.004 s      
+[62]  or1200_if._assert_23:precondition3           covered         PRE           1    0.000 s      
+[63]  or1200_if._assert_24                         cex             Hp            1    0.009 s      
+[64]  or1200_if._assert_24:precondition1           covered         Hp            1    0.004 s      
+[65]  or1200_if._assert_25                         cex             Hp            2    0.029 s      
+[66]  or1200_if._assert_25:precondition1           covered         PRE           1    0.000 s      
+[67]  or1200_if._assert_25:precondition2           covered         Hp            1    0.004 s      
+[68]  or1200_if._assert_25:precondition3           covered         PRE           1    0.000 s      
+[69]  or1200_if._assert_25:precondition4           covered         Hp            1    0.004 s      

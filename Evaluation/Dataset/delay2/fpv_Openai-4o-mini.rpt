@@ -5,7 +5,7 @@
     2022.09p001 64 bits for Linux64 3.10.0-1062.1.2.el7.x86_64
     Host Name: icpc
     User Name: master
-    Printed on: Friday, Feb21, 2025 08:21:42 PM CST
+    Printed on: Tuesday, Mar 4, 2025 01:48:14 PM CST
     Working Directory: /home/master/RAG-aided-Assertion-Generation/Evaluation/Dataset/delay2
 
 
@@ -42,8 +42,8 @@ RESULTS
 -------------------------------------------------------------------------------------------
 
 ---[ <embedded> ]--------------------------------------------------------------------------
-[1]   delay2._assert_1                         proven          Tri         (0)    1.362 s      
+[1]   delay2._assert_1                         proven          Tri         (0)    1.421 s      
 [2]   delay2._assert_2                         cex             PRE           1    0.000 s      
-[3]   delay2._assert_3                         cex             Ht     752 + 751   0.647 s      
-[4]   delay2._assert_3:precondition1           covered         Ht          752    0.002 s      
-[5]   delay2._assert_3:precondition2           covered         Ht          752    0.002 s      
+[3]   delay2._assert_3                         cex             Ht     752 + 751   0.631 s      
+[4]   delay2._assert_3:precondition1           covered         Ht          752    0.011 s      
+[5]   delay2._assert_3:precondition2           covered         Ht          752    0.011 s      

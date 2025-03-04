@@ -28,7 +28,7 @@ assert property(@(posedge clk) s_eventually rst == 1 || digit_select == 0);
 
 assert property (@(posedge clk)  (rst == 1 || digit_select == 1));
 assert property (@(posedge clk)  (s_eventually rst == 1 || digit_select == 1) iff (rst == 1 || digit_select == 1));
-assert property (@(posedge clk)  (eventually (rst == 1) || (digit_select == 0)));
-assert property (@(posedge clk)  (s_eventually rst == 1 || digit_select == 0) iff (eventually (rst == 1) || (digit_select == 0)));
+assert property (@(posedge clk)  (reset == 1 || digit_select == 0));
+assert property (@(posedge clk)  (s_eventually rst == 1 || digit_select == 0) iff (reset == 1 || digit_select == 0));
 
 endmodule
