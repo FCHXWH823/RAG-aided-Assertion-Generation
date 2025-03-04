@@ -130,7 +130,8 @@ system_prompt = (
 prompt = ChatPromptTemplate.from_messages(
     [
         ("system", system_prompt),
-        ("human","Given Verilog code snippet as below: \n{code}\n Use these property operations:\n{property_operators},\nto generate a systemverilog assertion following the description:\n{input}\nfor the given verilog code. Ensure the systemverilog syntax correctness and the used signals should be from the verilog code.\nThe output format should STRICTLY follow :\n{assertion_format}\nWITHOUT other things."),
+        # ("human","Given Verilog code snippet as below: \n{code}\n Use these property operations:\n{property_operators},\nto generate a systemverilog assertion following the description:\n{input}\nfor the given verilog code. Ensure the systemverilog syntax correctness and the used signals should be from the verilog code.\nThe output format should STRICTLY follow :\n{assertion_format}\nWITHOUT other things."),
+        ("human","Given Verilog code snippet as below: \n{code}\n Please generate a systemverilog assertion following the description:\n{input}\nfor the given verilog code. Ensure the systemverilog syntax correctness and the used signals should be from the verilog code.\nThe output format should STRICTLY follow :\n{assertion_format}\nWITHOUT other things."),
     ]
 )
 
@@ -266,16 +267,14 @@ def Property_Operation_Prompt(assertion_explanation):
     Please get all needed property operations for implementing the systemverilog assertion following the given natural language description:
     {assertion_explanation}
     The output format should follow the format as follows:
-    property operation 1: ...
-    property operation 2: ...
+    property operation in natural language description: systemverilog property operator
     ...
     For example, given the natural language description of a systemverilog assertion as follows:
-    `when enable signal is set (1), then eventually output signal equals the last one clock cycle's input signal from the next clock cycle`
-    The property operations should be:
-    property operation 1: when ..., then ... (|->)
-    property operation 2: eventually... (s_eventually)
-    property operation 2: last one cycle’s input signal ($past())
-    property operation 3: from the next clock cycle (##1)
+    `eventually output signal equals the last one clock cycle's input signal`
+    The output should be:
+    eventually...: s_eventually
+    equals...: ==
+    last one cycle’s input signal: $past()
     '''
 
 def Property_Operator_Prompt(assertion, property_operations):
@@ -351,7 +350,7 @@ with open(f'Results/Dynamic-RAG-Openai-4o-mini-Prompted-Assertion-Generation-Res
 
                 # systemverilog assertion generation
                 # prompt = f"Given Verilog code snippet as below: \n{code}\n Please generate such an assertion for it following the description:{explanation}\nThe output format should STRICTLY follow :\n{assertion_format}\nWITHOUT other things."
-                llm_result = rag_chain.invoke({"code":code,"input":explanation,"assertion_format":assertion_format,"property_operators":operations})
+                llm_result = rag_chain.invoke({"code":code,"input":f"{explanation} with the help of these given property operations:\n{operations}.\n","assertion_format":assertion_format})
                 llm_response = llm_result["answer"]
 
                 # assertion checker
