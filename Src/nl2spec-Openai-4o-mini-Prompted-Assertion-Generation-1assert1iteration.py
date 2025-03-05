@@ -241,7 +241,7 @@ with open('Results/Openai-4o-mini-Prompted-Assertion-Generation-Results-for-New-
                     processed_code += assertion+"\n"
                 processed_code += "\nendmodule\n"
 
-                with open(folder_path+"/"+folder+"_nl2spec.sv","w") as file:
+                with open(folder_path+"/"+folder+f"_nl2spec-{Model_Name}.sv","w") as file:
                     file.write(processed_code)
 
 

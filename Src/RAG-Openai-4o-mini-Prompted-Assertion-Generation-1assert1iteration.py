@@ -231,6 +231,6 @@ with open(f'Results/RAG-Openai-4o-mini-Prompted-Assertion-Generation-Results-{PD
                     processed_code += assertion+"\n"
                 processed_code += "\nendmodule\n"
 
-                with open(folder_path+"/"+folder+"_RAG-Openai-4o-mini.sv","w") as file:
+                with open(folder_path+"/"+folder+f"_RAG-{Model_Name}.sv","w") as file:
                     file.write(processed_code)
 
