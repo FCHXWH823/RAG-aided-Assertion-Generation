@@ -1,1 +1,10 @@
 The Power of Assertions in SystemVerilog
+Digital VLSI Design with Verilog
+SystemVerilog for Verification
+Principles of Verifiable RTL Design
+Assertion-Based Design
+SystemVerilog Assertions and Functional Coverage
+The Verilog PLI Handbook
+A Practical Guide for SystemVerilog Assertions
+Verilog and SystemVerilog Gotchas
+Computer Aided Verification
