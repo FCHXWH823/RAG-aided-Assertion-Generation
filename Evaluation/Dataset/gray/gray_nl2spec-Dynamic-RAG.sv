@@ -17,7 +17,7 @@ module gray #(parameter CBITS = 8) (input clk, input rst, output reg [CBITS-1:0]
 
 assert property(@(posedge clk) s_eventually (rst || sig == 1));
 
-assert property (@(posedge clk)  (s_eventually ((rst == 1) || (sig == 1))));
-assert property (@(posedge clk)  (s_eventually (rst || sig == 1)) iff (s_eventually ((rst == 1) || (sig == 1))));
+assert property (@(posedge clk)  (sig |-> gray_cnt == 1));
+assert property (@(posedge clk)  (s_eventually (rst || sig == 1)) iff (sig |-> gray_cnt == 1));
 
 endmodule
