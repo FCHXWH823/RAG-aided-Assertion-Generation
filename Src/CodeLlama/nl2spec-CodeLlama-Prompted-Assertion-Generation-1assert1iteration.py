@@ -58,8 +58,8 @@ OpenAI_client = ChatOpenAI(
 )
 
 client = ChatOllama(
-    model = Model_Name,
-    temperature = 0.8,
+    model = f"codellama:{Model_Name}",
+    temperature = 0.2,
     num_predict = 256
 )
 
@@ -71,7 +71,7 @@ client = ChatOllama(
 # model_name_4 = "ft:gpt-4o-mini-2024-07-18:personal::ADYuwFrD" # initial prompt template, epoch: 10
 # model_name_5 = "ft:gpt-4o-mini-2024-07-18:personal::ADefsoKl" # new prompt template, epoch: 10
 
-def nl2spec_minimal_prompt(code, explanation, output_format):
+def nl2spec_minimal_prompt(code, explanation, signals, output_format):
     return f'''
     Given the verilog code 
     {code},
@@ -79,7 +79,7 @@ def nl2spec_minimal_prompt(code, explanation, output_format):
     {explanation}
     into a systemverilog assertion for it. 
     The output format should STRICTLY follow :\n{output_format}\nWITHOUT other things.
-    Remember that the used signals are from the verilog code and use the appropriate systemverilog operators, for example:
+    Remember that ONLY use these signals {signals} to construct the assertion and use the appropriate systemverilog operators, for example:
     s_eventually: eventually...
     $past(): last one cycle
     |->: if..., then...
@@ -165,7 +165,7 @@ with open('Results/Openai-4o-mini-Prompted-Assertion-Generation-Results-for-New-
     for folder in os.listdir("Evaluation/Dataset/"):
         if Excute_Folder != 'ALL_DESIGNS' and Excute_Folder not in folder:
             continue
-        if folder not in Excute_Folders_nl2spec:
+        if folder in Excute_Folders_nl2spec:
             continue
         folder_path = os.path.join("Evaluation/Dataset/",folder)
         if os.path.isdir(folder_path):
@@ -183,6 +183,7 @@ with open('Results/Openai-4o-mini-Prompted-Assertion-Generation-Results-for-New-
             llm_responses = []
             for assertion, details in explanation_json.items():
                 explanation = details.get("Assertion Explaination", "No explanation provided")
+                signals = details.get("Signals", "No signals provided")
                 # clk_condition = "" if details.get("clock signal condition") is "none" else details.get("clock signal condition")
                 # reset_condition = "" if details.get("disable condition") is "none" else details.get("disable condition")
                 
@@ -190,7 +191,7 @@ with open('Results/Openai-4o-mini-Prompted-Assertion-Generation-Results-for-New-
                 
 
                 # prompt = f"Given Verilog code snippet as below: \n{code}\n Please generate such a systemverilog assertion for it following the description:{explanation}. Ensure the syntax correctness and the used signals should be from the verilog code.\nThe output format should STRICTLY follow :\n{assertion_format}\nWITHOUT other things."
-                nl2spec_prompt = nl2spec_minimal_prompt(code,explanation,assertion_format)
+                nl2spec_prompt = nl2spec_minimal_prompt(code,explanation,signals,assertion_format)
 
                 # completion = client.chat.completions.create(
                 # model=model_name,
@@ -229,7 +230,10 @@ with open('Results/Openai-4o-mini-Prompted-Assertion-Generation-Results-for-New-
 
                 i += 1
                 match = re.search(r'assert property\s*\(\s*(.*?)\s*\)\s*(.*?);', completion.content, re.DOTALL)
-                matched_str = str(match.group(0))
+                if match is None:
+                    matched_str = "assert property (GENERATE_NO_ASSERTION);"
+                else:
+                    matched_str = str(match.group(0))
                 matched_str = matched_str.replace("\n"," ").replace("\t"," ").replace("\"","\\\"")
                 llm_responses.append(f"\"Assertion {i}\": \"{matched_str}\"") 
 

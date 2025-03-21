@@ -1,440 +1,4 @@
 Master Module,Code,golden_assertions,llm_assertions
-ff,"module ff
-  (
-   input logic clk, rst, en, in,
-   output logic out   
-   );
-
-   always_ff @(posedge clk or posedge rst)
-      if (rst) out = 1'b0;
-      else if (en) out = in;         
-endmodule
-
-","{
-  ""Assertion 1"": {
-    ""clock signal condition"": ""@(posedge clk)"",
-    ""disable condition"": ""disable iff (rst)"",
-    ""logical expression"": ""en |=> out == $past(in,1)"",
-    ""Signals"": [""en"", ""out"", ""in""],
-    ""Signal Explanations"": {
-      ""en"": ""enable signal"",
-      ""out"": ""output signal of the verilog module"",
-      ""in"": ""input signal of the verilog module""
-    },
-    ""Logical Operators"": [""|=>"", ""=="", ""$past""],
-    ""Logical Operators Explanation"": {
-      ""|=>"": ""if the conditions on the left are met then the condition on the right must hold SINCE NEXT CLOCK CYCLE"",
-      ""=="": ""equal"",
-      ""$past"": ""the value of the signal in the specified previous clock cycle(s)""
-    },
-    ""Assertion Explaination"": ""check if when enable signal is set (1), the output is equal to the input from one cycle in the past from the next clock cycle""
-  },
-  ""Assertion 2"": {
-    ""clock signal condition"": ""@(posedge clk)"",
-    ""disable condition"": ""disable iff (rst)"",
-    ""logical expression"": ""!en |=> out == $past(out,1)"",
-    ""Signals"": [""en"", ""out""],
-    ""Signal Explanations"": {
-      ""en"": ""enable signal"",
-      ""out"": ""output signal of the verilog module""
-    },
-    ""Logical Operators"": [""!"", ""|=>"", ""=="", ""$past""],
-    ""Logical Operators Explanation"": {
-      ""!"": ""the value of a signal is reset (0)"",
-      ""|=>"": ""if the conditions on the left are met then the condition on the right must hold SINCE NEXT CLOCK CYCLE"",
-      ""=="": ""equal"",
-      ""$past"": ""the value of the signal in the specified previous clock cycle(s)""
-    },
-    ""Assertion Explaination"": ""check to make sure that when the enable isn't asserted, the output doesn't change from the next clock cycle""
-  }
-}","{
-""Assertion 1"": ""assert property ($past(en) |-> $onehot(out ^ $past(out)));"",
-""Assertion 2"": ""assert property ($stable(out) |-> ##1 en);""
-}"
-BusArbiter,"parameter N_MASTERS = 3;
-typedef bit [N_MASTERS-1:0] arb_vector;
-parameter arb_vector NO_REQUEST = '{default: '0};
-parameter arb_vector NO_GRANT = '{default: '0};
-
-module busarbiter(input clk, reset, bus_ack, input arb_vector bus_req, output arb_vector bus_grant);
-
-    enum {READY, BUSY} state_s;
-    arb_vector prio_req;
-    reg found;
-    always @(bus_req) begin: prio
-        arb_vector prio_req_v;
-	found = 0;
-        for (int i=0; i < N_MASTERS; i++) begin
-            if(~found & (bus_req[i]==1'b1)) begin
-                prio_req_v[i] = 1'b1;
-                found = 1;
-            end
-            else begin
-                prio_req_v[i] = 1'b0;
-            end
-        end
-        prio_req <= prio_req_v;
-    end
-
-    always @(posedge clk or posedge reset) begin: ctrl
-        if(reset) begin //always block triggered by reset
-            state_s <= READY;
-            bus_grant <= NO_GRANT;
-        end
-        else begin //always block triggered by clk
-            case (state_s)
-                READY: begin
-                    if (bus_req == NO_REQUEST) begin
-			state_s <= READY;
-                    end
-                    else begin
-                        state_s <= BUSY;
-                    end 
-                    bus_grant <= prio_req;
-                end
-
-                BUSY: begin
-                    if (bus_ack) begin
-                        if (bus_req == NO_REQUEST) begin
-                            state_s <= READY;
-                        end
-                        else begin
-                            state_s <= BUSY;
-                        end 
-		        bus_grant <= prio_req;
-		    end
-                end
-            endcase 
-        end
-    end
-endmodule","{
-  ""Assertion 1"": {
-    ""clock signal condition"": ""@(posedge clk)"",
-    ""disable condition"": ""none"",
-    ""logical expression"": ""bus_grant[0] + bus_grant[1] + bus_grant[2] < 2"",
-    ""Signals"": [
-      ""bus_grant[0]"",
-      ""bus_grant[1]"",
-      ""bus_grant[2]""
-    ],
-    ""Signal Explanations"": {
-      ""bus_grant[0]"": ""first bit of the output bus_grant vector representing grant signal for master 0"",
-      ""bus_grant[1]"": ""second bit of the output bus_grant vector representing grant signal for master 1"",
-      ""bus_grant[2]"": ""third bit of the output bus_grant vector representing grant signal for master 2""
-    },
-    ""Logical Operators"": [
-      ""+"",
-      ""<""
-    ],
-    ""Logical Operators Explanation"": {
-      ""+"": ""arithmetic addition"",
-      ""<"": ""less than""
-    },
-    ""Assertion Explaination"": ""the arithmetic addition of the first output grant bit, the second output grant bit, and the third output grant bit is computed and the result must be less than 2""
-  },
-  ""Assertion 2"": {
-    ""clock signal condition"": ""@(posedge clk)"",
-    ""disable condition"": ""none"",
-    ""logical expression"": ""bus_grant[0] |-> (!bus_grant[1] && !bus_grant[2])"",
-    ""Signals"": [
-      ""bus_grant[0]"",
-      ""bus_grant[1]"",
-      ""bus_grant[2]""
-    ],
-    ""Signal Explanations"": {
-      ""bus_grant[0]"": ""first bit of the output bus_grant vector representing grant signal for master 0"",
-      ""bus_grant[1]"": ""second bit of the output bus_grant vector representing grant signal for master 1"",
-      ""bus_grant[2]"": ""third bit of the output bus_grant vector representing grant signal for master 2""
-    },
-    ""Logical Operators"": [
-      ""|->"",
-      ""!"",
-      ""&&""
-    ],
-    ""Logical Operators Explanation"": {
-      ""|->"": ""an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"",
-      ""!"": ""the value of a signal is reset (0)"",
-      ""&&"": ""logical and""
-    },
-    ""Assertion Explaination"": ""When the first output grant bit is asserted, then the second output grant bit and the third output grant bit must be reset (0) from the current clock cycle""
-  },
-  ""Assertion 3"": {
-    ""clock signal condition"": ""@(posedge clk)"",
-    ""disable condition"": ""none"",
-    ""logical expression"": ""bus_grant[1] |-> (!bus_grant[0] && !bus_grant[2])"",
-    ""Signals"": [
-      ""bus_grant[1]"",
-      ""bus_grant[0]"",
-      ""bus_grant[2]""
-    ],
-    ""Signal Explanations"": {
-      ""bus_grant[1]"": ""second bit of the output bus_grant vector representing grant signal for master 1"",
-      ""bus_grant[0]"": ""first bit of the output bus_grant vector representing grant signal for master 0"",
-      ""bus_grant[2]"": ""third bit of the output bus_grant vector representing grant signal for master 2""
-    },
-    ""Logical Operators"": [
-      ""|->"",
-      ""!"",
-      ""&&""
-    ],
-    ""Logical Operators Explanation"": {
-      ""|->"": ""an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"",
-      ""!"": ""the value of a signal is reset (0)"",
-      ""&&"": ""logical and""
-    },
-    ""Assertion Explaination"": ""When the second output grant bit is asserted, then the first output grant bit and the third output grant bit must be reset (0) from the current clock cycle""
-  },
-  ""Assertion 4"": {
-    ""clock signal condition"": ""@(posedge clk)"",
-    ""disable condition"": ""none"",
-    ""logical expression"": ""bus_grant[2] |-> (!bus_grant[1] && !bus_grant[0])"",
-    ""Signals"": [
-      ""bus_grant[2]"",
-      ""bus_grant[1]"",
-      ""bus_grant[0]""
-    ],
-    ""Signal Explanations"": {
-      ""bus_grant[2]"": ""third bit of the output bus_grant vector representing grant signal for master 2"",
-      ""bus_grant[1]"": ""second bit of the output bus_grant vector representing grant signal for master 1"",
-      ""bus_grant[0]"": ""first bit of the output bus_grant vector representing grant signal for master 0""
-    },
-    ""Logical Operators"": [
-      ""|->"",
-      ""!"",
-      ""&&""
-    ],
-    ""Logical Operators Explanation"": {
-      ""|->"": ""an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"",
-      ""!"": ""the value of a signal is reset (0)"",
-      ""&&"": ""logical and""
-    },
-    ""Assertion Explaination"": ""When the third output grant bit is asserted, then the second output grant bit and the first output grant bit must be reset (0) from the current clock cycle""
-  },
-  ""Assertion 5"": {
-    ""clock signal condition"": ""@(posedge clk)"",
-    ""disable condition"": ""none"",
-    ""logical expression"": ""bus_grant != NO_GRANT && bus_ack != 1 |=> $stable(bus_grant)"",
-    ""Signals"": [
-      ""bus_grant"",
-      ""NO_GRANT"",
-      ""bus_ack""
-    ],
-    ""Signal Explanations"": {
-      ""bus_grant"": ""output bus grant vector"",
-      ""NO_GRANT"": ""constant arb_vector with all bits reset (0) representing no grant"",
-      ""bus_ack"": ""bus acknowledge signal""
-    },
-    ""Logical Operators"": [
-      ""!="",
-      ""&&"",
-      ""|=>"",
-      ""$stable""
-    ],
-    ""Logical Operators Explanation"": {
-      ""!="": ""not equal"",
-      ""&&"": ""logical and"",
-      ""|=>"": ""a non-overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE NEXT CLOCK CYCLE"",
-      ""$stable"": ""indicates that the signal remains constant for at least one clock cycle""
-    },
-    ""Assertion Explaination"": ""when the output bus grant vector is not equal to the constant vector representing no grant and the bus acknowledge signal is not asserted, then the output bus grant vector must remain constant from the next clock cycle""
-  },
-  ""Assertion 6"": {
-    ""clock signal condition"": ""@(posedge clk)"",
-    ""disable condition"": ""none"",
-    ""logical expression"": ""(bus_req[0] && bus_grant == NO_GRANT) || (bus_ack && bus_req[0]) |=> (bus_grant[0] && !bus_grant[1] && !bus_grant[2])"",
-    ""Signals"": [
-      ""bus_req[0]"",
-      ""bus_grant"",
-      ""NO_GRANT"",
-      ""bus_ack"",
-      ""bus_grant[0]"",
-      ""bus_grant[1]"",
-      ""bus_grant[2]""
-    ],
-    ""Signal Explanations"": {
-      ""bus_req[0]"": ""first bit of the bus request vector representing request from master 0"",
-      ""bus_grant"": ""output bus grant vector"",
-      ""NO_GRANT"": ""constant arb_vector with all bits reset (0) representing no grant"",
-      ""bus_ack"": ""bus acknowledge signal"",
-      ""bus_grant[0]"": ""first bit of the output bus grant vector representing grant signal for master 0"",
-      ""bus_grant[1]"": ""second bit of the output bus grant vector representing grant signal for master 1"",
-      ""bus_grant[2]"": ""third bit of the output bus grant vector representing grant signal for master 2""
-    },
-    ""Logical Operators"": [
-      ""&&"",
-      ""=="",
-      ""||"",
-      ""|=>"",
-      ""&&"",
-      ""!""
-    ],
-    ""Logical Operators Explanation"": {
-      ""&&"": ""logical and"",
-      ""=="": ""equal"",
-      ""||"": ""or"",
-      ""|=>"": ""a non-overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE NEXT CLOCK CYCLE"",
-      ""!"": ""the value of a signal is reset (0)""
-    },
-    ""Assertion Explaination"": ""when either the first bit of bus request signal is asserted and the output bus grant vector equals the constant vector representing no grant, or the bus acknowledge signal and the first bit of bus request signal are asserted, then the first output grant bit must be asserted and the second and third output grant bits must be reset (0) from the next clock cycle ""
-  },
-  ""Assertion 7"": {
-    ""clock signal condition"": ""@(posedge clk)"",
-    ""disable condition"": ""none"",
-    ""logical expression"": ""(bus_req[1] && !bus_req[0] && bus_grant == NO_GRANT) || (bus_ack && bus_req[1] && !bus_req[0]) |=> (!bus_grant[0] && bus_grant[1] && !bus_grant[2])"",
-    ""Signals"": [
-      ""bus_req[1]"",
-      ""bus_req[0]"",
-      ""bus_grant"",
-      ""NO_GRANT"",
-      ""bus_ack"",
-      ""bus_grant[0]"",
-      ""bus_grant[1]"",
-      ""bus_grant[2]""
-    ],
-    ""Signal Explanations"": {
-      ""bus_req[1]"": ""second bit of the bus request vector representing request from master 1"",
-      ""bus_req[0]"": ""first bit of the bus request vector representing request from master 0"",
-      ""bus_grant"": ""output bus grant vector"",
-      ""NO_GRANT"": ""constant arb_vector with all bits reset (0) representing no grant"",
-      ""bus_ack"": ""bus acknowledge signal"",
-      ""bus_grant[0]"": ""first bit of the output bus grant vector representing grant signal for master 0"",
-      ""bus_grant[1]"": ""second bit of the output bus grant vector representing grant signal for master 1"",
-      ""bus_grant[2]"": ""third bit of the output bus grant vector representing grant signal for master 2""
-    },
-    ""Logical Operators"": [
-      ""&&"",
-      ""!"",
-      ""=="",
-      ""||"",
-      ""|=>"",
-      ""&&""
-    ],
-    ""Logical Operators Explanation"": {
-      ""&&"": ""logical and"",
-      ""!"": ""the value of a signal is reset (0)"",
-      ""=="": ""equal"",
-      ""||"": ""or"",
-      ""|=>"": ""a non-overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE NEXT CLOCK CYCLE""
-    },
-    ""Assertion Explaination"": ""when either the second bit of bus request signal is asserted and the first bit of bus request signal is reset and the output bus grant vector equals the constant vector representing no grant, or the bus acknowledge signal is asserted and the second bit of bus request signal is asserted and the first bit of bus request signal is reset, then the second output grant bit must be asserted and the first and third output grant bits must be reset (0) from the next clock cycle""
-  },
-  ""Assertion 8"": {
-    ""clock signal condition"": ""@(posedge clk)"",
-    ""disable condition"": ""none"",
-    ""logical expression"": ""(bus_req[2] && !bus_req[1] && !bus_req[0] && bus_grant == NO_GRANT) || (bus_ack && bus_req[2] && !bus_req[0] && !bus_req[1]) |=> (!bus_grant[0] && !bus_grant[1] && bus_grant[2])"",
-    ""Signals"": [
-      ""bus_req[2]"",
-      ""bus_req[1]"",
-      ""bus_req[0]"",
-      ""bus_grant"",
-      ""NO_GRANT"",
-      ""bus_ack"",
-      ""bus_grant[0]"",
-      ""bus_grant[1]"",
-      ""bus_grant[2]""
-    ],
-    ""Signal Explanations"": {
-      ""bus_req[2]"": ""third bit of the bus request vector representing request from master 2"",
-      ""bus_req[1]"": ""second bit of the bus request vector representing request from master 1"",
-      ""bus_req[0]"": ""first bit of the bus request vector representing request from master 0"",
-      ""bus_grant"": ""output bus grant vector"",
-      ""NO_GRANT"": ""constant arb_vector with all bits reset (0) representing no grant"",
-      ""bus_ack"": ""bus acknowledge signal"",
-      ""bus_grant[0]"": ""first bit of the output bus grant vector representing grant signal for master 0"",
-      ""bus_grant[1]"": ""second bit of the output bus grant vector representing grant signal for master 1"",
-      ""bus_grant[2]"": ""third bit of the output bus grant vector representing grant signal for master 2""
-    },
-    ""Logical Operators"": [
-      ""&&"",
-      ""!"",
-      ""=="",
-      ""||"",
-      ""|=>"",
-      ""&&""
-    ],
-    ""Logical Operators Explanation"": {
-      ""&&"": ""logical and"",
-      ""!"": ""the value of a signal is reset (0)"",
-      ""=="": ""equal"",
-      ""||"": ""or"",
-      ""|=>"": ""a non-overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE NEXT CLOCK CYCLE""
-    },
-    ""Assertion Explaination"": ""when either the third bus request bit is asserted and the second and first bus request bits are reset and the output bus grant vector equals the constant vector representing no grant, or the bus acknowledge signal is asserted and the third bus request bit is asserted and the first and second bus request bits are reset, then the third output grant bit must be asserted and the first and second output grant bits must be reset (0) from the next clock cycle ""
-  },
-  ""Assertion 9"": {
-    ""clock signal condition"": ""@(posedge clk)"",
-    ""disable condition"": ""none"",
-    ""logical expression"": ""$rose(bus_grant[1]) |-> ($past(bus_req[1]) && !$past(bus_req[0]))"",
-    ""Signals"": [
-      ""bus_grant[1]"",
-      ""bus_req[1]"",
-      ""bus_req[0]""
-    ],
-    ""Signal Explanations"": {
-      ""bus_grant[1]"": ""second bit of the output bus_grant vector representing grant signal for master 1"",
-      ""bus_req[1]"": ""second bit of the bus request vector representing request from master 1"",
-      ""bus_req[0]"": ""first bit of the bus request vector representing request from master 0""
-    },
-    ""Logical Operators"": [
-      ""$rose"",
-      ""|->"",
-      ""$past"",
-      ""&&"",
-      ""!""
-    ],
-    ""Logical Operators Explanation"": {
-      ""$rose"": ""a function that returns true when a signal transitions from 0 to 1"",
-      ""|->"": ""an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"",
-      ""$past"": ""the value of a signal from the previous clock cycle"",
-      ""&&"": ""logical and"",
-      ""!"": ""the value of a signal is reset (0)""
-    },
-    ""Assertion Explaination"": ""when a rising edge is detected on the second output grant bit, then the second bus request bit in the last clock cycle was asserted and the first bus request bit in the last clock cycle was reset (0) from the current clock cycle ""
-  },
-  ""Assertion 10"": {
-    ""clock signal condition"": ""@(posedge clk)"",
-    ""disable condition"": ""none"",
-    ""logical expression"": ""$rose(bus_grant[2]) |-> ($past(bus_req[2]) && !$past(bus_req[1]) && !$past(bus_req[0]))"",
-    ""Signals"": [
-      ""bus_grant[2]"",
-      ""bus_req[2]"",
-      ""bus_req[1]"",
-      ""bus_req[0]""
-    ],
-    ""Signal Explanations"": {
-      ""bus_grant[2]"": ""third bit of the output bus_grant vector representing grant signal for master 2"",
-      ""bus_req[2]"": ""third bit of the bus request vector representing request from master 2"",
-      ""bus_req[1]"": ""second bit of the bus request vector representing request from master 1"",
-      ""bus_req[0]"": ""first bit of the bus request vector representing request from master 0""
-    },
-    ""Logical Operators"": [
-      ""$rose"",
-      ""|->"",
-      ""$past"",
-      ""&&"",
-      ""!""
-    ],
-    ""Logical Operators Explanation"": {
-      ""$rose"": ""a function that returns true when a signal transitions from 0 to 1"",
-      ""|->"": ""an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"",
-      ""$past"": ""the value of a signal from the previous clock cycle"",
-      ""&&"": ""logical and"",
-      ""!"": ""the value of a signal is reset (0)""
-    },
-    ""Assertion Explaination"": ""when a rising edge is detected on the third output grant bit, then the third bus request bit in the last clock cycle was asserted and the second and first bus request bits in the last clock cycle were reset (0) from the current clock cycle ""
-  }
-}","{
-""Assertion 1"": ""assert property ($rose(bus_req[0]) |-> (bus_grant[0] + bus_grant[1] + bus_grant[2]) < 2);"",
-""Assertion 2"": ""assert property (bus_grant[0] && !(bus_grant[1] || bus_grant[2]));"",
-""Assertion 3"": ""assert property ($rose(bus_grant[1]) |-> !(bus_grant[0] || bus_grant[2]));"",
-""Assertion 4"": ""assert property (bus_grant[2] |-> (!bus_grant[1] && !bus_grant[0]));"",
-""Assertion 5"": ""assert property (bus_grant != NO_GRANT && !bus_ack |-> ##1 (bus_grant == $past(bus_grant)));"",
-""Assertion 6"": ""assert property ((bus_req[0] && bus_grant == NO_GRANT || bus_ack && bus_req[0)) |-> ##1 (bus_grant[0] && !bus_grant[1] && !bus_grant[2]));"",
-""Assertion 7"": ""assert property (($rose(bus_req[1]) && !$rose(bus_req[0])) |-> ##1 (bus_grant == NO_GRANT) |=> ($rose(bus_grant[1]) && !$rose(bus_grant[0]) && !$rose(bus_grant[2])));"",
-""Assertion 8"": ""assert property (((bus_req[2] == 1'b1) && (bus_req[0] == 1'b0) && (bus_req[1] == 1'b0)) || (bus_ack && (bus_req[2] == 1'b1) && (bus_req[0] == 1'b0) && (bus_req[1] == 1'b0))) |-> ((bus_grant[2] == 1'b1) && (bus_grant[0] == 1'b0) && (bus_grant[1] == 1'b0)));"",
-""Assertion 9"": ""assert property ((req[1] && !req[0]) |-> ##1 gnt[1]));"",
-""Assertion 10"": ""assert property ((request[2] & !request[1] & !request[0]) ##1 $rose(grant[2]));""
-}"
 eth_rxstatem,"//////////////////////////////////////////////////////////////////////
 ////                                                              ////
 ////  eth_rxstatem.v                                              ////
@@ -1444,40 +1008,40 @@ endmodule","{
     ""Assertion Explaination"": ""when the receive data valid signal is equal to 0, then a register bit representing the idle state is equal to 1 from the next clock cycle""
   }
 }","{
-""Assertion 1"": ""assert property (StartPreamble |-> StatePreamble);"",
-""Assertion 2"": ""assert property (StartDrop |-> ##1 ~StatePreamble);"",
-""Assertion 3"": ""assert property (!(StateSFD[1] && StatePreamble[1]));"",
-""Assertion 4"": ""assert property (StateData[0] == 1 |-> $rose(StatePreamble));"",
-""Assertion 5"": ""assert property ((StateDrop && !StatePreamble) |=> ##1 !StatePreamble);"",
-""Assertion 6"": ""assert property (StateData1 |-> !StatePreamble);"",
-""Assertion 7"": ""assert property ((StatePreamble == 1 && MRxDEq5 == 0 && MRxDV == 1) |=> (StatePreamble == 1));"",
-""Assertion 8"": ""assert property (MRxDEq5 |-> !StatePreamble);"",
-""Assertion 9"": ""assert property (MRxDV == 0 |-> StatePreamble == 0);"",
-""Assertion 10"": ""assert property (@(posedge clk) StartSFD |-> StateSFD);"",
-""Assertion 11"": ""assert property (StateIdle |-> ##1 !StateSFD);"",
-""Assertion 12"": ""assert property (StartDrop |-> StateSFD === 0);"",
-""Assertion 13"": ""assert property ((StartData0[1:0] == 2'b11 && SFDState == 1'b1) |-> ##1 (SFDState == 1'b0));"",
-""Assertion 14"": ""assert property (StartPreamble |-> ~StateSFD);"",
-""Assertion 15"": ""assert property (StateSFD && !StartIdle && !StartData0 && !StartDrop);"",
-""Assertion 16"": ""assert property ((StateData[0] == 1 && StateSFD == 1) |=> !StateSFD);"",
-""Assertion 17"": ""assert property ((StateDrop && !StateSFD) |=> StateSFD);"",
-""Assertion 18"": ""assert property (~MRxDEq5 & StatePreamble | ~StateIdle | ~MRxDV) else $error(\""Preamble SFD state error!\"");"",
-""Assertion 19"": ""assert property (MRxDV == 0 |-> ##1 sfd_state[0] == 1'b0);"",
-""Assertion 20"": ""assert property (StartIdle |-> (StateDrop === 0));"",
-""Assertion 21"": ""assert property (StartDrop |=> StateDrop);"",
-""Assertion 22"": ""assert property ((DropState == 1'b1 && StartIdleState == 1'b0) |=> (DropState == 1'b1));"",
-""Assertion 23"": ""assert property (StateSFD && !StartDrop);"",
-""Assertion 24"": ""assert property (   (StateData[0] == 1'b1 && StartDrop == 1'b0) |=> (StateDrop == 1'b0) );"",
-""Assertion 25"": ""assert property (StatePreamble |-> !StateDrop);"",
-""Assertion 26"": ""assert property (StateData1 && !StateDrop);"",
-""Assertion 27"": ""assert property ((MRxDV == 0) |-> (StateDrop == 1'b0));"",
-""Assertion 28"": ""assert property ((Transmitting === 1'b0 && StateIdle === 1'b1) |-> ##1 (StateDrop === 1'b0));"",
-""Assertion 29"": ""assert property (StartIdle == 1'b1 |-> StateIdle == 1'b1);"",
-""Assertion 30"": ""assert property (StartDrop |-> !StateIdle);"",
-""Assertion 31"": ""assert property (StartSFD |-> StateIdle === 0);"",
-""Assertion 32"": ""assert property (StartPreamble |-> ~StateIdle);"",
-""Assertion 33"": ""assert property ((MRxDV == 1'b1) |-> (StateIdle == 1'b0));"",
-""Assertion 34"": ""assert property ((MRxDV == 0) |-> (StateIdle == 1));""
+""Assertion 1"": ""assert property (StartPreamble |-> ##1 StatePreamble);"",
+""Assertion 2"": ""assert property (StartDrop |-> ##1 !StatePreamble);"",
+""Assertion 3"": ""assert property (StateSFD == 1'b1 |=> StatePreamble == 1'b0);"",
+""Assertion 4"": ""assert property (StateData0 == 1'b1 |-> StatePreamble == 1'b0);"",
+""Assertion 5"": ""assert property ((StateDrop == 1'b1) |=> (StatePreamble == 1'b0));"",
+""Assertion 6"": ""assert property (StateData1 == 1'b1 |=> StatePreamble == 1'b0);"",
+""Assertion 7"": ""assert property ((StatePreamble == 1'b1 && MRxDEq5 == 1'b0 && MRxDV == 1'b1) |=> (StatePreamble == 1'b1));"",
+""Assertion 8"": ""assert property (MRxDEq5 |=> !StatePreamble);"",
+""Assertion 9"": ""assert property (MRxDV == 1'b0 |=> StatePreamble == 1'b0);"",
+""Assertion 10"": ""assert property (StartSFD |=> StateSFD);"",
+""Assertion 11"": ""assert property (StartIdle |=> !StateSFD);"",
+""Assertion 12"": ""assert property (StartDrop |-> ##1 !StateSFD);"",
+""Assertion 13"": ""assert property (StartData0 |-> ##1 !StateSFD);"",
+""Assertion 14"": ""assert property (StartPreamble |-> ##1 !StateSFD);"",
+""Assertion 15"": ""assert property ((StateSFD == 1'b1 && StartIdle == 1'b0 && MRxDEqD == 1'b0) |=> (StateSFD == 1'b1));"",
+""Assertion 16"": ""assert property (StateData0 == 1'b1 |=> StateSFD == 1'b0);"",
+""Assertion 17"": ""assert property (StateDrop == 1'b1 |=> StateSFD == 1'b0);"",
+""Assertion 18"": ""assert property ((~MRxDEq5 & StatePreamble) |=> ~StateSFD);"",
+""Assertion 19"": ""assert property (MRxDV == 1'b0 |=> StateSFD == 1'b0);"",
+""Assertion 20"": ""assert property (StartIdle |-> !StateDrop);"",
+""Assertion 21"": ""assert property (StartDrop |-> StateDrop);"",
+""Assertion 22"": ""assert property (StateDrop && !StartIdle |=> StateDrop);"",
+""Assertion 23"": ""assert property (StateSFD && !StartDrop |=> !StateDrop);"",
+""Assertion 24"": ""assert property ((StateData0 == 1'b1 && StartDrop == 1'b0) |=> (StateDrop == 1'b0));"",
+""Assertion 25"": ""assert property (StatePreamble == 1'b1 |=> StateDrop == 1'b0);"",
+""Assertion 26"": ""assert property (StateData1 == 1'b1 |=> StateDrop == 1'b0);"",
+""Assertion 27"": ""assert property (MRxDV == 1'b0 |=> StateDrop == 1'b0);"",
+""Assertion 28"": ""assert property ((~Transmitting & StateIdle) |=> ~StateDrop);"",
+""Assertion 29"": ""assert property (StartIdle |=> StateIdle);"",
+""Assertion 30"": ""assert property (StartDrop |=> !StateIdle);"",
+""Assertion 31"": ""assert property (StartSFD |=> !StateIdle);"",
+""Assertion 32"": ""assert property (StartPreamble |=> !StateIdle);"",
+""Assertion 33"": ""assert property (MRxDV |=> !StateIdle);"",
+""Assertion 34"": ""assert property (MRxDV == 1'b0 |=> StateIdle == 1'b1);""
 }"
 Gray_To_Binary,"module Gray_To_Binary #(
 	parameter DATA_WIDTH = 3
@@ -1518,7 +1082,7 @@ endmodule","{
     ""Assertion Explaination"": ""convert the output binary code to Gray code and it should equal the input Gray code""
   }
 }","{
-""Assertion 1"": ""assert property (bin == (gray ^ ((bin >> 1) & tmp[DATA_WIDTH-2])));""
+""Assertion 1"": ""assert property (bin == (bin ^ (bin >> 1)) && (bin ^ (bin >> 1)) == gray);""
 }"
 delay,"// Greg Stitt
 // University of Florida
@@ -1753,9 +1317,9 @@ endmodule
     ""Assertion Explaination"": ""when the enable signal is reset (0), then the output delayed signal remains unchanged from the next clock cycle""
   }
 }","{
-""Assertion 1"": ""assert property (count < CYCLES || out == in);"",
-""Assertion 2"": ""assert property ((count == CYCLES) |-> (out == RESET_VALUE));"",
-""Assertion 3"": ""assert property ((out === out_reg) && (en !== 1'b0));""
+""Assertion 1"": ""assert property (count < CYCLES || (out == regs[CYCLES] && en));"",
+""Assertion 2"": ""assert property ((count == CYCLES) || (out == RESET_VALUE));"",
+""Assertion 3"": ""assert property (en == 1'b0 |-> out == $past(out));""
 }"
 arb2,"module arb2(clk, rst, req1, req2, gnt1, gnt2);
 
@@ -1927,14 +1491,14 @@ endmodule
     ""Assertion Explaination"": ""when request signal from client 2 equals 1 and request signal from client 1 equals 0, then grant signal for client 2 equals 1 from the current clock cycle""
   }
 }","{
-""Assertion 1"": ""assert property ((state == 1 && req2 == 1) |=> (gnt1 == 0));"",
-""Assertion 2"": ""assert property (req1 && !state |-> gnt1);"",
-""Assertion 3"": ""assert property ($rose(req1) |-> $rose(gnt1));"",
-""Assertion 4"": ""assert property (req1 && !req2 |-> ##1 gnt1);"",
-""Assertion 5"": ""assert property ((req1 == 1'b1) && (state == 0) |-> (gnt2 == 0));"",
-""Assertion 6"": ""assert property ((req2 & state) |-> gnt2);"",
-""Assertion 7"": ""assert property (req2 == 0 |-> ##1 gnt2 == 0);"",
-""Assertion 8"": ""assert property (req2 && !req1 |=> gnt2);""
+""Assertion 1"": ""assert property (state == 1 && req2 == 1 |-> gnt1 == 0);"",
+""Assertion 2"": ""assert property ((req1 && !state) |-> gnt1);"",
+""Assertion 3"": ""assert property (req1 == 0 |-> gnt1 == 0);"",
+""Assertion 4"": ""assert property ($rose(req1 && !req2) |-> gnt1);"",
+""Assertion 5"": ""assert property ((req1 == 1 && state == 0) |-> (gnt2 == 0));"",
+""Assertion 6"": ""assert property (req2 && state |-> gnt2);"",
+""Assertion 7"": ""assert property (!req2 |-> !gnt2);"",
+""Assertion 8"": ""assert property ($rose(req2) && !req1 |-> gnt2);""
 }"
 Edge_Detector,"module Edge_Detector (
 	input  clk,
@@ -1983,7 +1547,7 @@ endmodule","{
     ""Assertion Explaination"": ""the output signal indicates whether a rising edge can be detected on the delayed version of the input signal""
   }
 }","{
-""Assertion 1"": ""assert property ((edge_seen_q == 1'b0) |-> (pulse_next == 1'b1));""
+""Assertion 1"": ""assert property ($rose(din) |=> dout);""
 }"
 VGA,"module VGA #(localparam  size = 1, localparam h_bits = 7, localparam v_bits = 5) (input clk, input rst, output reg disp_ena, output reg n_blank, output reg n_sync, output reg [h_bits-1:0] col, output reg [v_bits-1:0] row);
 
@@ -2068,7 +1632,7 @@ endmodule
   ""Assertion Explaination"": ""eventually, the reset signal equal 1 or the display enable signal equals 1""
 }
 }","{
-""Assertion 1"": ""assert property (rst || disp_ena);""
+""Assertion 1"": ""assert property (s_eventually (rst == 1 || disp_ena == 1));""
 }"
 simple_router,"module simple_router #(
 	parameter DATA_WIDTH = 32
@@ -2205,11 +1769,11 @@ endmodule","{
     ""Assertion Explaination"": ""when the data input enable signal is asserted and the address signal equals 3, then the data output signal for address 3 equals the data input signal and the data output signals for addresses 0, 1, and 2 are equal to zero from the current clock cycle""
   }
 }","{
-""Assertion 1"": ""assert property (din_en |=> ((dout0 == 0) && (dout1 == 0) && (dout2 == 0) && (dout3 == 0)));"",
-""Assertion 2"": ""assert property (din_en && addr == 2'd0 |-> (dout0 == din) && (!dout1) && (!dout2) && (!dout3));"",
-""Assertion 3"": ""assert property (($rose(din_en) && addr == 2'd1) |-> ((dout0 == {DATA_WIDTH{1'b0}}) && (dout1 == din) && (dout2 == {DATA_WIDTH{1'b0}}) && (dout3 == {DATA_WIDTH{1'b0}})));"",
-""Assertion 4"": ""assert property (din_en && addr == 2'd2 |-> (dout0 == 0 && dout1 == 0 && dout2 == din && dout3 == 0));"",
-""Assertion 5"": ""assert property ((din_en && addr == 3'd3) |-> (dout0 == 0 && dout1 == 0 && dout2 == 0 && dout3 == din));""
+""Assertion 1"": ""assert property (din_en || (dout0 == 0 && dout1 == 0 && dout2 == 0 && dout3 == 0));"",
+""Assertion 2"": ""assert property ((din_en && (addr == 2'd0)) |-> (dout0 == din && dout1 == 0 && dout2 == 0 && dout3 == 0));"",
+""Assertion 3"": ""assert property ((din_en && (addr == 2'd1)) |-> (dout1 == din) && (dout0 == 0) && (dout2 == 0) && (dout3 == 0));"",
+""Assertion 4"": ""assert property (     (din_en && (addr == 2'd2)) |->      (dout2 == din) &&      (dout0 == 0) &&      (dout1 == 0) &&      (dout3 == 0) );"",
+""Assertion 5"": ""assert property ((din_en && (addr == 2'd3)) |-> ((dout3 == din) && (dout0 == 0) && (dout1 == 0) && (dout2 == 0)));""
 }"
 a25_wishbone,"//////////////////////////////////////////////////////////////////
 //                                                              //
@@ -2826,12 +2390,12 @@ endmodule
     ""Assertion Explaination"": ""When the wishbone bus state equals WB_WAIT_ACK and the extra write flag is not set and the acknowledgement signal is asserted, then the wishbone bus state equals WB_IDLE from the next clock cycle""
   }
 }","{
-""Assertion 1"": ""assert property (wishbone_st == WB_IDLE || wishbone_st == WB_BURST1 || wishbone_st == WB_WAIT_ACK);"",
-""Assertion 2"": ""assert property ((wishbone_st == WB_BURST1 && i_wb_ack) |-> ##1 (wishbone_st == WB_BURST2));"",
-""Assertion 3"": ""assert property ((wishbone_st == WB_BURST2 && i_wb_ack) |=> (wishbone_st == WB_BURST3));"",
-""Assertion 4"": ""assert property (wishbone_st == WB_BURST3 && i_wb_ack == 1'b1 |-> wishbone_st == WB_WAIT_ACK);"",
-""Assertion 5"": ""assert property (wishbone_st == WB_WAIT_ACK && (extra_write_r || !i_wb_ack)) $display(\""WB_STATE should be WB_WAIT_ACK from next clock cycle!\"");"",
-""Assertion 6"": ""assert property (wishbone_st == WB_WAIT_ACK && extra_write_r == 'd0 && i_wb_ack);""
+""Assertion 1"": ""assert property (wishbone_st == WB_IDLE |=> (wishbone_st == WB_IDLE || wishbone_st == WB_BURST1 || wishbone_st == WB_WAIT_ACK));"",
+""Assertion 2"": ""assert property ((wishbone_st == WB_BURST1 && i_wb_ack) |=> (wishbone_st == WB_BURST2));"",
+""Assertion 3"": ""assert property (wishbone_st == WB_BURST2 && i_wb_ack |=> wishbone_st == WB_BURST3);"",
+""Assertion 4"": ""assert property (wishbone_st == WB_BURST3 && i_wb_ack |=> wishbone_st == WB_WAIT_ACK);"",
+""Assertion 5"": ""assert property ((wishbone_st == WB_WAIT_ACK && (extra_write_r || !i_wb_ack)) |=> (wishbone_st == WB_WAIT_ACK));"",
+""Assertion 6"": ""assert property ((wishbone_st == WB_WAIT_ACK && !extra_write_r && i_wb_ack) |=> (wishbone_st == WB_IDLE));""
 }"
 second_largest,"module second_largest #(parameter
   DATA_WIDTH = 32
@@ -2912,7 +2476,7 @@ endmodule","{
     ""Assertion Explaination"": ""the maximum value held equals 0 or the maximum value held is greater-than the second largest value held""
   }
 }","{
-""Assertion 1"": ""assert property ((max_q == 0) || (max_q > max2_q));""
+""Assertion 1"": ""assert property (max_q == 0 || max_q > max2_q);""
 }"
 reversing_bits,"module reversing_bits #(
 	parameter DATA_WIDTH=3
@@ -2948,7 +2512,7 @@ endmodule","{
     ""Assertion Explaination"": ""reversed output bus signal's first bit equals input bus signal's DATA_WIDTH-1-th bit""
   }
 }","{
-""Assertion 1"": ""assert property (dout[0] == din[data_width-1]);""
+""Assertion 1"": ""assert property (dout[0] == din[DATA_WIDTH-1]);""
 }"
 or1200_ctrl,"//////////////////////////////////////////////////////////////////////
 ////                                                              ////
@@ -4596,18 +4160,18 @@ endmodule","{
     ""Assertion Explaination"": ""when the freeze signal for the ID stage is reset (0) and the opcode field of the instruction in the IF stage equals the SFXX opcode `OR1200_OR32_SFXX, then the signal controlling immediate value selection equals 0 from the next clock cycle""
   }
 }","{
-""Assertion 1"": ""assert property ((ex_freeze == 0) && (ex_delay_slot == 1) && (ex_nop == 0) |=> (ex_nop == 0) && (ex_delay_slot == 0));"",
-""Assertion 2"": ""assert property (     !ex_freeze &&      (id_freeze || ex_flushpipe) |->      ~mac_read_sig_ex );"",
-""Assertion 3"": ""assert property (pipeline_flush_id_stage == 1 |-> id_stage_instruction == NOP_VALUE);"",
-""Assertion 4"": ""assert property (     !ex_freeze && (id_freeze || ex_flushpipe) |-> ##1      ex_instruction == `OR1200_NOP );"",
-""Assertion 5"": ""assert property ((id_freeze == 0 && if_opcode == `or1200_or32_jalr) |-> (imm_select == 0));"",
-""Assertion 6"": ""assert property ((id_stage_freeze == 0 && IF_opcode == `or1200_or32_jr) |-> (imm_sel == 0));"",
-""Assertion 7"": ""assert property ((IF_stage_instr_opcode == `or1200_or32_rfe && ID_stage_freeze_reset == 0) |-> (Immediate_value_selection_signal == 0));"",
-""Assertion 8"": ""assert property (ONLY id_stage_freeze_reset == 0 && if_stage_opcode == `or1200_or32_mfspr);"",
-""Assertion 9"": ""assert property ((id_freeze == 0 && id_opcode == `OR1200_OR32_MTSPR) |=> (imm_sel == 0));"",
-""Assertion 10"": ""assert property (   $rose(id_stage_freeze) |-> !($stable(instruction_opcode) within (1ns)) ##1 (instruction_opcode == `or1200_or32_xsync && immediate_value_select == 0) );"",
-""Assertion 11"": ""assert property (~id_stall && id_opcode == `or1200_or32_s |-> immediate_sel == 0);"",
-""Assertion 12"": ""assert property (id_opcode == or1200_or32_sb && !id_freeze |-> !imm_sel_en);"",
-""Assertion 13"": ""assert property (   !id_freeze && (id_insn[15:0] == `OR1200_OR32_ALU) |-> sig_immed_sel == 0 );"",
-""Assertion 14"": ""assert property (id_freeze || id_insn[25:21] != 6'd48 || imm_sel === 0);""
+""Assertion 1"": ""assert property ((!ex_freeze && ex_delayslot_dsi && !ex_delayslot_nop) |=> (!ex_delayslot_nop && !ex_delayslot_dsi));"",
+""Assertion 2"": ""assert property ((!ex_freeze && (id_freeze || ex_flushpipe)) |=> (ex_macrc_op == 1'b0));"",
+""Assertion 3"": ""assert property ((id_flushpipe == 1'b1) |=> (id_insn == {`OR1200_OR32_NOP, 26'h041_0000}));"",
+""Assertion 4"": ""assert property ((!ex_freeze && (id_freeze || ex_flushpipe)) |=> (ex_insn == {`OR1200_OR32_NOP, 26'h041_0000}));"",
+""Assertion 5"": ""assert property (!id_freeze && (if_insn[31:26] == `OR1200_OR32_JALR) |=> (sel_imm == 1'b0));"",
+""Assertion 6"": ""assert property ((!id_freeze && if_insn[31:26] == `OR1200_OR32_JR) |=> sel_imm == 1'b0);"",
+""Assertion 7"": ""assert property (!id_freeze && (if_insn[31:26] == `OR1200_OR32_RFE) |=> (sel_imm == 1'b0));"",
+""Assertion 8"": ""assert property ((!id_freeze && (if_insn[31:26] == `OR1200_OR32_MFSPR)) |=> (sel_imm == 1'b0));"",
+""Assertion 9"": ""assert property (!id_freeze && (if_insn[31:26] == `OR1200_OR32_MTSPR) |=> (sel_imm == 1'b0));"",
+""Assertion 10"": ""assert property (!id_freeze && (if_insn[31:26] == `OR1200_OR32_XSYNC) |=> (sel_imm == 1'b0));"",
+""Assertion 11"": ""assert property ((!id_freeze && if_insn[31:26] == `OR1200_OR32_SW) |=> (sel_imm == 1'b0));"",
+""Assertion 12"": ""assert property ((!id_freeze && if_insn[31:26] == `OR1200_OR32_SB) |=> (sel_imm == 1'b0));"",
+""Assertion 13"": ""assert property ((!id_freeze && (if_insn[31:26] == `OR1200_OR32_ALU)) |=> (sel_imm == 1'b0));"",
+""Assertion 14"": ""assert property ((!id_freeze && if_insn[31:26] == `OR1200_OR32_SFXX) |=> (sel_imm == 1'b0));""
 }"
