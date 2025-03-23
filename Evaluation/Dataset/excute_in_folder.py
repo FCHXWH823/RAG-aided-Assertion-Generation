@@ -1,26 +1,25 @@
 import os 
 import sys
 
+model = "deepseek-chat"
+
 def excute_in_each_folder(folder = "", a=1, b=1, c=1, d=1, e=1):
     folder_path = os.path.join("./",folder)
     # print(f"a:{a}, b:{b}, c:{c}")
     os.system(f"cd {folder_path}; rm -rf jqproject")
     if os.path.isdir(folder_path):
         if a:
-            os.system(f"cd {folder_path}; jg -no_gui fpv_Openai-4o-mini.tcl")
-            print("============================finished fpv_Openai-4o-mini.tcl==================================")
+            os.system(f"cd {folder_path}; jg -no_gui fpv_{model}.tcl")
+            print(f"============================finished fpv_{model}.tcl==================================")
         if b:
-            os.system(f"cd {folder_path}; jg -no_gui fpv_RAG_Openai-4o-mini.tcl")
-            print("============================finished fpv_RAG_Openai-4o-mini.tcl==================================")
+            os.system(f"cd {folder_path}; jg -no_gui fpv_nl2spec-{model}.tcl")
+            print(f"============================finished fpv_nl2spec-{model}.tcl==================================")
         if c:
-            os.system(f"cd {folder_path}; jg -no_gui fpv_Dynamic_RAG_Openai-4o-mini.tcl")
-            print("============================finished fpv_Dynamic_RAG_Openai-4o-mini.tcl==================================")
+            os.system(f"cd {folder_path}; jg -no_gui fpv_RAG-{model}.tcl")
+            print(f"============================finished fpv_RAG-{model}.tcl==================================")
         if d:
-            os.system(f"cd {folder_path}; jg -no_gui fpv_QueryExpand_Dynamic_RAG_Openai-4o-mini.tcl")
-            print("============================finished fpv_QueryExpand_Dynamic_RAG_Openai-4o-mini.tcl==================================")
-        if e:
-            os.system(f"cd {folder_path}; jg -no_gui fpv_CoT_Dynamic_RAG_Openai-4o-mini.tcl")
-            print("============================finished fpv_CoT_Dynamic_RAG_Openai-4o-mini.tcl==================================")
+            os.system(f"cd {folder_path}; jg -no_gui fpv_Dynamic-RAG-{model}.tcl")
+            print(f"============================finished fpv_Dynamic-RAG-{model}.tcl==================================")
         os.system(f"cd {folder_path}; rm -r jgproject")
 
 def excute_in_folders_1():

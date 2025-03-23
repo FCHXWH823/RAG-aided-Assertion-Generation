@@ -31,7 +31,7 @@ assign out = gray_q;
 
 assert property(@(posedge clk) disable iff (~resetn) unused_bin_inc | $onehot(gray_next ^ gray_q));
 
-assert property (@(posedge clk) disable iff (~resetn) ($onehot0(gray_q ^ $past(gray_q)) || (gray_q == {DATA_WIDTH{1'd0}} && $past(gray_q) == {DATA_WIDTH{1'd1}})));
-assert property (@(posedge clk) disable iff (~resetn) (unused_bin_inc | $onehot(gray_next ^ gray_q)) iff ($onehot0(gray_q ^ $past(gray_q)) || (gray_q == {DATA_WIDTH{1'd0}} && $past(gray_q) == {DATA_WIDTH{1'd1}})));
+assert property (@(posedge clk) disable iff (~resetn) (($onehot0(gray_q ^ $past(gray_q)) || (gray_q == {DATA_WIDTH{1'd0}} && $past(gray_q) == {DATA_WIDTH{1'd1}})));
+assert property (@(posedge clk) disable iff (~resetn) (unused_bin_inc | $onehot(gray_next ^ gray_q)) iff (($onehot0(gray_q ^ $past(gray_q)) || (gray_q == {DATA_WIDTH{1'd0}} && $past(gray_q) == {DATA_WIDTH{1'd1}})));
 
 endmodule

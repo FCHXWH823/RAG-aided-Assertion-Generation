@@ -142,7 +142,7 @@ def build_rag_system():
 
 code_store, text_store = build_rag_system()
 
-code_retriever = code_store.as_retriever(search_kwargs={"k": 2})
+code_retriever = code_store.as_retriever()
 text_retriever = text_store.as_retriever()
 
 # prompt
@@ -260,8 +260,8 @@ with open(f'Results/Dynamic-RAG-Openai-4o-mini-Prompted-Assertion-Generation-Res
     for folder in os.listdir("Evaluation/Dataset/"):
         if Excute_Folder != 'ALL_DESIGNS' and Excute_Folder not in folder:
             continue
-        if folder in Excute_Folders_Dynamic_RAG:
-            continue
+        # if folder in Excute_Folders_Dynamic_RAG:
+        #     continue
         folder_path = os.path.join("Evaluation/Dataset/",folder)
         if os.path.isdir(folder_path):
             with open(folder_path+"/"+folder+".sv","r") as file:
