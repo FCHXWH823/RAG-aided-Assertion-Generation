@@ -45,9 +45,10 @@ OpenAI_client = ChatOpenAI(
 )
 
 client = ChatOllama(
-    model = Model_Name,
-    temperature = 0.8,
-    num_predict = 256
+    model = f"codellama:{Model_Name}",
+    temperature = 0.2,
+    num_predict = 256,
+    top_p=1
 )
 
 
@@ -135,13 +136,14 @@ with open('Results/Openai-4o-mini-Prompted-Assertion-Generation-Results-for-New-
             llm_responses = []
             for assertion, details in explanation_json.items():
                 explanation = details.get("Assertion Explaination", "No explanation provided")
+                signals = details.get("Signals", "No signals provided")
                 # clk_condition = "" if details.get("clock signal condition") is "none" else details.get("clock signal condition")
                 # reset_condition = "" if details.get("disable condition") is "none" else details.get("disable condition")
                 
                 assertion_format = f"assert property (ONLY logical expression WITHOUT clock signal condition @(posedge clock) and WITHOUT disable condition disable iff(...));\n Note that the output assrtion must be end with semicolon."
                 
 
-                prompt = f"Given Verilog code snippet as below: \n{code}\n Please generate such a systemverilog assertion for it following the description:{explanation}. Ensure the syntax correctness and the used signals should be from the verilog code.\nThe output format should STRICTLY follow :\n{assertion_format}\nWITHOUT other things."
+                prompt = f"Given Verilog code snippet as below: \n{code}\n Please generate such a systemverilog assertion for it following the description:{explanation}. Ensure the syntax correctness and ONLY use these signals {signals} to construct the assertion.\nThe output format should STRICTLY follow :\n{assertion_format}\nWITHOUT other things."
 
                 completion = client.invoke(input=[
                     {"role": "system", "content": "You are a helpful bot that generate the assertion satisfying some requirements for a given verilog code."},
@@ -180,7 +182,10 @@ with open('Results/Openai-4o-mini-Prompted-Assertion-Generation-Results-for-New-
 
                 i += 1
                 match = re.search(r'assert property\s*\(\s*(.*?)\s*\)\s*(.*?);', completion.content, re.DOTALL)
-                matched_str = str(match.group(0))
+                if match is None:
+                    matched_str = "assert property (GENERATE_NO_ASSERTION);"
+                else:
+                    matched_str = str(match.group(0))
                 matched_str = matched_str.replace("\n"," ").replace("\t"," ").replace("\"","\\\"")
                 llm_responses.append(f"\"Assertion {i}\": \"{matched_str}\"") 
 

@@ -48,7 +48,7 @@
 // Structure reordered and bugs fixed. 
 
 // synopsys translate_off
-`include "timescale.v"
+// `include "timescale.v"
 // synopsys translate_on
 `include "or1200_defines.v"
 

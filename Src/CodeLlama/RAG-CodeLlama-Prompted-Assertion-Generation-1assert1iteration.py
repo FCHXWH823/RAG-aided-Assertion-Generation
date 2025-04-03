@@ -97,7 +97,7 @@ system_prompt = (
 prompt = ChatPromptTemplate.from_messages(
     [
         ("system", system_prompt),
-        ("human","Given Verilog code snippet as below: \n{code}\n Please generate such an assertion for it following the description:{input}\nThe output format should STRICTLY follow :\n{assertion_format}\nWITHOUT other things."),
+        ("human","Given Verilog code snippet as below: \n{code}\n Please generate such an assertion for it following the description:{input}\nEnsure the syntax correctness and ONLY use these signals {signals} to construct the assertion.\nThe output format should STRICTLY follow :\n{assertion_format}\nWITHOUT other things."),
     ]
 )
 
@@ -139,8 +139,8 @@ def assertion_format_prompt(llm_response, assertion_format):
 #     )
 
 llm = ChatOllama(
-    model = Model_Name,
-    temperature = 0.8,
+    model = f"codellama:{Model_Name}",
+    temperature = 0.2,
     num_predict = 256
 )
 
@@ -164,8 +164,8 @@ with open(f'Results/RAG-Openai-4o-mini-Prompted-Assertion-Generation-Results-{PD
     for folder in os.listdir("Evaluation/Dataset/"):
         if Excute_Folder != 'ALL_DESIGNS' and Excute_Folder not in folder:
             continue
-        # if folder not in Excute_Folders_RAG:
-        #     continue
+        if folder not in Excute_Folders_RAG:
+            continue
         folder_path = os.path.join("Evaluation/Dataset/",folder)
         if os.path.isdir(folder_path):
             with open(folder_path+"/"+folder+".sv","r") as file:
@@ -182,6 +182,7 @@ with open(f'Results/RAG-Openai-4o-mini-Prompted-Assertion-Generation-Results-{PD
             llm_responses = []
             for assertion, details in explanation_json.items():
                 explanation = details.get("Assertion Explaination", "No explanation provided")
+                signals = details.get("Signals", "No signals provided")
                 # clk_condition = "" if details.get("clock signal condition") is "none" else details.get("clock signal condition")
                 # reset_condition = "" if details.get("disable condition") is "none" else details.get("disable condition")
                 
@@ -190,7 +191,7 @@ with open(f'Results/RAG-Openai-4o-mini-Prompted-Assertion-Generation-Results-{PD
 
                 prompt = f"Given Verilog code snippet as below: \n{code}\n Please generate such a systemverilog assertion for it following the description:{explanation}. Ensure the syntax correctness and the used signals should be from the verilog code.\nThe output format should STRICTLY follow :\n{assertion_format}\nWITHOUT other things."
 
-                llm_result = rag_chain.invoke({"code":code,"input":explanation,"assertion_format":assertion_format})
+                llm_result = rag_chain.invoke({"code":code,"input":explanation,"signals":signals,"assertion_format":assertion_format})
                 llm_response = llm_result["answer"]
                 
                 rewrite_prompt = assertion_format_prompt(llm_response,assertion_format)
@@ -207,16 +208,19 @@ with open(f'Results/RAG-Openai-4o-mini-Prompted-Assertion-Generation-Results-{PD
                 i += 1
                 match = re.search(r'assert property\s*\(\s*(.*?)\s*\)\s*(.*?);', completion.content, re.DOTALL)
 
-                rw_times = 0
-                while match is None and rw_times >= 10:
-                    completion = OpenAI_client.invoke(input=[
-                    {"role": "system", "content": "You are a helpful bot that rewrite the input to STRICTLY follow the specified format."},
-                    {"role": "user", "content": rewrite_prompt}
-                    ])
-                    match = re.search(r'assert property\s*\(\s*(.*?)\s*\)\s*(.*?);', completion.content, re.DOTALL)
-                    rw_times += 1
+                # rw_times = 0
+                # while match is None and rw_times >= 10:
+                #     completion = OpenAI_client.invoke(input=[
+                #     {"role": "system", "content": "You are a helpful bot that rewrite the input to STRICTLY follow the specified format."},
+                #     {"role": "user", "content": rewrite_prompt}
+                #     ])
+                #     match = re.search(r'assert property\s*\(\s*(.*?)\s*\)\s*(.*?);', completion.content, re.DOTALL)
+                #     rw_times += 1
 
-                matched_str = str(match.group(0))
+                if match is None:
+                    matched_str = "assert property (GENERATE_NO_ASSERTION);"
+                else:
+                    matched_str = str(match.group(0))
                 matched_str = matched_str.replace("\n"," ").replace("\t"," ").replace("\"","\\\"")
                 llm_responses.append(f"\"Assertion {i}\": \"{matched_str}\"")
 

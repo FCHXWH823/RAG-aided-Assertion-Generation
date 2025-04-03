@@ -1,0 +1,13 @@
+{
+  "local": {
+    "3c6144220d5c00295cf162186e034205": {
+      "return": "{\"high_level_keywords\": [\"Signal processing\", \"Clock cycle\", \"Logical conditions\"], \"low_level_keywords\": [\"Signal A\", \"Signal B\", \"Equals\", \"Next\", \"Cycle\"]}",
+      "cache_type": "keywords",
+      "embedding": null,
+      "embedding_shape": null,
+      "embedding_min": null,
+      "embedding_max": null,
+      "original_prompt": "when signal a equals 1, signal b equals 0 from the next clock cycle."
+    }
+  }
+}

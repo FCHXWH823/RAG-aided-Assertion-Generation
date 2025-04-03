@@ -1,10 +1,10 @@
-Assertion-Based Design
-A Practical Guide for SystemVerilog Assertions
-Computer Aided Verification
-The Verilog PLI Handbook
-SystemVerilog for Verification
-Principles of Verifiable RTL Design
 Verilog and SystemVerilog Gotchas
+A Practical Guide for SystemVerilog Assertions
 Digital VLSI Design with Verilog
+Principles of Verifiable RTL Design
+SystemVerilog for Verification
 The Power of Assertions in SystemVerilog
 SystemVerilog Assertions and Functional Coverage
+The Verilog PLI Handbook
+Assertion-Based Design
+Computer Aided Verification
