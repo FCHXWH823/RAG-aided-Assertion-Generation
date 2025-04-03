@@ -89,32 +89,22 @@ def extract_csv_from_dataset(csv_name: str):
 
     # df_new.to_csv("Evaluation/asserted-verilog-evaluation-dataset-transform-new.csv")
 
-model = "deepseek-chat"
+# model = "deepseek-chat"
+model = "gpt-4o-mini"
+methods = ["HybridRAG","HybridDynamic-RAG"]
 
 def generate_fpv():
 
     for folder in os.listdir("Evaluation/Dataset"):
         folder_path = os.path.join("Evaluation/Dataset/",folder)
-        os.system(f"rm {folder_path}/fpv__QueryExpand-Dynamic-RAG-Openai-4o-mini.rpt")
+        # os.system(f"rm {folder_path}/fpv__QueryExpand-Dynamic-RAG-Openai-4o-mini.rpt")
         if os.path.isdir(folder_path):
             with open(f"{folder_path}/fpv.tcl","r") as file:
                 fpv_tcl = file.read()
-            fpv_tcl_basic = fpv_tcl.replace(f"./{folder}_assertion.sv",f"./{folder}_{model}.sv").replace("fpv.rpt",f"fpv_{model}.rpt")
-            fpv_tcl_nl2spec = fpv_tcl.replace(f"./{folder}_assertion.sv",f"./{folder}_nl2spec-{model}.sv").replace("fpv.rpt",f"fpv_nl2spec-{model}.rpt")
-            fpv_tcl_RAG = fpv_tcl.replace(f"./{folder}_assertion.sv",f"./{folder}_RAG-{model}.sv").replace("fpv.rpt",f"fpv_RAG-{model}.rpt")
-            fpv_tcl_Dynamic_RAG = fpv_tcl.replace(f"./{folder}_assertion.sv",f"./{folder}_Dynamic-RAG-{model}.sv").replace("fpv.rpt",f"fpv_Dynamic-RAG-{model}.rpt")
-
-            with open(f"{folder_path}/fpv_{model}.tcl","w") as file:
-                file.write(fpv_tcl_basic)
-            
-            with open(f"{folder_path}/fpv_nl2spec-{model}.tcl","w") as file:
-                file.write(fpv_tcl_nl2spec)
-
-            with open(f"{folder_path}/fpv_RAG-{model}.tcl","w") as file:
-                file.write(fpv_tcl_RAG)
-
-            with open(f"{folder_path}/fpv_Dynamic-RAG-{model}.tcl","w") as file:
-                file.write(fpv_tcl_Dynamic_RAG)
+            for method in methods:
+                fpv_tcl_method = fpv_tcl.replace(f"./{folder}_assertion.sv",f"./{folder}_{method}-{model}.sv").replace("fpv.rpt",f"fpv_{method}-{model}.rpt")
+                with open(f"{folder_path}/fpv_{method}-{model}.tcl","w") as file:
+                    file.write(fpv_tcl_method)
             
             
             
