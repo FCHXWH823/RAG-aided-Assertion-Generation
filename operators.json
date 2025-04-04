@@ -1,0 +1,13 @@
+{
+    "$rose": "detects that the condition transitions from false to true (rising edge)",
+    "##1": "delay operator that postpones evaluation by one clock cycle",
+    "$stable": "ensures that the signal value remains unchanged during the evaluation cycle",
+    "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold in the same clock cycle",
+    "$isunknown": "checks if a signal has an unknown (X or Z) value",
+    "s_eventually": "a temporal operator indicating that the contained condition is required to occur at some future clock cycle (eventually)",
+    "$onehot0": "a function that checks that the operand has no more than one bit of the expression is set to 1",
+    "|=>": "a non-overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold in the next clock cycle",
+    "##2": "a delay operator indicating that the condition following it should occur after 2 clock cycles",
+    "$onehot": "a function that verifies that exactly one bit in its operand is set to 1",
+    "$past": "the value from previous clock cycle(s)"
+}

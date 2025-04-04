@@ -1,594 +1,4 @@
 Master Module,Code,golden_assertions,llm_assertions
-Ripple_Carry_Adder,"module full_adder 
-(
-    input a,
-    input b,
-    input cin,
-    output sum,
-    output cout
-);
-
-assign sum = a ^ b ^ cin;
-assign cout = (a & b) | (a & cin) | (b & cin);
-endmodule
-
-module Ripple_Carry_Adder #(
-	parameter DATA_WIDTH=8
-)
-(
-    input [DATA_WIDTH-1:0] a,
-    input [DATA_WIDTH-1:0] b,
-    input clk,
-    input rst,
-    output logic [DATA_WIDTH-0:0] sum,
-    output logic [DATA_WIDTH-1:0] cout_int
-);
-
-logic [DATA_WIDTH:0] carry;
-assign carry[0] = 1'b0;
-
-genvar x;
-generate
-	for( x = 0; x < DATA_WIDTH; x++ ) begin
-		// instanciate adder module
-		full_adder m_adder(
-			.a( a[x] ),
-			.b( b[x] ),
-			.cin( carry[x]),
-			.sum( sum[x] ),
-			.cout( carry[x+1] )
-		);
-	end
-endgenerate
-// output
-assign sum[DATA_WIDTH] = carry[DATA_WIDTH];
-assign cout_int        = carry[DATA_WIDTH-1:0];
-
-endmodule","{
-  ""Assertion 1"": {
-    ""clock signal condition"": ""@(posedge clk)"",
-    ""disable condition"": ""disable iff (~rst)"",
-    ""logical expression"": ""res == sum"",
-    ""Signals"": [""res"", ""sum""],
-    ""Signal Explanations"": {
-      ""res"": ""result of addition of a and b"",
-      ""sum"": ""computed sum output from the ripple-carry adder""
-    },
-    ""Logical Operators"": [""==""],
-    ""Logical Operators Explanation"": {
-      ""=="": ""equal""
-    },
-    ""Assertion Explaination"": ""the result of addition of a and b is equal to the computed sum output from the ripple-carry adder""
-  }
-}","{
-""Assertion 1"": ""assert property (sum == a + b);""
-}"
-or1200_operandmuxes,"//////////////////////////////////////////////////////////////////////
-////                                                              ////
-////  OR1200's register file read operands mux                    ////
-////                                                              ////
-////  This file is part of the OpenRISC 1200 project              ////
-////  http://www.opencores.org/project,or1k                       ////
-////                                                              ////
-////  Description                                                 ////
-////  Mux for two register file read operands.                    ////
-////                                                              ////
-////  To Do:                                                      ////
-////   - make it smaller and faster                               ////
-////                                                              ////
-////  Author(s):                                                  ////
-////      - Damjan Lampret, lampret@opencores.org                 ////
-////                                                              ////
-//////////////////////////////////////////////////////////////////////
-////                                                              ////
-//// Copyright (C) 2000 Authors and OPENCORES.ORG                 ////
-////                                                              ////
-//// This source file may be used and distributed without         ////
-//// restriction provided that this copyright statement is not    ////
-//// removed from the file and that any derivative work contains  ////
-//// the original copyright notice and the associated disclaimer. ////
-////                                                              ////
-//// This source file is free software; you can redistribute it   ////
-//// and/or modify it under the terms of the GNU Lesser General   ////
-//// Public License as published by the Free Software Foundation; ////
-//// either version 2.1 of the License, or (at your option) any   ////
-//// later version.                                               ////
-////                                                              ////
-//// This source is distributed in the hope that it will be       ////
-//// useful, but WITHOUT ANY WARRANTY; without even the implied   ////
-//// warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR      ////
-//// PURPOSE.  See the GNU Lesser General Public License for more ////
-//// details.                                                     ////
-////                                                              ////
-//// You should have received a copy of the GNU Lesser General    ////
-//// Public License along with this source; if not, download it   ////
-//// from http://www.opencores.org/lgpl.shtml                     ////
-////                                                              ////
-//////////////////////////////////////////////////////////////////////
-//
-// $Log: or1200_operandmuxes.v,v $
-// Revision 2.0  2010/06/30 11:00:00  ORSoC
-// Minor update: 
-// Bugs fixed. 
-
-// synopsys translate_off
-// `include ""timescale.v""
-// synopsys translate_on
-`include ""or1200_defines.v""
-
-module or1200_operandmuxes(
-	// Clock and rst
-	clk, rst,
-
-	// Internal i/f
-	id_freeze, ex_freeze, rf_dataa, rf_datab, ex_forw, wb_forw,
-	simm, sel_a, sel_b, operand_a, operand_b, muxed_a, muxed_b
-);
-
-parameter width = `OR1200_OPERAND_WIDTH;
-
-//
-// I/O
-//
-input				clk;
-input				rst;
-input				id_freeze;
-input				ex_freeze;
-input	[width-1:0]		rf_dataa;
-input	[width-1:0]		rf_datab;
-input	[width-1:0]		ex_forw;
-input	[width-1:0]		wb_forw;
-input	[width-1:0]		simm;
-input	[`OR1200_SEL_WIDTH-1:0]	sel_a;
-input	[`OR1200_SEL_WIDTH-1:0]	sel_b;
-output	[width-1:0]		operand_a;
-output	[width-1:0]		operand_b;
-output	[width-1:0]		muxed_a;
-output	[width-1:0]		muxed_b;
-
-//
-// Internal wires and regs
-//
-reg	[width-1:0]		operand_a;
-reg	[width-1:0]		operand_b;
-reg	[width-1:0]		muxed_a;
-reg	[width-1:0]		muxed_b;
-reg				saved_a;
-reg				saved_b;
-
-//
-// Operand A register
-//
-always @(posedge clk or `OR1200_RST_EVENT rst) begin
-	if (rst == `OR1200_RST_VALUE) begin
-		operand_a <=  32'd0;
-		saved_a <=  1'b0;
-	end else if (!ex_freeze && id_freeze && !saved_a) begin
-		operand_a <=  muxed_a;
-		saved_a <=  1'b1;
-	end else if (!ex_freeze && !saved_a) begin
-		operand_a <=  muxed_a;
-	end else if (!ex_freeze && !id_freeze)
-		saved_a <=  1'b0;
-end
-
-//
-// Operand B register
-//
-always @(posedge clk or `OR1200_RST_EVENT rst) begin
-	if (rst == `OR1200_RST_VALUE) begin
-		operand_b <=  32'd0;
-		saved_b <=  1'b0;
-	end else if (!ex_freeze && id_freeze && !saved_b) begin
-		operand_b <=  muxed_b;
-		saved_b <=  1'b1;
-	end else if (!ex_freeze && !saved_b) begin
-		operand_b <=  muxed_b;
-	end else if (!ex_freeze && !id_freeze)
-		saved_b <=  1'b0;
-end
-
-//
-// Forwarding logic for operand A register
-//
-always @(ex_forw or wb_forw or rf_dataa or sel_a) begin
-`ifdef OR1200_ADDITIONAL_SYNOPSYS_DIRECTIVES
-	casez (sel_a)	// synopsys parallel_case infer_mux
-`else
-	casez (sel_a)	// synopsys parallel_case
-`endif
-		`OR1200_SEL_EX_FORW:
-			muxed_a = ex_forw;
-		`OR1200_SEL_WB_FORW:
-			muxed_a = wb_forw;
-		default:
-			muxed_a = rf_dataa;
-	endcase
-end
-
-//
-// Forwarding logic for operand B register
-//
-always @(simm or ex_forw or wb_forw or rf_datab or sel_b) begin
-`ifdef OR1200_ADDITIONAL_SYNOPSYS_DIRECTIVES
-	casez (sel_b)	// synopsys parallel_case infer_mux
-`else
-	casez (sel_b)	// synopsys parallel_case
-`endif
-		`OR1200_SEL_IMM:
-			muxed_b = simm;
-		`OR1200_SEL_EX_FORW:
-			muxed_b = ex_forw;
-		`OR1200_SEL_WB_FORW:
-			muxed_b = wb_forw;
-		default:
-			muxed_b = rf_datab;
-	endcase
-end
-
-
-endmodule","{
-  ""Assertion 1"": {
-    ""clock signal condition"": ""@(posedge clk)"",
-    ""disable condition"": ""disable iff(rst)"",
-    ""logical expression"": ""$rose(!ex_freeze && !id_freeze) ##1 (!ex_freeze && !id_freeze && sel_a == 2'd2 && $stable(ex_forw) && $stable(sel_a)) |-> muxed_a == ex_forw"",
-    ""Signals"": [""ex_freeze"", ""id_freeze"", ""sel_a"", ""ex_forw"", ""muxed_a""],
-    ""Signal Explanations"": {
-      ""ex_freeze"": ""execution stage freeze signal"",
-      ""id_freeze"": ""instruction decode stage freeze signal"",
-      ""sel_a"": ""selection signal for operand A multiplexer"",
-      ""ex_forw"": ""execution forwarding data for operand A"",
-      ""muxed_a"": ""operand A multiplexer output""
-    },
-    ""Logical Operators"": [""$rose"", ""!"", ""&&"", ""##1"", ""=="", ""$stable"", ""|->"", ""==""],
-    ""Logical Operators Explanation"": {
-      ""$rose"": ""detects that the condition transitions from false to true (rising edge)"",
-      ""!"": ""the value of a signal is reset (0)"",
-      ""&&"": ""logical AND"",
-      ""##1"": ""delay operator that postpones evaluation by one clock cycle"",
-      ""=="": ""equal"",
-      ""$stable"": ""ensures that the signal value remains unchanged during the evaluation cycle"",
-      ""|->"": ""an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE""
-    },
-    ""Assertion Explaination"": ""when a rising edge is detected on the condition that the execution stage freeze signal is not active and the instruction decode stage freeze signal is not active, and after a one clock cycle delay the execution stage freeze signal remains not active, the instruction decode stage freeze signal remains not active, the selection signal for operand A indicates the constant value corresponding to 2'd2, and both the execution forwarding data for operand A and the selection signal for operand A remain stable, then the operand A multiplexer output equals the execution forwarding data for operand A from the current clock cycle""
-  },
-  ""Assertion 2"": {
-    ""clock signal condition"": ""@(posedge clk)"",
-    ""disable condition"": ""disable iff(rst)"",
-    ""logical expression"": ""$rose(!ex_freeze && !id_freeze) ##1 (!ex_freeze && !id_freeze && sel_a == 2'd3 && $stable(wb_forw) && $stable(sel_a)) |-> muxed_a == wb_forw"",
-    ""Signals"": [""ex_freeze"", ""id_freeze"", ""sel_a"", ""wb_forw"", ""muxed_a""],
-    ""Signal Explanations"": {
-      ""ex_freeze"": ""execution stage freeze signal"",
-      ""id_freeze"": ""instruction decode stage freeze signal"",
-      ""sel_a"": ""selection signal for operand A multiplexer"",
-      ""wb_forw"": ""write-back forwarding data for operand A"",
-      ""muxed_a"": ""operand A multiplexer output""
-    },
-    ""Logical Operators"": [""$rose"", ""!"", ""&&"", ""##1"", ""=="", ""$stable"", ""|->"", ""==""],
-    ""Logical Operators Explanation"": {
-      ""$rose"": ""detects that the condition transitions from false to true (rising edge)"",
-      ""!"": ""the value of a signal is reset (0)"",
-      ""&&"": ""logical AND"",
-      ""##1"": ""delay operator that postpones evaluation by one clock cycle"",
-      ""=="": ""equal"",
-      ""$stable"": ""ensures that the signal value remains unchanged during the evaluation cycle"",
-      ""|->"": ""an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE""
-    },
-    ""Assertion Explaination"": ""when a rising edge is detected on the condition that the execution stage freeze signal is not active and the instruction decode stage freeze signal is not active, and after a one clock cycle delay the execution stage freeze signal remains not active, the instruction decode stage freeze signal remains not active, the selection signal for operand A indicates the constant value corresponding to 2'd3, and both the write-back forwarding data for operand A and the selection signal for operand A remain stable, then the operand A multiplexer output equals the write-back forwarding data for operand A from the current clock cycle""
-  },
-  ""Assertion 3"": {
-    ""clock signal condition"": ""@(posedge clk)"",
-    ""disable condition"": ""disable iff(rst)"",
-    ""logical expression"": ""$rose(!ex_freeze && !id_freeze) ##1 (!ex_freeze && !id_freeze && !(sel_a == 2'd2 || sel_a == 2'd3) && $stable(rf_dataa) && $stable(sel_a) && !$isunknown(operand_a)) |-> muxed_a == rf_dataa"",
-    ""Signals"": [""ex_freeze"", ""id_freeze"", ""sel_a"", ""rf_dataa"", ""operand_a"", ""muxed_a""],
-    ""Signal Explanations"": {
-      ""ex_freeze"": ""execution stage freeze signal"",
-      ""id_freeze"": ""instruction decode stage freeze signal"",
-      ""sel_a"": ""selection signal for operand A multiplexer"",
-      ""rf_dataa"": ""register file data for operand A"",
-      ""operand_a"": ""stored operand A value"",
-      ""muxed_a"": ""operand A multiplexer output""
-    },
-    ""Logical Operators"": [""$rose"", ""!"", ""&&"", ""##1"", ""=="", ""$stable"", ""||"", ""!"", ""$isunknown"", ""|->"", ""==""],
-    ""Logical Operators Explanation"": {
-      ""$rose"": ""detects that the condition transitions from false to true (rising edge)"",
-      ""!"": ""the value of a signal is reset (0) or inverts the condition"",
-      ""&&"": ""logical AND"",
-      ""##1"": ""delay operator that postpones evaluation by one clock cycle"",
-      ""=="": ""equal"",
-      ""$stable"": ""ensures that the signal value remains unchanged during the evaluation cycle"",
-      ""||"": ""logical OR"",
-      ""$isunknown"": ""checks if a signal has an unknown (X or Z) value"",
-      ""|->"": ""an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE""
-    },
-    ""Assertion Explaination"": ""when a rising edge is detected on the condition that the execution stage freeze signal is not active and the instruction decode stage freeze signal is not active, and after a one clock cycle delay the execution stage freeze signal remains not active, the instruction decode stage freeze signal remains not active, the selection signal for operand A does not indicate the constant values corresponding to 2'd2 or 2'd3, the register file data for operand A and the selection signal for operand A remain stable, and the stored operand A value is known, then the operand A multiplexer output equals the register file data for operand A from the current clock cycle""
-  },
-  ""Assertion 4"": {
-    ""clock signal condition"": ""@(posedge clk)"",
-    ""disable condition"": ""disable iff(rst)"",
-    ""logical expression"": ""$rose(!ex_freeze && !id_freeze) ##1 (!ex_freeze && !id_freeze && sel_b == 2'd1 && $stable(simm) && $stable(sel_b)) |-> muxed_b == simm"",
-    ""Signals"": [""ex_freeze"", ""id_freeze"", ""sel_b"", ""simm"", ""muxed_b""],
-    ""Signal Explanations"": {
-      ""ex_freeze"": ""execution stage freeze signal"",
-      ""id_freeze"": ""instruction decode stage freeze signal"",
-      ""sel_b"": ""selection signal for operand B multiplexer"",
-      ""simm"": ""signed immediate value"",
-      ""muxed_b"": ""operand B multiplexer output""
-    },
-    ""Logical Operators"": [""$rose"", ""!"", ""&&"", ""##1"", ""=="", ""$stable"", ""|->"", ""==""],
-    ""Logical Operators Explanation"": {
-      ""$rose"": ""detects that the condition transitions from false to true (rising edge)"",
-      ""!"": ""the value of a signal is reset (0)"",
-      ""&&"": ""logical AND"",
-      ""##1"": ""delay operator that postpones evaluation by one clock cycle"",
-      ""=="": ""equal"",
-      ""$stable"": ""ensures that the signal value remains unchanged during the evaluation cycle"",
-      ""|->"": ""an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE""
-    },
-    ""Assertion Explaination"": ""when a rising edge is detected on the condition that the execution stage freeze signal is not active and the instruction decode stage freeze signal is not active, and after a one clock cycle delay if the execution stage freeze signal remains not active, the instruction decode stage freeze signal remains not active, the selection signal for operand B indicates the constant value corresponding to 2'd1, and both the signed immediate value and the selection signal for operand B remain stable, then the operand B multiplexer output equals the signed immediate value from the current clock cycle""
-  },
-  ""Assertion 5"": {
-    ""clock signal condition"": ""@(posedge clk)"",
-    ""disable condition"": ""disable iff(rst)"",
-    ""logical expression"": ""$rose(!ex_freeze && !id_freeze) ##1 (!ex_freeze && !id_freeze && sel_b == 2'd2 && $stable(ex_forw) && $stable(sel_b)) |-> muxed_b == ex_forw"",
-    ""Signals"": [""ex_freeze"", ""id_freeze"", ""sel_b"", ""ex_forw"", ""muxed_b""],
-    ""Signal Explanations"": {
-      ""ex_freeze"": ""execution stage freeze signal"",
-      ""id_freeze"": ""instruction decode stage freeze signal"",
-      ""sel_b"": ""selection signal for operand B multiplexer"",
-      ""ex_forw"": ""execution forwarding data for operand B"",
-      ""muxed_b"": ""operand B multiplexer output""
-    },
-    ""Logical Operators"": [""$rose"", ""!"", ""&&"", ""##1"", ""=="", ""$stable"", ""|->"", ""==""],
-    ""Logical Operators Explanation"": {
-      ""$rose"": ""detects that the condition transitions from false to true (rising edge)"",
-      ""!"": ""the value of a signal is reset (0)"",
-      ""&&"": ""logical AND"",
-      ""##1"": ""delay operator that postpones evaluation by one clock cycle"",
-      ""=="": ""equal"",
-      ""$stable"": ""ensures that the signal value remains unchanged during the evaluation cycle"",
-      ""|->"": ""an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE""
-    },
-    ""Assertion Explaination"": ""when a rising edge is detected on the condition that the execution stage freeze signal is not active and the instruction decode stage freeze signal is not active, and after a one clock cycle delay the execution stage freeze signal remains not active, the instruction decode stage freeze signal remains not active, the selection signal for operand B indicates the constant value corresponding to 2'd2, and both the execution forwarding data for operand B and the selection signal for operand B remain stable, then the operand B multiplexer output equals the execution forwarding data for operand B from the current clock cycle""
-  },
-  ""Assertion 6"": {
-    ""clock signal condition"": ""@(posedge clk)"",
-    ""disable condition"": ""disable iff(rst)"",
-    ""logical expression"": ""$rose(!ex_freeze && !id_freeze) ##1 (!ex_freeze && !id_freeze && sel_b == 2'd3 && $stable(wb_forw) && $stable(sel_b)) |-> muxed_b == wb_forw"",
-    ""Signals"": [""ex_freeze"", ""id_freeze"", ""sel_b"", ""wb_forw"", ""muxed_b""],
-    ""Signal Explanations"": {
-      ""ex_freeze"": ""execution stage freeze signal"",
-      ""id_freeze"": ""instruction decode stage freeze signal"",
-      ""sel_b"": ""selection signal for operand B multiplexer"",
-      ""wb_forw"": ""write-back forwarding data for operand B"",
-      ""muxed_b"": ""operand B multiplexer output""
-    },
-    ""Logical Operators"": [""$rose"", ""!"", ""&&"", ""##1"", ""=="", ""$stable"", ""|->"", ""==""],
-    ""Logical Operators Explanation"": {
-      ""$rose"": ""detects that the condition transitions from false to true (rising edge)"",
-      ""!"": ""the value of a signal is reset (0)"",
-      ""&&"": ""logical AND"",
-      ""##1"": ""delay operator that postpones evaluation by one clock cycle"",
-      ""=="": ""equal"",
-      ""$stable"": ""ensures that the signal value remains unchanged during the evaluation cycle"",
-      ""|->"": ""an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE""
-    },
-    ""Assertion Explaination"": ""when a rising edge is detected on the condition that the execution stage freeze signal is not active and the instruction decode stage freeze signal is not active, and after a one clock cycle delay the execution stage freeze signal remains not active, the instruction decode stage freeze signal remains not active, the selection signal for operand B indicates the constant value corresponding to 2'd3, and both the write-back forwarding data for operand B and the selection signal for operand B remain stable, then the operand B multiplexer output equals the write-back forwarding data for operand B from the current clock cycle""
-  },
-  ""Assertion 7"": {
-    ""clock signal condition"": ""@(posedge clk)"",
-    ""disable condition"": ""disable iff(rst)"",
-    ""logical expression"": ""$rose(!ex_freeze && !id_freeze) ##1 (!ex_freeze && !id_freeze && !(sel_b == 2'd1 || sel_b == 2'd2 || sel_b == 2'd3) && $stable(rf_datab) && $stable(sel_b)) |-> muxed_b == rf_datab"",
-    ""Signals"": [""ex_freeze"", ""id_freeze"", ""sel_b"", ""rf_datab"", ""muxed_b""],
-    ""Signal Explanations"": {
-      ""ex_freeze"": ""execution stage freeze signal"",
-      ""id_freeze"": ""instruction decode stage freeze signal"",
-      ""sel_b"": ""selection signal for operand B multiplexer"",
-      ""rf_datab"": ""register file data for operand B"",
-      ""muxed_b"": ""operand B multiplexer output""
-    },
-    ""Logical Operators"": [""$rose"", ""!"", ""&&"", ""##1"", ""=="", ""$stable"", ""||"", ""!"", ""|->"", ""==""],
-    ""Logical Operators Explanation"": {
-      ""$rose"": ""detects that the condition transitions from false to true (rising edge)"",
-      ""!"": ""the value of a signal is reset (0) or inverts the condition"",
-      ""&&"": ""logical AND"",
-      ""##1"": ""delay operator that postpones evaluation by one clock cycle"",
-      ""=="": ""equal"",
-      ""$stable"": ""ensures that the signal value remains unchanged during the evaluation cycle"",
-      ""||"": ""logical OR"",
-      ""|->"": ""an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE""
-    },
-    ""Assertion Explaination"": ""when a rising edge is detected on the condition that the execution stage freeze signal is not active and the instruction decode stage freeze signal is not active, and after a one clock cycle delay the execution stage freeze signal remains not active, the instruction decode stage freeze signal remains not active, the selection signal for operand B does not indicate the constant values corresponding to 2'd1, 2'd2, or 2'd3, and both the register file data for operand B and the selection signal for operand B remain stable, then the operand B multiplexer output equals the register file data for operand B from the current clock cycle""
-  }
-}","{
-""Assertion 1"": ""assert property (     not ex_freeze && not id_freeze |=>      ((ex_freeze == 0 && id_freeze == 0) ##1          ((sel_a == 2'd2 && ex_forw == $past(ex_forw)) |=> (muxed_a == ex_forw))) );"",
-""Assertion 2"": ""assert property (ex_freeze == 1'b0 && id_freeze == 1'b0 |=>                   (ex_freeze[1] == 1'b0 && id_freeze[1] == 1'b0 &&                    $stable(wb_forw) && $stable(sel_a) |->                    (muxed_a == wb_forw)));"",
-""Assertion 3"": ""assert property (     (ex_freeze == 1'b0) && (id_freeze == 1'b0) |->      (ex_freeze |=>      ((id_freeze == 1'b0) &&      (sel_a != 2'd2) &&      (sel_a != 2'd3) &&      $stable(rf_dataa) &&      $stable(sel_a) &&      $stable(operand_a) |->      (muxed_a == rf_dataa))) );"",
-""Assertion 4"": ""assert property ( (not ex_freeze and not id_freeze) |=> ##1 (not ex_freeze and not id_freeze and sel_b == `OR1200_SEL_IMM and $stable(simm) and $stable(sel_b) |-> (muxed_b == simm)));"",
-""Assertion 5"": ""assert property (   (!ex_freeze && !id_freeze) |=>    ##1 ((!ex_freeze && !id_freeze && (sel_b == 2'd2) && $stable(ex_forw) && $stable(sel_b)) |-> (muxed_b == ex_forw)) );"",
-""Assertion 6"": ""assert property (     !ex_freeze && !id_freeze |=>      ##1 (!ex_freeze && !id_freeze &&      (sel_b == 2'd3) &&      (wb_forw === $past(wb_forw)) &&      (sel_b === $past(sel_b)) |=>      (muxed_b == $past(wb_forw)) );"",
-""Assertion 7"": ""assert property (     (!ex_freeze && !id_freeze) |=>      ((ex_freeze === 1'b0)      && (id_freeze === 1'b0)      && (sel_b != 2'd1) && (sel_b != 2'd2) && (sel_b != 2'd3)      && (rf_datab == $past(rf_datab)))      |-> (muxed_b == rf_datab) );""
-}"
-gray,"module gray #(parameter CBITS = 8) (input clk, input rst, output reg [CBITS-1:0] gray_cnt, output reg sig);
-  reg [CBITS-1:0] cnt;
-  always@(posedge clk, posedge rst) begin
-    if (rst) begin
-      cnt = 0;
-    end
-    else begin
-      cnt = cnt + 1;
-      gray_cnt = (cnt) ^ ((cnt) >> 1);
-      if(gray_cnt == 0)
-        sig = 1;
-      else
-        sig = 0;
-    end
-  end
-  // F G (rst = F) -> G F (sig = T)
-endmodule","{
-  ""Assertion 1"": {
-    ""clock signal condition"": ""@(posedge clk)"",
-    ""disable condition"": """",
-    ""logical expression"": ""s_eventually (rst || sig == 1)"",
-    ""Signals"": [""rst"", ""sig""],
-    ""Signal Explanations"": {
-      ""rst"": ""reset signal"",
-      ""sig"": ""signal that indicates when the computed Gray code counter equals 0""
-    },
-    ""Logical Operators"": [""s_eventually"", ""||"", ""==""],
-    ""Logical Operators Explanation"": {
-      ""s_eventually"": ""a temporal operator indicating that the contained condition is required to occur at some future clock cycle (eventually)"",
-      ""||"": ""or"",
-      ""=="": ""equal""
-    },
-    ""Assertion Explaination"": ""eventually, the reset signal equals 1 or the signal that indicates when the Gray code counter equals 0 equals 1""
-  }
-}","{
-""Assertion 1"": ""assert property (rst == 1 || sig == 1);""
-}"
-Flip_Flop_Array,"module Flip_Flop_Array #(
-	parameter DATA_W = 8,
-	parameter ADDR_W = 3,
-	parameter DATA_N = 8 // getting non constant error when using $pow(2,ADDR_W)
-)
-(
-    input clk,
-    input resetn,
-
-    input [DATA_W-1:0] din,
-    input [ADDR_W-1:0] addr,
-    input              wr,
-    input              rd,
-
-    output logic [DATA_W-1:0] dout,
-    output logic              error
-);
-
-// register file
-reg   [DATA_W-1:0] data_q[DATA_N-1:0];
-reg   [DATA_N-1:0] data_v_q;
-logic [DATA_W-1:0] data_rd[DATA_N-1:0];
-logic [DATA_N-1:0] data_v_next;
-logic [DATA_N-1:0] rd_en;
-logic [DATA_N-1:0] wr_en;
-logic [DATA_N-1:0] addr_v;
-logic rd_v;
-always @(posedge clk)
-begin
-	if ( ~resetn ) begin
-		data_v_q <= {DATA_N{1'b0}};
-	end else begin
-		data_v_q <= data_v_next;
-	end
-end
-
-genvar x;
-generate
-	for( x=0; x < DATA_N; x++) begin
-		assign addr_v[x] = addr == x;
-		assign wr_en[x]  = wr & addr_v[x];	
-		assign rd_en[x]  = rd & addr_v[x];
-
-		assign data_v_next[x] = wr_en[x];
-		assign data_rd[x] = {DATA_W{rd_en[x]}} & data_q[x];
- 
-		always @(posedge clk) begin
-			if ( wr_en[x] ) begin
-				data_q[x] <= din;
-			end
-		end	
-	end
-endgenerate
-// read valid
-assign rd_v  = data_v_q & rd_en;
-
-assign error = ( rd & ~|rd_v) |  wr & rd ;
-
-always_comb begin
-	for( int i=0; i < DATA_N; i++ ) begin
-		if ( 1 << i == rd_v ) dout = data_rd[i];
-	end
-	dout = {DATA_W{1'b0}};
-end
-
-endmodule","{
-  ""Assertion 1"": {
-    ""clock signal condition"": ""@(posedge clk)"",
-    ""disable condition"": """",
-    ""logical expression"": ""~(rd & wr) | (rd & wr & error)"",
-    ""Signals"": [
-      ""rd"",
-      ""wr"",
-      ""error""
-    ],
-    ""Signal Explanations"": {
-      ""rd"": ""read operation signal of the verilog module"",
-      ""wr"": ""write operation signal of the verilog module"",
-      ""error"": ""error flag output of the verilog module""
-    },
-    ""Logical Operators"": [
-      ""~"",
-      ""&"",
-      ""|""
-    ],
-    ""Logical Operators Explanation"": {
-      ""~"": ""logical negation operator meaning that the condition is inverted"",
-      ""&"": ""logical and operator meaning that the conditions on both sides must hold"",
-      ""|"": ""logical or operator meaning that at least one of the conditions must hold""
-    },
-    ""Assertion Explaination"": ""if read operation signal and write operation signal are both active, then error signal should be active from the current clock cycle""
-  },
-  ""Assertion 2"": {
-    ""clock signal condition"": ""@(posedge clk)"",
-    ""disable condition"": """",
-    ""logical expression"": ""~(~data_v_q & rd_en) | (~data_v_q & rd_en & (dout == '0))"",
-    ""Signals"": [
-      ""data_v_q"",
-      ""rd_en"",
-      ""dout""
-    ],
-    ""Signal Explanations"": {
-      ""data_v_q"": ""vector of valid bits for each entry in the flip-flop array"",
-      ""rd_en"": ""read enable vector where each bit corresponds to whether the address is selected for reading"",
-      ""dout"": ""data output signal of the verilog module""
-    },
-    ""Logical Operators"": [
-      ""~"",
-      ""&"",
-      ""|"",
-      ""==""
-    ],
-    ""Logical Operators Explanation"": {
-      ""~"": ""logical negation operator meaning that the condition is inverted"",
-      ""&"": ""logical and operator meaning that the conditions on both sides must hold"",
-      ""|"": ""logical or operator meaning that at least one of the conditions must hold"",
-      ""=="": ""equality comparison operator meaning that the two values are equal""
-    },
-    ""Assertion Explaination"": ""if the condition where data valid indicator is not active and read enable is active holds, then data output must equal zero from the current clock cycle""
-  },
-  ""Assertion 3"": {
-    ""clock signal condition"": ""@(posedge clk)"",
-    ""disable condition"": """",
-    ""logical expression"": ""$onehot0(rd_v)"",
-    ""Signals"": [
-      ""rd_v""
-    ],
-    ""Signal Explanations"": {
-      ""rd_v"": ""read valid signal computed as the and of the valid bits of the flip-flop array and the read enable vector""
-    },
-    ""Logical Operators"": [
-      ""$onehot0""
-    ],
-    ""Logical Operators Explanation"": {
-      ""$onehot0"": ""a function that checks that the vector has either no bits set or exactly one bit set""
-    },
-    ""Assertion Explaination"": ""the read valid signal must have at most one bit active""
-  }
-}","{
-""Assertion 1"": ""assert property (wr && rd |-> error);"",
-""Assertion 2"": ""assert property ((!data_v_q && rd_en) |-> (dout == {DATA_W{1'b0}}));"",
-""Assertion 3"": ""assert property ($countones(rd_v) <= 1);""
-}"
 PSGBusArb,"`timescale 1ns / 1ps
 //=============================================================================
 //	(C) 2007,2012  Robert Finch
@@ -1232,31 +642,31 @@ endmodule","{
     ""Assertion Explaination"": ""when selection signal for requester 4 is equal to 0 and bus request signal for requester 4 is equal to 0, then selection signal for requester 4 is equal to 0 from the next clock cycle""
   }
 }","{
-""Assertion 1"": ""assert property ((sel7 == 1'b0 && req0 == 1'b1) |-> (sel7 == 1'b0));"",
-""Assertion 2"": ""assert property (sel7 == 1'b0 && req1 == 1'b1 |=> sel7 == 1'b0);"",
-""Assertion 3"": ""assert property (sel7 == 1'b1 && ack == 1'b0 |-> sel7 == 1'b1);"",
-""Assertion 4"": ""assert property ( (sel7 == 1'b1 && ce == 1'b0) |-> (sel7 == 1'b1) );"",
-""Assertion 5"": ""assert property (sel7 == 1'b0 && ack == 1'b0 |=> sel7 == 1'b0);"",
-""Assertion 6"": ""assert property (req2 == 1'b1 && sel7 == 1'b0 |=> sel7 == 1'b0);"",
-""Assertion 7"": ""assert property (sel7 == 1'b0 && req3 == 1'b1 |=> sel7 == 1'b0);"",
+""Assertion 1"": ""assert property (sel7 == 1'b0 && req0 == 1'b1 |=> sel7 == 1'b0);"",
+""Assertion 2"": ""assert property ((sel7 == 1'b0 && req1 == 1'b1) |=> (sel7 == 1'b0));"",
+""Assertion 3"": ""assert property ((sel7 == 1'b1 && ack == 1'b0) |=> (sel7 == 1'b1));"",
+""Assertion 4"": ""assert property (sel7 == 1'b1 && ce == 1'b0 |-> sel7 == 1'b1);"",
+""Assertion 5"": ""assert property (sel7 == 1'b0 && ack == 1'b0 |=> sel7 throughout (sel7 == 1'b0));"",
+""Assertion 6"": ""assert property (sel7 == 1'b0 && req2 == 1'b1 |=> sel7 == 1'b0);"",
+""Assertion 7"": ""assert property (req3 == 1'b1 |=> sel7 == 1'b0);"",
 ""Assertion 8"": ""assert property (sel7 == 1'b0 && req5 == 1'b1 |=> sel7 == 1'b0);"",
-""Assertion 9"": ""assert property ( (req7 == 1'b0 && req6 == 1'b1) |=> (sel7 == 1'b0) );"",
-""Assertion 10"": ""assert property (sel5 == 1'b0 && req0 == 1'b1 |=> sel5 == 1'b0);"",
-""Assertion 11"": ""assert property (sel5 == 1'b0 && req1 == 1'b1 |=> sel5 === 1'b0);"",
-""Assertion 12"": ""assert property (sel5 == 1'b1 && ce == 1'b0 |=> sel5 == 1'b1);"",
-""Assertion 13"": ""assert property (sel5 == 1'b1 && ack == 1'b0 |=> sel5 == 1'b1);"",
-""Assertion 14"": ""assert property (sel5 == 1'b0 && ack == 1'b0 |=> sel5 == 1'b0);"",
-""Assertion 15"": ""assert property (sel5 == 1'b0 && ce == 1'b0 |=> 1'b0);"",
-""Assertion 16"": ""assert property (sel5 == 1'b0 && req2 == 1'b1 |=> sel5 == 1'b0);"",
-""Assertion 17"": ""assert property (sel5 == 1'b0 && req3 == 1'b1 |=> sel5 == 1'b0);"",
-""Assertion 18"": ""assert property (sel5 == 1'b0 && req4 == 1'b1 |=> sel5 == 1'b0);"",
-""Assertion 19"": ""assert property ((req5 == 1'b0 && sel5 == 1'b0) |=> (sel5 == 1'b0));"",
-""Assertion 20"": ""assert property (req1 == 1'b1 |=> sel4 == 1'b0);"",
-""Assertion 21"": ""assert property (   (sel4 == 1'b1 && ack == 1'b0) -> (sel4 ##1 sel4 == 1'b1) );"",
-""Assertion 22"": ""assert property ((sel4 == 1'b0 && ack == 1'b0) |=> (sel4 == 1'b0));"",
+""Assertion 9"": ""assert property ( (sel7 == 1'b0 && req6 == 1'b1) |=> (sel7 == 1'b0) );"",
+""Assertion 10"": ""assert property ((sel5 == 1'b0 && req0 == 1'b1) |=> (sel5 == 1'b0));"",
+""Assertion 11"": ""assert property (sel5 == 1'b0 && req1 == 1'b1 |-> sel5 == 1'b0);"",
+""Assertion 12"": ""assert property (sel5 == 1'b1 && ce == 1'b0 |=> sel5[1] == 1'b1);"",
+""Assertion 13"": ""assert property ((sel5 == 1'b1 && ack == 1'b0) |=> (sel5 == 1'b1));"",
+""Assertion 14"": ""assert property (sel5 == 1'b0 && ack == 1'b0 |=> (sel5 == 1'b0));"",
+""Assertion 15"": ""assert property ( (req5 == 1'b0 && ce == 1'b0) |=> (sel5 == 1'b0) );"",
+""Assertion 16"": ""assert property (sel5 == 1'b0 && req2 == 1'b1 |=> (sel5[2:0] == 3'b000));"",
+""Assertion 17"": ""assert property (sel5 == 1'b0 && req3 == 1'b1 |=> (sel5 == 1'b0));"",
+""Assertion 18"": ""assert property (sel5 == 1'b0 && req4 == 1'b1 |-> (sel5 == 1'b0));"",
+""Assertion 19"": ""assert property (req5 == 1'b0 && sel5 == 1'b0 |=> sel5 == 1'b0);"",
+""Assertion 20"": ""assert property (sel4 == 1'b0 && req1 == 1'b1 |-> sel4 == 1'b0);"",
+""Assertion 21"": ""assert property (sel4 == 1'b1 && ack == 1'b0 |=> (sel4 == 1'b1));"",
+""Assertion 22"": ""assert property (sel4 == 0 && ack == 0 |=> sel4 == 0);"",
 ""Assertion 23"": ""assert property (sel4 == 1'b0 && ce == 1'b0 |=> sel4 == 1'b0);"",
-""Assertion 24"": ""assert property (sel4 == 1'b1 && ce == 1'b0 |-> sel4[1] == 1'b1);"",
-""Assertion 25"": ""assert property (sel4 == 1'b0 && req2 == 1'b1 |-> sel4 == 1'b0 throughout [1]);"",
+""Assertion 24"": ""assert property (sel4 == 1'b1 && clk_en == 0 |=> sel4 == 1'b1);"",
+""Assertion 25"": ""assert property ((sel4 == 1'b0) && (req2 == 1'b1) |=> (sel4 == 1'b0));"",
 ""Assertion 26"": ""assert property (sel4 == 1'b0 && req3 == 1'b1 |=> sel4 == 1'b0);"",
 ""Assertion 27"": ""assert property (req4 == 1'b0 && sel4 == 1'b0 |=> sel4 == 1'b0);""
 }"
@@ -1566,8 +976,8 @@ endmodule","{
 }","{
 ""Assertion 1"": ""assert property (ERROR == 1'b0 |-> PSLVERR == 1'b0);"",
 ""Assertion 2"": ""assert property (ERROR |-> PSLVERR);"",
-""Assertion 3"": ""assert property (TX_EMPTY == 1'b1 |=> INT_TX == 1'b1);"",
-""Assertion 4"": ""assert property (TX_EMPTY == 1'b0 |-> (INT_TX == 1'b0));"",
+""Assertion 3"": ""assert property (TX_EMPTY == 1'b1 |-> INT_TX == 1'b1);"",
+""Assertion 4"": ""assert property ( (TX_EMPTY == 1'b0) |-> (INT_TX == 1'b0) );"",
 ""Assertion 5"": ""assert property (RX_EMPTY == 1'b0 |-> INT_RX == 1'b0);"",
 ""Assertion 6"": ""assert property (RX_EMPTY == 1'b1 |-> INT_RX == 1'b1);""
 }"
@@ -2007,17 +1417,17 @@ endmodule","{
 }
 }","{
 ""Assertion 1"": ""assert property (sample_bus == 1 |-> HREADYOUT == 1);"",
-""Assertion 2"": ""assert property (buffer_read_en && read_wait -> HREADYOUT == 0);"",
+""Assertion 2"": ""assert property (buffer_read_en && read_wait |-> HREADYOUT == 0);"",
 ""Assertion 3"": ""assert property (ahb_enable == 0 |-> HREADYOUT == 1);"",
-""Assertion 4"": ""assert property (write_en == 0 |-> crc_idr_en == 0);"",
-""Assertion 5"": ""assert property (HWRITE == 1'b1 && crc_idr_sel == 1'b1 -> crc_idr_en == 1'b1);"",
-""Assertion 6"": ""assert property (crc_idr_sel == 1'b0 |=> crc_idr_en == 1'b0);"",
-""Assertion 7"": ""assert property (hselx_pp == 1'b0 |-> crc_idr_en == 1'b0);"",
-""Assertion 8"": ""assert property (hwrite_pp == 1'b0 |=> crc_idr_en == 1'b0);"",
-""Assertion 9"": ""assert property (HWRITE == 1'b0 -> crc_poly_en == 1'b0);"",
+""Assertion 4"": ""assert property (write_en == 1'b0 |-> crc_idr_en == 1'b0);"",
+""Assertion 5"": ""assert property (HWRITE && crc_idr_sel |-> crc_idr_en);"",
+""Assertion 6"": ""assert property (crc_idr_sel == 1'b0 |-> (crc_idr_en == 1'b0));"",
+""Assertion 7"": ""assert property (hselx_pp == 1'b0 |-> !crc_idr_en);"",
+""Assertion 8"": ""assert property (hwrite_pp == 0 |-> crc_idr_en == 0);"",
+""Assertion 9"": ""assert property (HWRITE == 1'b0 |-> crc_poly_en == 1'b0);"",
 ""Assertion 10"": ""assert property (hselx_pp == 1'b0 |-> !crc_poly_en);"",
-""Assertion 11"": ""assert property (hwrite_pp == 1'b0 |-> !crc_poly_en);"",
-""Assertion 12"": ""assert property (haddr_pp[2] == 1 |-> crc_poly_en == 0);""
+""Assertion 11"": ""assert property (HWRITE == 1'b0 |-> crc_poly_en == 1'b0);"",
+""Assertion 12"": ""assert property (haddr_pp[1] == 1 |-> (crc_poly_en == 0));""
 }"
 control_unit,"//////////////////////////////////////////////////////////////////
 ////
@@ -2687,7 +2097,7 @@ endmodule","{
   }
 }","{
 ""Assertion 1"": ""assert property (aes_mode[0] == 1'b1 |-> (mode_ctr == 1'b0));"",
-""Assertion 2"": ""assert property (aes_mode[0] == 1'b0 |-> (mode_cbc == 1'b0));"",
+""Assertion 2"": ""assert property (aes_mode[0] == 0 |-> mode_cbc == 0);"",
 ""Assertion 3"": ""assert property (start == 0 |-> key_init == 0);"",
 ""Assertion 4"": ""assert property (start == 1'b1 |-> key_init == 1'b1);""
 }"
@@ -2737,7 +2147,7 @@ endmodule","{
     ""Assertion Explaination"": ""the output is asserted whenever a specified target sequence is detected on the input""
   }
 }","{
-""Assertion 1"": ""assert property (seen |-> (seq_q == init));""
+""Assertion 1"": ""assert property (target_sequence |=> output_signal);""
 }"
 PWM,"module PWM #(parameter CBITS = 10) 
 (input clk, input rst, input [3:0] sw, output reg pulse);
@@ -2774,7 +2184,7 @@ endmodule","{
     ""Assertion Explaination"": ""eventually, the inversion of the output signal becomes true""
   }
 }","{
-""Assertion 1"": ""assert property (s_eventually (pulse == 1'b0));""
+""Assertion 1"": ""assert property ((!pulse |-> eventually (pulse == 1'b1)));""
 }"
 module_i2c,"//////////////////////////////////////////////////////////////////
 ////
@@ -6326,12 +5736,12 @@ endmodule
     ""Assertion Explaination"": ""when the first bit of the configuration register equals 1 and the second bit of the configuration register equals 1, then the error signal equals 1 from the current clock cycle""
   }
 }","{
-""Assertion 1"": ""assert property (fifo_rx_f_empty == 1'b1 |-> (RX_EMPTY == 1'b1));"",
-""Assertion 2"": ""assert property (fifo_rx_f_empty == 1'b0 |-> RX_EMPTY == 1'b0);"",
-""Assertion 3"": ""assert property (fifo_empty == 1'b1 |-> RX_EMPTY == 1'b1);"",
-""Assertion 4"": ""assert property (fifo_rx_f_empty == 1'b0 |-> (RX_EMPTY == 1'b0));"",
-""Assertion 5"": ""assert property (DATA_CONFIG_REG[1] == 1'b0 |-> ERROR == 1'b0);"",
-""Assertion 6"": ""assert property (DATA_CONFIG_REG[0] == 1'b0 |=> (ERROR == 1'b0));"",
+""Assertion 1"": ""assert property (fifo_rx_f_empty == 1'b1 |-> RX_EMPTY == 1'b1);"",
+""Assertion 2"": ""assert property (fifo_rx_f_empty == 1'b0 |-> (RX_EMPTY == 1'b0));"",
+""Assertion 3"": ""assert property (fifo_rx_f_empty == 1'b1 |-> RX_EMPTY == 1'b1);"",
+""Assertion 4"": ""assert property (fifo_rx_f_empty == 1'b0 |-> RX_EMPTY == 1'b0);"",
+""Assertion 5"": ""assert property (DATA_CONFIG_REG[1] == 1'b0 |-> (ERROR == 1'b0));"",
+""Assertion 6"": ""assert property (DATA_CONFIG_REG[0] == 1'b0 |-> ERROR == 1'b0);"",
 ""Assertion 7"": ""assert property (DATA_CONFIG_REG[0] == 1'b1 && DATA_CONFIG_REG[1] == 1'b1 |-> ERROR == 1'b1);""
 }"
 delay2,"module delay2 
@@ -6368,7 +5778,7 @@ endmodule","{
     ""Assertion Explaination"": ""eventually, reset signal is asserted or output signal equals 1""
   }
 }","{
-""Assertion 1"": ""assert property (s_eventually (rst || sig == 1));""
+""Assertion 1"": ""assert property (nexttime[2] (rst || (sig == 1)));""
 }"
 simple_req_ack,"module simple_req_ack (
 	input  clk,
@@ -6419,7 +5829,7 @@ endmodule","{
 ""Assertion Explaination"": ""when request signal is detected to have a rising edge, then after a delay of 2 clock cycles the acknowledge signal is detected to have a rising edge""
 }
 }","{
-""Assertion 1"": ""assert property (req_ff |=> ##2 $rose(ack_ff));""
+""Assertion 1"": ""assert property ($rose(req) |=> ##2 $rose(ack));""
 }"
 Gray_Code_Counter,"module Gray_Code_Counter #(parameter
   DATA_WIDTH = 4
@@ -6479,7 +5889,7 @@ endmodule","{
     ""Assertion Explaination"": ""there is only 1 bit difference between 2 consequtive gray code's or we have overflown""
   }
 }","{
-""Assertion 1"": ""assert property (     (gray_q ^ $past(gray_q) == 1'b1) ||      (gray_q == {DATA_WIDTH{1'b0}} && $past(gray_q) == {DATA_WIDTH{1'b1}}) );""
+""Assertion 1"": ""assert property (     ($countbits({gray_q, $past(gray_q)}, 1'b1, 1'bx, 1'bz) <= 1) ||     (gray_q == {DATA_WIDTH{1'b0}} && $past(gray_q) == {DATA_WIDTH{1'b1}}) ||     (gray_q == {DATA_WIDTH{1'b1}} && $past(gray_q) == {DATA_WIDTH{1'b0}}) );""
 }"
 uartTrans,"////////////////////////////////////////////////////////////////////////////////////////////////
 ////                                                              							////
@@ -6919,9 +6329,9 @@ endmodule","{
     ""Assertion Explaination"": ""when the transmit start signal is equal to 0, then the transmit done tick signal should be equal to 0 from the current clock cycle""
   }
 }","{
-""Assertion 1"": ""assert property (bReg == 0 |=> tx == 0);"",
-""Assertion 2"": ""assert property (bReg == 8'h1 |-> tx == 1'b1);"",
-""Assertion 3"": ""assert property (stateReg[0] == 1'b1 |-> !txDoneTick);"",
+""Assertion 1"": ""assert property (bReg == 8'b0 |=> tx == 1'b0);"",
+""Assertion 2"": ""assert property (bReg[0] == 1 |-> ##1 (tx[1:0] == 2'b01));"",
+""Assertion 3"": ""assert property (stateReg[0] == 1 |-> (txDoneTick == 0));"",
 ""Assertion 4"": ""assert property (txStart == 1'b0 |-> txDoneTick == 1'b0);""
 }"
 i2c,"module i2c #(parameter divider = 125, parameter CBITS = 9) (input clk, input rst, input scl_not_ena, output reg data_clk);
@@ -7464,13 +6874,13 @@ endmodule","{
     ""Assertion Explaination"": ""when the first bit of the next sampling counter value is 0, then the UART reception done flag signal must be 0 from the next clock cycle""
   }
 }","{
-""Assertion 1"": ""assert property (stateReg[0] == 0 |-> rxDoneTick == 0);"",
-""Assertion 2"": ""assert property (sReg[2] == 0 |=> rxDoneTick == 0);"",
-""Assertion 3"": ""assert property (sReg[1] == 1'b0 |=> (rxDoneTick == 1'b0));"",
-""Assertion 4"": ""assert property (sReg[1] == 1'b0 |=> (rxDoneTick == 1'b0));"",
-""Assertion 5"": ""assert property (nReg[0] == 1'b0 |=> (rxDoneTick == 1'b0));"",
-""Assertion 6"": ""assert property (sTick == 0 |=> rxDoneTick == 0);"",
-""Assertion 7"": ""assert property (sNext[0] == 1'b0 |=> (rxDoneTick == 1'b0));""
+""Assertion 1"": ""assert property (stateReg[0] == 0 |-> (rxDoneTick == 0));"",
+""Assertion 2"": ""assert property ( (sReg[2] == 0) |=> (rxDoneTick == 0) );"",
+""Assertion 3"": ""assert property (sReg[1] == 1'b0 |=> rxDoneTick == 1'b0);"",
+""Assertion 4"": ""assert property (nReg[1] == 1'b0 |=> (rxDoneTick == 1'b0));"",
+""Assertion 5"": ""assert property (nReg[0] == 0 |=> rxDoneTick == 0);"",
+""Assertion 6"": ""assert property (sTick == 0 |=> (rxDoneTick == 0));"",
+""Assertion 7"": ""assert property (sReg[0] == 0 |=> rxDoneTick == 0 throughout [1:2]);""
 }"
 APB_FSM_Controller,"
 // AHB to APG Bridge | Maven Silicon
@@ -8128,25 +7538,25 @@ endmodule","{
     ""Assertion Explaination"": ""Property to verify the transition from ST_WENABLEP that when the current state of the FSM equals write enable pipelined and the write register control is not active, then the next state of the FSM equals read from the current clock cycle""
   }
 }","{
-""Assertion 1"": ""assert property (     (PRESENT_STATE == $past(NEXT_STATE, 2)) |=> (PRESENT_STATE == NEXT_STATE) );"",
-""Assertion 2"": ""assert property ( (PRESENT_STATE == ST_IDLE && valid && Hwrite) |=> (NEXT_STATE == ST_WWAIT) );"",
-""Assertion 3"": ""assert property ( (PRESENT_STATE == ST_IDLE && valid && ~Hwrite) |-> (NEXT_STATE == ST_READ) );"",
-""Assertion 4"": ""assert property ((PRESENT_STATE == ST_IDLE) && (~valid) |=> (NEXT_STATE == ST_IDLE));"",
-""Assertion 5"": ""assert property (PRESENT_STATE == ST_WWAIT && ~valid |=> NEXT_STATE == ST_WRITE);"",
-""Assertion 6"": ""assert property ( (PRESENT_STATE == ST_WWAIT && valid) |-> (NEXT_STATE == ST_WRITEP) );"",
-""Assertion 7"": ""assert property (PRESENT_STATE == ST_READ |=> NEXT_STATE == ST_RENABLE);"",
+""Assertion 1"": ""assert property (PRESENT_STATE == $past(NEXT_STATE, 2));"",
+""Assertion 2"": ""assert property (PRESENT_STATE == ST_IDLE && valid && Hwrite |-> NEXT_STATE == ST_WWAIT);"",
+""Assertion 3"": ""assert property ((PRESENT_STATE == ST_IDLE) && valid && ~Hwrite |-> (NEXT_STATE == ST_READ));"",
+""Assertion 4"": ""assert property ((PRESENT_STATE == ST_IDLE && ~valid) |-> (NEXT_STATE == ST_IDLE));"",
+""Assertion 5"": ""assert property ( (PRESENT_STATE == ST_WWAIT && ~valid) |=> (NEXT_STATE == ST_WRITE) );"",
+""Assertion 6"": ""assert property (PRESENT_STATE == ST_WWAIT && valid |-> NEXT_STATE == ST_WRITEP);"",
+""Assertion 7"": ""assert property ( (PRESENT_STATE == ST_READ) |=> (NEXT_STATE == ST_RENABLE) );"",
 ""Assertion 8"": ""assert property ( (PRESENT_STATE == ST_WRITE && ~valid) |=> (NEXT_STATE == ST_WENABLE) );"",
-""Assertion 9"": ""assert property ( (PRESENT_STATE == ST_WRITE && valid) |=> (NEXT_STATE == ST_WENABLE) );"",
-""Assertion 10"": ""assert property (PRESENT_STATE == ST_WRITEP |=> NEXT_STATE == ST_WENABLEP);"",
-""Assertion 11"": ""assert property ((PRESENT_STATE == ST_RENABLE) && ~valid |=> (NEXT_STATE == ST_IDLE));"",
-""Assertion 12"": ""assert property (   (PRESENT_STATE == ST_RENABLE && valid && Hwrite) |-> (NEXT_STATE == ST_WWAIT) );"",
-""Assertion 13"": ""assert property ( (PRESENT_STATE == ST_RENABLE && valid && ~Hwrite) |=> (NEXT_STATE == ST_READ) );"",
-""Assertion 14"": ""assert property ((PRESENT_STATE == ST_WENABLE) && (~valid) |=> (NEXT_STATE == ST_IDLE));"",
-""Assertion 15"": ""assert property ( (PRESENT_STATE == ST_WENABLE && valid && Hwrite) |-> (NEXT_STATE == ST_WWAIT) );"",
-""Assertion 16"": ""assert property ( (PRESENT_STATE == ST_WENABLE) && valid && !Hwrite |=> (NEXT_STATE == ST_READ) );"",
-""Assertion 17"": ""assert property (PRESENT_STATE == ST_WENABLEP && ~valid && Hwritereg |=> (NEXT_STATE == ST_WRITE));"",
-""Assertion 18"": ""assert property (PRESENT_STATE == ST_WENABLEP && valid && Hwritereg |-> (NEXT_STATE == ST_WRITEP));"",
-""Assertion 19"": ""assert property ( (PRESENT_STATE == ST_WENABLEP && ~Hwritereg) |=> (NEXT_STATE == ST_READ) );""
+""Assertion 9"": ""assert property (PRESENT_STATE == ST_WRITE && valid |=> NEXT_STATE == ST_WENABLE);"",
+""Assertion 10"": ""assert property (PRESENT_STATE == ST_WRITEP |-> NEXT_STATE == ST_WENABLEP);"",
+""Assertion 11"": ""assert property (   (PRESENT_STATE == ST_RENABLE && ~valid) |-> (NEXT_STATE == ST_IDLE) );"",
+""Assertion 12"": ""assert property ((PRESENT_STATE == ST_RENABLE) && valid && Hwrite |-> (NEXT_STATE == ST_WWAIT));"",
+""Assertion 13"": ""assert property ((PRESENT_STATE == ST_RENABLE) && valid && ~Hwrite |-> (NEXT_STATE == ST_READ));"",
+""Assertion 14"": ""assert property ( (PRESENT_STATE == ST_WENABLE && ~valid) -> (NEXT_STATE == ST_IDLE) );"",
+""Assertion 15"": ""assert property ( (PRESENT_STATE == ST_WENABLE) && valid && Hwrite |-> (NEXT_STATE == ST_WWAIT) );"",
+""Assertion 16"": ""assert property (PRESENT_STATE == ST_WENABLE && valid && ~Hwrite |-> NEXT_STATE == ST_READ);"",
+""Assertion 17"": ""assert property (PRESENT_STATE == ST_WENABLEP && ~valid && Hwritereg |-> NEXT_STATE == ST_WRITE);"",
+""Assertion 18"": ""assert property ((PRESENT_STATE == ST_WENABLEP && valid && Hwritereg) |=> (NEXT_STATE == ST_WRITEP));"",
+""Assertion 19"": ""assert property (PRESENT_STATE == ST_WENABLEP && ~Hwritereg |-> NEXT_STATE == ST_READ);""
 }"
 register,"module register
   #(
@@ -8206,8 +7616,8 @@ endmodule
 ""Assertion Explaination"": ""when enable signal is reset (0), output signal equals the last one clock cycle's output signal from the next clock cycle""
 }
 }","{
-""Assertion 1"": ""assert property (en |=> out == $past(in));"",
-""Assertion 2"": ""assert property (en == 0 |-> out == $past(out));""
+""Assertion 1"": ""assert property (en |=> (out == $past(in)));"",
+""Assertion 2"": ""assert property (en == 0 |=> (out == $past(out)));""
 }"
 SEVEN,"module SEVEN #(parameter freq = 250, parameter CBITS = 8) (input clk, input rst, input [13:0] both7seg, output reg[6:0] segment);
 	reg [CBITS-1:0] cnt;
@@ -8856,22 +8266,22 @@ endmodule","{
     ""Assertion Explaination"": ""Property for checking the priority scheme that when the fourth bit of grant output is asserted and in the previous clock cycle the arbitration type selector signal was equal to 3, then in the previous clock cycle the fourth bit of request input signal must be asserted from the current clock cycle""
   }
 }","{
-""Assertion 1"": ""assert property (r_gnt[0] && arb_type == 4'b0000 |=> $past(req[0]));"",
-""Assertion 2"": ""assert property (     (gnt[1] == 1 && arb_type == 4'b0000)      |-> ((req[1] == 1) && (req[0] == 0)) );"",
-""Assertion 3"": ""assert property (gnt[2] |=> ((arb_type == 4'b0000) ##1 (req[2] && !req[1] && !req[0])));"",
-""Assertion 4"": ""assert property (arb_type == 4'b0000 |=> (gnt[3] |-> (req[3] && !req[2] && !req[1] && !req[0])));"",
-""Assertion 5"": ""assert property (r_gnt[0] ##1 (arb_type == 4'b0001) ##1 (req[0] && !req[1]));"",
-""Assertion 6"": ""assert property (gnt[1] ##1 (arb_type[3:0] == 4'b0001) ##1 (req[1] throughout gnt[1]));"",
-""Assertion 7"": ""assert property ( (r_gnt[2] && arb_type == 3'b001) |=> (req[2] && !req[1] && !req[0]) );"",
-""Assertion 8"": ""assert property (gnt[3] && arb_type == 4'b0001 |=> (req[3] && !req[2] && !req[1] && !req[0]));"",
-""Assertion 9"": ""assert property ( (r_gnt[0] && arb_type == 3'b010) -> (req[0][$] && !req[2][$]) );"",
-""Assertion 10"": ""assert property (     (gnt[1] == 1'b1 && arb_type == 3'b010) |=>      (!req[0] && !req[1] && $rose(req[2])) );"",
-""Assertion 11"": ""assert property ( (r_gnt[2] && arb_type == 3'b010) |=> req[2] );"",
-""Assertion 12"": ""assert property (   (gnt[3] && arb_type == 3'b010) |->    (req[3] && !req[2] && !req[1] && !req[0]) );"",
-""Assertion 13"": ""assert property ( (r_gnt[0] && (arb_type == 4'b0011)) |-> (req[0][1] && !req[3][1]) );"",
-""Assertion 14"": ""assert property ( (gnt[1] && arb_type == 3'b0011) |=> (req[1] && !req[3] && !req[0]) );"",
-""Assertion 15"": ""assert property ( (gnt[2] && arb_type == 3'b011) |=> (req[2] && !req[3] && !req[1] && !req[0]) );"",
-""Assertion 16"": ""assert property (arb_type == 4'b0011 |=> (req[3] -> gnt[3]));""
+""Assertion 1"": ""assert property (gnt[0] |=> (arb_type == 4'b0000) ##1 req[0]);"",
+""Assertion 2"": ""assert property (     (gnt[1] && arb_type == 4'b0000) |=>      (req[1] && !req[0]) );"",
+""Assertion 3"": ""assert property ( (r_gnt[2] && arb_type == 4'b0000) |=> (req[2] && (req[1] == 0) && (req[0] == 0)));"",
+""Assertion 4"": ""assert property (   gnt[3] |-> (arb_type == 4'b0000 && req[3] && !req[2] && !req[1] && !req[0]) );"",
+""Assertion 5"": ""assert property (gnt[0] && arb_type == 4'b0001 |=> (req[0] && !req[1]));"",
+""Assertion 6"": ""assert property (gnt[1] && arb_type == 4'b0001 |=> req[1]);"",
+""Assertion 7"": ""assert property (     (gnt[2] &&       $past(arb_type) == 3'b001 &&       $past(req[2]) &&       !$past(req[0]) &&       !$past(req[1])) |-> (!req[0] && !req[1]) );"",
+""Assertion 8"": ""assert property ( (r_gnt[3] && arb_type == 4'b0001) |=> (req[3] && !req[2] && !req[1]) );"",
+""Assertion 9"": ""assert property ( (r_gnt[0] && (arb_type == 3'b010)) |-> ##1 (req[0] && !req[2]) );"",
+""Assertion 10"": ""assert property (r_gnt[1] && arb_type == 3'b010 |=> req[2] && !req[1] && !req[0]);"",
+""Assertion 11"": ""assert property ( (r_gnt[2] && (arb_type == 3'b010)) |-> req[2].previous );"",
+""Assertion 12"": ""assert property ( (gnt[3] == 1'b1 && arb_type == 3'b010) |=> (req[3] == 1'b1) && (req[2] == 1'b0 && req[1] == 1'b0 && req[0] == 1'b0) );"",
+""Assertion 13"": ""assert property (     r_gnt[0] && arb_type == 3'b011 |-> ##1 (req[0] && !req[3]) );"",
+""Assertion 14"": ""assert property (     (gnt[1] == 1'b1 && arb_type == 3'b011) |=>      (req_prev[1] == 1'b1 && req[3] == 1'b0 && req[0] == 1'b0) );"",
+""Assertion 15"": ""assert property (gnt[2] [*] && arb_type == 3'b011 -> (req[2] && !req[3] && !req[1] && !req[0]));"",
+""Assertion 16"": ""assert property (arb_type.prev == 3 && gnt[3] |=> req[3].prev);""
 }"
 simple_pipeline,"// Greg Stitt
 // University of Florida
@@ -8998,8 +8408,8 @@ endmodule
     ""Assertion Explaination"": ""when the integer register used for counting cycles equals the cycle latency, then the valid output signal equals the valid input signal LATENCY cycles in the past from the current clock cycle""
   }
 }","{
-""Assertion 1"": ""assert property (count < LATENCY -> ($past(valid_out) == 1'b0));"",
-""Assertion 2"": ""assert property (     (count == LATENCY) |-> (valid_out == $past(valid_in, LATENCY)) );""
+""Assertion 1"": ""assert property ( (count < LATENCY) |-> (valid_out == 0) );"",
+""Assertion 2"": ""assert property (count == LATENCY |-> valid_out == valid_delay_r[LATENCY - 1]);""
 }"
 lcd,"module lcd #(parameter clk_freq = 1, parameter CBITS = 9) (input rst, input clk, input [6:0] in_data, input lcd_enable, input [9:0] lcd_bus, output reg e, output reg[7:0] lcd_data, output reg rw, output reg rs, output reg busy);
 	reg [CBITS - 1:0] cnt;			// 0 to 500*clk_freg
@@ -9117,7 +8527,7 @@ endmodule","{
     ""Assertion Explaination"": ""eventually, LCD enable control signal equals 0 or internal state variable equals 2""
   }
 }","{
-""Assertion 1"": ""assert property (lcd_enable == 0 || state == 2 throughout [*0..$]);""
+""Assertion 1"": ""assert property (lcd_enable == 0 || state == 2 |=> next (lcd_enable == 0 || state == 2));""
 }"
 Parallel_In_Serial_Out_Shift_Reg,"module Parallel_In_Serial_Out_Shift_Reg #(
 	parameter DATA_WIDTH = 16
@@ -9182,7 +8592,7 @@ endmodule","{
     ""Assertion Explaination"": ""when valid flag register is reset (0), valid flag register is set (1) and the first bit of the register that captures and shifts the input data equals the output signal""
   }
 }","{
-""Assertion 1"": ""assert property (v_f_q == 0 |=> (v_f_q == 1 && data_q[0] == dout));""
+""Assertion 1"": ""assert property ( (v_f_q == 0) |-> ((v_f_next == 1) && (data_q[0] == dout)) );""
 }"
 fifo,"module fifo
   #(
@@ -9267,8 +8677,8 @@ endmodule
     ""Assertion Explaination"": ""when the derived valid read signal is set (1), then the FIFO empty indicator is reset (0) from the current clock cycle""
   }
 }","{
-""Assertion 1"": ""assert property (valid_wr == 1'b1 |-> full == 1'b0);"",
-""Assertion 2"": ""assert property (valid_rd |=> !empty);""
+""Assertion 1"": ""assert property (valid_wr |-> !full);"",
+""Assertion 2"": ""assert property (valid_rd |-> !empty);""
 }"
 or1200_if,"//////////////////////////////////////////////////////////////////////
 ////                                                              ////
@@ -9707,17 +9117,17 @@ endmodule","{
     ""Assertion Explaination"": ""when pipeline flush signal is true or both save instruction condition is reset (0) and pipeline freeze is reset (0), then err_saved equals 3'b000 from the next clock cycle""
   }
 }","{
-""Assertion 1"": ""assert property (no_more_dslot |-> ((except_itlbmiss == 1'b0) && (except_immufault == 1'b0) && (except_ibuserr == 1'b0)));"",
-""Assertion 2"": ""assert property (if_flushpipe == 0 && save_insn |=> saved[0]);"",
-""Assertion 3"": ""assert property ((if_flushpipe && !save_insn && !if_freeze) |=> (saved == 0));"",
-""Assertion 4"": ""assert property (if_flushpipe == 0 && save_insn && icpu_err_i == 0 |=> insn_saved == icpu_dat_i);"",
-""Assertion 5"": ""assert property (if_flushpipe || (!save_insn && !if_freeze && !icpu_err_i) |=> (insn_saved == {6'b000101, 26'h0410000}));"",
-""Assertion 6"": ""assert property (!(if_flushpipe) && (save_insn || !if_freeze) |=> (addr_saved == { $past(icpu_adr_i[31:2]), 2'b00 }));"",
-""Assertion 7"": ""assert property (if_flushpipe |=> (addr_saved == 32'h00000000));"",
-""Assertion 8"": ""assert property (     (if_flushpipe == 0 && save_insn) |=>      (err_saved[0] == ($past(icpu_err_i[0]) && ($past(icpu_tag_i) == 4'hd))) );"",
-""Assertion 9"": ""assert property (if_flushpipe == 1'b0 && save_insn |->      (err_saved[1] == (icpu_err_i[$past(1)] && (icpu_tag_i[$past(1)] == 4'hc))));"",
-""Assertion 10"": ""assert property (if_flushpipe == 0 && save_insn |=> (err_saved[2] == (icpu_err_i[0] && (icpu_tag_i == 4'hb))));"",
-""Assertion 11"": ""assert property (((if_flushpipe) || (save_insn == 0 && if_freeze == 0)) |=> (err_saved == 3'b000));""
+""Assertion 1"": ""assert property (     no_more_dslot |->      (except_itlbmiss == 1'b0) &&      (except_immufault == 1'b0) &&      (except_ibuserr == 1'b0) );"",
+""Assertion 2"": ""assert property (if_flushpipe == 0 && save_insn |=> (saved == 1));"",
+""Assertion 3"": ""assert property ( (if_flushpipe || (!save_insn && !if_freeze)) |-> (saved == 0) );"",
+""Assertion 4"": ""assert property (if_flushpipe == 1'b0 && save_insn && icpu_err_i == 1'b0 |=> insn_saved == icpu_dat_i);"",
+""Assertion 5"": ""assert property (     (if_flushpipe || (!save_insn && !if_freeze && !icpu_err_i)) |=>      (insn_saved == {6'b000101, 26'h041_0000}) );"",
+""Assertion 6"": ""assert property ((!if_flushpipe && (save_insn || !if_freeze)) |=> (addr_saved == {icpu_adr_i[31:2], 2'b00}));"",
+""Assertion 7"": ""assert property (if_flushpipe |=> (addr_saved == 32'h00000000) throughout (!if_flushpipe));"",
+""Assertion 8"": ""assert property (if_flushpipe == 0 && save_insn |-> (err_saved[0] == (icpu_err_i[$past] && (icpu_tag_i[$past] == 4'hd))));"",
+""Assertion 9"": ""assert property (if_flushpipe == 1'b0 && save_insn |=>                   (err_saved[1] == (icpu_err_i_1 && (icpu_tag_i_1 == 4'hc))));"",
+""Assertion 10"": ""assert property (     (if_flushpipe == 1'b0 && save_insn) |=> (err_saved[2] == (icpu_err_i[$past] && (icpu_tag_i[$past] == 4'hb))) );"",
+""Assertion 11"": ""assert property (if_flushpipe || (!save_insn && !if_freeze) |=> (err_saved == 3'b000));""
 }"
 uart_transmit,"module uart_transmit #(localparam d_width = 4, localparam c_width = 3) (input clk, input rst, input tx_ena, input [d_width - 1: 0] tx_data, output reg tx, output reg tx_busy);
 	reg [c_width-1:0] tx_cnt;
@@ -9773,7 +9183,7 @@ endmodule","{
     ""Assertion Explaination"": ""eventually, reset signal equals 1 or transmitter state equals 0""
   }
 }","{
-""Assertion 1"": ""assert property (rst == 1 || tx_state == 0 |=> (rst == 1 || tx_state == 0));""
+""Assertion 1"": ""assert property ( (rst == 1 || tx_state == 0) |=> eventual (rst == 1 || tx_state == 0) );""
 }"
 ff,"module ff
   (
@@ -9824,8 +9234,8 @@ endmodule
     ""Assertion Explaination"": ""check to make sure that when the enable isn't asserted, the output doesn't change from the next clock cycle""
   }
 }","{
-""Assertion 1"": ""assert property (en == 1'b1 |=> (out == $past(in)));"",
-""Assertion 2"": ""assert property (!en |=> $stable(out));""
+""Assertion 1"": ""assert property (en |=> (out == $past(in)));"",
+""Assertion 2"": ""assert property (en == 0 |-> $stable(out));""
 }"
 BusArbiter,"parameter N_MASTERS = 3;
 typedef bit [N_MASTERS-1:0] arb_vector;
@@ -10201,15 +9611,15 @@ endmodule","{
   }
 }","{
 ""Assertion 1"": ""assert property (bus_grant[0] + bus_grant[1] + bus_grant[2] < 2);"",
-""Assertion 2"": ""assert property (bus_grant[0] == 1'b1 |=> (bus_grant[1] == 1'b0 && bus_grant[2] == 1'b0));"",
+""Assertion 2"": ""assert property (     bus_grant[0] == 1 |=> (bus_grant[1] == 0 && bus_grant[2] == 0) );"",
 ""Assertion 3"": ""assert property (bus_grant[1] |-> (bus_grant[0] == 0 && bus_grant[2] == 0));"",
 ""Assertion 4"": ""assert property (bus_grant[2] |-> (bus_grant[1] == 0 && bus_grant[0] == 0));"",
-""Assertion 5"": ""assert property (bus_grant != NO_GRANT && !bus_ack |=> (bus_grant == $past(bus_grant)));"",
-""Assertion 6"": ""assert property (     ( (bus_req[0] == 1'b1 && bus_grant == NO_GRANT) ||        (bus_ack && bus_req[0] == 1'b1) )      |=>      (bus_grant[0] == 1'b1 &&       bus_grant[1] == 1'b0 &&       bus_grant[2] == 1'b0) );"",
-""Assertion 7"": ""assert property (   (bus_req[1] && !bus_req[0] && (bus_grant == NO_GRANT)) ||    (bus_ack && bus_req[1] && !bus_req[0]) |->    (bus_grant[1] && !bus_grant[0] && !bus_grant[2]) );"",
-""Assertion 8"": ""assert property (     ((bus_req[2] && !bus_req[1] && !bus_req[0] && bus_grant == NO_GRANT) ||      (bus_ack && bus_req[2] && !bus_req[1] && !bus_req[0])      ->      (bus_grant[2] === 1'b1 && bus_grant[1] === 1'b0 && bus_grant[0] === 1'b0)) );"",
-""Assertion 9"": ""assert property (bus_grant[1] |=> (bus_req[1] && !$past(bus_req[0])));"",
-""Assertion 10"": ""assert property ( (bus_grant[2] && !bus_req[1] && !bus_req[0]) |=> bus_req[2] );""
+""Assertion 5"": ""assert property ( (bus_grant != NO_GRANT && !bus_ack) |=> ##1 (bus_grant == $past(bus_grant)) );"",
+""Assertion 6"": ""assert property (   ((bus_req[0] && (bus_grant == NO_GRANT)) || (bus_ack && bus_req[0])) |->    (bus_grant[0] && !bus_grant[1] && !bus_grant[2]) );"",
+""Assertion 7"": ""assert property (     (bus_req[1] && !bus_req[0] && bus_grant == NO_GRANT) ||      (bus_ack && bus_req[1] && !bus_req[0]) |=>      (bus_grant[1] && !bus_grant[0] && !bus_grant[2]) );"",
+""Assertion 8"": ""assert property (     ((bus_req[2] && !bus_req[1] && !bus_req[0] && bus_grant == NO_GRANT) ||       (bus_ack && bus_req[2] && !bus_req[1] && !bus_req[0]))      |=> (bus_grant[2] && !bus_grant[1] && !bus_grant[0]) );"",
+""Assertion 9"": ""assert property ($rose(bus_grant[1]) |-> ($past(bus_req[1]) && !$past(bus_req[0])));"",
+""Assertion 10"": ""assert property (     $rose(bus_grant[2]) |=>      (bus_req[2] && !bus_req[1] && !bus_req[0]) );""
 }"
 eth_rxstatem,"//////////////////////////////////////////////////////////////////////
 ////                                                              ////
@@ -11220,40 +10630,40 @@ endmodule","{
     ""Assertion Explaination"": ""when the receive data valid signal is equal to 0, then a register bit representing the idle state is equal to 1 from the next clock cycle""
   }
 }","{
-""Assertion 1"": ""assert property (StartPreamble -> (StatePreamble[0] ##1 1));"",
-""Assertion 2"": ""assert property (StartDrop |-> (StatePreamble == 0));"",
-""Assertion 3"": ""assert property (StateSFD ##1 -> !StatePreamble);"",
-""Assertion 4"": ""assert property (StateData[0] == 1'b1 |=> (StatePreamble == 1'b0));"",
+""Assertion 1"": ""assert property (StartPreamble |=> ##1 StatePreamble);"",
+""Assertion 2"": ""assert property (StartDrop |-> ##1 (StatePreamble == 0));"",
+""Assertion 3"": ""assert property ((StateSFD == 1'b1) |-> (StatePreamble == 1'b0) throughout (StateSFD == 1'b1));"",
+""Assertion 4"": ""assert property (StateData[0] == 1'b1 |=> StatePreamble == 1'b0);"",
 ""Assertion 5"": ""assert property (StateDrop == 1'b1 |=> StatePreamble == 1'b0);"",
-""Assertion 6"": ""assert property (StateData1 == 1'b1 |-> StatePreamble == 1'b0);"",
-""Assertion 7"": ""assert property (((StatePreamble == 1'b1) && (MRxDEq5 == 1'b0) && (MRxDV == 1'b1)) |=> (StatePreamble == 1'b1));"",
-""Assertion 8"": ""assert property (MRxDEq5 |-> (StatePreamble == 1'b0));"",
-""Assertion 9"": ""assert property (MRxDV == 1'b0 |=> StatePreamble == 1'b0);"",
-""Assertion 10"": ""assert property (StartSFD == 1'b1 |-> StateSFD[0] == 1'b1);"",
+""Assertion 6"": ""assert property (     (StateData1 == 1'b1) |-> (StatePreamble == 1'b0) );"",
+""Assertion 7"": ""assert property ((StatePreamble == 1'b1 && MRxDEq5 == 1'b0 && MRxDV == 1'b1) |=> (StatePreamble == 1'b1));"",
+""Assertion 8"": ""assert property (MRxDEq5 == 1'b1 |=> (StatePreamble == 1'b0));"",
+""Assertion 9"": ""assert property (MRxDV == 1'b0 |=> (StatePreamble == 1'b0));"",
+""Assertion 10"": ""assert property (StartSFD == 1'b1 |=> StateSFD == 1'b1);"",
 ""Assertion 11"": ""assert property (StartIdle |=> (StateSFD == 1'b0));"",
-""Assertion 12"": ""assert property (StartDrop |=> ##1 (StateSFD[0] == 0));"",
-""Assertion 13"": ""assert property (StartData0 == 1'b1 |-> StateSFD == 1'b0);"",
-""Assertion 14"": ""assert property (StartPreamble == 1'b1 |=> StateSFD == 1'b0);"",
-""Assertion 15"": ""assert property (     (StateSFD == 1'b1 && StartIdle == 1'b0 && MRxDEqD == 1'b0) |=> (StateSFD == 1'b1) );"",
+""Assertion 12"": ""assert property (StartDrop == 1 |-> StateSFD == 0);"",
+""Assertion 13"": ""assert property (StartData0 == 1'b1 |=> (StateSFD == 1'b0));"",
+""Assertion 14"": ""assert property (StartPreamble == 1'b1 |=> (StateSFD == 1'b0));"",
+""Assertion 15"": ""assert property (StateSFD == 1'b1 && StartIdle == 1'b0 && MRxDEqD == 1'b0 |=> StateSFD[1:0] == 2'b10);"",
 ""Assertion 16"": ""assert property (StateData[0] == 1'b1 |=> StateSFD == 1'b0);"",
 ""Assertion 17"": ""assert property (StateDrop == 1'b1 |=> StateSFD == 1'b0);"",
-""Assertion 18"": ""assert property (MRxDEq5 == 1'b0 && StatePreamble == 1'b1 |=> (StateSFD == 1'b0));"",
+""Assertion 18"": ""assert property (MRxDEq5 == 1'b0 && StatePreamble == 1'b1 |=> StateSFD == 1'b0);"",
 ""Assertion 19"": ""assert property (MRxDV == 1'b0 |=> StateSFD == 1'b0);"",
 ""Assertion 20"": ""assert property (StartIdle |-> !StateDrop);"",
-""Assertion 21"": ""assert property (StartDrop |-> StateDrop);"",
+""Assertion 21"": ""assert property (StartDrop |-> (StateDrop == 1));"",
 ""Assertion 22"": ""assert property (StateDrop == 1'b1 && StartIdle == 1'b0 |=> StateDrop == 1'b1);"",
 ""Assertion 23"": ""assert property (StateSFD == 1'b1 && StartDrop == 1'b0 |=> StateDrop == 1'b0);"",
 ""Assertion 24"": ""assert property (StateData[0] == 1'b1 && StartDrop == 1'b0 |=> StateDrop == 1'b0);"",
-""Assertion 25"": ""assert property ( (StatePreamble == 1'b1) |-> (StateDrop == 1'b0) );"",
+""Assertion 25"": ""assert property (StatePreamble == 1'b1 |=> StateDrop == 1'b0);"",
 ""Assertion 26"": ""assert property (StateData1 == 1'b1 |=> StateDrop == 1'b0);"",
 ""Assertion 27"": ""assert property (MRxDV == 1'b0 |=> StateDrop == 1'b0);"",
 ""Assertion 28"": ""assert property (Transmitting == 0 && StateIdle == 1 |=> StateDrop == 0);"",
-""Assertion 29"": ""assert property (StartIdle |=> (StateIdle == 1'b1));"",
-""Assertion 30"": ""assert property (StartDrop |=> !StateIdle);"",
-""Assertion 31"": ""assert property (StartSFD |=> (StateIdle == 1'b0));"",
+""Assertion 29"": ""assert property (StartIdle |=> StateIdle);"",
+""Assertion 30"": ""assert property (StartDrop |=> (!StateIdle throughout [1:]));"",
+""Assertion 31"": ""assert property (StartSFD |=> (StateIdle == 0));"",
 ""Assertion 32"": ""assert property (StartPreamble |=> !StateIdle);"",
 ""Assertion 33"": ""assert property (MRxDV == 1'b1 |=> (StateIdle == 1'b0));"",
-""Assertion 34"": ""assert property (MRxDV == 1'b0 |=> (StateIdle == 1'b1));""
+""Assertion 34"": ""assert property (MRxDV == 1'b0 |=> StateIdle == 1'b1);""
 }"
 Gray_To_Binary,"module Gray_To_Binary #(
 	parameter DATA_WIDTH = 3
@@ -11529,8 +10939,8 @@ endmodule
     ""Assertion Explaination"": ""when the enable signal is reset (0), then the output delayed signal remains unchanged from the next clock cycle""
   }
 }","{
-""Assertion 1"": ""assert property ( (count < CYCLES) || (enable && (out == regs[count])) );"",
-""Assertion 2"": ""assert property (count == CYCLES || out == RESET_VALUE);"",
+""Assertion 1"": ""assert property (count < CYCLES || (count >= CYCLES && out === regs[count - CYCLES] && en));"",
+""Assertion 2"": ""assert property ((count == CYCLES) || (out == RESET_VALUE));"",
 ""Assertion 3"": ""assert property (en == 1'b0 |=> out == $past(out));""
 }"
 arb2,"module arb2(clk, rst, req1, req2, gnt1, gnt2);
@@ -11704,13 +11114,13 @@ endmodule
   }
 }","{
 ""Assertion 1"": ""assert property (state == 1 && req2 == 1 |-> gnt1 == 0);"",
-""Assertion 2"": ""assert property (req1 && (state == 0) |-> gnt1);"",
-""Assertion 3"": ""assert property (req1 == 0 |-> gnt1 == 0);"",
-""Assertion 4"": ""assert property (req1 == 1 && req2 == 0 |-> gnt1 == 1);"",
+""Assertion 2"": ""assert property (req1 == 1 && state == 0 |-> gnt1 == 1);"",
+""Assertion 3"": ""assert property (req1 == 0 -> gnt1 == 0);"",
+""Assertion 4"": ""assert property ((req1 == 1'b1) && (req2 == 1'b0) |-> (gnt1 == 1'b1));"",
 ""Assertion 5"": ""assert property (req1 == 1 && state == 0 |-> gnt2 == 0);"",
 ""Assertion 6"": ""assert property (req2 == 1 && state == 1 |-> gnt2 == 1);"",
 ""Assertion 7"": ""assert property (req2 == 0 |-> gnt2 == 0);"",
-""Assertion 8"": ""assert property (req2 && !req1 |-> gnt2);""
+""Assertion 8"": ""assert property (req2 && !req1 |=> gnt2);""
 }"
 Edge_Detector,"module Edge_Detector (
 	input  clk,
@@ -11759,7 +11169,7 @@ endmodule","{
     ""Assertion Explaination"": ""the output signal indicates whether a rising edge can be detected on the delayed version of the input signal""
   }
 }","{
-""Assertion 1"": ""assert property ( (din_delayed == 0 && din == 1) |=> pulse_q );""
+""Assertion 1"": ""assert property ((!din[1] && din[0]) |=> (din[1] && dout));""
 }"
 VGA,"module VGA #(localparam  size = 1, localparam h_bits = 7, localparam v_bits = 5) (input clk, input rst, output reg disp_ena, output reg n_blank, output reg n_sync, output reg [h_bits-1:0] col, output reg [v_bits-1:0] row);
 
@@ -11844,7 +11254,7 @@ endmodule
   ""Assertion Explaination"": ""eventually, the reset signal equal 1 or the display enable signal equals 1""
 }
 }","{
-""Assertion 1"": ""assert property (eventually (reset == 1 || disp_ena == 1));""
+""Assertion 1"": ""assert property (F (rst == 1 || disp_ena == 1));""
 }"
 simple_router,"module simple_router #(
 	parameter DATA_WIDTH = 32
@@ -11982,9 +11392,9 @@ endmodule","{
   }
 }","{
 ""Assertion 1"": ""assert property (din_en || (dout0 == 0 && dout1 == 0 && dout2 == 0 && dout3 == 0));"",
-""Assertion 2"": ""assert property ((din_en && (addr == 2'd0)) |-> ((dout0 == din) && (dout1 == 0) && (dout2 == 0) && (dout3 == 0)));"",
-""Assertion 3"": ""assert property (     din_en && (addr == 2'd1) |->      (dout1 == din) &&      (dout0 == 0) &&      (dout2 == 0) &&      (dout3 == 0) );"",
-""Assertion 4"": ""assert property (din_en ##1 (addr == 2'd2) |=> (dout2 == din) && (dout0 == 0) && (dout1 == 0) && (dout3 == 0));"",
+""Assertion 2"": ""assert property (din_en && (addr == 2'd0) |-> (dout0 == din) && (dout1 == 0) && (dout2 == 0) && (dout3 == 0));"",
+""Assertion 3"": ""assert property (din_en && (addr == 2'd1) |-> (dout1 == din && dout0 == 0 && dout2 == 0 && dout3 == 0));"",
+""Assertion 4"": ""assert property (din_en && (addr == 2'd2) |-> (dout2 == din) && (dout0 == 0) && (dout1 == 0) && (dout3 == 0));"",
 ""Assertion 5"": ""assert property (din_en && (addr == 2'd3) |-> ((dout3 == din) && (dout0 == 0) && (dout1 == 0) && (dout2 == 0)));""
 }"
 a25_wishbone,"//////////////////////////////////////////////////////////////////
@@ -12603,11 +12013,11 @@ endmodule
   }
 }","{
 ""Assertion 1"": ""assert property (wishbone_st == WB_IDLE |=> (wishbone_st == WB_IDLE || wishbone_st == WB_BURST1 || wishbone_st == WB_WAIT_ACK));"",
-""Assertion 2"": ""assert property (wishbone_st == WB_BURST1 && i_wb_ack |=> (wishbone_st == WB_BURST2));"",
-""Assertion 3"": ""assert property ((wishbone_st == WB_BURST2 && i_wb_ack) |=> (wishbone_st == WB_BURST3));"",
-""Assertion 4"": ""assert property (wishbone_st == WB_BURST3 && i_wb_ack |=> (wishbone_st == WB_WAIT_ACK));"",
-""Assertion 5"": ""assert property (wishbone_st == WB_WAIT_ACK && (extra_write_r || !i_wb_ack) |=> wishbone_st == WB_WAIT_ACK);"",
-""Assertion 6"": ""assert property ((wishbone_st == WB_WAIT_ACK && !extra_write_r && i_wb_ack) |=> (wishbone_st == WB_IDLE));""
+""Assertion 2"": ""assert property (wishbone_st == WB_BURST1 && i_wb_ack |-> (wishbone_st == WB_BURST2));"",
+""Assertion 3"": ""assert property (     (wishbone_st == WB_BURST2 && i_wb_ack) |=>      (wishbone_st == WB_BURST3) );"",
+""Assertion 4"": ""assert property ( (wishbone_st == WB_BURST3 && i_wb_ack) |=> (wishbone_st == WB_WAIT_ACK) );"",
+""Assertion 5"": ""assert property (wishbone_st == WB_WAIT_ACK && (extra_write_r || !i_wb_ack) |=> (wishbone_st == WB_WAIT_ACK));"",
+""Assertion 6"": ""assert property (wishbone_st == WB_WAIT_ACK && !extra_write_r && i_wb_ack |=> (wishbone_st == WB_IDLE));""
 }"
 second_largest,"module second_largest #(parameter
   DATA_WIDTH = 32
@@ -12688,7 +12098,7 @@ endmodule","{
     ""Assertion Explaination"": ""the maximum value held equals 0 or the maximum value held is greater-than the second largest value held""
   }
 }","{
-""Assertion 1"": ""assert property (     (max_q == 0) || (max_q > max2_q) );""
+""Assertion 1"": ""assert property (max_q == 0 || max_q > max2_q);""
 }"
 reversing_bits,"module reversing_bits #(
 	parameter DATA_WIDTH=3
@@ -12724,7 +12134,7 @@ endmodule","{
     ""Assertion Explaination"": ""reversed output bus signal's first bit equals input bus signal's DATA_WIDTH-1-th bit""
   }
 }","{
-""Assertion 1"": ""assert property (dout_valid |-> (dout[0] == din[DATA_WIDTH-1]));""
+""Assertion 1"": ""assert property (dout[0] == din[DATA_WIDTH-1]);""
 }"
 or1200_ctrl,"//////////////////////////////////////////////////////////////////////
 ////                                                              ////
@@ -14372,18 +13782,18 @@ endmodule","{
     ""Assertion Explaination"": ""when the freeze signal for the ID stage is reset (0) and the opcode field of the instruction in the IF stage equals the SFXX opcode `OR1200_OR32_SFXX, then the signal controlling immediate value selection equals 0 from the next clock cycle""
   }
 }","{
-""Assertion 1"": ""assert property (ex_freeze == 1'b0 && ex_delayslot_dsi == 1'b1 && ex_delayslot_nop == 1'b0 |-> (ex_delayslot_nop == 1'b0 && ex_delayslot_dsi == 1'b0));"",
-""Assertion 2"": ""assert property (not ex_freeze && (id_freeze || ex_flushpipe) |=> not ex_macrc_op);"",
-""Assertion 3"": ""assert property (id_flushpipe |=> (id_insn == {`OR1200_OR32_NOP, 26'h0410000}));"",
-""Assertion 4"": ""assert property (     (ex_freeze == 1'b0) &&      ((id_freeze == 1'b1) || (ex_flushpipe == 1'b1)) |=>      (ex_insn == {`OR1200_OR32_NOP, 26'h041_0000}) );"",
-""Assertion 5"": ""assert property ((id_freeze == 1'b0) && (if_insn[31:26] == `OR1200_OR32_JALR) |=> (sel_imm == 1'b0));"",
-""Assertion 6"": ""assert property (id_freeze == 0 && if_insn[31:26] == `OR1200_OR32_JR |-> sel_imm == 0);"",
-""Assertion 7"": ""assert property ((!id_freeze && (if_insn[31:26] == `OR1200_OR32_RFE) |=> (sel_imm == 0)));"",
-""Assertion 8"": ""assert property (id_freeze == 0 |=> (if_insn[31:26] == `OR1200_OR32_MFSPR) |=> (sel_imm == 0));"",
-""Assertion 9"": ""assert property ((id_freeze == 1'b0 && (if_insn[31:26] == `OR1200_OR32_MTSPR) |-> (sel_imm == 1'b0)));"",
-""Assertion 10"": ""assert property (id_freeze == 1'b0 && if_insn[31:26] == `OR1200_OR32_XSYNC |=> sel_imm == 1'b0);"",
-""Assertion 11"": ""assert property (id_freeze == 0 && if_insn[31:26] == `OR1200_OR32_SW |-> sel_imm == 0);"",
-""Assertion 12"": ""assert property ( (id_freeze == 0 && (if_insn[31:26] == `OR1200_OR32_SB)) |-> (sel_imm == 0) );"",
-""Assertion 13"": ""assert property (id_freeze == 0 && (if_insn[31:26] == `OR1200_OR32_ALU) |-> (sel_imm == 0));"",
-""Assertion 14"": ""assert property (     (id_freeze == 1'b0 && if_insn[31:26] == `OR1200_OR32_SFXX) |=> (sel_imm == 1'b0) );""
+""Assertion 1"": ""assert property (ex_freeze == 1'b0 && ex_delayslot_dsi == 1'b1 && ex_delayslot_nop == 1'b0 |=> (ex_delayslot_nop == 1'b0 && ex_delayslot_dsi == 1'b0));"",
+""Assertion 2"": ""assert property ((!ex_freeze && (id_freeze || ex_flushpipe)) |=> (ex_mac_op == 0));"",
+""Assertion 3"": ""assert property (id_flushpipe |=> id_insn == {`OR1200_OR32_NOP, 26'h0410000});"",
+""Assertion 4"": ""assert property ((!ex_freeze && id_freeze || ex_flushpipe) |=> (ex_insn == {`OR1200_OR32_NOP, 26'h041_0000}));"",
+""Assertion 5"": ""assert property (id_freeze == 0 && if_insn[31:26] == `OR1200_OR32_JALR ->> (sel_imm == 0));"",
+""Assertion 6"": ""assert property (     (id_freeze == 0 && if_insn[31:26] == `OR1200_OR32_JR) |=> (sel_imm == 0) );"",
+""Assertion 7"": ""assert property (     (id_freeze == 1'b0 && if_insn[31:26] == `OR1200_OR32_RFE) |=> (sel_imm == 1'b0) );"",
+""Assertion 8"": ""assert property (     id_freeze == 1'b0 && if_insn[31:26] == `OR1200_OR32_MFSPR |=> (sel_imm == 1'b0) );"",
+""Assertion 9"": ""assert property (   (id_freeze == 1'b0 && if_insn[31:26] == `OR1200_OR32_MTSPR) |=> (sel_imm == 1'b0) );"",
+""Assertion 10"": ""assert property ((!id_freeze && (if_insn[31:26] == `OR1200_OR32_XSYNC)) |=> (sel_imm == 0));"",
+""Assertion 11"": ""assert property ( (id_freeze == 0 && if_insn[31:26] == `OR1200_OR32_SW) throughout (sel_imm == 0) );"",
+""Assertion 12"": ""assert property ((!id_freeze && (if_insn[31:26] == `OR1200_OR32_SB)) |=> (sel_imm == 1'b0));"",
+""Assertion 13"": ""assert property (id_freeze == 0 && if_insn[31:26] == `OR1200_OR32_ALU |=> (sel_imm == 1'b0));"",
+""Assertion 14"": ""assert property (id_freeze == 1'b0 && (if_insn[31:26] == `OR1200_OR32_SFXX) |-> (sel_imm == 1'b0));""
 }"

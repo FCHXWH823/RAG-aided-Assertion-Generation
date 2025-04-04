@@ -239,7 +239,7 @@ with open(f'Results/Dynamic-RAG-Openai-4o-mini-Prompted-Assertion-Generation-Res
     for folder in os.listdir("Evaluation/Dataset/"):
         if Excute_Folder != 'ALL_DESIGNS' and Excute_Folder not in folder:
             continue
-        if folder in ["Ripple_Carry_Adder", "or1200_operandmuxes", "gray", "Flip_Flop_Array", "PSGBusArb", "apb", "host_interface", "control_unit", "Programmable_Sequence_Detector", "PWM", "module_i2c", "delay2", "simple_req_ack", "Gray_Code_Counter", "uartTrans", "i2c", "uartRec", "APB_FSM_Controller", "register", "SEVEN"]:
+        if folder in ["Ripple_Carry_Adder", "or1200_operandmuxes", "gray", "Flip_Flop_Array"]:
             continue
         folder_path = os.path.join("Evaluation/Dataset/",folder)
         if os.path.isdir(folder_path):
@@ -296,12 +296,16 @@ with open(f'Results/Dynamic-RAG-Openai-4o-mini-Prompted-Assertion-Generation-Res
                 if "|=>" in logic_expression or "|->" in logic_expression:
                     checking_str += "`|->`: \nif the left-hand side condition of |-> is true, the right-hand side condition of |-> is true in the same clock cycle\n\n\n"
                     checking_str += "`|=>`: \nif the left-hand side condition of |=> is true, the right-hand side condition of |=> is true in the next one clock cycle\n\n\n"
-                for op in property_ops:
-                    retrieved_doc = code_retriever.invoke(f"{op}")                    
-                    checking_str += f"`{op}`:\n"
-                    for doc in retrieved_doc:
-                        checking_str += doc.page_content + "\n\n"
-                    checking_str += "\n"
+                # read operators.json
+                with open("operators.json","r") as file:
+                    operators = json.load(file)
+                for op in operators:
+                    if op in logic_expression:
+                        checking_str += f"`{op}`: {operators[op]}\n\n"
+                        retrieved_doc = code_retriever.invoke(f"{operators[op]}")                    
+                        for doc in retrieved_doc:
+                            checking_str += doc.page_content + "\n\n"
+                        checking_str += "\n"    
 
 
                 # checking_str += llm_response_explain
@@ -378,7 +382,7 @@ with open(f'Results/Dynamic-RAG-Openai-4o-mini-Prompted-Assertion-Generation-Res
                     processed_code += assertion+"\n"
                 processed_code += "\nendmodule\n"
 
-                with open(folder_path+"/"+folder+f"_HybridDynamic-RAG-{Model_Name}.sv","w") as file:
+                with open(folder_path+"/"+folder+f"_GoldHybridDynamic-RAG-{Model_Name}.sv","w") as file:
                     file.write(processed_code)
 
 
