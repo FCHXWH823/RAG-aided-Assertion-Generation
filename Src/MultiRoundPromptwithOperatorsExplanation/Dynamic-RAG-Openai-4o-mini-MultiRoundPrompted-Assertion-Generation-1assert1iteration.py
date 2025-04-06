@@ -13,6 +13,7 @@ import json
 import csv
 import re
 from openai import OpenAI
+from sentence_splitter import SentenceSplitter, split_text_into_sentences
 
 with open("Src/Config.yml") as file:
     config = yaml.safe_load(file)
@@ -75,6 +76,7 @@ def build_rag_system():
     3. Store text blocks in a 'text_db' (Chroma).
     4. Return the two vector stores for retrieval.
     """
+    splitter = SentenceSplitter(language='en')
     pdf_names = []
 
     with open(f"VerilogTextBooks/{PDF_Txt}") as file:
@@ -106,6 +108,9 @@ def build_rag_system():
             code_docs.append(doc)
         else:
             text_docs.append(doc)
+            # sentences = splitter.split(content)
+            # for sentence in sentences:
+            #     text_docs.append(Document(page_content=sentence, metadata={"type": block["type"], "block_index": idx}))
 
     # 3) Build embeddings
     embedding_fn = OpenAIEmbeddings(openai_api_key=OpenAI_API_Key)  # or HuggingFaceEmbeddings(), etc.
@@ -123,6 +128,8 @@ code_store, text_store = build_rag_system()
 
 code_retriever = code_store.as_retriever()
 text_retriever = text_store.as_retriever()
+
+results = code_retriever.invoke("To ensure correct arbitration behavior, it is necessary to examine the value of the arb_type_sel signal in the previous clock cycle.")
 
 # prompt
 system_prompt = (

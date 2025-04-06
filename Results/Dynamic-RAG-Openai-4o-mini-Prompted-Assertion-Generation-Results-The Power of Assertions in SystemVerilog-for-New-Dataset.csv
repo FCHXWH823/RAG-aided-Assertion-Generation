@@ -642,33 +642,33 @@ endmodule","{
     ""Assertion Explaination"": ""when selection signal for requester 4 is equal to 0 and bus request signal for requester 4 is equal to 0, then selection signal for requester 4 is equal to 0 from the next clock cycle""
   }
 }","{
-""Assertion 1"": ""assert property (sel7 == 1'b0 && req0 == 1'b1 |=> sel7 == 1'b0);"",
-""Assertion 2"": ""assert property ((sel7 == 1'b0 && req1 == 1'b1) |=> (sel7 == 1'b0));"",
-""Assertion 3"": ""assert property ((sel7 == 1'b1 && ack == 1'b0) |=> (sel7 == 1'b1));"",
-""Assertion 4"": ""assert property (sel7 == 1'b1 && ce == 1'b0 |-> sel7 == 1'b1);"",
-""Assertion 5"": ""assert property (sel7 == 1'b0 && ack == 1'b0 |=> sel7 throughout (sel7 == 1'b0));"",
-""Assertion 6"": ""assert property (sel7 == 1'b0 && req2 == 1'b1 |=> sel7 == 1'b0);"",
-""Assertion 7"": ""assert property (req3 == 1'b1 |=> sel7 == 1'b0);"",
-""Assertion 8"": ""assert property (sel7 == 1'b0 && req5 == 1'b1 |=> sel7 == 1'b0);"",
-""Assertion 9"": ""assert property ( (sel7 == 1'b0 && req6 == 1'b1) |=> (sel7 == 1'b0) );"",
-""Assertion 10"": ""assert property ((sel5 == 1'b0 && req0 == 1'b1) |=> (sel5 == 1'b0));"",
-""Assertion 11"": ""assert property (sel5 == 1'b0 && req1 == 1'b1 |-> sel5 == 1'b0);"",
-""Assertion 12"": ""assert property (sel5 == 1'b1 && ce == 1'b0 |=> sel5[1] == 1'b1);"",
-""Assertion 13"": ""assert property ((sel5 == 1'b1 && ack == 1'b0) |=> (sel5 == 1'b1));"",
-""Assertion 14"": ""assert property (sel5 == 1'b0 && ack == 1'b0 |=> (sel5 == 1'b0));"",
-""Assertion 15"": ""assert property ( (req5 == 1'b0 && ce == 1'b0) |=> (sel5 == 1'b0) );"",
-""Assertion 16"": ""assert property (sel5 == 1'b0 && req2 == 1'b1 |=> (sel5[2:0] == 3'b000));"",
-""Assertion 17"": ""assert property (sel5 == 1'b0 && req3 == 1'b1 |=> (sel5 == 1'b0));"",
-""Assertion 18"": ""assert property (sel5 == 1'b0 && req4 == 1'b1 |-> (sel5 == 1'b0));"",
-""Assertion 19"": ""assert property (req5 == 1'b0 && sel5 == 1'b0 |=> sel5 == 1'b0);"",
-""Assertion 20"": ""assert property (sel4 == 1'b0 && req1 == 1'b1 |-> sel4 == 1'b0);"",
-""Assertion 21"": ""assert property (sel4 == 1'b1 && ack == 1'b0 |=> (sel4 == 1'b1));"",
-""Assertion 22"": ""assert property (sel4 == 0 && ack == 0 |=> sel4 == 0);"",
-""Assertion 23"": ""assert property (sel4 == 1'b0 && ce == 1'b0 |=> sel4 == 1'b0);"",
-""Assertion 24"": ""assert property (sel4 == 1'b1 && clk_en == 0 |=> sel4 == 1'b1);"",
-""Assertion 25"": ""assert property ((sel4 == 1'b0) && (req2 == 1'b1) |=> (sel4 == 1'b0));"",
-""Assertion 26"": ""assert property (sel4 == 1'b0 && req3 == 1'b1 |=> sel4 == 1'b0);"",
-""Assertion 27"": ""assert property (req4 == 1'b0 && sel4 == 1'b0 |=> sel4 == 1'b0);""
+""Assertion 1"": ""assert property ((sel7 == 0 && req0 == 1) |-> (sel7 == 0));"",
+""Assertion 2"": ""assert property (!sel7 && req1 |-> !sel7);"",
+""Assertion 3"": ""assert property ((sel7 == 1 && ack == 0) |-> (sel7 == 1));"",
+""Assertion 4"": ""assert property (sel7 && !ce |-> ##1 sel7);"",
+""Assertion 5"": ""assert property ((sel7 == 0 && ~ack) |=> (sel7 == 0));"",
+""Assertion 6"": ""assert property (sel7 == 0 && req2 == 1 |-> ##1 (sel7 == 0));"",
+""Assertion 7"": ""assert property ((sel7 == 0 && req3 == 1) |-> (sel7 == 0));"",
+""Assertion 8"": ""assert property ((!sel7 && req5) |-> ##1 !sel7);"",
+""Assertion 9"": ""assert property (!sel7 && req6 |-> (sel7 == 0));"",
+""Assertion 10"": ""assert property ((!sel5 && req0) |-> ##1 !sel5);"",
+""Assertion 11"": ""assert property ((sel5 == 1'b0 && req1 == 1'b1) |-> ##1 (sel5 == 1'b0));"",
+""Assertion 12"": ""assert property ((sel5 == 1) && (ce == 0) |=> (sel5 == 1));"",
+""Assertion 13"": ""assert property ((sel5 == 1'b1 && ack == 1'b0) |-> (sel5 == 1'b1));"",
+""Assertion 14"": ""assert property ((sel5 == 1'b0 && ack == 1'b0) |-> (sel5 == 1'b0));"",
+""Assertion 15"": ""assert property ((sel5 == 1'b0 && ce == 1'b0) |-> (sel5 == 1'b0));"",
+""Assertion 16"": ""assert property (sel5 == 1'b0 && req2 == 1'b1 |-> ##1 (sel5 == 1'b0));"",
+""Assertion 17"": ""assert property ((sel5 == 1'b0 && req3 == 1'b1) |-> (sel5 == 1'b0));"",
+""Assertion 18"": ""assert property ((sel5 == 1'b0 && req4 == 1'b1) |-> (sel5 == 1'b0));"",
+""Assertion 19"": ""assert property ((sel5 == 0 && req5 == 0) |-> ##1 (sel5 == 0));"",
+""Assertion 20"": ""assert property ((sel4 == 0 && req1 == 1) |-> ##1 (sel4 == 0));"",
+""Assertion 21"": ""assert property (sel4 && !ack |-> sel4);"",
+""Assertion 22"": ""assert property (sel4 == 0 && ack == 0 |-> ##1 (sel4 == 0));"",
+""Assertion 23"": ""assert property (ce == 0 && sel4 == 0 |-> sel4 == 0);"",
+""Assertion 24"": ""assert property (sel4 && !ce |-> ##1 sel4);"",
+""Assertion 25"": ""assert property ((sel4 == 0 && req2 == 1) |-> (sel4 == 0));"",
+""Assertion 26"": ""assert property (sel4 == 1'b0 && req3 == 1'b1 |-> ##1 (sel4 == 1'b0));"",
+""Assertion 27"": ""assert property ((sel4 == 1'b0 && req4 == 1'b0) |-> (sel4 == 1'b0));""
 }"
 apb,"//////////////////////////////////////////////////////////////////
 ////
@@ -974,12 +974,12 @@ endmodule","{
     ""Assertion Explaination"": ""When receive FIFO empty indicator equals 1, then receive interrupt signal equals 1 from the current clock cycle""
   }
 }","{
-""Assertion 1"": ""assert property (ERROR == 1'b0 |-> PSLVERR == 1'b0);"",
-""Assertion 2"": ""assert property (ERROR |-> PSLVERR);"",
+""Assertion 1"": ""assert property (ERROR == 0 |-> (PSLVERR == 0));"",
+""Assertion 2"": ""assert property (ERROR == 1'b1 |-> PSLVERR == 1'b1);"",
 ""Assertion 3"": ""assert property (TX_EMPTY == 1'b1 |-> INT_TX == 1'b1);"",
-""Assertion 4"": ""assert property ( (TX_EMPTY == 1'b0) |-> (INT_TX == 1'b0) );"",
+""Assertion 4"": ""assert property (TX_EMPTY == 1'b0 |-> INT_TX == 1'b0);"",
 ""Assertion 5"": ""assert property (RX_EMPTY == 1'b0 |-> INT_RX == 1'b0);"",
-""Assertion 6"": ""assert property (RX_EMPTY == 1'b1 |-> INT_RX == 1'b1);""
+""Assertion 6"": ""assert property ((RX_EMPTY == 1) |-> (INT_RX == 1));""
 }"
 host_interface,"//////////////////////////////////////////////////////////////////
 ////
@@ -1416,18 +1416,18 @@ endmodule","{
   ""Assertion Explaination"": ""when the second bit of the pipeline HADDR signal equals 1, then write enable for CRC_POL register equals 0 from the current clock cycle""
 }
 }","{
-""Assertion 1"": ""assert property (sample_bus == 1 |-> HREADYOUT == 1);"",
-""Assertion 2"": ""assert property (buffer_read_en && read_wait |-> HREADYOUT == 0);"",
-""Assertion 3"": ""assert property (ahb_enable == 0 |-> HREADYOUT == 1);"",
-""Assertion 4"": ""assert property (write_en == 1'b0 |-> crc_idr_en == 1'b0);"",
-""Assertion 5"": ""assert property (HWRITE && crc_idr_sel |-> crc_idr_en);"",
-""Assertion 6"": ""assert property (crc_idr_sel == 1'b0 |-> (crc_idr_en == 1'b0));"",
-""Assertion 7"": ""assert property (hselx_pp == 1'b0 |-> !crc_idr_en);"",
-""Assertion 8"": ""assert property (hwrite_pp == 0 |-> crc_idr_en == 0);"",
-""Assertion 9"": ""assert property (HWRITE == 1'b0 |-> crc_poly_en == 1'b0);"",
-""Assertion 10"": ""assert property (hselx_pp == 1'b0 |-> !crc_poly_en);"",
-""Assertion 11"": ""assert property (HWRITE == 1'b0 |-> crc_poly_en == 1'b0);"",
-""Assertion 12"": ""assert property (haddr_pp[1] == 1 |-> (crc_poly_en == 0));""
+""Assertion 1"": ""assert property (sample_bus |-> ##1 HREADYOUT);"",
+""Assertion 2"": ""assert property (buffer_read_en && read_wait |-> !HREADYOUT);"",
+""Assertion 3"": ""assert property (ahb_enable == 1'b0 |-> HREADYOUT == 1'b1);"",
+""Assertion 4"": ""assert property (write_en == 0 |-> ##1 (crc_idr_en == 0));"",
+""Assertion 5"": ""assert property (write_en && crc_idr_sel |-> crc_idr_en);"",
+""Assertion 6"": ""assert property (!(crc_idr_sel == 1'b0) || (crc_idr_en == 1'b0));"",
+""Assertion 7"": ""assert property (!(hselx == 0) || (crc_idr_en == 0));"",
+""Assertion 8"": ""assert property (!((hwrite_pp == 1'b0) || (crc_idr_en == 0)));"",
+""Assertion 9"": ""assert property (!write_en |-> !crc_poly_en);"",
+""Assertion 10"": ""assert property (hselx_pp == 0 |-> crc_poly_en == 0);"",
+""Assertion 11"": ""assert property ((hwrite_pp == 1'b0) |-> (write_en == 1'b0));"",
+""Assertion 12"": ""assert property (haddr_pp[1] == 1 |-> !crc_poly_en);""
 }"
 control_unit,"//////////////////////////////////////////////////////////////////
 ////
@@ -2096,10 +2096,10 @@ endmodule","{
     ""Assertion Explaination"": ""when the signal that indicates the beginning of an AES operation equals 1, then the signal used to initialize the key generation process equals 1 from the current clock cycle""
   }
 }","{
-""Assertion 1"": ""assert property (aes_mode[0] == 1'b1 |-> (mode_ctr == 1'b0));"",
+""Assertion 1"": ""assert property (aes_mode[0] |-> (mode_ctr == 0));"",
 ""Assertion 2"": ""assert property (aes_mode[0] == 0 |-> mode_cbc == 0);"",
 ""Assertion 3"": ""assert property (start == 0 |-> key_init == 0);"",
-""Assertion 4"": ""assert property (start == 1'b1 |-> key_init == 1'b1);""
+""Assertion 4"": ""assert property (start |-> key_init);""
 }"
 Programmable_Sequence_Detector,"module Programmable_Sequence_Detector 
 #(
@@ -2147,7 +2147,7 @@ endmodule","{
     ""Assertion Explaination"": ""the output is asserted whenever a specified target sequence is detected on the input""
   }
 }","{
-""Assertion 1"": ""assert property (target_sequence |=> output_signal);""
+""Assertion 1"": ""assert property (seen == (seq_q == init));""
 }"
 PWM,"module PWM #(parameter CBITS = 10) 
 (input clk, input rst, input [3:0] sw, output reg pulse);
@@ -2184,7 +2184,7 @@ endmodule","{
     ""Assertion Explaination"": ""eventually, the inversion of the output signal becomes true""
   }
 }","{
-""Assertion 1"": ""assert property ((!pulse |-> eventually (pulse == 1'b1)));""
+""Assertion 1"": ""assert property (pulse[*0:$] ##1 (pulse == 1'b0));""
 }"
 module_i2c,"//////////////////////////////////////////////////////////////////
 ////
@@ -5736,13 +5736,13 @@ endmodule
     ""Assertion Explaination"": ""when the first bit of the configuration register equals 1 and the second bit of the configuration register equals 1, then the error signal equals 1 from the current clock cycle""
   }
 }","{
-""Assertion 1"": ""assert property (fifo_rx_f_empty == 1'b1 |-> RX_EMPTY == 1'b1);"",
-""Assertion 2"": ""assert property (fifo_rx_f_empty == 1'b0 |-> (RX_EMPTY == 1'b0));"",
+""Assertion 1"": ""assert property (fifo_rx_f_empty == 1 |-> RX_EMPTY == 1);"",
+""Assertion 2"": ""assert property (fifo_rx_f_empty == 1'b0 |-> RX_EMPTY == 1'b0);"",
 ""Assertion 3"": ""assert property (fifo_rx_f_empty == 1'b1 |-> RX_EMPTY == 1'b1);"",
 ""Assertion 4"": ""assert property (fifo_rx_f_empty == 1'b0 |-> RX_EMPTY == 1'b0);"",
-""Assertion 5"": ""assert property (DATA_CONFIG_REG[1] == 1'b0 |-> (ERROR == 1'b0));"",
+""Assertion 5"": ""assert property (DATA_CONFIG_REG[1] == 1'b0 |-> ERROR == 1'b0);"",
 ""Assertion 6"": ""assert property (DATA_CONFIG_REG[0] == 1'b0 |-> ERROR == 1'b0);"",
-""Assertion 7"": ""assert property (DATA_CONFIG_REG[0] == 1'b1 && DATA_CONFIG_REG[1] == 1'b1 |-> ERROR == 1'b1);""
+""Assertion 7"": ""assert property ((DATA_CONFIG_REG[0] == 1'b1 && DATA_CONFIG_REG[1] == 1'b1) |-> (ERROR == 1'b1));""
 }"
 delay2,"module delay2 
 #(
@@ -5778,7 +5778,7 @@ endmodule","{
     ""Assertion Explaination"": ""eventually, reset signal is asserted or output signal equals 1""
   }
 }","{
-""Assertion 1"": ""assert property (nexttime[2] (rst || (sig == 1)));""
+""Assertion 1"": ""assert property (s_eventually (rst || sig));""
 }"
 simple_req_ack,"module simple_req_ack (
 	input  clk,
@@ -5829,7 +5829,7 @@ endmodule","{
 ""Assertion Explaination"": ""when request signal is detected to have a rising edge, then after a delay of 2 clock cycles the acknowledge signal is detected to have a rising edge""
 }
 }","{
-""Assertion 1"": ""assert property ($rose(req) |=> ##2 $rose(ack));""
+""Assertion 1"": ""assert property ($rose(req) |-> ##2 $rose(ack));""
 }"
 Gray_Code_Counter,"module Gray_Code_Counter #(parameter
   DATA_WIDTH = 4
@@ -5889,7 +5889,7 @@ endmodule","{
     ""Assertion Explaination"": ""there is only 1 bit difference between 2 consequtive gray code's or we have overflown""
   }
 }","{
-""Assertion 1"": ""assert property (     ($countbits({gray_q, $past(gray_q)}, 1'b1, 1'bx, 1'bz) <= 1) ||     (gray_q == {DATA_WIDTH{1'b0}} && $past(gray_q) == {DATA_WIDTH{1'b1}}) ||     (gray_q == {DATA_WIDTH{1'b1}} && $past(gray_q) == {DATA_WIDTH{1'b0}}) );""
+""Assertion 1"": ""assert property (   ($countbits((gray_q ^ gray_next), 1'b1, 1'bx, 1'bz) == 1) ||    (gray_q == {DATA_WIDTH{1'd0}} && gray_next == {DATA_WIDTH{1'd1}}) );""
 }"
 uartTrans,"////////////////////////////////////////////////////////////////////////////////////////////////
 ////                                                              							////
@@ -6329,10 +6329,10 @@ endmodule","{
     ""Assertion Explaination"": ""when the transmit start signal is equal to 0, then the transmit done tick signal should be equal to 0 from the current clock cycle""
   }
 }","{
-""Assertion 1"": ""assert property (bReg == 8'b0 |=> tx == 1'b0);"",
-""Assertion 2"": ""assert property (bReg[0] == 1 |-> ##1 (tx[1:0] == 2'b01));"",
-""Assertion 3"": ""assert property (stateReg[0] == 1 |-> (txDoneTick == 0));"",
-""Assertion 4"": ""assert property (txStart == 1'b0 |-> txDoneTick == 1'b0);""
+""Assertion 1"": ""assert property (bNext == 0 |-> (tx == 0));"",
+""Assertion 2"": ""assert property (txNext == 1'b1 |-> tx == 1'b1);"",
+""Assertion 3"": ""assert property (stateReg[0] == 1 |-> txDoneTick == 0);"",
+""Assertion 4"": ""assert property ((txStart == 0) |-> (txDoneTick == 0));""
 }"
 i2c,"module i2c #(parameter divider = 125, parameter CBITS = 9) (input clk, input rst, input scl_not_ena, output reg data_clk);
 	reg [CBITS - 1:0] cnt;	//0 to 4*divider
@@ -6398,7 +6398,7 @@ endmodule","{
     ""Assertion Explaination"": ""eventually, reset signal equals 1 or input signal indicating that scl is not enabled equals 1 or internal signal that indicates if clock stretching is occurring equals 1""
   }
 }","{
-""Assertion 1"": ""assert property (rst == 1 || scl_not_ena == 1 || stretch == 1);""
+""Assertion 1"": ""assert property (not_rst_scl_not_stretch |-> ##[0:$] (rst || scl_not_ena || stretch));""
 }"
 uartRec,"////////////////////////////////////////////////////////////////////////////////////////////////
 ////                                                              							////
@@ -6874,13 +6874,13 @@ endmodule","{
     ""Assertion Explaination"": ""when the first bit of the next sampling counter value is 0, then the UART reception done flag signal must be 0 from the next clock cycle""
   }
 }","{
-""Assertion 1"": ""assert property (stateReg[0] == 0 |-> (rxDoneTick == 0));"",
-""Assertion 2"": ""assert property ( (sReg[2] == 0) |=> (rxDoneTick == 0) );"",
-""Assertion 3"": ""assert property (sReg[1] == 1'b0 |=> rxDoneTick == 1'b0);"",
-""Assertion 4"": ""assert property (nReg[1] == 1'b0 |=> (rxDoneTick == 1'b0));"",
-""Assertion 5"": ""assert property (nReg[0] == 0 |=> rxDoneTick == 0);"",
-""Assertion 6"": ""assert property (sTick == 0 |=> (rxDoneTick == 0));"",
-""Assertion 7"": ""assert property (sReg[0] == 0 |=> rxDoneTick == 0 throughout [1:2]);""
+""Assertion 1"": ""assert property ((stateReg[0] == 1'b0) |=> (rxDoneTick == 1'b0));"",
+""Assertion 2"": ""assert property ((sReg[3] == 0) |=> (rxDoneTick == 0));"",
+""Assertion 3"": ""assert property ((sReg[1] == 1'b0) |-> (rxDoneTick == 1'b0));"",
+""Assertion 4"": ""assert property ((sReg[1] == 0) |=> (rxDoneTick == 0));"",
+""Assertion 5"": ""assert property (!sReg[0] |-> !rxDoneTick);"",
+""Assertion 6"": ""assert property (sTick == 1'b0 |-> rxDoneTick == 1'b0);"",
+""Assertion 7"": ""assert property ((sNext[0] == 1'b0) |-> (rxDoneTick == 1'b0));""
 }"
 APB_FSM_Controller,"
 // AHB to APG Bridge | Maven Silicon
@@ -7538,25 +7538,25 @@ endmodule","{
     ""Assertion Explaination"": ""Property to verify the transition from ST_WENABLEP that when the current state of the FSM equals write enable pipelined and the write register control is not active, then the next state of the FSM equals read from the current clock cycle""
   }
 }","{
-""Assertion 1"": ""assert property (PRESENT_STATE == $past(NEXT_STATE, 2));"",
-""Assertion 2"": ""assert property (PRESENT_STATE == ST_IDLE && valid && Hwrite |-> NEXT_STATE == ST_WWAIT);"",
-""Assertion 3"": ""assert property ((PRESENT_STATE == ST_IDLE) && valid && ~Hwrite |-> (NEXT_STATE == ST_READ));"",
-""Assertion 4"": ""assert property ((PRESENT_STATE == ST_IDLE && ~valid) |-> (NEXT_STATE == ST_IDLE));"",
-""Assertion 5"": ""assert property ( (PRESENT_STATE == ST_WWAIT && ~valid) |=> (NEXT_STATE == ST_WRITE) );"",
+""Assertion 1"": ""assert property ((PRESENT_STATE == NEXT_STATE) |-> ##2 (PRESENT_STATE == $past(NEXT_STATE, 2)));"",
+""Assertion 2"": ""assert property ((PRESENT_STATE == ST_IDLE) && valid && Hwrite |-> (NEXT_STATE == ST_WWAIT));"",
+""Assertion 3"": ""assert property ((PRESENT_STATE == ST_IDLE) && valid && !Hwrite |-> (NEXT_STATE == ST_READ));"",
+""Assertion 4"": ""assert property (((PRESENT_STATE == ST_IDLE) && (~valid)) |-> (NEXT_STATE == ST_IDLE));"",
+""Assertion 5"": ""assert property ((PRESENT_STATE == ST_WWAIT) && !valid |-> (NEXT_STATE == ST_WRITE));"",
 ""Assertion 6"": ""assert property (PRESENT_STATE == ST_WWAIT && valid |-> NEXT_STATE == ST_WRITEP);"",
-""Assertion 7"": ""assert property ( (PRESENT_STATE == ST_READ) |=> (NEXT_STATE == ST_RENABLE) );"",
-""Assertion 8"": ""assert property ( (PRESENT_STATE == ST_WRITE && ~valid) |=> (NEXT_STATE == ST_WENABLE) );"",
-""Assertion 9"": ""assert property (PRESENT_STATE == ST_WRITE && valid |=> NEXT_STATE == ST_WENABLE);"",
-""Assertion 10"": ""assert property (PRESENT_STATE == ST_WRITEP |-> NEXT_STATE == ST_WENABLEP);"",
-""Assertion 11"": ""assert property (   (PRESENT_STATE == ST_RENABLE && ~valid) |-> (NEXT_STATE == ST_IDLE) );"",
+""Assertion 7"": ""assert property (PRESENT_STATE == ST_READ |-> NEXT_STATE == ST_RENABLE);"",
+""Assertion 8"": ""assert property ((PRESENT_STATE == ST_WRITE) && ~valid |=> NEXT_STATE == ST_WENABLE);"",
+""Assertion 9"": ""assert property ((PRESENT_STATE == ST_WRITE && valid) |-> (NEXT_STATE == ST_WENABLEP));"",
+""Assertion 10"": ""assert property ((PRESENT_STATE == ST_WRITEP) |-> (NEXT_STATE == ST_WENABLEP));"",
+""Assertion 11"": ""assert property ((PRESENT_STATE == ST_RENABLE) && !valid |-> (NEXT_STATE == ST_IDLE));"",
 ""Assertion 12"": ""assert property ((PRESENT_STATE == ST_RENABLE) && valid && Hwrite |-> (NEXT_STATE == ST_WWAIT));"",
-""Assertion 13"": ""assert property ((PRESENT_STATE == ST_RENABLE) && valid && ~Hwrite |-> (NEXT_STATE == ST_READ));"",
-""Assertion 14"": ""assert property ( (PRESENT_STATE == ST_WENABLE && ~valid) -> (NEXT_STATE == ST_IDLE) );"",
-""Assertion 15"": ""assert property ( (PRESENT_STATE == ST_WENABLE) && valid && Hwrite |-> (NEXT_STATE == ST_WWAIT) );"",
-""Assertion 16"": ""assert property (PRESENT_STATE == ST_WENABLE && valid && ~Hwrite |-> NEXT_STATE == ST_READ);"",
-""Assertion 17"": ""assert property (PRESENT_STATE == ST_WENABLEP && ~valid && Hwritereg |-> NEXT_STATE == ST_WRITE);"",
-""Assertion 18"": ""assert property ((PRESENT_STATE == ST_WENABLEP && valid && Hwritereg) |=> (NEXT_STATE == ST_WRITEP));"",
-""Assertion 19"": ""assert property (PRESENT_STATE == ST_WENABLEP && ~Hwritereg |-> NEXT_STATE == ST_READ);""
+""Assertion 13"": ""assert property ((PRESENT_STATE == ST_RENABLE) && valid && ~Hwrite |-> NEXT_STATE == ST_READ);"",
+""Assertion 14"": ""assert property ((PRESENT_STATE == ST_WENABLE) && (~valid) |-> (NEXT_STATE == ST_IDLE));"",
+""Assertion 15"": ""assert property ((PRESENT_STATE == ST_WENABLE) && valid && Hwrite |-> (NEXT_STATE == ST_WWAIT));"",
+""Assertion 16"": ""assert property ((PRESENT_STATE == ST_WENABLE && valid && ~Hwrite) |=> (NEXT_STATE == ST_READ));"",
+""Assertion 17"": ""assert property ((PRESENT_STATE == ST_WENABLEP) && (~valid) && Hwritereg |-> (NEXT_STATE == ST_WRITE));"",
+""Assertion 18"": ""assert property (((PRESENT_STATE == ST_WENABLEP) && (valid && Hwritereg)) |-> (NEXT_STATE == ST_WRITEP));"",
+""Assertion 19"": ""assert property (PRESENT_STATE == ST_WENABLEP && ~Hwritereg |=> NEXT_STATE == ST_READ);""
 }"
 register,"module register
   #(
@@ -7616,8 +7616,8 @@ endmodule
 ""Assertion Explaination"": ""when enable signal is reset (0), output signal equals the last one clock cycle's output signal from the next clock cycle""
 }
 }","{
-""Assertion 1"": ""assert property (en |=> (out == $past(in)));"",
-""Assertion 2"": ""assert property (en == 0 |=> (out == $past(out)));""
+""Assertion 1"": ""assert property (en |-> (out == $past(in, 1)));"",
+""Assertion 2"": ""assert property (en == 0 |-> out == $past(out));""
 }"
 SEVEN,"module SEVEN #(parameter freq = 250, parameter CBITS = 8) (input clk, input rst, input [13:0] both7seg, output reg[6:0] segment);
 	reg [CBITS-1:0] cnt;
@@ -7679,8 +7679,8 @@ endmodule","{
   ""Assertion Explaination"": ""eventually, reset signal equals 1 or digit selection register equals 0""
 }
 }","{
-""Assertion 1"": ""assert property (eventually (rst == 1 || digit_select == 1));"",
-""Assertion 2"": ""assert property (eventually (rst == 1 || digit_select == 0));""
+""Assertion 1"": ""assert property (s_eventually (rst == 1 || digit_select == 1));"",
+""Assertion 2"": ""assert property (1 |-> s_eventually((rst == 1) || (digit_select == 0)));""
 }"
 arbiter,"//EE382M-Verification of Digital Systems
 //Lab 4 - Formal Property Verification
@@ -8266,22 +8266,22 @@ endmodule","{
     ""Assertion Explaination"": ""Property for checking the priority scheme that when the fourth bit of grant output is asserted and in the previous clock cycle the arbitration type selector signal was equal to 3, then in the previous clock cycle the fourth bit of request input signal must be asserted from the current clock cycle""
   }
 }","{
-""Assertion 1"": ""assert property (gnt[0] |=> (arb_type == 4'b0000) ##1 req[0]);"",
-""Assertion 2"": ""assert property (     (gnt[1] && arb_type == 4'b0000) |=>      (req[1] && !req[0]) );"",
-""Assertion 3"": ""assert property ( (r_gnt[2] && arb_type == 4'b0000) |=> (req[2] && (req[1] == 0) && (req[0] == 0)));"",
-""Assertion 4"": ""assert property (   gnt[3] |-> (arb_type == 4'b0000 && req[3] && !req[2] && !req[1] && !req[0]) );"",
-""Assertion 5"": ""assert property (gnt[0] && arb_type == 4'b0001 |=> (req[0] && !req[1]));"",
-""Assertion 6"": ""assert property (gnt[1] && arb_type == 4'b0001 |=> req[1]);"",
-""Assertion 7"": ""assert property (     (gnt[2] &&       $past(arb_type) == 3'b001 &&       $past(req[2]) &&       !$past(req[0]) &&       !$past(req[1])) |-> (!req[0] && !req[1]) );"",
-""Assertion 8"": ""assert property ( (r_gnt[3] && arb_type == 4'b0001) |=> (req[3] && !req[2] && !req[1]) );"",
-""Assertion 9"": ""assert property ( (r_gnt[0] && (arb_type == 3'b010)) |-> ##1 (req[0] && !req[2]) );"",
-""Assertion 10"": ""assert property (r_gnt[1] && arb_type == 3'b010 |=> req[2] && !req[1] && !req[0]);"",
-""Assertion 11"": ""assert property ( (r_gnt[2] && (arb_type == 3'b010)) |-> req[2].previous );"",
-""Assertion 12"": ""assert property ( (gnt[3] == 1'b1 && arb_type == 3'b010) |=> (req[3] == 1'b1) && (req[2] == 1'b0 && req[1] == 1'b0 && req[0] == 1'b0) );"",
-""Assertion 13"": ""assert property (     r_gnt[0] && arb_type == 3'b011 |-> ##1 (req[0] && !req[3]) );"",
-""Assertion 14"": ""assert property (     (gnt[1] == 1'b1 && arb_type == 3'b011) |=>      (req_prev[1] == 1'b1 && req[3] == 1'b0 && req[0] == 1'b0) );"",
-""Assertion 15"": ""assert property (gnt[2] [*] && arb_type == 3'b011 -> (req[2] && !req[3] && !req[1] && !req[0]));"",
-""Assertion 16"": ""assert property (arb_type.prev == 3 && gnt[3] |=> req[3].prev);""
+""Assertion 1"": ""assert property ((gnt[0] && ($past(arb_type) == 4'b0000)) |-> $past(req[0]));"",
+""Assertion 2"": ""assert property ((gnt[1] && ~gnt[0] && (prev_arbitration_type == 0)) |-> (prev_req[1] && ~prev_req[0]));"",
+""Assertion 3"": ""assert property (gnt[2] && (arb_type == 3'b000) |-> ##1 (req[2] && !req[1] && !req[0]));"",
+""Assertion 4"": ""assert property ((arb_type == 4'b0000 && req[3]) |-> (gnt[3] && !req[0] && !req[1] && !req[2]));"",
+""Assertion 5"": ""assert property (gnt[0] |-> ($past(arb_type) == 4'b0001 && $past(req[0]) && !$past(req[1])));"",
+""Assertion 6"": ""assert property (gnt[1] && ($past(arb_type) == 3'b001) |-> $past(req[1]));"",
+""Assertion 7"": ""assert property (gnt[2] && (arb_type == 4'b0001) |-> (req[2] && !req[0] && !req[1]));"",
+""Assertion 8"": ""assert property (gnt[3] && ($past(arb_type) == 4'b0001) |-> ($past(req[3]) && !req[2] && !req[1] && !req[0]));"",
+""Assertion 9"": ""assert property (gnt[0] |-> ($past(arb_type) == 2 && $past(req[0]) && !$past(req[2])));"",
+""Assertion 10"": ""assert property ( (arb_type == 2) |-> (gnt[2] |-> (req[2] && !req[3] && !req[0])) );"",
+""Assertion 11"": ""assert property (gnt[2] |-> ($past(arb_type) == 3'b010 && $past(req[2])));"",
+""Assertion 12"": ""assert property (gnt[3] && ($past(arb_type) == 2) |-> ($past(req[3]) && !req[2] && !req[1] && !req[0]));"",
+""Assertion 13"": ""assert property (gnt[0] && $past(arb_type == 4'b0011) |-> ($past(req[0]) && !req[3]));"",
+""Assertion 14"": ""assert property ((gnt[1] && ($past(arb_type[2:0]) == 3'b011)) |-> ($past(req[1]) && !req[3] && !req[0]));"",
+""Assertion 15"": ""assert property (gnt[2] && arb_type == 4'b0011 |-> (req[2] && !req[3] && !req[1] && !req[0]));"",
+""Assertion 16"": ""assert property (gnt[3] && ($past(arb_type) == 3) |-> $past(req[3]));""
 }"
 simple_pipeline,"// Greg Stitt
 // University of Florida
@@ -8408,8 +8408,8 @@ endmodule
     ""Assertion Explaination"": ""when the integer register used for counting cycles equals the cycle latency, then the valid output signal equals the valid input signal LATENCY cycles in the past from the current clock cycle""
   }
 }","{
-""Assertion 1"": ""assert property ( (count < LATENCY) |-> (valid_out == 0) );"",
-""Assertion 2"": ""assert property (count == LATENCY |-> valid_out == valid_delay_r[LATENCY - 1]);""
+""Assertion 1"": ""assert property ((count < LATENCY) |-> (valid_out == 0));"",
+""Assertion 2"": ""assert property (count == LATENCY |-> valid_out == $past(valid_in, LATENCY));""
 }"
 lcd,"module lcd #(parameter clk_freq = 1, parameter CBITS = 9) (input rst, input clk, input [6:0] in_data, input lcd_enable, input [9:0] lcd_bus, output reg e, output reg[7:0] lcd_data, output reg rw, output reg rs, output reg busy);
 	reg [CBITS - 1:0] cnt;			// 0 to 500*clk_freg
@@ -8527,7 +8527,7 @@ endmodule","{
     ""Assertion Explaination"": ""eventually, LCD enable control signal equals 0 or internal state variable equals 2""
   }
 }","{
-""Assertion 1"": ""assert property (lcd_enable == 0 || state == 2 |=> next (lcd_enable == 0 || state == 2));""
+""Assertion 1"": ""assert property (1'b1 |-> ((lcd_enable == 0) || (state == 2)) [*0:$]);""
 }"
 Parallel_In_Serial_Out_Shift_Reg,"module Parallel_In_Serial_Out_Shift_Reg #(
 	parameter DATA_WIDTH = 16
@@ -8592,7 +8592,7 @@ endmodule","{
     ""Assertion Explaination"": ""when valid flag register is reset (0), valid flag register is set (1) and the first bit of the register that captures and shifts the input data equals the output signal""
   }
 }","{
-""Assertion 1"": ""assert property ( (v_f_q == 0) |-> ((v_f_next == 1) && (data_q[0] == dout)) );""
+""Assertion 1"": ""assert property (~v_f_q && v_f_next |-> (din_f_q[0] == dout));""
 }"
 fifo,"module fifo
   #(
@@ -9117,17 +9117,17 @@ endmodule","{
     ""Assertion Explaination"": ""when pipeline flush signal is true or both save instruction condition is reset (0) and pipeline freeze is reset (0), then err_saved equals 3'b000 from the next clock cycle""
   }
 }","{
-""Assertion 1"": ""assert property (     no_more_dslot |->      (except_itlbmiss == 1'b0) &&      (except_immufault == 1'b0) &&      (except_ibuserr == 1'b0) );"",
-""Assertion 2"": ""assert property (if_flushpipe == 0 && save_insn |=> (saved == 1));"",
-""Assertion 3"": ""assert property ( (if_flushpipe || (!save_insn && !if_freeze)) |-> (saved == 0) );"",
-""Assertion 4"": ""assert property (if_flushpipe == 1'b0 && save_insn && icpu_err_i == 1'b0 |=> insn_saved == icpu_dat_i);"",
-""Assertion 5"": ""assert property (     (if_flushpipe || (!save_insn && !if_freeze && !icpu_err_i)) |=>      (insn_saved == {6'b000101, 26'h041_0000}) );"",
-""Assertion 6"": ""assert property ((!if_flushpipe && (save_insn || !if_freeze)) |=> (addr_saved == {icpu_adr_i[31:2], 2'b00}));"",
-""Assertion 7"": ""assert property (if_flushpipe |=> (addr_saved == 32'h00000000) throughout (!if_flushpipe));"",
-""Assertion 8"": ""assert property (if_flushpipe == 0 && save_insn |-> (err_saved[0] == (icpu_err_i[$past] && (icpu_tag_i[$past] == 4'hd))));"",
-""Assertion 9"": ""assert property (if_flushpipe == 1'b0 && save_insn |=>                   (err_saved[1] == (icpu_err_i_1 && (icpu_tag_i_1 == 4'hc))));"",
-""Assertion 10"": ""assert property (     (if_flushpipe == 1'b0 && save_insn) |=> (err_saved[2] == (icpu_err_i[$past] && (icpu_tag_i[$past] == 4'hb))) );"",
-""Assertion 11"": ""assert property (if_flushpipe || (!save_insn && !if_freeze) |=> (err_saved == 3'b000));""
+""Assertion 1"": ""assert property (no_more_dslot |-> (except_itlbmiss == 1'b0 && except_immufault == 1'b0 && except_ibuserr == 1'b0));"",
+""Assertion 2"": ""assert property ((if_flushpipe == 0 && save_insn) |=> (saved == 1));"",
+""Assertion 3"": ""assert property ((if_flushpipe || (!save_insn && !if_freeze)) |=> (saved == 1'b0));"",
+""Assertion 4"": ""assert property (!if_flushpipe && save_insn && !icpu_err_i |-> (insn_saved == $past(icpu_dat_i, 1)));"",
+""Assertion 5"": ""assert property ((if_flushpipe || (!save_insn && !if_freeze && !icpu_err_i)) |-> (insn_saved == {6'b000101, 26'h041_0000}));"",
+""Assertion 6"": ""assert property (if_flushpipe == 0 && (save_insn || !if_freeze) |=> (addr_saved == {icpu_adr_i[31:2], 2'b00}));"",
+""Assertion 7"": ""assert property (if_flushpipe |-> (addr_saved == 32'h00000000));"",
+""Assertion 8"": ""assert property (!if_flushpipe && save_insn |=> (err_saved[0] == (icpu_err_i && (icpu_tag_i == 4'hd))));"",
+""Assertion 9"": ""assert property ((!if_flushpipe && save_insn) |=> (err_saved[1] == (icpu_err_i && ($past(icpu_tag_i) == 4'hc))));"",
+""Assertion 10"": ""assert property (!if_flushpipe && save_insn |-> (err_saved[2] == (icpu_err_i && (icpu_tag_i == 4'hb))));"",
+""Assertion 11"": ""assert property ((if_flushpipe || (save_insn == 0 && if_freeze == 0)) |=> (err_saved == 3'b000));""
 }"
 uart_transmit,"module uart_transmit #(localparam d_width = 4, localparam c_width = 3) (input clk, input rst, input tx_ena, input [d_width - 1: 0] tx_data, output reg tx, output reg tx_busy);
 	reg [c_width-1:0] tx_cnt;
@@ -9183,7 +9183,7 @@ endmodule","{
     ""Assertion Explaination"": ""eventually, reset signal equals 1 or transmitter state equals 0""
   }
 }","{
-""Assertion 1"": ""assert property ( (rst == 1 || tx_state == 0) |=> eventual (rst == 1 || tx_state == 0) );""
+""Assertion 1"": ""assert property ((rst == 1 || tx_state == 0) |=> ##[0:$] (rst == 1 || tx_state == 0));""
 }"
 ff,"module ff
   (
@@ -9234,8 +9234,8 @@ endmodule
     ""Assertion Explaination"": ""check to make sure that when the enable isn't asserted, the output doesn't change from the next clock cycle""
   }
 }","{
-""Assertion 1"": ""assert property (en |=> (out == $past(in)));"",
-""Assertion 2"": ""assert property (en == 0 |-> $stable(out));""
+""Assertion 1"": ""assert property (en |-> (out == $past(in)));"",
+""Assertion 2"": ""assert property (!en |-> $stable(out));""
 }"
 BusArbiter,"parameter N_MASTERS = 3;
 typedef bit [N_MASTERS-1:0] arb_vector;
@@ -9611,15 +9611,15 @@ endmodule","{
   }
 }","{
 ""Assertion 1"": ""assert property (bus_grant[0] + bus_grant[1] + bus_grant[2] < 2);"",
-""Assertion 2"": ""assert property (     bus_grant[0] == 1 |=> (bus_grant[1] == 0 && bus_grant[2] == 0) );"",
-""Assertion 3"": ""assert property (bus_grant[1] |-> (bus_grant[0] == 0 && bus_grant[2] == 0));"",
-""Assertion 4"": ""assert property (bus_grant[2] |-> (bus_grant[1] == 0 && bus_grant[0] == 0));"",
-""Assertion 5"": ""assert property ( (bus_grant != NO_GRANT && !bus_ack) |=> ##1 (bus_grant == $past(bus_grant)) );"",
-""Assertion 6"": ""assert property (   ((bus_req[0] && (bus_grant == NO_GRANT)) || (bus_ack && bus_req[0])) |->    (bus_grant[0] && !bus_grant[1] && !bus_grant[2]) );"",
-""Assertion 7"": ""assert property (     (bus_req[1] && !bus_req[0] && bus_grant == NO_GRANT) ||      (bus_ack && bus_req[1] && !bus_req[0]) |=>      (bus_grant[1] && !bus_grant[0] && !bus_grant[2]) );"",
-""Assertion 8"": ""assert property (     ((bus_req[2] && !bus_req[1] && !bus_req[0] && bus_grant == NO_GRANT) ||       (bus_ack && bus_req[2] && !bus_req[1] && !bus_req[0]))      |=> (bus_grant[2] && !bus_grant[1] && !bus_grant[0]) );"",
+""Assertion 2"": ""assert property ((bus_grant[0] == 1'b1) |-> ((bus_grant[1] == 1'b0) && (bus_grant[2] == 1'b0)));"",
+""Assertion 3"": ""assert property (bus_grant[1] == 1 |-> (bus_grant[0] == 0 && bus_grant[2] == 0));"",
+""Assertion 4"": ""assert property (bus_grant[2] == 1'b1 |-> bus_grant[1] == 1'b0 && bus_grant[0] == 1'b0);"",
+""Assertion 5"": ""assert property (bus_grant != NO_GRANT && !bus_ack |-> $stable(bus_grant));"",
+""Assertion 6"": ""assert property ((bus_req[0] && bus_grant == NO_GRANT) || (bus_ack && bus_req[0]) |=> ##1 (bus_grant[0] && !bus_grant[1] && !bus_grant[2]));"",
+""Assertion 7"": ""assert property (((bus_req[1] && !bus_req[0] && bus_grant == NO_GRANT) || (bus_ack && bus_req[1] && !bus_req[0])) |=> (bus_grant[1] && !bus_grant[0] && !bus_grant[2]));"",
+""Assertion 8"": ""assert property ((bus_req[2] && !bus_req[1] && !bus_req[0] && (bus_grant == NO_GRANT)) || (bus_ack && bus_req[2] && !bus_req[1] && !bus_req[0])) |=> (bus_grant[2] && !bus_grant[1] && !bus_grant[0]));"",
 ""Assertion 9"": ""assert property ($rose(bus_grant[1]) |-> ($past(bus_req[1]) && !$past(bus_req[0])));"",
-""Assertion 10"": ""assert property (     $rose(bus_grant[2]) |=>      (bus_req[2] && !bus_req[1] && !bus_req[0]) );""
+""Assertion 10"": ""assert property (bus_grant[2] |=> (bus_req[2] && !bus_req[1] && !bus_req[0]));""
 }"
 eth_rxstatem,"//////////////////////////////////////////////////////////////////////
 ////                                                              ////
@@ -10630,40 +10630,40 @@ endmodule","{
     ""Assertion Explaination"": ""when the receive data valid signal is equal to 0, then a register bit representing the idle state is equal to 1 from the next clock cycle""
   }
 }","{
-""Assertion 1"": ""assert property (StartPreamble |=> ##1 StatePreamble);"",
-""Assertion 2"": ""assert property (StartDrop |-> ##1 (StatePreamble == 0));"",
-""Assertion 3"": ""assert property ((StateSFD == 1'b1) |-> (StatePreamble == 1'b0) throughout (StateSFD == 1'b1));"",
-""Assertion 4"": ""assert property (StateData[0] == 1'b1 |=> StatePreamble == 1'b0);"",
-""Assertion 5"": ""assert property (StateDrop == 1'b1 |=> StatePreamble == 1'b0);"",
-""Assertion 6"": ""assert property (     (StateData1 == 1'b1) |-> (StatePreamble == 1'b0) );"",
-""Assertion 7"": ""assert property ((StatePreamble == 1'b1 && MRxDEq5 == 1'b0 && MRxDV == 1'b1) |=> (StatePreamble == 1'b1));"",
-""Assertion 8"": ""assert property (MRxDEq5 == 1'b1 |=> (StatePreamble == 1'b0));"",
-""Assertion 9"": ""assert property (MRxDV == 1'b0 |=> (StatePreamble == 1'b0));"",
-""Assertion 10"": ""assert property (StartSFD == 1'b1 |=> StateSFD == 1'b1);"",
-""Assertion 11"": ""assert property (StartIdle |=> (StateSFD == 1'b0));"",
-""Assertion 12"": ""assert property (StartDrop == 1 |-> StateSFD == 0);"",
-""Assertion 13"": ""assert property (StartData0 == 1'b1 |=> (StateSFD == 1'b0));"",
-""Assertion 14"": ""assert property (StartPreamble == 1'b1 |=> (StateSFD == 1'b0));"",
-""Assertion 15"": ""assert property (StateSFD == 1'b1 && StartIdle == 1'b0 && MRxDEqD == 1'b0 |=> StateSFD[1:0] == 2'b10);"",
-""Assertion 16"": ""assert property (StateData[0] == 1'b1 |=> StateSFD == 1'b0);"",
-""Assertion 17"": ""assert property (StateDrop == 1'b1 |=> StateSFD == 1'b0);"",
-""Assertion 18"": ""assert property (MRxDEq5 == 1'b0 && StatePreamble == 1'b1 |=> StateSFD == 1'b0);"",
-""Assertion 19"": ""assert property (MRxDV == 1'b0 |=> StateSFD == 1'b0);"",
+""Assertion 1"": ""assert property (StartPreamble == 1 |-> ##1 (StatePreamble == 1));"",
+""Assertion 2"": ""assert property (StartDrop |-> !StatePreamble);"",
+""Assertion 3"": ""assert property ((StateSFD == 1'b1) |-> (StatePreamble == 1'b0));"",
+""Assertion 4"": ""assert property (StateData[0] |=> !StatePreamble);"",
+""Assertion 5"": ""assert property (StateDrop |-> !StatePreamble);"",
+""Assertion 6"": ""assert property (StateData1 == 1'b1 |-> StatePreamble == 1'b0);"",
+""Assertion 7"": ""assert property (StatePreamble == 1'b1 && MRxDEq5 == 1'b0 && MRxDV == 1'b1 |-> StatePreamble == 1'b1);"",
+""Assertion 8"": ""assert property (MRxDEq5 |-> (StatePreamble == 1'b0));"",
+""Assertion 9"": ""assert property (!MRxDV |-> ##1 (StatePreamble == 1'b0));"",
+""Assertion 10"": ""assert property (StartSFD |=> StateSFD);"",
+""Assertion 11"": ""assert property (StartIdle == 1 |-> StateSFD == 0);"",
+""Assertion 12"": ""assert property (StartDrop |-> (StateSFD == 1'b0));"",
+""Assertion 13"": ""assert property (StartData0 == 1 |-> StateSFD == 0);"",
+""Assertion 14"": ""assert property (StartPreamble == 1 |-> StateSFD == 0);"",
+""Assertion 15"": ""assert property ((StateSFD == 1'b1) && (StartIdle == 1'b0) && (MRxDEqD == 1'b0) |-> (StateSFD == 1'b1));"",
+""Assertion 16"": ""assert property (StateData[0] == 1 |-> ##1 (StateSFD == 0));"",
+""Assertion 17"": ""assert property (StateDrop |-> !StateSFD);"",
+""Assertion 18"": ""assert property (MRxDEq5 == 1'b0 && StatePreamble == 1'b1 |-> StateSFD == 1'b0);"",
+""Assertion 19"": ""assert property (!MRxDV |=> !StateSFD);"",
 ""Assertion 20"": ""assert property (StartIdle |-> !StateDrop);"",
-""Assertion 21"": ""assert property (StartDrop |-> (StateDrop == 1));"",
-""Assertion 22"": ""assert property (StateDrop == 1'b1 && StartIdle == 1'b0 |=> StateDrop == 1'b1);"",
-""Assertion 23"": ""assert property (StateSFD == 1'b1 && StartDrop == 1'b0 |=> StateDrop == 1'b0);"",
-""Assertion 24"": ""assert property (StateData[0] == 1'b1 && StartDrop == 1'b0 |=> StateDrop == 1'b0);"",
-""Assertion 25"": ""assert property (StatePreamble == 1'b1 |=> StateDrop == 1'b0);"",
-""Assertion 26"": ""assert property (StateData1 == 1'b1 |=> StateDrop == 1'b0);"",
-""Assertion 27"": ""assert property (MRxDV == 1'b0 |=> StateDrop == 1'b0);"",
-""Assertion 28"": ""assert property (Transmitting == 0 && StateIdle == 1 |=> StateDrop == 0);"",
+""Assertion 21"": ""assert property (StartDrop |-> StateDrop);"",
+""Assertion 22"": ""assert property (StateDrop && !StartIdle |=> StateDrop);"",
+""Assertion 23"": ""assert property ((StateSFD == 1 && StartDrop == 0) |-> (StateDrop == 0));"",
+""Assertion 24"": ""assert property ((StateData[0] == 1) && (StartDrop == 0) |-> (StateDrop == 0));"",
+""Assertion 25"": ""assert property (StatePreamble |-> !StateDrop);"",
+""Assertion 26"": ""assert property ((StateData1 == 1) |-> (StateDrop == 0));"",
+""Assertion 27"": ""assert property (~MRxDV |-> !StateDrop);"",
+""Assertion 28"": ""assert property ((~Transmitting && StateIdle) |=> !StateDrop);"",
 ""Assertion 29"": ""assert property (StartIdle |=> StateIdle);"",
-""Assertion 30"": ""assert property (StartDrop |=> (!StateIdle throughout [1:]));"",
-""Assertion 31"": ""assert property (StartSFD |=> (StateIdle == 0));"",
-""Assertion 32"": ""assert property (StartPreamble |=> !StateIdle);"",
-""Assertion 33"": ""assert property (MRxDV == 1'b1 |=> (StateIdle == 1'b0));"",
-""Assertion 34"": ""assert property (MRxDV == 1'b0 |=> StateIdle == 1'b1);""
+""Assertion 30"": ""assert property (StartDrop |-> !StateIdle);"",
+""Assertion 31"": ""assert property (StartSFD |-> !StateIdle);"",
+""Assertion 32"": ""assert property (StartPreamble == 1 |-> StateIdle == 0);"",
+""Assertion 33"": ""assert property (MRxDV && StateIdle |=> !StateIdle);"",
+""Assertion 34"": ""assert property (~MRxDV |-> StateIdle);""
 }"
 Gray_To_Binary,"module Gray_To_Binary #(
 	parameter DATA_WIDTH = 3
@@ -10704,7 +10704,7 @@ endmodule","{
     ""Assertion Explaination"": ""convert the output binary code to Gray code and it should equal the input Gray code""
   }
 }","{
-""Assertion 1"": ""assert property (gray == (bin ^ (bin >> 1)));""
+""Assertion 1"": ""assert property (({1'b0, bin[DATA_WIDTH-1:1]} ^ bin) == gray);""
 }"
 delay,"// Greg Stitt
 // University of Florida
@@ -10939,9 +10939,9 @@ endmodule
     ""Assertion Explaination"": ""when the enable signal is reset (0), then the output delayed signal remains unchanged from the next clock cycle""
   }
 }","{
-""Assertion 1"": ""assert property (count < CYCLES || (count >= CYCLES && out === regs[count - CYCLES] && en));"",
+""Assertion 1"": ""assert property (   (count < CYCLES) || (enable && (out == regs[CYCLES])) );"",
 ""Assertion 2"": ""assert property ((count == CYCLES) || (out == RESET_VALUE));"",
-""Assertion 3"": ""assert property (en == 1'b0 |=> out == $past(out));""
+""Assertion 3"": ""assert property (en == 1'b0 |-> $stable(out));""
 }"
 arb2,"module arb2(clk, rst, req1, req2, gnt1, gnt2);
 
@@ -11113,14 +11113,14 @@ endmodule
     ""Assertion Explaination"": ""when request signal from client 2 equals 1 and request signal from client 1 equals 0, then grant signal for client 2 equals 1 from the current clock cycle""
   }
 }","{
-""Assertion 1"": ""assert property (state == 1 && req2 == 1 |-> gnt1 == 0);"",
-""Assertion 2"": ""assert property (req1 == 1 && state == 0 |-> gnt1 == 1);"",
-""Assertion 3"": ""assert property (req1 == 0 -> gnt1 == 0);"",
-""Assertion 4"": ""assert property ((req1 == 1'b1) && (req2 == 1'b0) |-> (gnt1 == 1'b1));"",
-""Assertion 5"": ""assert property (req1 == 1 && state == 0 |-> gnt2 == 0);"",
-""Assertion 6"": ""assert property (req2 == 1 && state == 1 |-> gnt2 == 1);"",
+""Assertion 1"": ""assert property (state && req2 |-> !gnt1);"",
+""Assertion 2"": ""assert property (req1 && !state |-> gnt1);"",
+""Assertion 3"": ""assert property ((req1 == 0) |-> (gnt1 == 0));"",
+""Assertion 4"": ""assert property (req1 && !req2 |-> gnt1);"",
+""Assertion 5"": ""assert property ( req1 && !state |-> !gnt2 );"",
+""Assertion 6"": ""assert property (req2 && state |-> gnt2);"",
 ""Assertion 7"": ""assert property (req2 == 0 |-> gnt2 == 0);"",
-""Assertion 8"": ""assert property (req2 && !req1 |=> gnt2);""
+""Assertion 8"": ""assert property (req2 && !req1 |-> gnt2);""
 }"
 Edge_Detector,"module Edge_Detector (
 	input  clk,
@@ -11169,7 +11169,7 @@ endmodule","{
     ""Assertion Explaination"": ""the output signal indicates whether a rising edge can be detected on the delayed version of the input signal""
   }
 }","{
-""Assertion 1"": ""assert property ((!din[1] && din[0]) |=> (din[1] && dout));""
+""Assertion 1"": ""assert property (din && !edge_seen_q |-> dout);""
 }"
 VGA,"module VGA #(localparam  size = 1, localparam h_bits = 7, localparam v_bits = 5) (input clk, input rst, output reg disp_ena, output reg n_blank, output reg n_sync, output reg [h_bits-1:0] col, output reg [v_bits-1:0] row);
 
@@ -11254,7 +11254,7 @@ endmodule
   ""Assertion Explaination"": ""eventually, the reset signal equal 1 or the display enable signal equals 1""
 }
 }","{
-""Assertion 1"": ""assert property (F (rst == 1 || disp_ena == 1));""
+""Assertion 1"": ""assert property (s_eventually ((rst == 1) or (disp_ena == 1)));""
 }"
 simple_router,"module simple_router #(
 	parameter DATA_WIDTH = 32
@@ -11392,10 +11392,10 @@ endmodule","{
   }
 }","{
 ""Assertion 1"": ""assert property (din_en || (dout0 == 0 && dout1 == 0 && dout2 == 0 && dout3 == 0));"",
-""Assertion 2"": ""assert property (din_en && (addr == 2'd0) |-> (dout0 == din) && (dout1 == 0) && (dout2 == 0) && (dout3 == 0));"",
+""Assertion 2"": ""assert property (din_en && (addr == 2'd0) |-> ((dout0 == din) && (dout1 == 2'd0) && (dout2 == 2'd0) && (dout3 == 2'd0)));"",
 ""Assertion 3"": ""assert property (din_en && (addr == 2'd1) |-> (dout1 == din && dout0 == 0 && dout2 == 0 && dout3 == 0));"",
-""Assertion 4"": ""assert property (din_en && (addr == 2'd2) |-> (dout2 == din) && (dout0 == 0) && (dout1 == 0) && (dout3 == 0));"",
-""Assertion 5"": ""assert property (din_en && (addr == 2'd3) |-> ((dout3 == din) && (dout0 == 0) && (dout1 == 0) && (dout2 == 0)));""
+""Assertion 4"": ""assert property ((din_en && (addr == 2'd2)) |-> ((dout2 == din) && (dout0 == {DATA_WIDTH{1'b0}}) && (dout1 == {DATA_WIDTH{1'b0}}) && (dout3 == {DATA_WIDTH{1'b0}})));"",
+""Assertion 5"": ""assert property ((din_en && (addr == 2'd3)) |-> ((dout3 == din) && (dout0 == 0) && (dout1 == 0) && (dout2 == 0)));""
 }"
 a25_wishbone,"//////////////////////////////////////////////////////////////////
 //                                                              //
@@ -12012,12 +12012,12 @@ endmodule
     ""Assertion Explaination"": ""When the wishbone bus state equals WB_WAIT_ACK and the extra write flag is not set and the acknowledgement signal is asserted, then the wishbone bus state equals WB_IDLE from the next clock cycle""
   }
 }","{
-""Assertion 1"": ""assert property (wishbone_st == WB_IDLE |=> (wishbone_st == WB_IDLE || wishbone_st == WB_BURST1 || wishbone_st == WB_WAIT_ACK));"",
+""Assertion 1"": ""assert property ((wishbone_st == WB_IDLE) |=> (wishbone_st == WB_IDLE || wishbone_st == WB_BURST1 || wishbone_st == WB_WAIT_ACK));"",
 ""Assertion 2"": ""assert property (wishbone_st == WB_BURST1 && i_wb_ack |-> (wishbone_st == WB_BURST2));"",
-""Assertion 3"": ""assert property (     (wishbone_st == WB_BURST2 && i_wb_ack) |=>      (wishbone_st == WB_BURST3) );"",
-""Assertion 4"": ""assert property ( (wishbone_st == WB_BURST3 && i_wb_ack) |=> (wishbone_st == WB_WAIT_ACK) );"",
-""Assertion 5"": ""assert property (wishbone_st == WB_WAIT_ACK && (extra_write_r || !i_wb_ack) |=> (wishbone_st == WB_WAIT_ACK));"",
-""Assertion 6"": ""assert property (wishbone_st == WB_WAIT_ACK && !extra_write_r && i_wb_ack |=> (wishbone_st == WB_IDLE));""
+""Assertion 3"": ""assert property (wishbone_st == WB_BURST2 && i_wb_ack |-> wishbone_st == WB_BURST3);"",
+""Assertion 4"": ""assert property (wishbone_st == WB_BURST3 && i_wb_ack |-> (wishbone_st == WB_WAIT_ACK));"",
+""Assertion 5"": ""assert property ((wishbone_st == WB_WAIT_ACK) && (extra_write_r || !i_wb_ack) |-> (wishbone_st == WB_WAIT_ACK));"",
+""Assertion 6"": ""assert property (wishbone_st == WB_WAIT_ACK && !extra_write_r && i_wb_ack |-> wishbone_st == WB_IDLE);""
 }"
 second_largest,"module second_largest #(parameter
   DATA_WIDTH = 32
@@ -12098,7 +12098,7 @@ endmodule","{
     ""Assertion Explaination"": ""the maximum value held equals 0 or the maximum value held is greater-than the second largest value held""
   }
 }","{
-""Assertion 1"": ""assert property (max_q == 0 || max_q > max2_q);""
+""Assertion 1"": ""assert property ((max_q == 0) || (max_q > max2_q));""
 }"
 reversing_bits,"module reversing_bits #(
 	parameter DATA_WIDTH=3
@@ -13782,18 +13782,18 @@ endmodule","{
     ""Assertion Explaination"": ""when the freeze signal for the ID stage is reset (0) and the opcode field of the instruction in the IF stage equals the SFXX opcode `OR1200_OR32_SFXX, then the signal controlling immediate value selection equals 0 from the next clock cycle""
   }
 }","{
-""Assertion 1"": ""assert property (ex_freeze == 1'b0 && ex_delayslot_dsi == 1'b1 && ex_delayslot_nop == 1'b0 |=> (ex_delayslot_nop == 1'b0 && ex_delayslot_dsi == 1'b0));"",
-""Assertion 2"": ""assert property ((!ex_freeze && (id_freeze || ex_flushpipe)) |=> (ex_mac_op == 0));"",
-""Assertion 3"": ""assert property (id_flushpipe |=> id_insn == {`OR1200_OR32_NOP, 26'h0410000});"",
-""Assertion 4"": ""assert property ((!ex_freeze && id_freeze || ex_flushpipe) |=> (ex_insn == {`OR1200_OR32_NOP, 26'h041_0000}));"",
-""Assertion 5"": ""assert property (id_freeze == 0 && if_insn[31:26] == `OR1200_OR32_JALR ->> (sel_imm == 0));"",
-""Assertion 6"": ""assert property (     (id_freeze == 0 && if_insn[31:26] == `OR1200_OR32_JR) |=> (sel_imm == 0) );"",
-""Assertion 7"": ""assert property (     (id_freeze == 1'b0 && if_insn[31:26] == `OR1200_OR32_RFE) |=> (sel_imm == 1'b0) );"",
-""Assertion 8"": ""assert property (     id_freeze == 1'b0 && if_insn[31:26] == `OR1200_OR32_MFSPR |=> (sel_imm == 1'b0) );"",
-""Assertion 9"": ""assert property (   (id_freeze == 1'b0 && if_insn[31:26] == `OR1200_OR32_MTSPR) |=> (sel_imm == 1'b0) );"",
-""Assertion 10"": ""assert property ((!id_freeze && (if_insn[31:26] == `OR1200_OR32_XSYNC)) |=> (sel_imm == 0));"",
-""Assertion 11"": ""assert property ( (id_freeze == 0 && if_insn[31:26] == `OR1200_OR32_SW) throughout (sel_imm == 0) );"",
-""Assertion 12"": ""assert property ((!id_freeze && (if_insn[31:26] == `OR1200_OR32_SB)) |=> (sel_imm == 1'b0));"",
-""Assertion 13"": ""assert property (id_freeze == 0 && if_insn[31:26] == `OR1200_OR32_ALU |=> (sel_imm == 1'b0));"",
-""Assertion 14"": ""assert property (id_freeze == 1'b0 && (if_insn[31:26] == `OR1200_OR32_SFXX) |-> (sel_imm == 1'b0));""
+""Assertion 1"": ""assert property ((!ex_freeze && ex_delayslot_dsi && !ex_delayslot_nop) |=> (ex_delayslot_nop === 1'b0 && ex_delayslot_dsi === 1'b0));"",
+""Assertion 2"": ""assert property ((ex_freeze == 0) && (id_freeze == 1 || ex_flushpipe == 1) |-> (ex_macrc_op == 0));"",
+""Assertion 3"": ""assert property (id_flushpipe |=> (id_insn == {`OR1200_OR32_NOP, 26'h041_0000}));"",
+""Assertion 4"": ""assert property (!ex_freeze && (id_freeze || ex_flushpipe) |-> (ex_insn == {`OR1200_OR32_NOP, 26'h041_0000}));"",
+""Assertion 5"": ""assert property ((id_freeze == 0) && (if_insn[31:26] == `OR1200_OR32_JALR) |-> ##1 (sel_imm == 0));"",
+""Assertion 6"": ""assert property (!id_freeze && (if_insn[31:26] == `OR1200_OR32_JR) |-> !sel_imm);"",
+""Assertion 7"": ""assert property (!id_freeze && (if_insn[31:26] == `OR1200_OR32_RFE) |=> (sel_imm == 0));"",
+""Assertion 8"": ""assert property (!id_freeze && (if_insn[31:26] == `OR1200_OR32_MFSPR) |=> (sel_imm == 1'b0));"",
+""Assertion 9"": ""assert property ((id_freeze == 1'b0) && (if_insn[31:26] == `OR1200_OR32_MTSPR) |-> (sel_imm == 1'b0));"",
+""Assertion 10"": ""assert property (!id_freeze && (if_insn[31:26] == `OR1200_OR32_XSYNC) |=> (sel_imm == 0));"",
+""Assertion 11"": ""assert property (id_freeze == 0 && if_insn[31:26] == `OR1200_OR32_SW |-> (sel_imm == 0));"",
+""Assertion 12"": ""assert property ((id_freeze == 0) && (if_insn[31:26] == `OR1200_OR32_SB) |-> (sel_imm == 0));"",
+""Assertion 13"": ""assert property (id_freeze == 0 && if_insn[31:26] == `OR1200_OR32_ALU |-> sel_imm == 0);"",
+""Assertion 14"": ""assert property ((!id_freeze && (if_insn[31:26] == `OR1200_OR32_SFXX)) |=> (sel_imm == 1'b0));""
 }"

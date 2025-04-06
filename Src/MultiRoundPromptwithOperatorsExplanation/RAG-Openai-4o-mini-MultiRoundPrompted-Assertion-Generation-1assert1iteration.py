@@ -13,6 +13,7 @@ from langchain.chains.combine_documents import create_stuff_documents_chain
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_openai import ChatOpenAI
 from openai import OpenAI
+from extract_keywords import *
 
 from RAG_Database_New import *
 
@@ -92,6 +93,7 @@ system_prompt = (
     "You are a helpful bot that generate the assertion satisfying some requirements for a given verilog code."
     "Use the following pieces of retrieved context to answer the question. "
     "\n\n"
+    "{keywords_explaination}"
     "{context}"
 )
 prompt = ChatPromptTemplate.from_messages(
@@ -148,7 +150,7 @@ rag_chain_checker = create_retrieval_chain(retriever,question_answer_chain_check
 question_answer_chain_explain = create_stuff_documents_chain(llm,prompt_explain)
 rag_chain_explain = create_retrieval_chain(retriever,question_answer_chain_explain)
 
-results = retriever.invoke("Get relevant context about `[->2]`.")
+results = retriever.invoke("in the past clock cycle.")
 
 # results
 
@@ -162,9 +164,9 @@ with open(f'Results/RAG-Openai-4o-mini-Prompted-Assertion-Generation-Results-{PD
     for folder in os.listdir("Evaluation/Dataset/"):
         if Excute_Folder != 'ALL_DESIGNS' and Excute_Folder not in folder:
             continue
-        # if folder in ["Ripple_Carry_Adder", "or1200_operandmuxes", "gray", "Flip_Flop_Array", "PSGBusArb", "apb", "host_interface", "control_unit", "Programmable_Sequence_Detector", "PWM", "module_i2c", "delay2", "simple_req_ack", "Gray_Code_Counter", "uartTrans", "i2c", "uartRec", "APB_FSM_Controller", "register", "SEVEN"]:
+        # if folder in ["Ripple_Carry_Adder", "or1200_operandmuxes", "gray", "Flip_Flop_Array", "PSGBusArb", "apb", "host_interface", "control_unit", "Programmable_Sequence_Detector", "PWM", "module_i2c", "delay2", "simple_req_ack", "Gray_Code_Counter"]:
         #     continue
-        # folder = "SEVEN"
+        folder = "arbiter"
         folder_path = os.path.join("Evaluation/Dataset/",folder)
         if os.path.isdir(folder_path):
             with open(folder_path+"/"+folder+".sv","r") as file:
@@ -186,10 +188,20 @@ with open(f'Results/RAG-Openai-4o-mini-Prompted-Assertion-Generation-Results-{PD
                 
                 assertion_format = f"assert property (ONLY logical expression WITHOUT clock signal condition @(posedge clock) and WITHOUT disable condition disable iff(...));"
                 
+                keywords = extract_keywords(explanation)
+                extract_operators_explanations = extract_related_operators_of_keyword(keywords)
+                
+                checking_str = ""
+                for op_explanation in extract_operators_explanations:
+                    checking_str += f"{op_explanation}\n\n"
+                    retrieved_doc = retriever.invoke(f"{op_explanation}")                    
+                    for doc in retrieved_doc:
+                        checking_str += doc.page_content + "\n\n"
+                    checking_str += "\n"    
 
                 prompt = f"Given Verilog code snippet as below: \n{code}\n Please generate such a systemverilog assertion for it following the description:{explanation}. Ensure the syntax correctness and the used signals should be from the verilog code.\nThe output format should STRICTLY follow :\n{assertion_format}\nWITHOUT other things."
 
-                llm_result = rag_chain.invoke({"code":code,"input":explanation,"assertion_format":assertion_format})
+                llm_result = rag_chain.invoke({"keywords_explaination": checking_str, "code":code,"input":explanation,"assertion_format":assertion_format})
                 llm_response = llm_result["answer"]
                 
                 # completion = client.chat.completions.create(
