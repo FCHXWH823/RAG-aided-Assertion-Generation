@@ -60,6 +60,22 @@ def extract_keywords(nl_sva):
     parsed = parse_numbered_output(completion.choices[0].message.content)
     return parsed
 
+def extract_keywords(nl_sva):
+    prompt_split = f"Split the following sentence\n{nl_sva}\n into multiple parts. Each part should represent either: \n1. an operation on a single signal or a group of related signals;\n 2. or a temporal keyword or phrase commonly used in formal specification languages.\n Present the output as a numbered list in the following format:\n1. <First operation>\n2. <Second operation>\n3. <Third operation>\n...\n"
+    completion = client.chat.completions.create(
+                model= Model_Name,
+                messages=[
+                    {"role": "system", "content": "You are a helpful bot to split a given sentence into multiple parts."},
+                    {"role": "user", "content": prompt_split}
+                ]
+    )
+    
+    # print("Split Results: ", completion.choices[0].message.content)
+
+    parsed = parse_numbered_output(completion.choices[0].message.content)
+    return parsed
+
+
 def extract_related_operators_of_keyword(keywords):
     operators = set()
     # read the json file and print the operators and explanations

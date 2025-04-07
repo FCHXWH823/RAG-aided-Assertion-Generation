@@ -14,6 +14,7 @@ import csv
 import re
 from openai import OpenAI
 from sentence_splitter import SentenceSplitter, split_text_into_sentences
+from extract_keywords import *
 
 with open("Src/Config.yml") as file:
     config = yaml.safe_load(file)
@@ -136,6 +137,7 @@ system_prompt = (
     "You are a helpful bot that generate the assertion satisfying some requirements for a given verilog code."
     "Use the following pieces of retrieved context to help answer the question. "
     "\n\n"
+    "{keywords_explaination}"
     "{context}"
 )
 prompt = ChatPromptTemplate.from_messages(
@@ -246,7 +248,7 @@ with open(f'Results/Dynamic-RAG-Openai-4o-mini-Prompted-Assertion-Generation-Res
     for folder in os.listdir("Evaluation/Dataset/"):
         if Excute_Folder != 'ALL_DESIGNS' and Excute_Folder not in folder:
             continue
-        if folder in ["Ripple_Carry_Adder", "or1200_operandmuxes", "gray", "Flip_Flop_Array"]:
+        if folder in ["Ripple_Carry_Adder", "or1200_operandmuxes", "gray", "Flip_Flop_Array", "PSGBusArb", "apb", "host_interface", "control_unit", "Programmable_Sequence_Detector", "PWM", "module_i2c", "delay2", "simple_req_ack", "Gray_Code_Counter", "uartTrans", "i2c", "uartRec", "APB_FSM_Controller", "register", "SEVEN","arbiter","simple_pipeline","lcd","Parallel_In_Serial_Out_Shift_Reg","fifo","or1200_if","uart_transmit","ff"]:
             continue
         folder_path = os.path.join("Evaluation/Dataset/",folder)
         if os.path.isdir(folder_path):
@@ -270,10 +272,20 @@ with open(f'Results/Dynamic-RAG-Openai-4o-mini-Prompted-Assertion-Generation-Res
                 
                 assertion_format = f"assert property (ONLY logical expression WITHOUT clock signal condition @(posedge clock) and WITHOUT disable condition disable iff(...));"
                 
+                keywords = extract_keywords(explanation)
+                extract_operators_explanations = extract_related_operators_of_keyword(keywords)
+                
+                checking_str = ""
+                for op_explanation in extract_operators_explanations:
+                    checking_str += f"{op_explanation}\n\n"
+                    retrieved_doc = code_retriever.invoke(f"{op_explanation}")                    
+                    for doc in retrieved_doc:
+                        checking_str += doc.page_content + "\n\n"
+                    checking_str += "\n"
 
                 prompt = f"Given Verilog code snippet as below: \n{code}\n Please generate such an assertion for it following the description:{explanation}\nThe output format should STRICTLY follow :\n{assertion_format}\nWITHOUT other things."
 
-                llm_result = rag_chain.invoke({"code":code,"input":explanation,"assertion_format":assertion_format})
+                llm_result = rag_chain.invoke({"keywords_explaination": checking_str, "code":code,"input":explanation,"assertion_format":assertion_format})
                 llm_response = llm_result["answer"]
 
                 completion = client.chat.completions.create(
@@ -309,7 +321,7 @@ with open(f'Results/Dynamic-RAG-Openai-4o-mini-Prompted-Assertion-Generation-Res
                 for op in operators:
                     if op in logic_expression:
                         checking_str += f"`{op}`: {operators[op]}\n\n"
-                        retrieved_doc = code_retriever.invoke(f"{operators[op]}")                    
+                        retrieved_doc = code_retriever.invoke(f"`{op}`: {operators[op]}")                    
                         for doc in retrieved_doc:
                             checking_str += doc.page_content + "\n\n"
                         checking_str += "\n"    
@@ -389,7 +401,7 @@ with open(f'Results/Dynamic-RAG-Openai-4o-mini-Prompted-Assertion-Generation-Res
                     processed_code += assertion+"\n"
                 processed_code += "\nendmodule\n"
 
-                with open(folder_path+"/"+folder+f"_GoldHybridDynamic-RAG-{Model_Name}.sv","w") as file:
+                with open(folder_path+"/"+folder+f"_KWGoldHybridDynamic-RAG-{Model_Name}.sv","w") as file:
                     file.write(processed_code)
 
 

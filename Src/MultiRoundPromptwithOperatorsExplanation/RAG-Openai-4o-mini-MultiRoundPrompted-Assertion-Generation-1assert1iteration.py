@@ -164,9 +164,9 @@ with open(f'Results/RAG-Openai-4o-mini-Prompted-Assertion-Generation-Results-{PD
     for folder in os.listdir("Evaluation/Dataset/"):
         if Excute_Folder != 'ALL_DESIGNS' and Excute_Folder not in folder:
             continue
-        # if folder in ["Ripple_Carry_Adder", "or1200_operandmuxes", "gray", "Flip_Flop_Array", "PSGBusArb", "apb", "host_interface", "control_unit", "Programmable_Sequence_Detector", "PWM", "module_i2c", "delay2", "simple_req_ack", "Gray_Code_Counter"]:
-        #     continue
-        folder = "arbiter"
+        if folder in ["Ripple_Carry_Adder", "or1200_operandmuxes", "gray", "Flip_Flop_Array", "PSGBusArb", "apb", "host_interface", "control_unit", "Programmable_Sequence_Detector", "PWM", "module_i2c", "delay2", "simple_req_ack", "Gray_Code_Counter", "uartTrans", "i2c", "uartRec", "APB_FSM_Controller", "register", "SEVEN","arbiter","simple_pipeline","lcd","Parallel_In_Serial_Out_Shift_Reg","fifo","or1200_if","uart_transmit","ff","Gray_To_Binary","delay","BusArbiter"]:
+            continue
+        # folder = "arbiter"
         folder_path = os.path.join("Evaluation/Dataset/",folder)
         if os.path.isdir(folder_path):
             with open(folder_path+"/"+folder+".sv","r") as file:
@@ -245,7 +245,7 @@ with open(f'Results/RAG-Openai-4o-mini-Prompted-Assertion-Generation-Results-{PD
                 for op in operators:
                     if op in logic_expression:
                         checking_str += f"`{op}`: {operators[op]}\n\n"
-                        retrieved_doc = retriever.invoke(f"{operators[op]}")                    
+                        retrieved_doc = retriever.invoke(f"`{op}`: {operators[op]}")                    
                         for doc in retrieved_doc:
                             checking_str += doc.page_content + "\n\n"
                         checking_str += "\n"    
@@ -324,6 +324,6 @@ with open(f'Results/RAG-Openai-4o-mini-Prompted-Assertion-Generation-Results-{PD
                     processed_code += assertion+"\n"
                 processed_code += "\nendmodule\n"
 
-                with open(folder_path+"/"+folder+f"_GoldHybridRAG-{Model_Name}.sv","w") as file:
+                with open(folder_path+"/"+folder+f"_KWGoldHybridRAG-{Model_Name}.sv","w") as file:
                     file.write(processed_code)
 
