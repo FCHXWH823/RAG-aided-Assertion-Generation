@@ -1,4 +1,561 @@
 Master Module,Code,golden_assertions,llm_assertions
+or1200_if,"//////////////////////////////////////////////////////////////////////
+////                                                              ////
+////  OR1200's instruction fetch                                  ////
+////                                                              ////
+////  This file is part of the OpenRISC 1200 project              ////
+////  http://www.opencores.org/project,or1k                       ////
+////                                                              ////
+////  Description                                                 ////
+////  PC, instruction fetch, interface to IC.                     ////
+////                                                              ////
+////  To Do:                                                      ////
+////   - make it smaller and faster                               ////
+////                                                              ////
+////  Author(s):                                                  ////
+////      - Damjan Lampret, lampret@opencores.org                 ////
+////                                                              ////
+//////////////////////////////////////////////////////////////////////
+////                                                              ////
+//// Copyright (C) 2000 Authors and OPENCORES.ORG                 ////
+////                                                              ////
+//// This source file may be used and distributed without         ////
+//// restriction provided that this copyright statement is not    ////
+//// removed from the file and that any derivative work contains  ////
+//// the original copyright notice and the associated disclaimer. ////
+////                                                              ////
+//// This source file is free software; you can redistribute it   ////
+//// and/or modify it under the terms of the GNU Lesser General   ////
+//// Public License as published by the Free Software Foundation; ////
+//// either version 2.1 of the License, or (at your option) any   ////
+//// later version.                                               ////
+////                                                              ////
+//// This source is distributed in the hope that it will be       ////
+//// useful, but WITHOUT ANY WARRANTY; without even the implied   ////
+//// warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR      ////
+//// PURPOSE.  See the GNU Lesser General Public License for more ////
+//// details.                                                     ////
+////                                                              ////
+//// You should have received a copy of the GNU Lesser General    ////
+//// Public License along with this source; if not, download it   ////
+//// from http://www.opencores.org/lgpl.shtml                     ////
+////                                                              ////
+//////////////////////////////////////////////////////////////////////
+//
+// $Log: or1200_if.v,v $
+// Revision 2.0  2010/06/30 11:00:00  ORSoC
+// Major update: 
+// Structure reordered and bugs fixed. 
+
+// synopsys translate_off
+// `include ""timescale.v""
+// synopsys translate_on
+`include ""or1200_defines.v""
+
+module or1200_if(
+	// Clock and reset
+	clk, rst,
+
+	// External i/f to IC
+	icpu_dat_i, icpu_ack_i, icpu_err_i, icpu_adr_i, icpu_tag_i,
+
+	// Internal i/f
+	if_freeze, if_insn, if_pc, if_flushpipe, saving_if_insn, 
+	if_stall, no_more_dslot, genpc_refetch, rfe,
+	except_itlbmiss, except_immufault, except_ibuserr
+);
+
+//
+// I/O
+//
+
+//
+// Clock and reset
+//
+input				clk;
+input				rst;
+
+//
+// External i/f to IC
+//
+input	[31:0]			icpu_dat_i;
+input				icpu_ack_i;
+input				icpu_err_i;
+input	[31:0]			icpu_adr_i;
+input	[3:0]			icpu_tag_i;
+
+//
+// Internal i/f
+//
+input				if_freeze;
+output	[31:0]			if_insn;
+output	[31:0]			if_pc;
+input				if_flushpipe;
+output				saving_if_insn;
+output				if_stall;
+input				no_more_dslot;
+output				genpc_refetch;
+input				rfe;
+output				except_itlbmiss;
+output				except_immufault;
+output				except_ibuserr;
+
+//
+// Internal wires and regs
+//
+wire			save_insn;
+wire			if_bypass;
+reg			if_bypass_reg;
+reg	[31:0]		insn_saved;
+reg	[31:0]		addr_saved;
+reg	[2:0]		err_saved;
+reg			saved;
+
+assign save_insn = (icpu_ack_i | icpu_err_i) & if_freeze & !saved;
+assign saving_if_insn = !if_flushpipe & save_insn;
+
+//
+// IF bypass 
+//
+assign if_bypass = icpu_adr_i[0] ? 1'b0 : if_bypass_reg | if_flushpipe;
+
+always @(posedge clk or `OR1200_RST_EVENT rst)
+	if (rst == `OR1200_RST_VALUE)
+		if_bypass_reg <=  1'b0;
+	else
+		if_bypass_reg <=  if_bypass;
+
+//
+// IF stage insn
+//
+assign if_insn = no_more_dslot | rfe | if_bypass ? {`OR1200_OR32_NOP, 26'h041_0000} : saved ? insn_saved : icpu_ack_i ? icpu_dat_i : {`OR1200_OR32_NOP, 26'h061_0000};
+assign if_pc = saved ? addr_saved : {icpu_adr_i[31:2], 2'h0};
+assign if_stall = !icpu_err_i & !icpu_ack_i & !saved;
+assign genpc_refetch = saved & icpu_ack_i;
+assign except_itlbmiss = no_more_dslot ? 1'b0 : saved ? err_saved[0] : icpu_err_i & (icpu_tag_i == `OR1200_ITAG_TE);
+assign except_immufault = no_more_dslot ? 1'b0 : saved ? err_saved[1] : icpu_err_i & (icpu_tag_i == `OR1200_ITAG_PE);
+assign except_ibuserr = no_more_dslot ? 1'b0 : saved ? err_saved[2] : icpu_err_i & (icpu_tag_i == `OR1200_ITAG_BE);
+
+//
+// Flag for saved insn/address
+//
+always @(posedge clk or `OR1200_RST_EVENT rst)
+	if (rst == `OR1200_RST_VALUE)
+		saved <=  1'b0;
+	else if (if_flushpipe)
+		saved <=  1'b0;
+	else if (save_insn)
+		saved <=  1'b1;
+	else if (!if_freeze)
+		saved <=  1'b0;
+
+//
+// Store fetched instruction
+//
+always @(posedge clk or `OR1200_RST_EVENT rst)
+	if (rst == `OR1200_RST_VALUE)
+		insn_saved <=  {`OR1200_OR32_NOP, 26'h041_0000};
+	else if (if_flushpipe)
+		insn_saved <=  {`OR1200_OR32_NOP, 26'h041_0000};
+	else if (save_insn)
+		insn_saved <=  icpu_err_i ? {`OR1200_OR32_NOP, 26'h041_0000} : icpu_dat_i;
+	else if (!if_freeze)
+		insn_saved <=  {`OR1200_OR32_NOP, 26'h041_0000};
+
+//
+// Store fetched instruction's address
+//
+always @(posedge clk or `OR1200_RST_EVENT rst)
+	if (rst == `OR1200_RST_VALUE)
+		addr_saved <=  32'h00000000;
+	else if (if_flushpipe)
+		addr_saved <=  32'h00000000;
+	else if (save_insn)
+		addr_saved <=  {icpu_adr_i[31:2], 2'b00};
+	else if (!if_freeze)
+		addr_saved <=  {icpu_adr_i[31:2], 2'b00};
+
+//
+// Store fetched instruction's error tags 
+//
+always @(posedge clk or `OR1200_RST_EVENT rst)
+	if (rst == `OR1200_RST_VALUE)
+		err_saved <=  3'b000;
+	else if (if_flushpipe)
+		err_saved <=  3'b000;
+	else if (save_insn) begin
+		err_saved[0] <=  icpu_err_i & (icpu_tag_i == `OR1200_ITAG_TE);
+		err_saved[1] <=  icpu_err_i & (icpu_tag_i == `OR1200_ITAG_PE);
+		err_saved[2] <=  icpu_err_i & (icpu_tag_i == `OR1200_ITAG_BE);
+	end
+	else if (!if_freeze)
+		err_saved <=  3'b000;
+
+
+endmodule","{
+  ""Assertion 1"": {
+    ""clock signal condition"": ""@(posedge clk)"",
+    ""disable condition"": """",
+    ""logical expression"": ""no_more_dslot |-> (except_itlbmiss == 0 && except_immufault == 0 && except_ibuserr == 0)"",
+    ""Signals"": [""no_more_dslot"", ""except_itlbmiss"", ""except_immufault"", ""except_ibuserr""],
+    ""Signal Explanations"": {
+      ""no_more_dslot"": ""input signal indicating that there is no delay slot instruction"",
+      ""except_itlbmiss"": ""output signal indicating an ITLB miss exception"",
+      ""except_immufault"": ""output signal indicating an immediate fault exception"",
+      ""except_ibuserr"": ""output signal indicating an instruction bus error exception""
+    },
+    ""Logical Operators"": [""|->"", ""=="", ""&&""],
+    ""Logical Operators Explanation"": {
+      ""|->"": ""if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"",
+      ""=="": ""equal"",
+      ""&&"": ""and""
+    },
+    ""Assertion Explaination"": ""when no delay slot instruction signal is true, then ITLB miss exception equals 0 and immediate fault exception equals 0 and instruction bus error exception equals 0 from the current clock cycle""
+  },
+  ""Assertion 2"": {
+    ""clock signal condition"": ""@(posedge clk)"",
+    ""disable condition"": ""disable iff (rst)"",
+    ""logical expression"": ""(!if_flushpipe && save_insn) |-> ##1 saved == 1"",
+    ""Signals"": [""if_flushpipe"", ""save_insn"", ""saved""],
+    ""Signal Explanations"": {
+      ""if_flushpipe"": ""input signal indicating pipeline flush"",
+      ""save_insn"": ""wire signal indicating that an instruction should be saved"",
+      ""saved"": ""flag indicating if an instruction has been saved""
+    },
+    ""Logical Operators"": [""!"", ""&&"", ""|->"", ""##1"", ""==""],
+    ""Logical Operators Explanation"": {
+      ""!"": ""the value of a signal is negated"",
+      ""&&"": ""and"",
+      ""|->"": ""if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE (modified by a delay)"",
+      ""##1"": ""a temporal delay operator indicating that the consequent is checked SINCE NEXT CLOCK CYCLE"",
+      ""=="": ""equal""
+    },
+    ""Assertion Explaination"": ""when pipeline flush signal is reset (0) and save instruction condition is true, then saved flag equals 1 from the next clock cycle""
+  },
+  ""Assertion 3"": {
+    ""clock signal condition"": ""@(posedge clk)"",
+    ""disable condition"": ""disable iff (rst)"",
+    ""logical expression"": ""(if_flushpipe | (!save_insn && !if_freeze)) |-> ##1 saved == 0"",
+    ""Signals"": [""if_flushpipe"", ""save_insn"", ""if_freeze"", ""saved""],
+    ""Signal Explanations"": {
+      ""if_flushpipe"": ""input signal indicating pipeline flush"",
+      ""save_insn"": ""wire signal indicating that an instruction should be saved"",
+      ""if_freeze"": ""input signal indicating a pipeline freeze"",
+      ""saved"": ""flag indicating if an instruction has been saved""
+    },
+    ""Logical Operators"": [""|"", ""!"", ""&&"", ""|->"", ""##1"", ""==""],
+    ""Logical Operators Explanation"": {
+      ""|"": ""or"",
+      ""!"": ""the value of a signal is negated"",
+      ""&&"": ""and"",
+      ""|->"": ""if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE (modified by a delay)"",
+      ""##1"": ""a temporal delay operator indicating that the consequent is checked SINCE NEXT CLOCK CYCLE"",
+      ""=="": ""equal""
+    },
+    ""Assertion Explaination"": ""when pipeline flush signal is true or both save instruction condition is reset (0) and pipeline freeze is reset (0), then saved flag equals 0 from the next clock cycle""
+  },
+  ""Assertion 4"": {
+    ""clock signal condition"": ""@(posedge clk)"",
+    ""disable condition"": ""disable iff (rst)"",
+    ""logical expression"": ""(!if_flushpipe && save_insn && !icpu_err_i) |-> ##1 (insn_saved == $past(icpu_dat_i))"",
+    ""Signals"": [""if_flushpipe"", ""save_insn"", ""icpu_err_i"", ""insn_saved"", ""icpu_dat_i""],
+    ""Signal Explanations"": {
+      ""if_flushpipe"": ""input signal indicating pipeline flush"",
+      ""save_insn"": ""wire signal indicating that an instruction should be saved"",
+      ""icpu_err_i"": ""input signal indicating an instruction cache error"",
+      ""insn_saved"": ""register holding the saved instruction"",
+      ""icpu_dat_i"": ""input data from the instruction cache""
+    },
+    ""Logical Operators"": [""!"", ""&&"", ""|->"", ""##1"", ""=="", ""$past""],
+    ""Logical Operators Explanation"": {
+      ""!"": ""the value of a signal is negated"",
+      ""&&"": ""and"",
+      ""|->"": ""if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE (modified by a delay)"",
+      ""##1"": ""a temporal delay operator indicating that the consequent is checked SINCE NEXT CLOCK CYCLE"",
+      ""=="": ""equal"",
+      ""$past"": ""the value from the previous clock cycle""
+    },
+    ""Assertion Explaination"": ""when pipeline flush signal is reset (0) and save instruction condition is true and instruction cache error signal is reset (0), then insn_saved equals the previous clock cycle's instruction cache data from the next clock cycle""
+  },
+  ""Assertion 5"": {
+    ""clock signal condition"": ""@(posedge clk)"",
+    ""disable condition"": ""disable iff (rst)"",
+    ""logical expression"": ""(if_flushpipe | (!save_insn && !if_freeze) && !icpu_err_i) |-> ##1 (insn_saved == {6'b000101, 26'h041_0000})"",
+    ""Signals"": [""if_flushpipe"", ""save_insn"", ""if_freeze"", ""icpu_err_i"", ""insn_saved""],
+    ""Signal Explanations"": {
+      ""if_flushpipe"": ""input signal indicating pipeline flush"",
+      ""save_insn"": ""wire signal indicating that an instruction should be saved"",
+      ""if_freeze"": ""input signal indicating a pipeline freeze"",
+      ""icpu_err_i"": ""input signal indicating an instruction cache error"",
+      ""insn_saved"": ""register holding the saved instruction""
+    },
+    ""Logical Operators"": [""!"", ""&&"", ""|"", ""|->"", ""##1"", ""==""],
+    ""Logical Operators Explanation"": {
+      ""!"": ""the value of a signal is negated"",
+      ""&&"": ""and"",
+      ""|"": ""or"",
+      ""|->"": ""if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE (modified by a delay)"",
+      ""##1"": ""a temporal delay operator indicating that the consequent is checked SINCE NEXT CLOCK CYCLE"",
+      ""=="": ""equal""
+    },
+    ""Assertion Explaination"": ""when pipeline flush signal is true or both save instruction condition is reset (0) and pipeline freeze is reset (0) and instruction cache error is reset (0), then insn_saved equals the constant value {6'b000101, 26'h041_0000} from the next clock cycle""
+  },
+  ""Assertion 6"": {
+    ""clock signal condition"": ""@(posedge clk)"",
+    ""disable condition"": ""disable iff (rst)"",
+    ""logical expression"": ""(!if_flushpipe && (save_insn | !if_freeze)) |-> ##1 (addr_saved == {$past(icpu_adr_i[31:2]), 2'b00})"",
+    ""Signals"": [""if_flushpipe"", ""save_insn"", ""if_freeze"", ""addr_saved"", ""icpu_adr_i""],
+    ""Signal Explanations"": {
+      ""if_flushpipe"": ""input signal indicating pipeline flush"",
+      ""save_insn"": ""wire signal indicating that an instruction should be saved"",
+      ""if_freeze"": ""input signal indicating a pipeline freeze"",
+      ""addr_saved"": ""register holding the saved instruction address"",
+      ""icpu_adr_i"": ""input signal providing the instruction cache address""
+    },
+    ""Logical Operators"": [""!"", ""&&"", ""|"", ""|->"", ""##1"", ""=="", ""$past""],
+    ""Logical Operators Explanation"": {
+      ""!"": ""the value of a signal is negated"",
+      ""&&"": ""and"",
+      ""|"": ""or"",
+      ""|->"": ""if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE (modified by a delay)"",
+      ""##1"": ""a temporal delay operator indicating that the consequent is checked SINCE NEXT CLOCK CYCLE"",
+      ""=="": ""equal"",
+      ""$past"": ""the value from the previous clock cycle""
+    },
+    ""Assertion Explaination"": ""when pipeline flush signal is reset (0) and either save instruction is true or pipeline freeze is reset (0), then addr_saved equals the previous clock cycle's instruction cache address with its lower two bits set to 0 from the next clock cycle""
+  },
+  ""Assertion 7"": {
+    ""clock signal condition"": ""@(posedge clk)"",
+    ""disable condition"": ""disable iff (rst)"",
+    ""logical expression"": ""(if_flushpipe) |-> ##1 (addr_saved == 32'h00000000)"",
+    ""Signals"": [""if_flushpipe"", ""addr_saved""],
+    ""Signal Explanations"": {
+      ""if_flushpipe"": ""input signal indicating pipeline flush"",
+      ""addr_saved"": ""register holding the saved instruction address""
+    },
+    ""Logical Operators"": [""|->"", ""##1"", ""==""],
+    ""Logical Operators Explanation"": {
+      ""|->"": ""if the condition on the left is met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE (modified by a delay)"",
+      ""##1"": ""a temporal delay operator indicating that the consequent is checked SINCE NEXT CLOCK CYCLE"",
+      ""=="": ""equal""
+    },
+    ""Assertion Explaination"": ""when pipeline flush signal is true then addr_saved equals 32'h00000000 from the next clock cycle""
+  },
+  ""Assertion 8"": {
+    ""clock signal condition"": ""@(posedge clk)"",
+    ""disable condition"": ""disable iff (rst)"",
+    ""logical expression"": ""(!if_flushpipe && save_insn) |-> ##1 (err_saved[0] == ($past(icpu_err_i) & ($past(icpu_tag_i) == 4'hd)))"",
+    ""Signals"": [""if_flushpipe"", ""save_insn"", ""err_saved[0]"", ""icpu_err_i"", ""icpu_tag_i""],
+    ""Signal Explanations"": {
+      ""if_flushpipe"": ""input signal indicating pipeline flush"",
+      ""save_insn"": ""wire signal indicating that an instruction should be saved"",
+      ""err_saved[0]"": ""bit 0 of the saved error register representing an ITLB miss"",
+      ""icpu_err_i"": ""input signal indicating an instruction cache error"",
+      ""icpu_tag_i"": ""input signal providing the instruction cache tag""
+    },
+    ""Logical Operators"": [""!"", ""&&"", ""|->"", ""##1"", ""=="", ""&"", ""$past""],
+    ""Logical Operators Explanation"": {
+      ""!"": ""the value of a signal is negated"",
+      ""&&"": ""and"",
+      ""|->"": ""if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE (modified by a delay)"",
+      ""##1"": ""a temporal delay operator indicating that the consequent is checked SINCE NEXT CLOCK CYCLE"",
+      ""=="": ""equal"",
+      ""&"": ""and"",
+      ""$past"": ""the value from the previous clock cycle""
+    },
+    ""Assertion Explaination"": ""when pipeline flush signal is reset (0) and save instruction condition is true, then the first bit of the saved error register equals the logical AND of the previous clock cycle's instruction cache error signal and the result of comparing the previous clock cycle's instruction cache tag signal equal to 4'hd from the next clock cycle""
+  },
+  ""Assertion 9"": {
+    ""clock signal condition"": ""@(posedge clk)"",
+    ""disable condition"": ""disable iff (rst)"",
+    ""logical expression"": ""(!if_flushpipe && save_insn) |-> ##1 (err_saved[1] == ($past(icpu_err_i) & ($past(icpu_tag_i) == 4'hc)))"",
+    ""Signals"": [""if_flushpipe"", ""save_insn"", ""err_saved[1]"", ""icpu_err_i"", ""icpu_tag_i""],
+    ""Signal Explanations"": {
+      ""if_flushpipe"": ""input signal indicating pipeline flush"",
+      ""save_insn"": ""wire signal indicating that an instruction should be saved"",
+      ""err_saved[1]"": ""bit 1 of the saved error register representing an immediate fault"",
+      ""icpu_err_i"": ""input signal indicating an instruction cache error"",
+      ""icpu_tag_i"": ""input signal providing the instruction cache tag""
+    },
+    ""Logical Operators"": [""!"", ""&&"", ""|->"", ""##1"", ""=="", ""&"", ""$past""],
+    ""Logical Operators Explanation"": {
+      ""!"": ""the value of a signal is negated"",
+      ""&&"": ""and"",
+      ""|->"": ""if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE (modified by a delay)"",
+      ""##1"": ""a temporal delay operator indicating that the consequent is checked SINCE NEXT CLOCK CYCLE"",
+      ""=="": ""equal"",
+      ""&"": ""and"",
+      ""$past"": ""the value from the previous clock cycle""
+    },
+    ""Assertion Explaination"": ""when pipeline flush signal is reset (0) and save instruction condition is true, then the second bit of the saved error register equals the logical AND of the previous clock cycle's instruction cache error signal and the result of comparing the previous clock cycle's instruction cache tag signal equal to 4'hc from the next clock cycle""
+  },
+  ""Assertion 10"": {
+    ""clock signal condition"": ""@(posedge clk)"",
+    ""disable condition"": ""disable iff (rst)"",
+    ""logical expression"": ""(!if_flushpipe && save_insn) |-> ##1 (err_saved[2] == ($past(icpu_err_i) & ($past(icpu_tag_i) == 4'hb)))"",
+    ""Signals"": [""if_flushpipe"", ""save_insn"", ""err_saved[2]"", ""icpu_err_i"", ""icpu_tag_i""],
+    ""Signal Explanations"": {
+      ""if_flushpipe"": ""input signal indicating pipeline flush"",
+      ""save_insn"": ""wire signal indicating that an instruction should be saved"",
+      ""err_saved[2]"": ""bit 2 of the saved error register representing an instruction bus error"",
+      ""icpu_err_i"": ""input signal indicating an instruction cache error"",
+      ""icpu_tag_i"": ""input signal providing the instruction cache tag""
+    },
+    ""Logical Operators"": [""!"", ""&&"", ""|->"", ""##1"", ""=="", ""&"", ""$past""],
+    ""Logical Operators Explanation"": {
+      ""!"": ""the value of a signal is negated"",
+      ""&&"": ""and"",
+      ""|->"": ""if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE (modified by a delay)"",
+      ""##1"": ""a temporal delay operator indicating that the consequent is checked SINCE NEXT CLOCK CYCLE"",
+      ""=="": ""equal"",
+      ""&"": ""and"",
+      ""$past"": ""the value from the previous clock cycle""
+    },
+    ""Assertion Explaination"": ""when pipeline flush signal is reset (0) and save instruction condition is true, then the third bit of the saved error register equals the logical AND of the previous clock cycle's instruction cache error signal and the result of comparing the previous clock cycle's instruction cache tag signal equal to 4'hb from the next clock cycle""
+  },
+  ""Assertion 11"": {
+    ""clock signal condition"": ""@(posedge clk)"",
+    ""disable condition"": ""disable iff (rst)"",
+    ""logical expression"": ""(if_flushpipe | (!save_insn && !if_freeze)) |-> ##1 (err_saved == 3'b000)"",
+    ""Signals"": [""if_flushpipe"", ""save_insn"", ""if_freeze"", ""err_saved""],
+    ""Signal Explanations"": {
+      ""if_flushpipe"": ""input signal indicating pipeline flush"",
+      ""save_insn"": ""wire signal indicating that an instruction should be saved"",
+      ""if_freeze"": ""input signal indicating a pipeline freeze"",
+      ""err_saved"": ""register holding the saved error tags for the instruction""
+    },
+    ""Logical Operators"": [""|"", ""!"", ""&&"", ""|->"", ""##1"", ""==""],
+    ""Logical Operators Explanation"": {
+      ""|"": ""or"",
+      ""!"": ""the value of a signal is negated"",
+      ""&&"": ""and"",
+      ""|->"": ""if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE (modified by a delay)"",
+      ""##1"": ""a temporal delay operator indicating that the consequent is checked SINCE NEXT CLOCK CYCLE"",
+      ""=="": ""equal""
+    },
+    ""Assertion Explaination"": ""when pipeline flush signal is true or both save instruction condition is reset (0) and pipeline freeze is reset (0), then err_saved equals 3'b000 from the next clock cycle""
+  }
+}","{
+""Assertion 1"": ""assert property (no_more_dslot |-> (except_itlbmiss == 0 && except_immufault == 0 && except_ibuserr == 0));"",
+""Assertion 2"": ""assert property ((!if_flushpipe && ((icpu_ack_i | icpu_err_i) & if_freeze & !saved)) |=> (saved == 1'b1));"",
+""Assertion 3"": ""assert property ((if_flushpipe || (!save_insn && !if_freeze)) |=> !saved);"",
+""Assertion 4"": ""assert property ((!if_flushpipe && save_insn && !icpu_err_i) |=> (insn_saved == $past(icpu_dat_i, 1)));"",
+""Assertion 5"": ""assert property ((if_flushpipe || (!save_insn && !if_freeze && !icpu_err_i)) |=> (insn_saved == {6'b000101, 26'h041_0000}));"",
+""Assertion 6"": ""assert property ((!if_flushpipe && (save_insn || !if_freeze)) |=> (addr_saved == {($past(icpu_adr_i[31:2]), 2'b00)}));"",
+""Assertion 7"": ""assert property (if_flushpipe |=> (addr_saved == 32'h00000000));"",
+""Assertion 8"": ""assert property ($fell(if_flushpipe) && save_insn |=> err_saved[0] == ($past(icpu_err_i) && (icpu_tag_i == `OR1200_ITAG_TE)));"",
+""Assertion 9"": ""assert property ((!if_flushpipe && save_insn) |=> err_saved[1] == ($past(icpu_err_i) && ($past(icpu_tag_i) == 4'hc));"",
+""Assertion 10"": ""assert property ($fell(if_flushpipe) && save_insn |=> err_saved[2] == ($past(icpu_err_i) && $past(icpu_tag_i) == `OR1200_ITAG_BE));"",
+""Assertion 11"": ""assert property ((if_flushpipe || (!save_insn && !if_freeze)) |=> (err_saved == 3'b000));""
+}"
+uart_transmit,"module uart_transmit #(localparam d_width = 4, localparam c_width = 3) (input clk, input rst, input tx_ena, input [d_width - 1: 0] tx_data, output reg tx, output reg tx_busy);
+	reg [c_width-1:0] tx_cnt;
+	reg tx_state;
+	reg [d_width+1:0] tx_buffer;
+
+	always @(posedge clk) begin
+		if(rst == 1) begin
+			tx_cnt = 0;
+			tx = 1;
+			tx_busy = 0;
+			tx_state = 0;
+		end
+		if(tx_state == 0) begin
+			if(tx_ena == 1) begin
+				tx_buffer = {tx_data, 2'b01};
+				tx_busy = 1;
+				tx_cnt = 0;
+				tx_state = 1;
+			end
+			else
+				tx_busy = 0;
+		end
+		else if(tx_state == 1) begin
+			if(tx_cnt < d_width+3) begin
+				tx_state = 1;
+				tx_cnt = tx_cnt + 1;
+				tx_buffer = {1'b1, tx_buffer[d_width+1:1]};
+			end
+			else begin
+				tx_cnt = 0;
+				tx_state = 0;
+			end
+		end
+		tx = tx_buffer[0];
+	end
+endmodule","{
+  ""Assertion 1"": {
+    ""clock signal condition"": ""@(posedge clk)"",
+    ""disable condition"": """",
+    ""logical expression"": ""s_eventually rst == 1 || tx_state == 0"",
+    ""Signals"": [""rst"", ""tx_state""],
+    ""Signal Explanations"": {
+      ""rst"": ""reset signal"",
+      ""tx_state"": ""state of the UART transmitter indicating if it is transmitting (1) or idle (0)""
+    },
+    ""Logical Operators"": [""s_eventually"", ""=="", ""||""],
+    ""Logical Operators Explanation"": {
+      ""s_eventually"": ""a temporal operator indicating that the contained condition is required to occur at some future clock cycle (eventually)"",
+      ""=="": ""equal"",
+      ""||"": ""or""
+    },
+    ""Assertion Explaination"": ""eventually, reset signal equals 1 or transmitter state equals 0""
+  }
+}","{
+""Assertion 1"": ""assert property (s_eventually (rst || (tx_state == 0)));""
+}"
+ff,"module ff
+  (
+   input logic clk, rst, en, in,
+   output logic out   
+   );
+
+   always_ff @(posedge clk or posedge rst)
+      if (rst) out = 1'b0;
+      else if (en) out = in;         
+endmodule
+
+","{
+  ""Assertion 1"": {
+    ""clock signal condition"": ""@(posedge clk)"",
+    ""disable condition"": ""disable iff (rst)"",
+    ""logical expression"": ""en |=> out == $past(in,1)"",
+    ""Signals"": [""en"", ""out"", ""in""],
+    ""Signal Explanations"": {
+      ""en"": ""enable signal"",
+      ""out"": ""output signal of the verilog module"",
+      ""in"": ""input signal of the verilog module""
+    },
+    ""Logical Operators"": [""|=>"", ""=="", ""$past""],
+    ""Logical Operators Explanation"": {
+      ""|=>"": ""if the conditions on the left are met then the condition on the right must hold SINCE NEXT CLOCK CYCLE"",
+      ""=="": ""equal"",
+      ""$past"": ""the value of the signal in the specified previous clock cycle(s)""
+    },
+    ""Assertion Explaination"": ""check if when enable signal is set (1), the output is equal to the input from one cycle in the past from the next clock cycle""
+  },
+  ""Assertion 2"": {
+    ""clock signal condition"": ""@(posedge clk)"",
+    ""disable condition"": ""disable iff (rst)"",
+    ""logical expression"": ""!en |=> out == $past(out,1)"",
+    ""Signals"": [""en"", ""out""],
+    ""Signal Explanations"": {
+      ""en"": ""enable signal"",
+      ""out"": ""output signal of the verilog module""
+    },
+    ""Logical Operators"": [""!"", ""|=>"", ""=="", ""$past""],
+    ""Logical Operators Explanation"": {
+      ""!"": ""the value of a signal is reset (0)"",
+      ""|=>"": ""if the conditions on the left are met then the condition on the right must hold SINCE NEXT CLOCK CYCLE"",
+      ""=="": ""equal"",
+      ""$past"": ""the value of the signal in the specified previous clock cycle(s)""
+    },
+    ""Assertion Explaination"": ""check to make sure that when the enable isn't asserted, the output doesn't change from the next clock cycle""
+  }
+}","{
+""Assertion 1"": ""assert property (en |=> out == $past(in));"",
+""Assertion 2"": ""assert property (!en |=> $stable(out));""
+}"
 BusArbiter,"parameter N_MASTERS = 3;
 typedef bit [N_MASTERS-1:0] arb_vector;
 parameter arb_vector NO_REQUEST = '{default: '0};
@@ -373,14 +930,14 @@ endmodule","{
   }
 }","{
 ""Assertion 1"": ""assert property ((bus_grant[0] + bus_grant[1] + bus_grant[2]) < 2);"",
-""Assertion 2"": ""assert property ((bus_grant[0] == 1'b1) |-> (bus_grant[1] == 1'b0 && bus_grant[2] == 1'b0));"",
-""Assertion 3"": ""assert property (bus_grant[1] == 1'b1 |-> (bus_grant[0] == 1'b0 && bus_grant[2] == 1'b0));"",
-""Assertion 4"": ""assert property (bus_grant[2] == 1'b1 |-> (bus_grant[1] == 1'b0 && bus_grant[0] == 1'b0));"",
-""Assertion 5"": ""assert property ( (bus_grant != NO_GRANT && !bus_ack) |=> $stable(bus_grant) );"",
+""Assertion 2"": ""assert property (bus_grant[0] |-> !bus_grant[1] && !bus_grant[2]);"",
+""Assertion 3"": ""assert property (bus_grant[1] |-> !bus_grant[0] && !bus_grant[2]);"",
+""Assertion 4"": ""assert property (bus_grant[2] |-> !bus_grant[1] && !bus_grant[0]);"",
+""Assertion 5"": ""assert property (((bus_grant != NO_GRANT) && !bus_acknowledge) |=> $stable(bus_grant));"",
 ""Assertion 6"": ""assert property (((bus_req[0] && (bus_grant == NO_GRANT)) || (bus_ack && bus_req[0])) |=> (bus_grant[0] && !bus_grant[1] && !bus_grant[2]));"",
-""Assertion 7"": ""assert property ((bus_req[1] && ~bus_req[0] && bus_grant == NO_GRANT) || (bus_ack && bus_req[1] && ~bus_req[0]) |-> (bus_grant[1] && ~bus_grant[0] && ~bus_grant[2]));"",
-""Assertion 8"": ""assert property ((bus_req[2] && ~bus_req[1] && ~bus_req[0] && (bus_grant == NO_GRANT)) ||  (bus_ack && bus_req[2] && ~bus_req[1] && ~bus_req[0]) |=> (bus_grant[2] && ~bus_grant[1] && ~bus_grant[0]));"",
-""Assertion 9"": ""assert property ($rose(bus_grant[1]) |-> ($past(bus_req[1]) && ~$past(bus_req[0])));"",
+""Assertion 7"": ""assert property ((!bus_req[0] && bus_req[1] && (bus_grant == NO_GRANT)) || (bus_ack && !bus_req[0] && bus_req[1]) |-> (bus_grant[1] && !bus_grant[0] && !bus_grant[2]));"",
+""Assertion 8"": ""assert property (     ((bus_req[2] && !bus_req[1] && !bus_req[0] && (bus_grant == NO_GRANT))      ||      (bus_ack && bus_req[2] && !bus_req[1] && !bus_req[0]))     |=>      (bus_grant[2] && !bus_grant[1] && !bus_grant[0]) );"",
+""Assertion 9"": ""assert property ($rose(bus_grant[1]) |-> ($past(bus_req[1]) && !$past(bus_req[0])));"",
 ""Assertion 10"": ""assert property ($rose(bus_grant[2]) |-> ($past(bus_req[2]) && !$past(bus_req[1]) && !$past(bus_req[0])));""
 }"
 eth_rxstatem,"//////////////////////////////////////////////////////////////////////
@@ -1392,40 +1949,40 @@ endmodule","{
     ""Assertion Explaination"": ""when the receive data valid signal is equal to 0, then a register bit representing the idle state is equal to 1 from the next clock cycle""
   }
 }","{
-""Assertion 1"": ""assert property (StartPreamble |-> StatePreamble);"",
-""Assertion 2"": ""assert property (StartDrop |-> !StatePreamble);"",
-""Assertion 3"": ""assert property (StateSFD |-> !StatePreamble);"",
+""Assertion 1"": ""assert property (StartPreamble |=> StatePreamble);"",
+""Assertion 2"": ""assert property (StartDrop |=> !StatePreamble);"",
+""Assertion 3"": ""assert property (StateSFD |=> !StatePreamble);"",
 ""Assertion 4"": ""assert property (StateData[0] |=> !StatePreamble);"",
 ""Assertion 5"": ""assert property (StateDrop |=> !StatePreamble);"",
-""Assertion 6"": ""assert property (StateData1 |-> !StatePreamble);"",
-""Assertion 7"": ""assert property (StatePreamble && ~MRxDEq5 && MRxDV |-> StatePreamble);"",
+""Assertion 6"": ""assert property (StateData1 |=> !StatePreamble);"",
+""Assertion 7"": ""assert property (StatePreamble && ~MRxDEq5 && MRxDV |=> StatePreamble);"",
 ""Assertion 8"": ""assert property (MRxDEq5 |=> !StatePreamble);"",
-""Assertion 9"": ""assert property (!MRxDV |=> !StatePreamble);"",
+""Assertion 9"": ""assert property (MRxDV == 0 |=> StatePreamble == 0);"",
 ""Assertion 10"": ""assert property (StartSFD |=> StateSFD);"",
-""Assertion 11"": ""assert property (StartIdle |=> !StateSFD);"",
+""Assertion 11"": ""assert property (StartIdle |=> !StateSFD)` is already syntactically correct and follows the requested format (only logical expression without clock signal condition or disable condition).   No corrections are needed. The assertion remains:  ```systemverilog assert property (StartIdle |=> !StateSFD);"",
 ""Assertion 12"": ""assert property (StartDrop |=> !StateSFD);"",
-""Assertion 13"": ""assert property (StartData0 |-> !StateSFD);"",
-""Assertion 14"": ""assert property (StartPreamble |-> !StateSFD);"",
-""Assertion 15"": ""assert property (StateSFD && !StartIdle && !MRxDEqD |-> StateSFD);"",
-""Assertion 16"": ""assert property (StateData[0] |-> !StateSFD);"",
-""Assertion 17"": ""assert property (StateDrop |-> !StateSFD);"",
-""Assertion 18"": ""assert property (MRxDEq5 == 1'b0 && StatePreamble == 1'b1 |-> StateSFD == 1'b0);"",
-""Assertion 19"": ""assert property (MRxDV == 1'b0 |-> StateSFD == 1'b0);"",
+""Assertion 13"": ""assert property (StartData0 |=> !StateSFD);"",
+""Assertion 14"": ""assert property (StartPreamble |=> !StateSFD);"",
+""Assertion 15"": ""assert property (StateSFD && !StartIdle && !MRxDEqD |=> StateSFD);"",
+""Assertion 16"": ""assert property (StateData0 |=> !StateSFD);"",
+""Assertion 17"": ""assert property (StateDrop |=> !StateSFD);"",
+""Assertion 18"": ""assert property ((~MRxDEq5 & StatePreamble) |=> ~StateSFD);"",
+""Assertion 19"": ""assert property (MRxDV == 0 |=> StateSFD == 0);"",
 ""Assertion 20"": ""assert property (StartIdle |-> !StateDrop);"",
 ""Assertion 21"": ""assert property (StartDrop |-> StateDrop);"",
-""Assertion 22"": ""assert property ((StateDrop == 1) && (StartIdle == 0) |-> (StateDrop == 1));"",
-""Assertion 23"": ""assert property (StateSFD && !StartDrop |-> !StateDrop);"",
-""Assertion 24"": ""assert property (StateData[0] && !StartDrop |=> !StateDrop);"",
+""Assertion 22"": ""assert property (StateDrop && ~StartIdle |=> StateDrop);"",
+""Assertion 23"": ""assert property (StateSFD && !StartDrop |=> !StateDrop);"",
+""Assertion 24"": ""assert property (StateData0 && !StartDrop |=> !StateDrop);"",
 ""Assertion 25"": ""assert property (StatePreamble |=> !StateDrop);"",
 ""Assertion 26"": ""assert property (StateData1 |=> !StateDrop);"",
-""Assertion 27"": ""assert property (~MRxDV |-> ~StateDrop);"",
-""Assertion 28"": ""assert property (Transmitting == 1'b0 && StateIdle == 1'b1 |-> StateDrop == 1'b0);"",
+""Assertion 27"": ""assert property (MRxDV == 0 |=> StateDrop == 0);"",
+""Assertion 28"": ""assert property ((~Transmitting & StateIdle) |=> ~StateDrop);"",
 ""Assertion 29"": ""assert property (StartIdle |=> StateIdle);"",
-""Assertion 30"": ""assert property (StartDrop |-> (StateIdle == 1'b0));"",
+""Assertion 30"": ""assert property (StartDrop |=> !StateIdle);"",
 ""Assertion 31"": ""assert property (StartSFD |=> !StateIdle);"",
-""Assertion 32"": ""assert property (StartPreamble |-> !StateIdle);"",
+""Assertion 32"": ""assert property (StartPreamble |=> !StateIdle);"",
 ""Assertion 33"": ""assert property (MRxDV |=> !StateIdle);"",
-""Assertion 34"": ""assert property (!MRxDV |-> StateIdle);""
+""Assertion 34"": ""assert property (!MRxDV |=> StateIdle);""
 }"
 Gray_To_Binary,"module Gray_To_Binary #(
 	parameter DATA_WIDTH = 3
@@ -1466,7 +2023,7 @@ endmodule","{
     ""Assertion Explaination"": ""convert the output binary code to Gray code and it should equal the input Gray code""
   }
 }","{
-""Assertion 1"": ""assert property (((bin >> 1) ^ bin) == gray);""
+""Assertion 1"": ""assert property (gray == (bin ^ (bin >> 1)));""
 }"
 delay,"// Greg Stitt
 // University of Florida
@@ -1701,9 +2258,9 @@ endmodule
     ""Assertion Explaination"": ""when the enable signal is reset (0), then the output delayed signal remains unchanged from the next clock cycle""
   }
 }","{
-""Assertion 1"": ""assert property ((count < CYCLES) || ($past(en, CYCLES) && (out == $past(in, CYCLES, en))));"",
+""Assertion 1"": ""assert property ((count < CYCLES) || (out == $past(in, CYCLES, en)));"",
 ""Assertion 2"": ""assert property ((count == CYCLES) || (out == RESET_VALUE));"",
-""Assertion 3"": ""assert property (en == 1'b0 |-> $stable(out));""
+""Assertion 3"": ""assert property ($fell(en) |=> $stable(out));""
 }"
 arb2,"module arb2(clk, rst, req1, req2, gnt1, gnt2);
 
@@ -1875,14 +2432,14 @@ endmodule
     ""Assertion Explaination"": ""when request signal from client 2 equals 1 and request signal from client 1 equals 0, then grant signal for client 2 equals 1 from the current clock cycle""
   }
 }","{
-""Assertion 1"": ""assert property (state && req2 |-> (gnt1 == 0));"",
+""Assertion 1"": ""assert property (state && req2 |-> !gnt1);"",
 ""Assertion 2"": ""assert property (req1 && !state |-> gnt1);"",
-""Assertion 3"": ""assert property (!req1 |-> !gnt1);"",
-""Assertion 4"": ""assert property ((req1 == 1) && (req2 == 0) |-> (gnt1 == 1));"",
-""Assertion 5"": ""assert property ((req1 && !state) |-> (gnt2 == 0));"",
+""Assertion 3"": ""assert property (req1 == 0 |-> gnt1 == 0);"",
+""Assertion 4"": ""assert property (req1 && !req2 |-> gnt1);"",
+""Assertion 5"": ""assert property (req1 && !state |-> !gnt2);"",
 ""Assertion 6"": ""assert property (req2 && state |-> gnt2);"",
 ""Assertion 7"": ""assert property (req2 == 0 |-> gnt2 == 0);"",
-""Assertion 8"": ""assert property (req2 && !req1 |-> gnt2);""
+""Assertion 8"": ""assert property ((!req1 && req2) |-> (gnt2));""
 }"
 Edge_Detector,"module Edge_Detector (
 	input  clk,
@@ -1931,7 +2488,7 @@ endmodule","{
     ""Assertion Explaination"": ""the output signal indicates whether a rising edge can be detected on the delayed version of the input signal""
   }
 }","{
-""Assertion 1"": ""assert property ($rose(deldin) |-> dout);""
+""Assertion 1"": ""assert property ($rose(din) |=> dout);""
 }"
 VGA,"module VGA #(localparam  size = 1, localparam h_bits = 7, localparam v_bits = 5) (input clk, input rst, output reg disp_ena, output reg n_blank, output reg n_sync, output reg [h_bits-1:0] col, output reg [v_bits-1:0] row);
 
@@ -2016,7 +2573,7 @@ endmodule
   ""Assertion Explaination"": ""eventually, the reset signal equal 1 or the display enable signal equals 1""
 }
 }","{
-""Assertion 1"": ""assert property (s_eventually (rst == 1 || disp_ena == 1));""
+""Assertion 1"": ""assert property (s_eventually (rst || disp_ena));""
 }"
 simple_router,"module simple_router #(
 	parameter DATA_WIDTH = 32
@@ -2153,11 +2710,11 @@ endmodule","{
     ""Assertion Explaination"": ""when the data input enable signal is asserted and the address signal equals 3, then the data output signal for address 3 equals the data input signal and the data output signals for addresses 0, 1, and 2 are equal to zero from the current clock cycle""
   }
 }","{
-""Assertion 1"": ""assert property (din_en || (dout0 == {DATA_WIDTH{1'b0}} && dout1 == {DATA_WIDTH{1'b0}} && dout2 == {DATA_WIDTH{1'b0}} && dout3 == {DATA_WIDTH{1'b0}}));"",
-""Assertion 2"": ""assert property (din_en && (addr == 2'd0) |-> (dout0 == din && dout1 == 0 && dout2 == 0 && dout3 == 0));"",
-""Assertion 3"": ""assert property (din_en && (addr == 2'd1) |-> (dout1 == din && dout0 == 0 && dout2 == 0 && dout3 == 0));"",
-""Assertion 4"": ""assert property ((din_en && addr == 2'd2) |-> (dout2 == din && dout0 == {DATA_WIDTH{1'b0}} && dout1 == {DATA_WIDTH{1'b0}} && dout3 == {DATA_WIDTH{1'b0}}));"",
-""Assertion 5"": ""assert property (din_en && (addr == 2'd3) |-> ((dout3 == din) && (dout0 == {DATA_WIDTH{1'b0}}) && (dout1 == {DATA_WIDTH{1'b0}}) && (dout2 == {DATA_WIDTH{1'b0}})));""
+""Assertion 1"": ""assert property (din_en || (dout0 == 0 && dout1 == 0 && dout2 == 0 && dout3 == 0));"",
+""Assertion 2"": ""assert property ((din_en && (addr == 2'd0) |-> ((dout0 == din) && (dout1 == 0) && (dout2 == 0) && (dout3 == 0)));"",
+""Assertion 3"": ""assert property ((din_en && (addr == 2'd1)) |-> (dout1 == din) && (dout0 == 0) && (dout2 == 0) && (dout3 == 0));"",
+""Assertion 4"": ""assert property ((din_en && (addr == 2'd2)) |-> ((dout2 == din) && (dout0 == 0) && (dout1 == 0) && (dout3 == 0)));"",
+""Assertion 5"": ""assert property ((din_en && (addr == 2'd3)) |-> (dout3 == din) && (dout0 == 0) && (dout1 == 0) && (dout2 == 0));""
 }"
 a25_wishbone,"//////////////////////////////////////////////////////////////////
 //                                                              //
@@ -2775,11 +3332,11 @@ endmodule
   }
 }","{
 ""Assertion 1"": ""assert property ((wishbone_st == WB_IDLE) |=> (wishbone_st == WB_IDLE || wishbone_st == WB_BURST1 || wishbone_st == WB_WAIT_ACK));"",
-""Assertion 2"": ""assert property (wishbone_st == WB_BURST1 && i_wb_ack |=> wishbone_st == WB_BURST2);"",
-""Assertion 3"": ""assert property (wishbone_st == WB_BURST2 && i_wb_ack |-> (wishbone_st == WB_BURST3));"",
-""Assertion 4"": ""assert property ((wishbone_st == WB_BURST3 && i_wb_ack) |-> (wishbone_st == WB_WAIT_ACK));"",
-""Assertion 5"": ""assert property ((wishbone_st == WB_WAIT_ACK) && (extra_write_r || !i_wb_ack) |-> (wishbone_st == WB_WAIT_ACK));"",
-""Assertion 6"": ""assert property ((wishbone_st == WB_WAIT_ACK && !extra_write_r && i_wb_ack) |-> (wishbone_st == WB_IDLE));""
+""Assertion 2"": ""assert property ((wishbone_st == WB_BURST1 && i_wb_ack) |=> (wishbone_st == WB_BURST2));"",
+""Assertion 3"": ""assert property ((wishbone_st == WB_BURST2 && i_wb_ack) |=> (wishbone_st == WB_BURST3));"",
+""Assertion 4"": ""assert property ((wishbone_st == WB_BURST3 && i_wb_ack) |=> (wishbone_st == WB_WAIT_ACK));"",
+""Assertion 5"": ""assert property ((wishbone_st == WB_WAIT_ACK && (extra_write_r || !i_wb_ack)) |=> (wishbone_st == WB_WAIT_ACK));"",
+""Assertion 6"": ""assert property ((wishbone_st == WB_WAIT_ACK && !extra_write_r && i_wb_ack) |=> (wishbone_st == WB_IDLE));""
 }"
 second_largest,"module second_largest #(parameter
   DATA_WIDTH = 32
@@ -2860,7 +3417,7 @@ endmodule","{
     ""Assertion Explaination"": ""the maximum value held equals 0 or the maximum value held is greater-than the second largest value held""
   }
 }","{
-""Assertion 1"": ""assert property (max_q == 0 || max_q > max2_q);""
+""Assertion 1"": ""assert property ((max_q == 0) || (max_q > max2_q));""
 }"
 reversing_bits,"module reversing_bits #(
 	parameter DATA_WIDTH=3
@@ -4544,18 +5101,18 @@ endmodule","{
     ""Assertion Explaination"": ""when the freeze signal for the ID stage is reset (0) and the opcode field of the instruction in the IF stage equals the SFXX opcode `OR1200_OR32_SFXX, then the signal controlling immediate value selection equals 0 from the next clock cycle""
   }
 }","{
-""Assertion 1"": ""assert property (!ex_freeze && ex_delayslot_dsi && !ex_delayslot_nop |-> (ex_delayslot_nop == 1'b0 && ex_delayslot_dsi == 1'b0));"",
-""Assertion 2"": ""assert property ((!ex_freeze && (id_freeze || ex_flushpipe)) |=> (ex_macrc_op == 0));"",
+""Assertion 1"": ""assert property ((!ex_freeze && ex_delayslot_dsi && !ex_delayslot_nop) |=> (!ex_delayslot_nop && !ex_delayslot_dsi));"",
+""Assertion 2"": ""assert property ((!ex_freeze && (id_freeze || ex_flushpipe)) |=> !ex_macrc_op);"",
 ""Assertion 3"": ""assert property (id_flushpipe |=> (id_insn == {`OR1200_OR32_NOP, 26'h041_0000}));"",
-""Assertion 4"": ""assert property ((~ex_freeze) && (id_freeze || ex_flushpipe) |-> (ex_insn == {`OR1200_OR32_NOP, 26'h041_0000}));"",
-""Assertion 5"": ""assert property ((id_freeze == 1'b0) && (if_insn[31:26] == `OR1200_OR32_JALR) |-> (sel_imm == 1'b0));"",
-""Assertion 6"": ""assert property (id_freeze == 1'b0 && if_insn[31:26] == `OR1200_OR32_JR |-> sel_imm == 1'b0);"",
-""Assertion 7"": ""assert property (((!id_freeze) && (if_insn[31:26] == `OR1200_OR32_RFE)) |=> (sel_imm == 1'b0));"",
-""Assertion 8"": ""assert property (!id_freeze && (if_insn[31:26] == `OR1200_OR32_MFSPR) |-> (sel_imm == 0));"",
-""Assertion 9"": ""assert property (!id_freeze && (if_insn[31:26] == `OR1200_OR32_MTSPR) |-> (sel_imm == 0));"",
-""Assertion 10"": ""assert property (!id_freeze && (if_insn[31:26] == `OR1200_OR32_XSYNC) |=> (sel_imm == 1'b0));"",
-""Assertion 11"": ""assert property (     (!id_freeze && (if_insn[31:26] == `OR1200_OR32_SW)) |=> (sel_imm == 0) );"",
-""Assertion 12"": ""assert property (( !id_freeze && (if_insn[31:26] == `OR1200_OR32_SB) ) |=> ( sel_imm == 1'b0 ) );"",
-""Assertion 13"": ""assert property ((id_freeze == 0) && (if_insn[31:26] == `OR1200_OR32_ALU) |-> (sel_imm == 0));"",
-""Assertion 14"": ""assert property (!id_freeze && (if_insn[31:26] == `OR1200_OR32_SFXX) |-> (sel_imm == 0));""
+""Assertion 4"": ""assert property ((ex_freeze == 0 && (id_freeze == 1 || ex_flushpipe == 1)) |=> (ex_insn == {`OR1200_OR32_NOP, 26'h041_0000}));"",
+""Assertion 5"": ""assert property ((!id_freeze && (if_insn[31:26] == `OR1200_OR32_JALR)) |=> (sel_imm == 0));"",
+""Assertion 6"": ""assert property (!id_freeze && (if_insn[31:26] == `OR1200_OR32_JR) |=> !sel_imm);"",
+""Assertion 7"": ""assert property ((!id_freeze && (if_insn[31:26] == `OR1200_OR32_RFE)) |=> !sel_imm);"",
+""Assertion 8"": ""assert property ((!id_freeze && (if_insn[31:26] == `OR1200_OR32_MFSPR)) |=> (sel_imm == 1'b0));"",
+""Assertion 9"": ""assert property ((!id_freeze && (if_insn[31:26] == `OR1200_OR32_MTSPR)) |=> !sel_imm);"",
+""Assertion 10"": ""assert property ((!id_freeze && (if_insn[31:26] == `OR1200_OR32_XSYNC)) |=> !sel_imm);"",
+""Assertion 11"": ""assert property ((!id_freeze && (if_insn[31:26] == `OR1200_OR32_SW)) |=> (sel_imm == 0));"",
+""Assertion 12"": ""assert property (!id_freeze && (if_insn[31:26] == `OR1200_OR32_SB) |=> !sel_imm);"",
+""Assertion 13"": ""assert property ((!id_freeze && (if_insn[31:26] == `OR1200_OR32_ALU)) |=> !sel_imm);"",
+""Assertion 14"": ""assert property ((!id_freeze && (if_insn[31:26] == `OR1200_OR32_SFXX)) |=> !sel_imm);""
 }"

@@ -8,10 +8,12 @@ with open("Src/Config.yml") as file:
     config = yaml.safe_load(file)
 # Load your PDFs
 OpenAI_API_Key = config["Openai_API_Key"]
-Model_Name = "gpt-4o-mini"
+DeepSeek_API_Key = config["DeepSeek_API_Key"]
+Model_Name = config["Model_Name"]
 
 client = OpenAI(
-        api_key=OpenAI_API_Key
+        api_key=DeepSeek_API_Key,
+        base_url="https://api.deepseek.com"
 )
 
 
