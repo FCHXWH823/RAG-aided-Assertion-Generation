@@ -1,5 +1,4 @@
-Master Module,Code,golden_assertions,llm_assertions
-delay,"// Greg Stitt
+// Greg Stitt
 // University of Florida
 //
 // This file illustrates how to implement a versatile delay module structurally
@@ -11,7 +10,7 @@ delay,"// Greg Stitt
 
 module register
   #(
-    parameter WIDTH = 8,
+    parameter WIDTH,
     parameter logic HAS_ASYNC_RESET = 1'b1,
     parameter logic RESET_ACTIVATION_LEVEL = 1'b1,
     parameter logic [WIDTH-1:0] RESET_VALUE = '0
@@ -43,7 +42,6 @@ module register
       end
    endgenerate
 endmodule // register
-
 
 // Module: delay
 // Description: This module delays a provided WIDTH-bit input by CYCLES cycles.
@@ -84,17 +82,17 @@ module delay
       // the name, $error only created a warning in the version of Quartus
       // used for testing.
       //
-      // $error(""ERROR: CYCLES parameter must be >= 0."");
+      // $error("ERROR: CYCLES parameter must be >= 0.");
 
       // $fatal does caused Quartus synthesis to terminate, but is not 
       // supported by every synthesis tool.
       //
-      // $fatal(""ERROR: CYCLES parameter must be >= 0."");
+      // $fatal("ERROR: CYCLES parameter must be >= 0.");
    end
    if (WIDTH < 1) begin
       width_parameter_must_be_gt_0();      
-      //$error(""ERROR: WIDTH parameter must be >= 1."");
-      //$fatal(1, ""ERROR: WIDTH parameter must be >= 1."");      
+      //$error("ERROR: WIDTH parameter must be >= 1.");
+      //$fatal(1, "ERROR: WIDTH parameter must be >= 1.");      
    end
 
    // Create an array of WIDTH-bit signals, which will connect all the registers
@@ -108,7 +106,7 @@ module delay
    // the total number of elements.
    //
    // The CYCLES+1 notation is short for [0:CYCLES+1-1]. A common convention is
-   // to use ""downto"" syntax for the packed array, and ""to"" syntax for the
+   // to use "downto" syntax for the packed array, and "to" syntax for the
    // unpacked array. Most people are used to thinking of arrays starting at 
    // index 0, and the MSB starting at the highest number.
    //
@@ -145,94 +143,17 @@ int count;
 always_ff @(posedge clk or posedge rst)
 if (rst) count = 0;
 else if (en == 1'b1 && count < CYCLES) count ++;
-endmodule
+assert property(@(posedge clk) disable iff (rst) count < CYCLES || out == $past(in, CYCLES, en));
 
-","{
-  ""Assertion 1"": {
-    ""clock signal condition"": ""@(posedge clk)"",
-    ""disable condition"": ""disable iff (rst)"",
-    ""logical expression"": ""count < CYCLES || out == $past(in, CYCLES, en)"",
-    ""Signals"": [
-      ""count"",
-      ""CYCLES"",
-      ""out"",
-      ""in"",
-      ""en""
-    ],
-    ""Signal Explanations"": {
-      ""count"": ""register that counts cycles"",
-      ""CYCLES"": ""parameter specifying the number of delay cycles"",
-      ""out"": ""output delayed signal"",
-      ""in"": ""input signal to be delayed"",
-      ""en"": ""enable signal that stalls the delay when not asserted""
-    },
-    ""Logical Operators"": [
-      ""<"",
-      ""||"",
-      ""=="",
-      ""$past""
-    ],
-    ""Logical Operators Explanation"": {
-      ""<"": ""less than"",
-      ""||"": ""logical or"",
-      ""=="": ""equal"",
-      ""$past"": ""the last several clock cycles (returning the value of a signal from a specified number of cycles in the past under the given enable condition)""
-    },
-    ""Assertion Explaination"": ""the register counting cycles is less than the parameter specifying the number of delay cycles or the output delayed signal equals the value of the input signal from the last several clock cycles (with a delay of the specified number of cycles under the enable condition)""
-  },
-  ""Assertion 2"": {
-    ""clock signal condition"": ""@(posedge clk)"",
-    ""disable condition"": ""disable iff (rst)"",
-    ""logical expression"": ""count == CYCLES || out == RESET_VALUE"",
-    ""Signals"": [
-      ""count"",
-      ""CYCLES"",
-      ""out"",
-      ""RESET_VALUE""
-    ],
-    ""Signal Explanations"": {
-      ""count"": ""register that counts cycles"",
-      ""CYCLES"": ""parameter specifying the number of delay cycles"",
-      ""out"": ""output delayed signal"",
-      ""RESET_VALUE"": ""the constant value to which registers are reset""
-    },
-    ""Logical Operators"": [
-      ""=="",
-      ""||"",
-      ""==""
-    ],
-    ""Logical Operators Explanation"": {
-      ""=="": ""equal"",
-      ""||"": ""logical or""
-    },
-    ""Assertion Explaination"": ""the register counting cycles equals the parameter specifying the number of delay cycles or the output delayed signal equals the constant value used for reset""
-  },
-  ""Assertion 3"": {
-    ""clock signal condition"": ""@(posedge clk)"",
-    ""disable condition"": ""disable iff (rst)"",
-    ""logical expression"": ""!en |=> $stable(out)"",
-    ""Signals"": [
-      ""en"",
-      ""out""
-    ],
-    ""Signal Explanations"": {
-      ""en"": ""enable signal that stalls the delay when not asserted"",
-      ""out"": ""output delayed signal""
-    },
-    ""Logical Operators"": [
-      ""!"",
-      ""|=>"",
-      ""$stable""
-    ],
-    ""Logical Operators Explanation"": {
-      ""!"": ""the value of a signal is reset (0)"",
-      ""|=>"": ""a non-overlapping implication operator meaning that if the condition on the left is met then the condition on the right must hold since the next clock cycle"",
-      ""$stable"": ""indicates that the signal remains unchanged from one clock cycle to the next""
-    },
-    ""Assertion Explaination"": ""when the enable signal is reset (0), then the output delayed signal remains unchanged from the next clock cycle""
-  }
-}","{
-""Assertion 1"": ""assert property ((count < CYCLES) || (count >= CYCLES && (out == $past(in, CYCLES, en)));"",
-""Assertion 2"": ""assert property (count == CYCLES || out == RESET_VALUE);"",
-""Assertion 3"": ""assert property (en == 1'b0 |=> ##1 $stable(out));""
-}"
+assert property(@(posedge clk) disable iff (rst) count == CYCLES || out == RESET_VALUE);
+
+assert property(@(posedge clk) disable iff (rst) !en |=> $stable(out));
+
+assert property (@(posedge clk) disable iff (rst) ((count < CYCLES) || (count >= CYCLES && (out == $past(in, CYCLES, en))));
+assert property (@(posedge clk) disable iff (rst) (count < CYCLES || out == $past(in, CYCLES, en)) iff ((count < CYCLES) || (count >= CYCLES && (out == $past(in, CYCLES, en))));
+assert property (@(posedge clk) disable iff (rst) (count == CYCLES || out == RESET_VALUE));
+assert property (@(posedge clk) disable iff (rst) (count == CYCLES || out == RESET_VALUE) iff (count == CYCLES || out == RESET_VALUE));
+assert property (@(posedge clk) disable iff (rst) (en == 1'b0 |=> ##1 $stable(out)));
+assert property (@(posedge clk) disable iff (rst) (!en |=> $stable(out)) iff (en == 1'b0 |=> ##1 $stable(out)));
+
+endmodule
