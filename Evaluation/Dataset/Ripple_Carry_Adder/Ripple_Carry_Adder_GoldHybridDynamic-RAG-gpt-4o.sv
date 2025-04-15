@@ -48,7 +48,7 @@ logic [DATA_WIDTH:0] res;
 assign res = a + b;
 assert property(@(posedge clk) disable iff (~rst) res == sum);
 
-assert property (@(posedge clk) disable iff (~rst) (sum == a + b));
-assert property (@(posedge clk) disable iff (~rst) (res == sum) iff (sum == a + b));
+assert property (@(posedge clk) disable iff (~rst) (sum == $past(a + b)));
+assert property (@(posedge clk) disable iff (~rst) (res == sum) iff (sum == $past(a + b)));
 
 endmodule

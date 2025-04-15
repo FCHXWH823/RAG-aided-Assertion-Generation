@@ -64,7 +64,7 @@ module VGA #(localparam  size = 1, localparam h_bits = 7, localparam v_bits = 5)
 
 assert property (@(posedge clk) s_eventually (rst == 1 || disp_ena == 1));
 
-assert property (@(posedge clk)  (s_eventually ((rst == 1) || (disp_ena == 1))));
-assert property (@(posedge clk)  (s_eventually (rst == 1 || disp_ena == 1)) iff (s_eventually ((rst == 1) || (disp_ena == 1))));
+assert property (@(posedge clk)  (not (rst == 1 || disp_ena == 1) |-> ##[1:$] (rst == 1 || disp_ena == 1)));
+assert property (@(posedge clk)  (s_eventually (rst == 1 || disp_ena == 1)) iff (not (rst == 1 || disp_ena == 1) |-> ##[1:$] (rst == 1 || disp_ena == 1)));
 
 endmodule

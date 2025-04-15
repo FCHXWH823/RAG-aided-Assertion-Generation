@@ -37,7 +37,7 @@ module i2c #(parameter divider = 125, parameter CBITS = 9) (input clk, input rst
 
 assert property(@(posedge clk) s_eventually rst == 1 || scl_not_ena == 1 || stretch == 1);
 
-assert property (@(posedge clk)  (not_rst_scl_not_stretch |-> ##[0:$] (rst || scl_not_ena || stretch)));
-assert property (@(posedge clk)  (s_eventually rst == 1 || scl_not_ena == 1 || stretch == 1) iff (not_rst_scl_not_stretch |-> ##[0:$] (rst || scl_not_ena || stretch)));
+assert property (@(posedge clk)  (eventually ((rst == 1) || (scl_not_ena == 1) || (stretch == 1))));
+assert property (@(posedge clk)  (s_eventually rst == 1 || scl_not_ena == 1 || stretch == 1) iff (eventually ((rst == 1) || (scl_not_ena == 1) || (stretch == 1))));
 
 endmodule

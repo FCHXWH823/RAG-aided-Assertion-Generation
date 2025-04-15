@@ -68,11 +68,11 @@ assert property(@(posedge clk) ~(rd & wr) | (rd & wr & error));
 assert property(@(posedge clk) ~(~data_v_q & rd_en) | (~data_v_q & rd_en & (dout == '0)));
 assert property(@(posedge clk) $onehot0(rd_v));
 
-assert property (@(posedge clk)  (wr && rd |=> error));
-assert property (@(posedge clk)  (~(rd & wr) | (rd & wr & error)) iff (wr && rd |=> error));
-assert property (@(posedge clk)  ((!rd_v && rd) |-> (dout === {DATA_W{1'b0}})));
-assert property (@(posedge clk)  (~(~data_v_q & rd_en) | (~data_v_q & rd_en & (dout == '0))) iff ((!rd_v && rd) |-> (dout === {DATA_W{1'b0}})));
-assert property (@(posedge clk)  (rd_v == 0 || (rd_v != 0 && ((rd_v & (rd_v - 1)) == 0))));
-assert property (@(posedge clk)  ($onehot0(rd_v)) iff (rd_v == 0 || (rd_v != 0 && ((rd_v & (rd_v - 1)) == 0))));
+assert property (@(posedge clk)  ((rd === 1'b1) && (wr === 1'b1) |-> (error === 1'b1)));
+assert property (@(posedge clk)  (~(rd & wr) | (rd & wr & error)) iff ((rd === 1'b1) && (wr === 1'b1) |-> (error === 1'b1)));
+assert property (@(posedge clk)  (rd_en && ~|data_v_q |-> dout == {DATA_W{1'b0}}));
+assert property (@(posedge clk)  (~(~data_v_q & rd_en) | (~data_v_q & rd_en & (dout == '0))) iff (rd_en && ~|data_v_q |-> dout == {DATA_W{1'b0}}));
+assert property (@(posedge clk)  ((rd_v == 1'b0) || ((rd_v & (rd_v - 1)) == 1'b0 && (rd_v != 1'b0))));
+assert property (@(posedge clk)  ($onehot0(rd_v)) iff ((rd_v == 1'b0) || ((rd_v & (rd_v - 1)) == 1'b0 && (rd_v != 1'b0))));
 
 endmodule
