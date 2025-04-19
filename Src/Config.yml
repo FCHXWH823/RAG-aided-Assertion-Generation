@@ -5,7 +5,7 @@ PDF_Name: The Power of Assertions in SystemVerilog
 PDF_Txt: AllTextbooks.txt
 JasperGold_VERIFY: 1
 Model_Name: deepseek-chat
-OpenAI_Model_Name: gpt-4o-mini
+OpenAI_Model_Name: gpt-4o
 DeepSeek_Model_Name: deepseek-chat
 Excute_Folder: ALL_DESIGNS
 Excute_Folders_Basic_Model: [Ripple_Carry_Adder, or1200_operandmuxes, gray, Flip_Flop_Array, PSGBusArb, apb, host_interface, control_unit, Programmable_Sequence_Detector, PWM, module_i2c, delay2, simple_req_ack, Gray_Code_Counter, uartTrans, i2c, uartRec, APB_FSM_Controller, register, SEVEN, arbiter, simple_pipeline, lcd, Parallel_In_Serial_Out_Shift_Reg, fifo]
