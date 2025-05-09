@@ -3388,7 +3388,7 @@ assert property(@(posedge PCLK) (DATA_CONFIG_REG[1] == 0) |-> (ERROR == 0));
 assert property(@(posedge PCLK) (DATA_CONFIG_REG[0] == 0) |-> (ERROR == 0));
 assert property(@(posedge PCLK) (DATA_CONFIG_REG[0] == 1 & DATA_CONFIG_REG[1] == 1) |-> (ERROR == 1));
 
-assert property (@(posedge PCLK)  (fifo_rx_f_empty == 1'b1 |-> RX_EMPTY == 1'b1));
+m
 assert property (@(posedge PCLK)  ((fifo_rx_f_empty == 1) |-> (RX_EMPTY == 1)) iff (fifo_rx_f_empty == 1'b1 |-> RX_EMPTY == 1'b1));
 assert property (@(posedge PCLK)  (fifo_rx_f_empty == 1'b0 |-> RX_EMPTY == 1'b0));
 assert property (@(posedge PCLK)  ((fifo_rx_f_empty == 0) |-> (RX_EMPTY == 0)) iff (fifo_rx_f_empty == 1'b0 |-> RX_EMPTY == 1'b0));

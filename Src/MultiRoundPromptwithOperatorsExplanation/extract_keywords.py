@@ -11,9 +11,13 @@ OpenAI_API_Key = config["Openai_API_Key"]
 DeepSeek_API_Key = config["DeepSeek_API_Key"]
 Model_Name = config["Model_Name"]
 
+# client = OpenAI(
+#         api_key=DeepSeek_API_Key,
+#         base_url="https://api.deepseek.com"
+# )
+
 client = OpenAI(
-        api_key=DeepSeek_API_Key,
-        base_url="https://api.deepseek.com"
+        api_key=OpenAI_API_Key,
 )
 
 
@@ -93,7 +97,7 @@ def extract_related_operators_of_keyword(keywords):
         # nl_sva = "when the third bit of grant output is asserted and in the previous clock cycle the arbitration type selector signal was equal to 1, then in the previous clock cycle the third bit of request input signal must be asserted and the first and second bits of request input signal must not be asserted from the current clock cycle"
         
     for i, keyword in enumerate(keywords, 1):
-        prompt = f"Given a set of systemverilog assertion operatosrs and their explanations as follows:\n {ops_explanation}\n Please extract the most relevant operator from the natural language input \n`{keyword}`\n, but do not return anything if no relevant operator exists。\n"
+        prompt = f"Given a set of systemverilog assertion operatosrs and their explanations as follows:\n {ops_explanation}\n Please extract the most relevant operator from the natural language input \n`{keyword}`\n, but do not return anything if no relevant operator exists.\n"
         completion = client.chat.completions.create(
                     model= Model_Name,
                     messages=[

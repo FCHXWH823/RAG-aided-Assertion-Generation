@@ -1,0 +1,4 @@
+design      assertion explanation                                              RAGSVAG                                                            GPT-4o-mini
+pwm            eventually, the inversion of the output signal becomes true        assert property (@(posedge clk)  (s_eventually (!pulse)));         assert property (@(posedge clk)  (pulse |-> eventually (!pulse)));
+simple_pipeline when the integer register used for counting cycles equals the cycle latency, 
+                then the valid output signal equals the valid input signal LATENCY cycles in the past from the current clock cycle
