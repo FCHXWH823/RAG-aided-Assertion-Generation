@@ -85,9 +85,9 @@ else if (count < LATENCY) count ++;
 assert property(@(posedge clk) disable iff (rst) count < LATENCY |-> valid_out == 1'b0);
 assert property(@(posedge clk) disable iff (rst) count == LATENCY |-> valid_out == $past(valid_in, LATENCY));
 
-assert property (@(posedge clk) disable iff (rst) (@(posedge clk) disable iff (rst)                        (count < LATENCY) |-> (valid_out === 0)));
-assert property (@(posedge clk) disable iff (rst) (count < LATENCY |-> valid_out == 1'b0) iff (@(posedge clk) disable iff (rst)                        (count < LATENCY) |-> (valid_out === 0)));
-assert property (@(posedge clk) disable iff (rst) (@(posedge clk)     (count == LATENCY) |->     ($past(valid_in, LATENCY) == valid_out)));
-assert property (@(posedge clk) disable iff (rst) (count == LATENCY |-> valid_out == $past(valid_in, LATENCY)) iff (@(posedge clk)     (count == LATENCY) |->     ($past(valid_in, LATENCY) == valid_out)));
+assert property (@(posedge clk) disable iff (rst) ((count < LATENCY) |-> (valid_out == 1)));
+assert property (@(posedge clk) disable iff (rst) (count < LATENCY |-> valid_out == 1'b0) iff ((count < LATENCY) |-> (valid_out == 1)));
+assert property (@(posedge clk) disable iff (rst) (@(posedge clk)       (count == LATENCY)         |->       (valid_out == $past(valid_in, LATENCY))));
+assert property (@(posedge clk) disable iff (rst) (count == LATENCY |-> valid_out == $past(valid_in, LATENCY)) iff (@(posedge clk)       (count == LATENCY)         |->       (valid_out == $past(valid_in, LATENCY))));
 
 endmodule

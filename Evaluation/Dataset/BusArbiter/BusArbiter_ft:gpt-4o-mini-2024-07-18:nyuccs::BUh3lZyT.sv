@@ -66,25 +66,25 @@ assert property(@(posedge clk)  (bus_req[2] && !bus_req[1] && !bus_req[0] && bus
 assert property(@(posedge clk)  $rose(bus_grant[1]) |-> ($past(bus_req[1]) && !$past(bus_req[0])));
 assert property(@(posedge clk)  $rose(bus_grant[2]) |-> ($past(bus_req[2]) && !$past(bus_req[1]) && !$past(bus_req[0])));
 
-assert property (@(posedge clk)  (($grant[0] + $grant[1] + $grant[2]) < 2));
-assert property (@(posedge clk)  (bus_grant[0] + bus_grant[1] + bus_grant[2] < 2) iff (($grant[0] + $grant[1] + $grant[2]) < 2));
-assert property (@(posedge clk)  (b1_grant |-> !(b2_grant || b3_grant)));
-assert property (@(posedge clk)  (bus_grant[0] |-> (!bus_grant[1] && !bus_grant[2])) iff (b1_grant |-> !(b2_grant || b3_grant)));
-assert property (@(posedge clk)  (bus_grant[1] |-> ( (bus_grant[0] == 0) && (bus_grant[2] == 0) )));
-assert property (@(posedge clk)  (bus_grant[1] |-> (!bus_grant[0] && !bus_grant[2])) iff (bus_grant[1] |-> ( (bus_grant[0] == 0) && (bus_grant[2] == 0) )));
-assert property (@(posedge clk)  ($fell(bus_grant[2]) |-> (!bus_grant[1] && !bus_grant[0])));
-assert property (@(posedge clk)  (bus_grant[2] |-> (!bus_grant[1] && !bus_grant[0])) iff ($fell(bus_grant[2]) |-> (!bus_grant[1] && !bus_grant[0])));
-assert property (@(posedge clk)  ((bus_grant != 'NO_GRANT && !bus_ack) |=> constant(bus_grant)));
-assert property (@(posedge clk)  (bus_grant != NO_GRANT && bus_ack != 1 |=> $stable(bus_grant)) iff ((bus_grant != 'NO_GRANT && !bus_ack) |=> constant(bus_grant)));
-assert property (@(posedge clk)  (( ( bus_req[0] && bus_grant == NO_GRANT )          ||        ( bus_ack && bus_req[0] ) )   |=>     ( bus_grant[0] && !bus_grant[1] && !bus_grant[2] )));
-assert property (@(posedge clk)  ((bus_req[0] && bus_grant == NO_GRANT) || (bus_ack && bus_req[0]) |=> (bus_grant[0] && !bus_grant[1] && !bus_grant[2])) iff (( ( bus_req[0] && bus_grant == NO_GRANT )          ||        ( bus_ack && bus_req[0] ) )   |=>     ( bus_grant[0] && !bus_grant[1] && !bus_grant[2] )));
-assert property (@(posedge clk)  (( (bus_req[1] && !bus_req[0] && bus_grant == NO_GRANT)       or     (bus_ack && bus_req[1] && !bus_req[2])   )   |=>    (bus_grant[1]      && bus_grant[0] == 1'b0      && bus_grant[2] == 1'b0)));
-assert property (@(posedge clk)  ((bus_req[1] && !bus_req[0] && bus_grant == NO_GRANT) || (bus_ack && bus_req[1] && !bus_req[0]) |=> (!bus_grant[0] && bus_grant[1] && !bus_grant[2])) iff (( (bus_req[1] && !bus_req[0] && bus_grant == NO_GRANT)       or     (bus_ack && bus_req[1] && !bus_req[2])   )   |=>    (bus_grant[1]      && bus_grant[0] == 1'b0      && bus_grant[2] == 1'b0)));
-assert property (@(posedge clk)  ((       ($bus_req[2] && !bus_req[1] && !bus_req[0] && bus_grant == NO_GRANT)       or       (bus_ack && bus_req[2] && !bus_req[1] && !bus_req[0])     ) |->     (bus_grant[2] && !bus_grant[1] && !bus_grant[0])));
-assert property (@(posedge clk)  ((bus_req[2] && !bus_req[1] && !bus_req[0] && bus_grant == NO_GRANT) || (bus_ack && bus_req[2] && !bus_req[0] && !bus_req[1]) |=> (!bus_grant[0] && !bus_grant[1] && bus_grant[2])) iff ((       ($bus_req[2] && !bus_req[1] && !bus_req[0] && bus_grant == NO_GRANT)       or       (bus_ack && bus_req[2] && !bus_req[1] && !bus_req[0])     ) |->     (bus_grant[2] && !bus_grant[1] && !bus_grant[0])));
-assert property (@(posedge clk)  (@(posedge clk)     $rose(bus_grant[1])     |-> ($past(bus_req[1]) && ! $past(bus_req[0]))));
-assert property (@(posedge clk)  ($rose(bus_grant[1]) |-> ($past(bus_req[1]) && !$past(bus_req[0]))) iff (@(posedge clk)     $rose(bus_grant[1])     |-> ($past(bus_req[1]) && ! $past(bus_req[0]))));
-assert property (@(posedge clk)  ($rose(bus_grant[2])    |-> ( bus_req[2]   [$:: -1] == 1          && bus_req[1] && bus_req[0]  [$:: -1] == 0 )));
-assert property (@(posedge clk)  ($rose(bus_grant[2]) |-> ($past(bus_req[2]) && !$past(bus_req[1]) && !$past(bus_req[0]))) iff ($rose(bus_grant[2])    |-> ( bus_req[2]   [$:: -1] == 1          && bus_req[1] && bus_req[0]  [$:: -1] == 0 )));
+assert property (@(posedge clk)  ((bus_grant[2] + bus_grant[1] + bus_grant[0]) < 2));
+assert property (@(posedge clk)  (bus_grant[0] + bus_grant[1] + bus_grant[2] < 2) iff ((bus_grant[2] + bus_grant[1] + bus_grant[0]) < 2));
+assert property (@(posedge clk)  (@(posedge clk) (bus_grant[0] |-> (!bus_grant[1] && !bus_grant[2]))));
+assert property (@(posedge clk)  (bus_grant[0] |-> (!bus_grant[1] && !bus_grant[2])) iff (@(posedge clk) (bus_grant[0] |-> (!bus_grant[1] && !bus_grant[2]))));
+assert property (@(posedge clk)  ($rose(bus_grant[1]) |-> !(bus_grant[0] || bus_grant[2])));
+assert property (@(posedge clk)  (bus_grant[1] |-> (!bus_grant[0] && !bus_grant[2])) iff ($rose(bus_grant[1]) |-> !(bus_grant[0] || bus_grant[2])));
+assert property (@(posedge clk)  (bus_grant[2] -> (!bus_grant[1] && !bus_grant[0])));
+assert property (@(posedge clk)  (bus_grant[2] |-> (!bus_grant[1] && !bus_grant[0])) iff (bus_grant[2] -> (!bus_grant[1] && !bus_grant[0])));
+// assert property (@(posedge clk)  ((!bus_grant == NO_GRANT && !bus_ack)   |->    nexttime stable(bus_grant)));
+// assert property (@(posedge clk)  (bus_grant != NO_GRANT && bus_ack != 1 |=> $stable(bus_grant)) iff ((!bus_grant == NO_GRANT && !bus_ack)   |->    nexttime stable(bus_grant)));
+assert property (@(posedge clk)  ((1'b1   && !bus_req[0] && bus_grant == NO_GRANT)     ||     ( !NO_REQUEST[0] && bus_ack && bus_req[0])   |=> nexttime ( bus_grant[0] && !bus_grant[1] && !bus_grant[2] )));
+assert property (@(posedge clk)  ((bus_req[0] && bus_grant == NO_GRANT) || (bus_ack && bus_req[0]) |=> (bus_grant[0] && !bus_grant[1] && !bus_grant[2])) iff ((1'b1   && !bus_req[0] && bus_grant == NO_GRANT)     ||     ( !NO_REQUEST[0] && bus_ack && bus_req[0])   |=> nexttime ( bus_grant[0] && !bus_grant[1] && !bus_grant[2] )));
+assert property (@(posedge clk)  ((     bus_req[1] && !bus_req[0] && bus_grant == NO_GRANT   ) or (     bus_ack && bus_req[1] && bus_req[0] == 0   )   |->     (prio_req[1] == 1     && prio_req[0] == 0     && prio_req[2] == 0)));
+assert property (@(posedge clk)  ((bus_req[1] && !bus_req[0] && bus_grant == NO_GRANT) || (bus_ack && bus_req[1] && !bus_req[0]) |=> (!bus_grant[0] && bus_grant[1] && !bus_grant[2])) iff ((     bus_req[1] && !bus_req[0] && bus_grant == NO_GRANT   ) or (     bus_ack && bus_req[1] && bus_req[0] == 0   )   |->     (prio_req[1] == 1     && prio_req[0] == 0     && prio_req[2] == 0)));
+assert property (@(posedge clk)  ((!bus_req[2] && !bus_req[1] && bus_grant == NO_GRANT)   or   (bus_ack && bus_req[2] && !bus_req[1] && !bus_req[0])   |->    bus_grant[2] && !bus_grant[1] && !bus_grant[0]));
+assert property (@(posedge clk)  ((bus_req[2] && !bus_req[1] && !bus_req[0] && bus_grant == NO_GRANT) || (bus_ack && bus_req[2] && !bus_req[0] && !bus_req[1]) |=> (!bus_grant[0] && !bus_grant[1] && bus_grant[2])) iff ((!bus_req[2] && !bus_req[1] && bus_grant == NO_GRANT)   or   (bus_ack && bus_req[2] && !bus_req[1] && !bus_req[0])   |->    bus_grant[2] && !bus_grant[1] && !bus_grant[0]));
+assert property (@(posedge clk)  ($rose(bus_grant[1]) ##1 ( (bus_req[1]) && (bus_req[0] == 0) )));
+assert property (@(posedge clk)  ($rose(bus_grant[1]) |-> ($past(bus_req[1]) && !$past(bus_req[0]))) iff ($rose(bus_grant[1]) ##1 ( (bus_req[1]) && (bus_req[0] == 0) )));
+assert property (@(posedge clk)  ($rose(bus_grant[2]) |->     ( ($past(bus_req[2]) == 1)       &&       ( ($past(bus_req[1]) == 0) && ($past(bus_req[0]) == 0) ) )));
+assert property (@(posedge clk)  ($rose(bus_grant[2]) |-> ($past(bus_req[2]) && !$past(bus_req[1]) && !$past(bus_req[0]))) iff ($rose(bus_grant[2]) |->     ( ($past(bus_req[2]) == 1)       &&       ( ($past(bus_req[1]) == 0) && ($past(bus_req[0]) == 0) ) )));
 
 endmodule

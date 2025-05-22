@@ -90,8 +90,16 @@ def extract_csv_from_dataset(csv_name: str):
     # df_new.to_csv("Evaluation/asserted-verilog-evaluation-dataset-transform-new.csv")
 
 # model = "deepseek-chat"
-model = "gpt-4o-mini"
-methods = ["HybridRAG","HybridDynamic-RAG"]
+model = "ft:gpt-4o-mini-2024-07-18:nyuccs::BUh3lZyT"
+methods = [""]
+modified_model = "finetuned_gpt-4o-mini"
+
+def modify_model_name():
+    for folder in os.listdir("Evaluation/Dataset"):
+        folder_path = os.path.join("Evaluation/Dataset/",folder)
+        # os.system(f"rm {folder_path}/fpv__QueryExpand-Dynamic-RAG-Openai-4o-mini.rpt")
+        if os.path.isdir(folder_path):
+            os.system(f"cp {folder_path}/{folder}_{model}.sv {folder_path}/{folder}_{modified_model}.sv")
 
 def generate_fpv():
 
@@ -101,16 +109,16 @@ def generate_fpv():
         if os.path.isdir(folder_path):
             with open(f"{folder_path}/fpv.tcl","r") as file:
                 fpv_tcl = file.read()
-            for method in methods:
-                fpv_tcl_method = fpv_tcl.replace(f"./{folder}_assertion.sv",f"./{folder}_{method}-{model}.sv").replace("fpv.rpt",f"fpv_{method}-{model}.rpt")
-                with open(f"{folder_path}/fpv_{method}-{model}.tcl","w") as file:
-                    file.write(fpv_tcl_method)
+            fpv_tcl_method = fpv_tcl.replace(f"./{folder}_assertion.sv",f"./{folder}_{modified_model}.sv").replace("fpv.rpt",f"fpv_{modified_model}.rpt")
+            with open(f"{folder_path}/fpv_{modified_model}.tcl","w") as file:
+                file.write(fpv_tcl_method)
             
             
             
 
 
 if __name__ == '__main__':
+    modify_model_name()
     generate_fpv()
     # extract_csv_from_dataset("evaluation-dataset.csv")
 

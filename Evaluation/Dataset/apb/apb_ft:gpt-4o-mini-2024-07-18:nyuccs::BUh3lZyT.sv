@@ -176,17 +176,17 @@ assert property(@(posedge PCLK) (TX_EMPTY == 0) |-> (INT_TX == 0));
 assert property(@(posedge PCLK) (RX_EMPTY == 0) |-> (INT_RX == 0));  
 assert property(@(posedge PCLK) (RX_EMPTY == 1) |-> (INT_RX == 1));
 
-assert property (@(posedge PCLK)  ((!ERROR) |-> (!PSLVERR)));
-assert property (@(posedge PCLK)  ((ERROR == 0) |-> (PSLVERR == 0)) iff ((!ERROR) |-> (!PSLVERR)));
-assert property (@(posedge PCLK)  ((ERROR == 1’b1) |-> (PSLVERR == 1’b1)));
-assert property (@(posedge PCLK)  ((ERROR == 1) |-> (PSLVERR == 1)) iff ((ERROR == 1’b1) |-> (PSLVERR == 1’b1)));
-assert property (@(posedge PCLK)  (@(posedge PCLK)     (tx_empty == 1'b1) |-> (int_tx == 1'b1)));
-assert property (@(posedge PCLK)  ((TX_EMPTY == 1) |-> (INT_TX == 1)) iff (@(posedge PCLK)     (tx_empty == 1'b1) |-> (int_tx == 1'b1)));
-assert property (@(posedge PCLK)  (!TX_EMPTY |-> !INT_TX));
-assert property (@(posedge PCLK)  ((TX_EMPTY == 0) |-> (INT_TX == 0)) iff (!TX_EMPTY |-> !INT_TX));
-assert property (@(posedge PCLK)  (!RX_EMPTY |-> !INT_RX));
-assert property (@(posedge PCLK)  ((RX_EMPTY == 0) |-> (INT_RX == 0)) iff (!RX_EMPTY |-> !INT_RX));
-assert property (@(posedge PCLK)  (@(posedge PCLK) (RX_EMPTY |-> INT_RX)));
-assert property (@(posedge PCLK)  ((RX_EMPTY == 1) |-> (INT_RX == 1)) iff (@(posedge PCLK) (RX_EMPTY |-> INT_RX)));
+assert property (@(posedge PCLK)  (!ERROR |-> PSLVERR == 0));
+assert property (@(posedge PCLK)  ((ERROR == 0) |-> (PSLVERR == 0)) iff (!ERROR |-> PSLVERR == 0));
+assert property (@(posedge PCLK)  ((ERROR == 1) |-> (PSLVERR == 1)));
+assert property (@(posedge PCLK)  ((ERROR == 1) |-> (PSLVERR == 1)) iff ((ERROR == 1) |-> (PSLVERR == 1)));
+assert property (@(posedge PCLK)  ((TX_EMPTY == 1) |-> (INT_TX == TX_EMPTY)));
+assert property (@(posedge PCLK)  ((TX_EMPTY == 1) |-> (INT_TX == 1)) iff ((TX_EMPTY == 1) |-> (INT_TX == TX_EMPTY)));
+assert property (@(posedge PCLK)  ((!TX_EMPTY) |-> (!INT_TX)));
+assert property (@(posedge PCLK)  ((TX_EMPTY == 0) |-> (INT_TX == 0)) iff ((!TX_EMPTY) |-> (!INT_TX)));
+assert property (@(posedge PCLK)  ((!RX_EMPTY) |-> (!RX_EMPTY)));
+assert property (@(posedge PCLK)  ((RX_EMPTY == 0) |-> (INT_RX == 0)) iff ((!RX_EMPTY) |-> (!RX_EMPTY)));
+assert property (@(posedge PCLK)  ($rose(WRITE_DATA_ON_TX == PADDR && (READ_DATA_ON_RX == 0)) |-> (INT_RX == RX_EMPTY)));
+assert property (@(posedge PCLK)  ((RX_EMPTY == 1) |-> (INT_RX == 1)) iff ($rose(WRITE_DATA_ON_TX == PADDR && (READ_DATA_ON_RX == 0)) |-> (INT_RX == RX_EMPTY)));
 
 endmodule

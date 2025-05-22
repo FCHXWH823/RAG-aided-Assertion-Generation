@@ -2,17 +2,15 @@ import os
 import sys
 
 # model = "deepseek-chat"
-model = "gpt-4o-mini"
-methods = ["HybridRAG","HybridDynamic-RAG"]
-
+model = "ft:gpt-4o-mini-2024-07-18:nyuccs::BUh3lZyT"
+modified_model = "finetuned_gpt-4o-mini"
 def excute_in_each_folder(folder = "", a=1, b=1, c=1, d=1, e=1):
     folder_path = os.path.join("./",folder)
     # print(f"a:{a}, b:{b}, c:{c}")
     os.system(f"cd {folder_path}; rm -rf jqproject")
     if os.path.isdir(folder_path):
-        for method in methods:
-            os.system(f"cd {folder_path}; jg -no_gui fpv_{method}-{model}.tcl")
-            print(f"============================finished fpv_{method}-{model}.tcl==================================")
+        os.system(f"cd {folder_path}; jg -no_gui fpv_{modified_model}.tcl")
+        print(f"============================finished fpv_{modified_model}.tcl==================================")
         os.system(f"cd {folder_path}; rm -r jgproject")
 
 def excute_in_folders_1():

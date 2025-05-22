@@ -40,7 +40,7 @@ begin
 end
 assert property(@(posedge clk) disable iff (~resetn) $rose(din_f_q) == dout);
 
-assert property (@(posedge clk) disable iff (~resetn) (@(posedge clk) ##1 $rose(din)));
-assert property (@(posedge clk) disable iff (~resetn) ($rose(din_f_q) == dout) iff (@(posedge clk) ##1 $rose(din)));
+assert property (@(posedge clk) disable iff (~resetn) (@(posedge clk) $rose(din)));
+assert property (@(posedge clk) disable iff (~resetn) ($rose(din_f_q) == dout) iff (@(posedge clk) $rose(din)));
 
 endmodule
