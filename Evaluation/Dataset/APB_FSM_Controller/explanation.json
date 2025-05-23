@@ -35,7 +35,7 @@
       "&&": "logical AND",
       "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"
     },
-    "Assertion Explaination": "Property to verify the transition from ST_IDLE that when the current state of the FSM equals idle, transaction is valid, and a write operation is active, then the next state of the FSM equals write wait from the current clock cycle"
+    "Assertion Explaination": "Property to verify the transition from ST_IDLE that when the current state of the FSM equals ST_IDLE, transaction is valid, and a write operation is active, then the next state of the FSM equals ST_WWAIT wait from the current clock cycle"
   },
   "Assertion 3": {
     "clock signal condition": "@(posedge Hclk)",
@@ -55,7 +55,7 @@
       "!": "the value of a signal is reset (0)",
       "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"
     },
-    "Assertion Explaination": "Property to verify the transition from ST_IDLE that when the current state of the FSM equals idle, transaction is valid, and the write operation is not active, then the next state of the FSM equals read from the current clock cycle"
+    "Assertion Explaination": "Property to verify the transition from ST_IDLE that when the current state of the FSM equals ST_IDLE, transaction is valid, and the write operation is not active, then the next state of the FSM equals ST_READ from the current clock cycle"
   },
   "Assertion 4": {
     "clock signal condition": "@(posedge Hclk)",
@@ -74,7 +74,7 @@
       "!": "the value of a signal is reset (0)",
       "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"
     },
-    "Assertion Explaination": "Property to verify the transition from ST_IDLE that when the current state of the FSM equals idle and transaction is not valid, then the next state of the FSM equals idle from the current clock cycle"
+    "Assertion Explaination": "Property to verify the transition from ST_IDLE that when the current state of the FSM equals ST_IDLE and transaction is not valid, then the next state of the FSM equals ST_IDLE from the current clock cycle"
   },
   "Assertion 5": {
     "clock signal condition": "@(posedge Hclk)",
@@ -93,7 +93,7 @@
       "!": "the value of a signal is reset (0)",
       "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"
     },
-    "Assertion Explaination": "Property to verify the transition from ST_WWAIT that when the current state of the FSM equals write wait and transaction is not valid, then the next state of the FSM equals write from the current clock cycle"
+    "Assertion Explaination": "Property to verify the transition from ST_WWAIT that when the current state of the FSM equals ST_WWAIT and transaction is not valid, then the next state of the FSM equals ST_WRITE from the current clock cycle"
   },
   "Assertion 6": {
     "clock signal condition": "@(posedge Hclk)",
@@ -111,7 +111,8 @@
       "&&": "logical AND",
       "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"
     },
-    "Assertion Explaination": "Property to verify the transition from ST_WWAIT that when the current state of the FSM equals write wait and transaction is valid, then the next state of the FSM equals write pipelined from the currect clock cycle"
+    "Assertion Explaination": "Property to verify the transition from ST_WWAIT that when the current state of the FSM equals ST_WWAIT and transaction is valid, then the next state of the FSM equals ST_WRITEP from the currect clock cycle"
+
   },
   "Assertion 7": {
     "clock signal condition": "@(posedge Hclk)",
@@ -127,7 +128,7 @@
       "==": "equal",
       "|->": "an overlapping implication operator meaning that if the condition on the left is met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"
     },
-    "Assertion Explaination": "Property to verify the transition from ST_READ that when the current state of the FSM equals read, then the next state of the FSM equals read enable from the current clock cycle"
+    "Assertion Explaination": "Property to verify the transition from ST_READ that when the current state of the FSM equals ST_READ, then the next state of the FSM equals ST_RENABLE from the current clock cycle"
   },
   "Assertion 8": {
     "clock signal condition": "@(posedge Hclk)",
@@ -146,7 +147,7 @@
       "!": "the value of a signal is reset (0)",
       "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"
     },
-    "Assertion Explaination": "Property to verify the transition from ST_WRITE that when the current state of the FSM equals write and transaction is not valid, then the next state of the FSM equals write enable from the current clock cycle"
+    "Assertion Explaination": "Property to verify the transition from ST_WRITE that when the current state of the FSM equals ST_WRITE and transaction is not valid, then the next state of the FSM equals ST_WENABLE from the current clock cycle"
   },
   "Assertion 9": {
     "clock signal condition": "@(posedge Hclk)",
@@ -164,7 +165,7 @@
       "&&": "logical AND",
       "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"
     },
-    "Assertion Explaination": "Property to verify the transition from ST_WRITE that when the current state of the FSM equals write and transaction is valid, then the next state of the FSM equals write enable pipelined from the current clock cycle"
+    "Assertion Explaination": "Property to verify the transition from ST_WRITE that when the current state of the FSM equals ST_WRITE and transaction is valid, then the next state of the FSM equals ST_WENABLEP from the current clock cycle"
   },
   "Assertion 10": {
     "clock signal condition": "@(posedge Hclk)",
@@ -180,7 +181,7 @@
       "==": "equal",
       "|->": "an overlapping implication operator meaning that if the condition on the left is met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"
     },
-    "Assertion Explaination": "Property to verify the transition from ST_WRITEP that when the current state of the FSM equals write pipelined, then the next state of the FSM equals write enable pipelined from the current clock cycle"
+    "Assertion Explaination": "Property to verify the transition from ST_WRITEP that when the current state of the FSM equals ST_WRITEP, then the next state of the FSM equals ST_WENABLEP from the current clock cycle"
   },
   "Assertion 11": {
     "clock signal condition": "@(posedge Hclk)",
@@ -199,7 +200,7 @@
       "!": "the value of a signal is reset (0)",
       "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"
     },
-    "Assertion Explaination": "Property to verify the transition from ST_RENABLE that when the current state of the FSM equals read enable and transaction is not valid, then the next state of the FSM equals idle from the current clock cycle"
+    "Assertion Explaination": "Property to verify the transition from ST_RENABLE that when the current state of the FSM equals ST_RENABLE and transaction is not valid, then the next state of the FSM equals ST_IDLE from the current clock cycle"
   },
   "Assertion 12": {
     "clock signal condition": "@(posedge Hclk)",
@@ -218,7 +219,7 @@
       "&&": "logical AND",
       "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"
     },
-    "Assertion Explaination": "Property to verify the transition from ST_RENABLE that when the current state of the FSM equals read enable, and transaction is valid, and a write operation is active, then the next state of the FSM equals write wait from the current clock cycle"
+    "Assertion Explaination": "Property to verify the transition from ST_RENABLE that when the current state of the FSM equals ST_RENABLE, and transaction is valid, and a write operation is active, then the next state of the FSM equals ST_WWAIT from the current clock cycle"
   },
   "Assertion 13": {
     "clock signal condition": "@(posedge Hclk)",
@@ -238,7 +239,7 @@
       "!": "the value of a signal is reset (0)",
       "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"
     },
-    "Assertion Explaination": "Property to verify the transition from ST_RENABLE that when the current state of the FSM equals read enable, and transaction is valid, and the write operation is not active, then the next state of the FSM equals read from the current clock cycle"
+    "Assertion Explaination": "Property to verify the transition from ST_RENABLE that when the current state of the FSM equals ST_RENABLE, and transaction is valid, and the write operation is not active, then the next state of the FSM equals ST_READ from the current clock cycle"
   },
   "Assertion 14": {
     "clock signal condition": "@(posedge Hclk)",
@@ -257,7 +258,7 @@
       "!": "the value of a signal is reset (0)",
       "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"
     },
-    "Assertion Explaination": "Property to verify the transition from ST_WENABLE that when the current state of the FSM equals write enable and transaction is not valid, then the next state of the FSM equals idle from the current clock cycle"
+    "Assertion Explaination": "Property to verify the transition from ST_WENABLE that when the current state of the FSM equals ST_WENABLE and transaction is not valid, then the next state of the FSM equals ST_IDLE from the current clock cycle"
   },
   "Assertion 15": {
     "clock signal condition": "@(posedge Hclk)",
@@ -276,7 +277,7 @@
       "&&": "logical AND",
       "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"
     },
-    "Assertion Explaination": "Property to verify the transition from ST_WENABLE that when the current state of the FSM equals write enable, and transaction is valid, and a write operation is active, then the next state of the FSM equals write wait from the current clock cycle"
+    "Assertion Explaination": "Property to verify the transition from ST_WENABLE that when the current state of the FSM equals ST_WENABLE, and transaction is valid, and a write operation is active, then the next state of the FSM equals ST_WWAIT from the current clock cycle"
   },
   "Assertion 16": {
     "clock signal condition": "@(posedge Hclk)",
@@ -296,7 +297,7 @@
       "!": "the value of a signal is reset (0)",
       "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"
     },
-    "Assertion Explaination": "Property to verify the transition from ST_WENABLE that when the current state of the FSM equals write enable, transaction is valid, and the write operation is not active, then the next state of the FSM equals read from the current clock cycle"
+    "Assertion Explaination": "Property to verify the transition from ST_WENABLE that when the current state of the FSM equals ST_WENABLE, transaction is valid, and the write operation is not active, then the next state of the FSM equals ST_READ from the current clock cycle"
   },
   "Assertion 17": {
     "clock signal condition": "@(posedge Hclk)",
@@ -316,7 +317,7 @@
       "!": "the value of a signal is reset (0)",
       "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"
     },
-    "Assertion Explaination": "Property to verify the transition from ST_WENABLEP that when the current state of the FSM equals write enable pipelined, and transaction is not valid, and the write register control is active, then the next state of the FSM equals write from the current clock cycle"
+    "Assertion Explaination": "Property to verify the transition from ST_WENABLEP that when the current state of the FSM equals ST_WENABLEP, and transaction is not valid, and the write register control is active, then the next state of the FSM equals ST_WRITE from the current clock cycle"
   },
   "Assertion 18": {
     "clock signal condition": "@(posedge Hclk)",
@@ -335,7 +336,7 @@
       "&&": "logical AND",
       "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"
     },
-    "Assertion Explaination": "Property to verify the transition from ST_WENABLEP that when the current state of the FSM equals write enable pipelined, and transaction is valid, and the write register control is active, then the next state of the FSM equals write pipelined from the current clock cycle"
+    "Assertion Explaination": "Property to verify the transition from ST_WENABLEP that when the current state of the FSM equals ST_WENABLEP, and transaction is valid, and the write register control is active, then the next state of the FSM equals ST_WRITEP from the current clock cycle"
   },
   "Assertion 19": {
     "clock signal condition": "@(posedge Hclk)",
@@ -354,6 +355,6 @@
       "!": "the value of a signal is reset (0)",
       "|->": "an overlapping implication operator meaning that if the conditions on the left are met then the condition on the right must hold SINCE THE SAME CLOCK CYCLE"
     },
-    "Assertion Explaination": "Property to verify the transition from ST_WENABLEP that when the current state of the FSM equals write enable pipelined and the write register control is not active, then the next state of the FSM equals read from the current clock cycle"
+    "Assertion Explaination": "Property to verify the transition from ST_WENABLEP that when the current state of the FSM equals ST_WENABLEP and the write register control is not active, then the next state of the FSM equals ST_READ from the current clock cycle"
   }
 }

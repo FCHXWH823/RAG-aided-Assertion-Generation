@@ -60,7 +60,7 @@ end
 
 assert property(@(posedge clk) disable iff (~resetn) (max_q == 0) | (max_q > max2_q));
 
-assert property (@(posedge clk) disable iff (~resetn) ((max_q == 0) || (max_q > max2_q)));
-assert property (@(posedge clk) disable iff (~resetn) ((max_q == 0) | (max_q > max2_q)) iff ((max_q == 0) || (max_q > max2_q)));
+assert property (@(posedge clk) disable iff (~resetn) ((max_q == 0) or (max_q > max2_q)));
+assert property (@(posedge clk) disable iff (~resetn) ((max_q == 0) | (max_q > max2_q)) iff ((max_q == 0) or (max_q > max2_q)));
 
 endmodule

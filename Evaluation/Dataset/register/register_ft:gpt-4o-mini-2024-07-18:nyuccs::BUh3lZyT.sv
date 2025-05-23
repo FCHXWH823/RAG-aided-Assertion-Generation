@@ -28,9 +28,9 @@ module register
 assert property(@(posedge clk) disable iff (rst) en |=> out == $past(in,1));
 assert property(@(posedge clk) disable iff (rst) !en |=> out == $past(out,1));
 
-// assert property (@(posedge clk) disable iff (rst) (@(posedge clk)      // every clock tick     en |=> $past(in)[*0] // enable on current clk allows us to sample last-cycle's in));
-// assert property (@(posedge clk) disable iff (rst) (en |=> out == $past(in,1)) iff (@(posedge clk)      // every clock tick     en |=> $past(in)[*0] // enable on current clk allows us to sample last-cycle's in));
-assert property (@(posedge clk) disable iff (rst) ((!en) |=> (out ##1 $past(out))));
-assert property (@(posedge clk) disable iff (rst) (!en |=> out == $past(out,1)) iff ((!en) |=> (out ##1 $past(out))));
+assert property (@(posedge clk) disable iff (rst) (en |-> (out == $past(in, 1, 1))));
+assert property (@(posedge clk) disable iff (rst) (en |=> out == $past(in,1)) iff (en |-> (out == $past(in, 1, 1))));
+assert property (@(posedge clk) disable iff (rst) ((en == 0) |-> (out == $past(out,1) [*1] ##1 out)));
+assert property (@(posedge clk) disable iff (rst) (!en |=> out == $past(out,1)) iff ((en == 0) |-> (out == $past(out,1) [*1] ##1 out)));
 
 endmodule

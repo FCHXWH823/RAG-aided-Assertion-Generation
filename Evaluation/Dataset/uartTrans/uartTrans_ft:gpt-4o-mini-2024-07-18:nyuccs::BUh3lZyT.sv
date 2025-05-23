@@ -348,13 +348,13 @@ assert property(@(posedge clk) (txNext == 1) |=> (tx == 1));
 assert property(@(posedge clk) (stateReg[0] == 1) |-> (txDoneTick == 0));  
 assert property(@(posedge clk) (txStart == 0) |-> (txDoneTick == 0));
 
-// assert property (@(posedge clk)  ((next(txReg) == 0) |-> ##1 (tx == 0)));
-// assert property (@(posedge clk)  ((txNext == 0) |=> (tx == 0)) iff ((next(txReg) == 0) |-> ##1 (tx == 0)));
-assert property (@(posedge clk)  ((din == 1) |-> (tx == 1)));
-assert property (@(posedge clk)  ((txNext == 1) |=> (tx == 1)) iff ((din == 1) |-> (tx == 1)));
-// assert property (@(posedge clk)  ($first_bit(stateReg) === 1 |-> !txDoneTick));
-// assert property (@(posedge clk)  ((stateReg[0] == 1) |-> (txDoneTick == 0)) iff ($first_bit(stateReg) === 1 |-> !txDoneTick));
-assert property (@(posedge clk)  (txStart |-> !txDoneTick));
-assert property (@(posedge clk)  ((txStart == 0) |-> (txDoneTick == 0)) iff (txStart |-> !txDoneTick));
+assert property (@(posedge clk)  ((txNext == 0) |=> ##1 (tx == 0)));
+assert property (@(posedge clk)  ((txNext == 0) |=> (tx == 0)) iff ((txNext == 0) |=> ##1 (tx == 0)));
+assert property (@(posedge clk)  ((txNext == 1) |=> (tx == 1)));
+assert property (@(posedge clk)  ((txNext == 1) |=> (tx == 1)) iff ((txNext == 1) |=> (tx == 1)));
+assert property (@(posedge clk)  (stateReg[0] |-> !txDoneTick));
+assert property (@(posedge clk)  ((stateReg[0] == 1) |-> (txDoneTick == 0)) iff (stateReg[0] |-> !txDoneTick));
+assert property (@(posedge clk)  (!txStart |-> !txDoneTick));
+assert property (@(posedge clk)  ((txStart == 0) |-> (txDoneTick == 0)) iff (!txStart |-> !txDoneTick));
 
 endmodule
