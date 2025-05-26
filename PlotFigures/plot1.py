@@ -77,7 +77,7 @@ for ax, sc, fm, model in zip(axes, all_sc, all_fm, models):
     ax.text(x[-1] + 0.3, 229, '229', ha='center', va='bottom', color='red', fontsize=10)
 
 # Global figure labels
-fig.text(0.5, 0.02, 'Setting', ha='center', fontsize=14)
+# fig.text(0.5, 0.02, 'Setting', ha='center', fontsize=14)
 fig.text(0.04, 0.5, 'Number of Assertions', va='center', rotation='vertical', fontsize=14)
 
 # Add a proper legend

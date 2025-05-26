@@ -22,7 +22,7 @@ def get_num_golden_assertions(dir_path):
     filepath = os.path.join(dir_path,"explanation.json")
     with open(filepath,"r") as file:
           assertions = json.load(file)
-    return len(assertions)
+    return len(assertions) - 1
 
 def get_num_sc_fc_fm(results, num_golden_assertions):
     num_sc = int((len(results) - num_golden_assertions) / 2)
@@ -39,14 +39,17 @@ def get_num_sc_fc_fm(results, num_golden_assertions):
 
 model = "gpt-4o-mini"
 methods = ["HybridRAG","HybridDynamic-RAG"]
-with open(f"../Results/Prompted-Assertion-Generation-Results-{model}.csv","w") as file:
+model = "ft:gpt-4o-mini-2024-07-18:nyuccs::BUh3lZyT"
+methods = [""]
+modified_model = "finetuned_gpt-4o-mini"
+
+with open(f"../Results/FineTune-Results.csv","w") as file:
     csv_writer = csv.writer(file)
     for folder in os.listdir("../Evaluation/Dataset"):
         folder_path = os.path.join("../Evaluation/Dataset/",folder)
         if os.path.isdir(folder_path):
             data = [folder,get_num_golden_assertions(folder_path)]
-            for method in methods:
-                extract_data = extract_rpt_data(folder_path,f"fpv_{method}-{model}.rpt")
-                sc, fc, fm = get_num_sc_fc_fm(extract_data,get_num_golden_assertions(folder_path))
-                data += [sc, fc, fm]
+            extract_data = extract_rpt_data(folder_path,f"fpv_{modified_model}.rpt")
+            sc, fc, fm = get_num_sc_fc_fm(extract_data,get_num_golden_assertions(folder_path))
+            data += [sc, fc, fm]
             csv_writer.writerow(data)

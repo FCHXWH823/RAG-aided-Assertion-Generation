@@ -43,4 +43,6 @@ endgenerate
 assign sum[DATA_WIDTH] = carry[DATA_WIDTH];
 assign cout_int        = carry[DATA_WIDTH-1:0];
 
+logic [DATA_WIDTH:0] res;
+assign res = a + b;
 endmodule

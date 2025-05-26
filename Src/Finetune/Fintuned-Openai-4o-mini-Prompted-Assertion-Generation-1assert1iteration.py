@@ -92,32 +92,322 @@ def extract_prerequist_of_assertions(verilog_code_w_assertions:str, verilog_code
     lines_assertions.append("// above are golden assertions\n\n")
     return lines_assertions
 
+def fill_signal_placeholders(
+    raw_nl_spec: str,
+    verilog_code: str
+) -> str:
+    """
+    Use the LLM to:
+      1. Read the provided Verilog code and identify all declared signals.
+      2. Match each abstract reference in raw_nl_spec to the correct signal name.
+      3. Return the updated NL spec with real signal names substituted.
+    """
+    prompt_assert = f"""
+    You have this Verilog code:
+    \"\"\"
+    {verilog_code}
+    \"\"\"
+
+    And this natural-language property description:
+    \"\"\"
+    {raw_nl_spec}
+    \"\"\"
+
+    Generate the complete SystemVerilog assertion (SVA) that implements this requirement.
+    Wrap it exactly as:
+
+    assert property (
+    @(posedge clk) disable iff (!rstn)
+    <property_expression>
+    );
+    Return ONLY the assertion.
+    """
+    resp1 = client.chat.completions.create(
+        model=OpenAI_Model_Name,
+        messages=[{"role":"user", "content": prompt_assert}]
+    )
+    sva = resp1.choices[0].message.content.strip()
+
+    prompt_rewrite = f"""
+    You have this Verilog code:
+    \"\"\"
+    {verilog_code}
+    \"\"\"
+
+    And this SVA assertion you just generated:
+    \"\"\"
+    {sva}
+    \"\"\"
+
+    Original explanation (with placeholders):
+    \"\"\"
+    {raw_nl_spec}
+    \"\"\"
+
+    Rewrite the explanation so that every phrase referencing a signal or parameter
+    uses the exact signal or parameter (do not use `` to insert signal or paramter) from the Verilog code and the SVA assertion. Preserve the
+    rest of the wording.
+    Return ONLY the rewritten explanation.
+    """
+    resp = client.chat.completions.create(
+        model=OpenAI_Model_Name,
+        messages=[{"role":"user", "content": prompt_rewrite}]
+    )
+    
+    # prompt = f"""
+    # You are given a Verilog module:
+
+    # \"\"\"
+    # {verilog_code}
+    # \"\"\"
+
+    # And a natural-language property description without concrete signal names:
+
+    # \"\"\"
+    # {raw_nl_spec}
+    # \"\"\"
+
+    # **Task**:
+    # 1. Identify every placeholder in the description that refers to:
+    #     - a signal name
+    #     - a parameter or numeric constant
+    # 2. Substitute each with the exact identifier or literal value as declared in the Verilog code.
+    # 3. Preserve all other words, punctuation, and sentence structure.
+    # 4. The resulting sentence must have no abstract placeholders—only real signal names and numeric constants, since it will be directly translated into an SystemVerilog assertion.
+
+    # **Return (no extra fields or commentary)**:
+    # A single line containing the updated description.
+    # """
+    # resp = client.chat.completions.create(
+    #     model=OpenAI_Model_Name,
+    #     messages=[{"role":"user", "content": prompt}]
+    # )
+    # The LLM should return exactly the filled-in spec
+    return resp.choices[0].message.content.strip()
+
+def extract_relevant_signals(
+    raw_nl_spec: str,
+    verilog_code: str
+) -> str:
+    """
+    Use the LLM to:
+      1. Read the provided Verilog code and identify all declared signals.
+      2. Match each abstract reference in raw_nl_spec to the correct signal name.
+      3. Return the updated NL spec with real signal names substituted.
+    """
+    prompt_assert = f"""
+    You have this Verilog code:
+    \"\"\"
+    {verilog_code}
+    \"\"\"
+
+    And this natural-language property description:
+    \"\"\"
+    {raw_nl_spec}
+    \"\"\"
+
+    Generate the complete SystemVerilog assertion (SVA) that implements this requirement.
+    Wrap it exactly as:
+
+    assert property (ONLY logical expression WITHOUT clock signal condition @(posedge clock) and WITHOUT disable condition disable iff(...));
+    Return ONLY the assertion.
+    """
+    resp1 = client.chat.completions.create(
+        model=OpenAI_Model_Name,
+        messages=[{"role":"user", "content": prompt_assert}]
+    )
+    sva = resp1.choices[0].message.content.strip()
+
+    prompt_signal_extraction = f"""
+    You are given a Verilog code snippet and a SystemVerilog assertion generated from it.
+
+    Verilog code:
+    \"\"\"
+    {verilog_code}
+    \"\"\"
+
+    Assertion:
+    \"\"\"
+    {sva}
+    \"\"\"
+
+    Your task:
+    1. Identify every signal, every parameter used in the assertion.
+    2. For each one, produce a concise explanation of its role **based on the provided code context**.
+
+    Return **only** lines in this exact format (no extra text or numbering beyond what’s shown):
+
+    signal name 1: <signal_name>  
+    signal explanation 1: <natural-language explanation of its role in the assertion>  
+
+    signal name 2: <signal_name>  
+    signal explanation 2: <natural-language explanation>  
+
+    ...  
+
+    parameter name 1: <parameter_name>  (if exists)
+    parameter explanation 1: <natural-language explanation of its purpose/value>  
+
+    parameter name 2: <parameter_name>  (if exists)
+    parameter explanation 2: <explanation> 
+
+    ... 
+
+    Continue this pattern for all signals, parameters referenced in the assertion.
+    """
+    resp = client.chat.completions.create(
+        model=OpenAI_Model_Name,
+        messages=[{"role":"user", "content": prompt_signal_extraction}]
+    )
+    
+    # prompt = f"""
+    # You are given a Verilog module:
+
+    # \"\"\"
+    # {verilog_code}
+    # \"\"\"
+
+    # And a natural-language property description without concrete signal names:
+
+    # \"\"\"
+    # {raw_nl_spec}
+    # \"\"\"
+
+    # **Task**:
+    # 1. Identify every placeholder in the description that refers to:
+    #     - a signal name
+    #     - a parameter or numeric constant
+    # 2. Substitute each with the exact identifier or literal value as declared in the Verilog code.
+    # 3. Preserve all other words, punctuation, and sentence structure.
+    # 4. The resulting sentence must have no abstract placeholders—only real signal names and numeric constants, since it will be directly translated into an SystemVerilog assertion.
+
+    # **Return (no extra fields or commentary)**:
+    # A single line containing the updated description.
+    # """
+    # resp = client.chat.completions.create(
+    #     model=OpenAI_Model_Name,
+    #     messages=[{"role":"user", "content": prompt}]
+    # )
+    # The LLM should return exactly the filled-in spec
+    return resp.choices[0].message.content.strip()
+
+def fill_signal_placeholders(
+    raw_nl_spec: str,
+    verilog_code: str
+) -> str:
+    signals = extract_relevant_signals(raw_nl_spec, verilog_code)
+    prompt_rewrite = f"""
+    You have this Verilog code:
+    \"\"\"
+    {verilog_code}
+    \"\"\"
+
+    Original explanation (with placeholders):
+    \"\"\"
+    {raw_nl_spec}
+    \"\"\"
+
+    Given all relevant signals, parameters, and macros:
+    \"\"\"
+    {signals}
+    \"\"\"
+
+    Rewrite the explanation so that every phrase referencing a signal or parameter or macro
+    uses the exact signal or parameter or macro (do not use `` to insert signal or paramter) from the Verilog code and the SVA assertion. Preserve the
+    rest of the wording.
+    Return ONLY the rewritten explanation.
+    """
+    resp = client.chat.completions.create(
+        model=OpenAI_Model_Name,
+        messages=[{"role":"user", "content": prompt_rewrite}]
+    )
+    
+    return resp.choices[0].message.content.strip()
 
 def assertion_generation(code, assertion, details):
     explanation = details.get("Assertion Explaination", "No explanation provided")
+    # explanation = "after 2 clock cycles PRESENT_STATE equals the previous value of NEXT_STATE"
     # clk_condition = "" if details.get("clock signal condition") is "none" else details.get("clock signal condition")
     # reset_condition = "" if details.get("disable condition") is "none" else details.get("disable condition")
     
     assertion_format = f"assert property (ONLY logical expression WITHOUT clock signal condition @(posedge clock) and WITHOUT disable condition disable iff(...));"
     
+    # signals = extract_relevant_signals(explanation, code)
+    signals = details.get("Signal Explanations", "No signal provided")
+    print(f"signals: {signals}")
+    print(f"explanation: {explanation}")
+    prompt_rewrite = f"""
+    You have this Verilog code:
+    \"\"\"
+    {code}
+    \"\"\"
 
-    prompt = f"Given Verilog code snippet as below: \n{code}\n Please generate the systemverilog assertion for the following natural language property explanation:\n{explanation}."
+    Original explanation (with placeholders):
+    \"\"\"
+    {explanation}
+    \"\"\"
+
+    Given all relevant signals, parameters:
+    \"\"\"
+    {signals}
+    \"\"\"
+
+    Rewrite the explanation so that every phrase referencing a signal or parameter
+    uses the exact signal or parameter (do not use `` to insert signal or paramter) from the Verilog code and the SVA assertion. Preserve the
+    rest of the wording.
+    Return ONLY the rewritten explanation.
+    """
+    signal_spec = client.chat.completions.create(
+        model=OpenAI_Model_Name,
+        messages=[{"role":"user", "content": prompt_rewrite}]
+    ).choices[0].message.content.strip()
+    # print(f"signal_spec: {signal_spec}")
+    # signal_spec = fill_signal_placeholders(explanation, code)
+
+    # extracted_signals = extract_relevant_signals(explanation, code)
+
+    prompt = f"Given Verilog code snippet as below: \n{code}\n and the used signals:\n{signals}\n Please generate the systemverilog assertion for the following natural language property explanation:\n{explanation}.\n"
+    # prompt = f"Please extract relevant siganls and parameters from the following Verilog code snippet: \n{code}\n to generate the systemverilog assertion for the following natural language property explanation:\n{explanation}.\n"
+    # prompt = f"Given all relevant signals, parameters, and macros:\n{extracted_signals}\nPlease generate the systemverilog assertion for the following natural language property explanation:\n{explanation}."
+    # prompt = f"Please generate the systemverilog assertion for the following natural language property explanation:\n{signal_spec}."
 
     completion = client.chat.completions.create(
     model=Fine_Tune_Model_Name,
     messages=[
         {"role": "system", "content": "You are a helpful bot that answer some questions about SystemVerilog."},
         {"role": "user", "content": prompt}
-    ]
+    ],
+    # temperature=1,
+    max_tokens=2048,
     )
     llm_response = completion.choices[0].message.content
+    # print(f"llm_response: {llm_response}")
 
     completion = client.chat.completions.create(
     model=OpenAI_Model_Name,
     messages=[
-        {"role": "user", "content": "Please extract the final generated SystemVerilog assertion from the following text:\n" + llm_response},
+        {"role": "user", "content": f"Please extract the final generated SystemVerilog assertion following the format:\n{assertion_format}\nfrom the following text:\n" + llm_response},
     ]
     )
+    sva = completion.choices[0].message.content.strip()
+    print(f"sva: {sva}")
+
+    prompt_match_signal = f'''
+    Validate that every signal and parameter referenced in the SystemVerilog assertion
+    {sva}
+    appears in the given Verilog code:
+    {code}
+    If any signal or parameter is absent, replace it with the correct one from the Verilog code and output **only** the corrected assertion in the exact following format:
+    {assertion_format}
+    '''
+    completion = client.chat.completions.create(
+    model=OpenAI_Model_Name,
+    messages=[
+        {"role": "user", "content": prompt_match_signal},
+    ]
+    )
+    print(f"checked_sva: {completion.choices[0].message.content.strip()}")
+    print("=====================================================")
     return completion.choices[0].message.content
 
 
@@ -133,7 +423,7 @@ with open('Results/Openai-4o-mini-Prompted-Assertion-Generation-Results-for-New-
     for folder in os.listdir("Evaluation/Dataset/"):
         if Excute_Folder != 'ALL_DESIGNS' and Excute_Folder not in folder:
             continue
-        folder = "VGA"
+        folder = "APB_FSM_Controller"
         folder_path = os.path.join("Evaluation/Dataset/",folder)
         if os.path.isdir(folder_path):
             with open(folder_path+"/"+folder+".sv","r") as file:

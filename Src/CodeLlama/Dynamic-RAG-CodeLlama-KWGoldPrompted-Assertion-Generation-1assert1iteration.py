@@ -19,6 +19,7 @@ from extract_keywords import *
 from langchain_openai import ChatOpenAI
 from langchain_ollama import ChatOllama
 from json import JSONDecodeError
+from docker_vcs import *
 
 with open("Src/Config.yml") as file:
     config = yaml.safe_load(file)
@@ -148,7 +149,7 @@ system_prompt = (
 prompt = ChatPromptTemplate.from_messages(
     [
         ("system", system_prompt),
-        ("human","Given Verilog code snippet as below: \n{code}\n Please generate such a systemverilog assertion for it following the description:{input}. Ensure the syntax correctness and the used signals should be from the verilog code.\nThe output format should STRICTLY follow :\n{assertion_format}\nWITHOUT other things."),
+        ("human","Given the used signals \n{signals}\n Please generate the systemverilog assertion for the following natural language property explanation:\n{input}.\nThe output format should STRICTLY follow :\n{assertion_format}\nWITHOUT other things."),
     ]
 )
 
@@ -265,7 +266,7 @@ def assertion_format_prompt(llm_response, assertion_format):
 
 def HybridRAG_SVAGeneration(assertion, details):
     explanation = details.get("Assertion Explaination", "No explanation provided").lower()
-
+    signals = details.get("Signals", "No signals provided")
     # clk_condition = "" if details.get("clock signal condition") is "none" else details.get("clock signal condition")
     # reset_condition = "" if details.get("disable condition") is "none" else details.get("disable condition")
     
@@ -284,7 +285,7 @@ def HybridRAG_SVAGeneration(assertion, details):
 
     prompt = f"Given Verilog code snippet as below: \n{code}\n Please generate such an assertion for it following the description:{explanation}\nThe output format should STRICTLY follow :\n{assertion_format}\nWITHOUT other things."
 
-    llm_result = rag_chain.invoke({"keywords_explaination": checking_str, "code":code,"input":explanation,"assertion_format":assertion_format})
+    llm_result = rag_chain.invoke({"keywords_explaination": checking_str, "input":explanation, "signals":signals, "assertion_format":assertion_format})
     llm_response = llm_result["answer"]
 
     completion = client.chat.completions.create(
@@ -356,8 +357,9 @@ with open(f'Results/Dynamic-RAG-Openai-4o-mini-Prompted-Assertion-Generation-Res
     for folder in os.listdir("Evaluation/Dataset/"):
         if Excute_Folder != 'ALL_DESIGNS' and Excute_Folder not in folder:
             continue
-        if folder in ["Ripple_Carry_Adder", "or1200_operandmuxes", "gray", "Flip_Flop_Array", "PSGBusArb", "apb", "host_interface", "control_unit", "Programmable_Sequence_Detector", "PWM", "module_i2c", "delay2", "simple_req_ack", "Gray_Code_Counter", "uartTrans", "i2c", "uartRec"]:
-            continue
+        # if folder in ["Ripple_Carry_Adder", "or1200_operandmuxes", "gray", "Flip_Flop_Array", "PSGBusArb", "apb", "host_interface", "control_unit", "Programmable_Sequence_Detector", "PWM", "module_i2c", "delay2", "simple_req_ack", "Gray_Code_Counter", "uartTrans", "i2c", "uartRec"]:
+        #     continue
+        leaf_sv_files = []
         folder_path = os.path.join("Evaluation/Dataset/",folder)
         if os.path.isdir(folder_path):
             with open(folder_path+"/"+folder+".sv","r") as file:
@@ -379,6 +381,9 @@ with open(f'Results/Dynamic-RAG-Openai-4o-mini-Prompted-Assertion-Generation-Res
             last_assertion = None
             last_details = None
             for assertion, details in explanation_json.items():
+                if "Assertion" not in assertion:
+                    leaf_sv_files = details
+                    continue
                 i += 1
 
                 while True:
@@ -417,6 +422,8 @@ with open(f'Results/Dynamic-RAG-Openai-4o-mini-Prompted-Assertion-Generation-Res
                 llm_logic_expressions = []
 
                 for assertion, details in explanation_json.items():
+                    if "Assertion" not in assertion:
+                        continue
                     clk_condition = "" if details.get("clock signal condition") == "none" else details.get("clock signal condition")
                     disable_condition = "" if details.get("disable condition") == "none" else details.get("disable condition")
                     logic_expression = details.get("logical expression")
@@ -434,14 +441,30 @@ with open(f'Results/Dynamic-RAG-Openai-4o-mini-Prompted-Assertion-Generation-Res
                 with open(folder_path+"/"+folder+"_assertion.sv","r") as file:
                     verilog_code_w_assertions = file.read()
                 
+                if len(leaf_sv_files):
+                    leaf_file_name = leaf_sv_files[0]
+                    with open(folder_path+"/"+leaf_sv_files[0]+".v","r") as file:
+                        verilog_leaf_sv = file.read()
+                else:
+                    verilog_leaf_sv = ""
+                    leaf_file_name = ""
+
                 # combine_assertions = remove_last_endmodule(verilog_code_w_assertions)
                 # combine_assertions = extract_prerequist_of_assertions(verilog_code_w_assertions,verilog_code_wo_assertions,len(clk_conditions))
 
                 for i in range(len(clk_conditions)):
                     combine_assertion = f"assert property ({clk_conditions[i]} {disable_conditions[i]} ({llm_logic_expressions[i]}));" 
-                    combine_assertions.append(combine_assertion)
-                    combine_assertion = f"assert property ({clk_conditions[i]} {disable_conditions[i]} ({golden_logic_expressions[i]}) iff ({llm_logic_expressions[i]}));" 
-                    combine_assertions.append(combine_assertion)
+                    sc_detect = vcs_process(verilog_leaf_sv, verilog_code_wo_assertions, combine_assertion, leaf_file_name, f"{folder}_{i+1}_llm")
+                    if sc_detect:
+                        combine_assertion = f"// assert property ({clk_conditions[i]} {disable_conditions[i]} ({llm_logic_expressions[i]}));"     
+                        combine_assertions.append(combine_assertion)
+                        combine_assertion = f"// assert property ({clk_conditions[i]} {disable_conditions[i]} ({golden_logic_expressions[i]}) iff ({llm_logic_expressions[i]}));" 
+                        combine_assertions.append(combine_assertion)
+                    else:
+                        combine_assertion = f"assert property ({clk_conditions[i]} {disable_conditions[i]} ({llm_logic_expressions[i]}));"     
+                        combine_assertions.append(combine_assertion)
+                        combine_assertion = f"assert property ({clk_conditions[i]} {disable_conditions[i]} ({golden_logic_expressions[i]}) iff ({llm_logic_expressions[i]}));" 
+                        combine_assertions.append(combine_assertion)
                     
 
                 processed_code = remove_last_endmodule(verilog_code_w_assertions)
