@@ -605,13 +605,13 @@ assert property(@(posedge clk) (aes_mode[0] == 0) |-> (mode_cbc == 0));
 assert property(@(posedge clk) (start == 0) |-> (key_init == 0));
 assert property(@(posedge clk) (start == 1) |-> (key_init == 1));
 
-assert property (@(posedge clk)  (aes_mode[0] |-> !mode_ctr));
-assert property (@(posedge clk)  ((aes_mode[0] == 1) |-> (mode_ctr == 0)) iff (aes_mode[0] |-> !mode_ctr));
+assert property (@(posedge clk)  (aes_mode[0] == 1 |-> mode_ctr == 0));
+assert property (@(posedge clk)  ((aes_mode[0] == 1) |-> (mode_ctr == 0)) iff (aes_mode[0] == 1 |-> mode_ctr == 0));
 assert property (@(posedge clk)  (aes_mode[0] == 0 |-> mode_cbc == 0));
 assert property (@(posedge clk)  ((aes_mode[0] == 0) |-> (mode_cbc == 0)) iff (aes_mode[0] == 0 |-> mode_cbc == 0));
-assert property (@(posedge clk)  (start == 0 |-> key_init == 0));
-assert property (@(posedge clk)  ((start == 0) |-> (key_init == 0)) iff (start == 0 |-> key_init == 0));
-assert property (@(posedge clk)  (start |-> key_init));
-assert property (@(posedge clk)  ((start == 1) |-> (key_init == 1)) iff (start |-> key_init));
+assert property (@(posedge clk)  (key_init == 0));
+assert property (@(posedge clk)  ((start == 0) |-> (key_init == 0)) iff (key_init == 0));
+assert property (@(posedge clk)  ((start == 1) |-> (key_init == 1)));
+assert property (@(posedge clk)  ((start == 1) |-> (key_init == 1)) iff ((start == 1) |-> (key_init == 1)));
 
 endmodule

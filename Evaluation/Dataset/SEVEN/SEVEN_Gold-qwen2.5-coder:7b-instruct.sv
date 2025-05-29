@@ -26,9 +26,9 @@ module SEVEN #(parameter freq = 250, parameter CBITS = 8) (input clk, input rst,
 assert property(@(posedge clk) s_eventually rst == 1 || digit_select == 1);
 assert property(@(posedge clk) s_eventually rst == 1 || digit_select == 0);
 
-assert property (@(posedge clk)  (rst |=> digit_select));
-assert property (@(posedge clk)  (s_eventually rst == 1 || digit_select == 1) iff (rst |=> digit_select));
-assert property (@(posedge clk)  (rst |=> (rst == 1 || digit_select == 0)));
-assert property (@(posedge clk)  (s_eventually rst == 1 || digit_select == 0) iff (rst |=> (rst == 1 || digit_select == 0)));
+assert property (@(posedge clk)  (rst |-> ##0 digit_select || rst |-> ##1 1));
+assert property (@(posedge clk)  (s_eventually rst == 1 || digit_select == 1) iff (rst |-> ##0 digit_select || rst |-> ##1 1));
+// assert property (@(posedge clk)  (rst ##1 |=> rst || digit_select == 0));
+// assert property (@(posedge clk)  (s_eventually rst == 1 || digit_select == 0) iff (rst ##1 |=> rst || digit_select == 0));
 
 endmodule

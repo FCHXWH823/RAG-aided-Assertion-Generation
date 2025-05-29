@@ -41,15 +41,15 @@ assert property (@(posedge clk)  (req1 == 1 && state == 0 |-> gnt1 == 1));
 assert property (@(posedge clk)  ((req1 == 1 & state == 0) |-> (gnt1 == 1)) iff (req1 == 1 && state == 0 |-> gnt1 == 1));
 assert property (@(posedge clk)  (req1 == 0 |-> gnt1 == 0));
 assert property (@(posedge clk)  ((req1 == 0) |-> (gnt1 == 0)) iff (req1 == 0 |-> gnt1 == 0));
-assert property (@(posedge clk)  ((req1 == 1 && req2 == 0) |=> gnt1 == 1));
-assert property (@(posedge clk)  ((req1 == 1 & req2 == 0) |-> (gnt1 == 1)) iff ((req1 == 1 && req2 == 0) |=> gnt1 == 1));
-assert property (@(posedge clk)  (req1 == 1 && state == 0 |-> gnt2 == 0));
-assert property (@(posedge clk)  ((req1 == 1 & state == 0) |-> (gnt2 == 0)) iff (req1 == 1 && state == 0 |-> gnt2 == 0));
-assert property (@(posedge clk)  ((req2 == 1 && state == 1) |=> gnt2 == 1));
-assert property (@(posedge clk)  ((req2 == 1 & state == 1) |-> (gnt2 == 1)) iff ((req2 == 1 && state == 1) |=> gnt2 == 1));
-assert property (@(posedge clk)  (req2 == 0 |-> gnt2 == 0));
-assert property (@(posedge clk)  ((req2 == 0) |-> (gnt2 == 0)) iff (req2 == 0 |-> gnt2 == 0));
-assert property (@(posedge clk)  (req2 == 1 && req1 == 0 |-> gnt2 == 1));
-assert property (@(posedge clk)  ((req2 == 1 & req1 == 0) |-> (gnt2 == 1)) iff (req2 == 1 && req1 == 0 |-> gnt2 == 1));
+assert property (@(posedge clk)  ((req1 == 1 && req2 == 0) |=> (gnt1 == 1)));
+assert property (@(posedge clk)  ((req1 == 1 & req2 == 0) |-> (gnt1 == 1)) iff ((req1 == 1 && req2 == 0) |=> (gnt1 == 1)));
+assert property (@(posedge clk)  ((req1 == 1 && state == 0) |-> (gnt2 == 0)));
+assert property (@(posedge clk)  ((req1 == 1 & state == 0) |-> (gnt2 == 0)) iff ((req1 == 1 && state == 0) |-> (gnt2 == 0)));
+assert property (@(posedge clk)  ((req2 == 1 && state == 1) |-> (gnt2 == 1)));
+assert property (@(posedge clk)  ((req2 == 1 & state == 1) |-> (gnt2 == 1)) iff ((req2 == 1 && state == 1) |-> (gnt2 == 1)));
+assert property (@(posedge clk)  (req2 == 0 |=> gnt2 == 0));
+assert property (@(posedge clk)  ((req2 == 0) |-> (gnt2 == 0)) iff (req2 == 0 |=> gnt2 == 0));
+assert property (@(posedge clk)  (req2 == 1 && req1 == 0 |=> gnt2 == 1));
+assert property (@(posedge clk)  ((req2 == 1 & req1 == 0) |-> (gnt2 == 1)) iff (req2 == 1 && req1 == 0 |=> gnt2 == 1));
 
 endmodule
