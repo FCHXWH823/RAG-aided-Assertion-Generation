@@ -1,0 +1,96 @@
+
+==============================================================
+    Jasper Verification Results
+==============================================================
+    2022.09p001 64 bits for Linux64 3.10.0-1062.1.2.el7.x86_64
+    Host Name: icpc
+    User Name: master
+    Printed on: Tuesday, Jul29, 2025 08:07:03 AM CST
+    Working Directory: /home/master/RAG-aided-Assertion-Generation/Evaluation/Dataset/a25_wishbone
+
+
+==============================================================
+SUMMARY
+==============================================================
+    Total Tasks           : 1
+    Total Properties      : 52
+          assumptions     : 0                   
+           - approved     : 0                   
+           - temporary    : 0                   
+          assertions      : 18                  
+           - proven       : 10                  ( 55.6% )
+           - marked_proven: 0                   ( 0.0% )
+           - cex          : 8                   ( 44.4% )
+           - ar_cex       : 0                   ( 0.0% )
+           - undetermined : 0                   ( 0.0% )
+           - unprocessed  : 0                   ( 0.0% )
+           - error        : 0                   ( 0.0% )
+          covers          : 34                  
+           - unreachable  : 1                   ( 2.9% )
+           - covered      : 33                  ( 97.1% )
+           - ar_covered   : 0                   ( 0.0% )
+           - undetermined : 0                   ( 0.0% )
+           - unprocessed  : 0                   ( 0.0% )
+           - error        : 0                   ( 0.0% )
+
+==============================================================
+RESULTS
+==============================================================
+
+--------------------------------------------------------------------------------------------------
+       Name                                      |    Result    |  Engine  |  Bound  |  Time    
+--------------------------------------------------------------------------------------------------
+
+---[ <embedded> ]---------------------------------------------------------------------------------
+[1]   a25_wishbone._assert_1                          proven          N      Infinite    0.003 s      
+[2]   a25_wishbone._assert_1:precondition1            covered         PRE           1    0.000 s      
+[3]   a25_wishbone._assert_2                          proven          N      Infinite    0.001 s      
+[4]   a25_wishbone._assert_2:precondition1            covered         Hp            2    0.006 s      
+[5]   a25_wishbone._assert_3                          proven          Hp     Infinite    0.005 s      
+[6]   a25_wishbone._assert_3:precondition1            covered         N             3    0.001 s      
+[7]   a25_wishbone._assert_4                          proven          Hp     Infinite    0.005 s      
+[8]   a25_wishbone._assert_4:precondition1            covered         N             4    0.001 s      
+[9]   a25_wishbone._assert_5                          proven          Hp     Infinite    0.006 s      
+[10]  a25_wishbone._assert_5:precondition1            covered         Hp            2    0.008 s      
+[11]  a25_wishbone._assert_6                          proven          Hp     Infinite    0.006 s      
+[12]  a25_wishbone._assert_6:precondition1            covered         Hp            2    0.008 s      
+[13]  a25_wishbone._assert_7                          proven          Hp     Infinite    0.002 s      
+[14]  a25_wishbone._assert_7:precondition1            covered         Hp            2    0.006 s      
+[15]  a25_wishbone._assert_8                          proven          Hp     Infinite    0.006 s      
+[16]  a25_wishbone._assert_8:precondition1            covered         PRE           1    0.000 s      
+[17]  a25_wishbone._assert_8:precondition2            covered         PRE           1    0.000 s      
+[18]  a25_wishbone._assert_8:precondition3            covered         Hp            2    0.006 s      
+[19]  a25_wishbone._assert_8:precondition4            covered         Hp            2    0.006 s      
+[20]  a25_wishbone._assert_9                          proven          N      Infinite    0.001 s      
+[21]  a25_wishbone._assert_9:precondition1            covered         Hp            2    0.006 s      
+[22]  a25_wishbone._assert_10                         proven          PRE    Infinite    0.000 s      
+[23]  a25_wishbone._assert_10:precondition1           covered         PRE           1    0.000 s      
+[24]  a25_wishbone._assert_10:precondition2           covered         Hp            2    0.006 s      
+[25]  a25_wishbone._assert_10:precondition3           covered         PRE           1    0.000 s      
+[26]  a25_wishbone._assert_10:precondition4           covered         Hp            2    0.006 s      
+[27]  a25_wishbone._assert_11                         cex             N             3    0.001 s      
+[28]  a25_wishbone._assert_11:precondition1           covered         N             3    0.001 s      
+[29]  a25_wishbone._assert_12                         cex             N             4    0.001 s      
+[30]  a25_wishbone._assert_12:precondition1           covered         PRE           1    0.000 s      
+[31]  a25_wishbone._assert_12:precondition2           covered         N             3    0.001 s      
+[32]  a25_wishbone._assert_12:precondition3           covered         PRE           1    0.000 s      
+[33]  a25_wishbone._assert_12:precondition4           covered         N             3    0.001 s      
+[34]  a25_wishbone._assert_13                         cex             Hp            2    0.008 s      
+[35]  a25_wishbone._assert_13:precondition1           covered         Hp            2    0.008 s      
+[36]  a25_wishbone._assert_14                         cex             Hp            2    0.008 s      
+[37]  a25_wishbone._assert_14:precondition1           covered         PRE           1    0.000 s      
+[38]  a25_wishbone._assert_14:precondition2           covered         N             4    0.001 s      
+[39]  a25_wishbone._assert_14:precondition3           covered         PRE           1    0.000 s      
+[40]  a25_wishbone._assert_14:precondition4           covered         Hp            2    0.008 s      
+[41]  a25_wishbone._assert_15                         cex             PRE           1    0.000 s      
+[42]  a25_wishbone._assert_16                         cex             PRE           1    0.000 s      
+[43]  a25_wishbone._assert_16:precondition1           covered         Hp            2    0.009 s      
+[44]  a25_wishbone._assert_16:precondition2           unreachable     Hp     Infinite    0.002 s      
+[45]  a25_wishbone._assert_16:precondition3           covered         PRE           1    0.000 s      
+[46]  a25_wishbone._assert_17                         cex             Hp            2    0.008 s      
+[47]  a25_wishbone._assert_17:precondition1           covered         Hp            2    0.008 s      
+[48]  a25_wishbone._assert_18                         cex             Hp            3    0.013 s      
+[49]  a25_wishbone._assert_18:precondition1           covered         PRE           1    0.000 s      
+[50]  a25_wishbone._assert_18:precondition2           covered         Hp            2    0.008 s      
+[51]  a25_wishbone._assert_18:precondition3           covered         PRE           1    0.000 s      
+[52]  a25_wishbone._assert_18:precondition4           covered         Hp            2    0.008 s      

@@ -3,7 +3,8 @@ import sys
 
 # model = "deepseek-chat"
 model = "ft:gpt-4o-mini-2024-07-18:nyuccs::BUh3lZyT"
-modified_model = "finetuned_gpt-4o-mini"
+# modified_model = "deepseek-coder-7b-finetune-nl2sva-prompt-guided-vcs"
+modified_model = "deepseek-coder-7b-instruct-v1.5-vcs"
 def excute_in_each_folder(folder = "", a=1, b=1, c=1, d=1, e=1):
     folder_path = os.path.join("./",folder)
     # print(f"a:{a}, b:{b}, c:{c}")
@@ -54,4 +55,8 @@ else:
     c = 1
     d = 1
     e = 1
-excute_in_each_folder(sys.argv[1], a, b, c, d, e)
+for folder in os.listdir("/home/master/RAG-aided-Assertion-Generation/Evaluation/Dataset"):
+    folder_path = os.path.join("/home/master/RAG-aided-Assertion-Generation/Evaluation/Dataset/",folder)
+    # os.system(f"rm {folder_path}/fpv__QueryExpand-Dynamic-RAG-Openai-4o-mini.rpt")
+    if os.path.isdir(folder_path):
+        excute_in_each_folder(folder, a, b, c, d, e)

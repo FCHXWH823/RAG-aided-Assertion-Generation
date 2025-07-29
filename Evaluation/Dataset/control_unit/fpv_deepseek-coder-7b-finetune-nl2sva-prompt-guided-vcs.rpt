@@ -1,0 +1,80 @@
+
+==============================================================
+    Jasper Verification Results
+==============================================================
+    2022.09p001 64 bits for Linux64 3.10.0-1062.1.2.el7.x86_64
+    Host Name: icpc
+    User Name: master
+    Printed on: Tuesday, Jul29, 2025 06:49:22 AM CST
+    Working Directory: /home/master/RAG-aided-Assertion-Generation/Evaluation/Dataset/control_unit
+
+
+==============================================================
+SUMMARY
+==============================================================
+    Total Tasks           : 1
+    Total Properties      : 36
+          assumptions     : 0                   
+           - approved     : 0                   
+           - temporary    : 0                   
+          assertions      : 12                  
+           - proven       : 12                  ( 100.0% )
+           - marked_proven: 0                   ( 0.0% )
+           - cex          : 0                   ( 0.0% )
+           - ar_cex       : 0                   ( 0.0% )
+           - undetermined : 0                   ( 0.0% )
+           - unprocessed  : 0                   ( 0.0% )
+           - error        : 0                   ( 0.0% )
+          covers          : 24                  
+           - unreachable  : 0                   ( 0.0% )
+           - covered      : 24                  ( 100.0% )
+           - ar_covered   : 0                   ( 0.0% )
+           - undetermined : 0                   ( 0.0% )
+           - unprocessed  : 0                   ( 0.0% )
+           - error        : 0                   ( 0.0% )
+
+==============================================================
+RESULTS
+==============================================================
+
+--------------------------------------------------------------------------------------------------
+       Name                                      |    Result    |  Engine  |  Bound  |  Time    
+--------------------------------------------------------------------------------------------------
+
+---[ <embedded> ]---------------------------------------------------------------------------------
+[1]   control_unit._assert_1                          proven          PRE    Infinite    0.000 s      
+[2]   control_unit._assert_1:precondition1            covered         PRE           1    0.000 s      
+[3]   control_unit._assert_2                          proven          PRE    Infinite    0.000 s      
+[4]   control_unit._assert_2:precondition1            covered         PRE           1    0.000 s      
+[5]   control_unit._assert_3                          proven          PRE    Infinite    0.000 s      
+[6]   control_unit._assert_3:precondition1            covered         PRE           1    0.000 s      
+[7]   control_unit._assert_4                          proven          PRE    Infinite    0.000 s      
+[8]   control_unit._assert_4:precondition1            covered         PRE           1    0.000 s      
+[9]   control_unit._assert_5                          proven          PRE    Infinite    0.000 s      
+[10]  control_unit._assert_5:precondition1            covered         PRE           1    0.000 s      
+[11]  control_unit._assert_6                          proven          PRE    Infinite    0.000 s      
+[12]  control_unit._assert_6:precondition1            covered         PRE           1    0.000 s      
+[13]  control_unit._assert_6:precondition2            covered         PRE           1    0.000 s      
+[14]  control_unit._assert_6:precondition3            covered         PRE           1    0.000 s      
+[15]  control_unit._assert_6:precondition4            covered         PRE           1    0.000 s      
+[16]  control_unit._assert_7                          proven          PRE    Infinite    0.000 s      
+[17]  control_unit._assert_7:precondition1            covered         PRE           1    0.000 s      
+[18]  control_unit._assert_8                          proven          PRE    Infinite    0.000 s      
+[19]  control_unit._assert_8:precondition1            covered         PRE           1    0.000 s      
+[20]  control_unit._assert_8:precondition2            covered         PRE           1    0.000 s      
+[21]  control_unit._assert_8:precondition3            covered         PRE           1    0.000 s      
+[22]  control_unit._assert_8:precondition4            covered         PRE           1    0.000 s      
+[23]  control_unit._assert_9                          proven          PRE    Infinite    0.000 s      
+[24]  control_unit._assert_9:precondition1            covered         PRE           1    0.000 s      
+[25]  control_unit._assert_10                         proven          PRE    Infinite    0.000 s      
+[26]  control_unit._assert_10:precondition1           covered         PRE           1    0.000 s      
+[27]  control_unit._assert_10:precondition2           covered         PRE           1    0.000 s      
+[28]  control_unit._assert_10:precondition3           covered         PRE           1    0.000 s      
+[29]  control_unit._assert_10:precondition4           covered         PRE           1    0.000 s      
+[30]  control_unit._assert_11                         proven          PRE    Infinite    0.000 s      
+[31]  control_unit._assert_11:precondition1           covered         PRE           1    0.000 s      
+[32]  control_unit._assert_12                         proven          PRE    Infinite    0.000 s      
+[33]  control_unit._assert_12:precondition1           covered         PRE           1    0.000 s      
+[34]  control_unit._assert_12:precondition2           covered         PRE           1    0.000 s      
+[35]  control_unit._assert_12:precondition3           covered         PRE           1    0.000 s      
+[36]  control_unit._assert_12:precondition4           covered         PRE           1    0.000 s      

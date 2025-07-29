@@ -1,0 +1,50 @@
+
+==============================================================
+    Jasper Verification Results
+==============================================================
+    2022.09p001 64 bits for Linux64 3.10.0-1062.1.2.el7.x86_64
+    Host Name: icpc
+    User Name: master
+    Printed on: Tuesday, Jul29, 2025 06:52:36 AM CST
+    Working Directory: /home/master/RAG-aided-Assertion-Generation/Evaluation/Dataset/SEVEN
+
+
+==============================================================
+SUMMARY
+==============================================================
+    Total Tasks           : 1
+    Total Properties      : 6
+          assumptions     : 0                   
+           - approved     : 0                   
+           - temporary    : 0                   
+          assertions      : 4                   
+           - proven       : 4                   ( 100.0% )
+           - marked_proven: 0                   ( 0.0% )
+           - cex          : 0                   ( 0.0% )
+           - ar_cex       : 0                   ( 0.0% )
+           - undetermined : 0                   ( 0.0% )
+           - unprocessed  : 0                   ( 0.0% )
+           - error        : 0                   ( 0.0% )
+          covers          : 2                   
+           - unreachable  : 0                   ( 0.0% )
+           - covered      : 2                   ( 100.0% )
+           - ar_covered   : 0                   ( 0.0% )
+           - undetermined : 0                   ( 0.0% )
+           - unprocessed  : 0                   ( 0.0% )
+           - error        : 0                   ( 0.0% )
+
+==============================================================
+RESULTS
+==============================================================
+
+------------------------------------------------------------------------------------------
+       Name                              |    Result    |  Engine  |  Bound  |  Time    
+------------------------------------------------------------------------------------------
+
+---[ <embedded> ]-------------------------------------------------------------------------
+[1]   SEVEN._assert_1                         proven          Tri         (0)    1.025 s      
+[2]   SEVEN._assert_2                         proven          Tri         (0)    1.012 s      
+[3]   SEVEN._assert_3                         proven          Tri         (0)    1.025 s      
+[4]   SEVEN._assert_4                         proven          PRE         (0)    0.000 s      
+[5]   SEVEN._assert_4:precondition1           covered         PRE           1    0.000 s      
+[6]   SEVEN._assert_4:precondition2           covered         PRE           1    0.000 s      

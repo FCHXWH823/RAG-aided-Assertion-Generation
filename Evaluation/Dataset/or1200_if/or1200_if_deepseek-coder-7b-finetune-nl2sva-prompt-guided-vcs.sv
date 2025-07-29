@@ -212,8 +212,8 @@ assert property (@(posedge clk) disable iff (rst) ((if_flushpipe || (!save_insn 
 assert property (@(posedge clk) disable iff (rst) ((if_flushpipe | (!save_insn && !if_freeze)) |-> ##1 saved == 0) iff ((if_flushpipe || (!save_insn && !if_freeze)) |-> (saved == 0)));
 assert property (@(posedge clk) disable iff (rst) ((!if_flushpipe && save_insn && !icpu_err_i)      |->    (insn_saved == $past(icpu_dat_i, 1))));
 assert property (@(posedge clk) disable iff (rst) ((!if_flushpipe && save_insn && !icpu_err_i) |-> ##1 (insn_saved == $past(icpu_dat_i))) iff ((!if_flushpipe && save_insn && !icpu_err_i)      |->    (insn_saved == $past(icpu_dat_i, 1))));
-assert property (@(posedge clk) disable iff (rst) ((if_flushpipe || (save_insn && !if_flushpipe && !if_freeze && !icpu_err_i)) ) |->  (insn_saved == {6'b000101, 26'h041_0000}));
-assert property (@(posedge clk) disable iff (rst) ((if_flushpipe | (!save_insn && !if_freeze) && !icpu_err_i) |-> ##1 (insn_saved == {6'b000101, 26'h041_0000})) iff ((if_flushpipe || (save_insn && !if_flushpipe && !if_freeze && !icpu_err_i)) ) |->  (insn_saved == {6'b000101, 26'h041_0000}));
+assert property (@(posedge clk) disable iff (rst) (((if_flushpipe || (save_insn && !if_flushpipe && !if_freeze && !icpu_err_i)) ) |->  (insn_saved == {6'b000101, 26'h041_0000})));
+assert property (@(posedge clk) disable iff (rst) ((if_flushpipe | (!save_insn && !if_freeze) && !icpu_err_i) |-> ##1 (insn_saved == {6'b000101, 26'h041_0000})) iff (((if_flushpipe || (save_insn && !if_flushpipe && !if_freeze && !icpu_err_i)) ) |->  (insn_saved == {6'b000101, 26'h041_0000})));
 assert property (@(posedge clk) disable iff (rst) ((!if_flushpipe && (save_insn || !if_freeze))     |->    (addr_saved == $past(icpu_adr_i,2))));
 assert property (@(posedge clk) disable iff (rst) ((!if_flushpipe && (save_insn | !if_freeze)) |-> ##1 (addr_saved == {$past(icpu_adr_i[31:2]), 2'b00})) iff ((!if_flushpipe && (save_insn || !if_freeze))     |->    (addr_saved == $past(icpu_adr_i,2))));
 assert property (@(posedge clk) disable iff (rst) (if_flushpipe |-> ##1 (addr_saved == 32'h00000000)));

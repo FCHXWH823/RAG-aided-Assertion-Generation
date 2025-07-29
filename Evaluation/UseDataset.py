@@ -92,7 +92,8 @@ def extract_csv_from_dataset(csv_name: str):
 # model = "deepseek-chat"
 model = "ft:gpt-4o-mini-2024-07-18:nyuccs::BUh3lZyT"
 methods = [""]
-modified_model = "finetuned_gpt-4o-mini"
+# modified_model = "deepseek-coder-7b-instruct-v1.5-vcs"
+modified_model = "deepseek-coder-7b-finetune-nl2sva-prompt-guided-vcs"
 
 def modify_model_name():
     for folder in os.listdir("Evaluation/Dataset"):
@@ -118,7 +119,7 @@ def generate_fpv():
 
 
 if __name__ == '__main__':
-    modify_model_name()
+    # modify_model_name()
     generate_fpv()
     # extract_csv_from_dataset("evaluation-dataset.csv")
 

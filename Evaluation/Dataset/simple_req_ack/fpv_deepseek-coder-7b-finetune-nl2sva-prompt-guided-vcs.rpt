@@ -1,0 +1,53 @@
+
+==============================================================
+    Jasper Verification Results
+==============================================================
+    2022.09p001 64 bits for Linux64 3.10.0-1062.1.2.el7.x86_64
+    Host Name: icpc
+    User Name: master
+    Printed on: Tuesday, Jul29, 2025 07:07:35 AM CST
+    Working Directory: /home/master/RAG-aided-Assertion-Generation/Evaluation/Dataset/simple_req_ack
+
+
+==============================================================
+SUMMARY
+==============================================================
+    Total Tasks           : 1
+    Total Properties      : 9
+          assumptions     : 0                   
+           - approved     : 0                   
+           - temporary    : 0                   
+          assertions      : 3                   
+           - proven       : 3                   ( 100.0% )
+           - marked_proven: 0                   ( 0.0% )
+           - cex          : 0                   ( 0.0% )
+           - ar_cex       : 0                   ( 0.0% )
+           - undetermined : 0                   ( 0.0% )
+           - unprocessed  : 0                   ( 0.0% )
+           - error        : 0                   ( 0.0% )
+          covers          : 6                   
+           - unreachable  : 0                   ( 0.0% )
+           - covered      : 6                   ( 100.0% )
+           - ar_covered   : 0                   ( 0.0% )
+           - undetermined : 0                   ( 0.0% )
+           - unprocessed  : 0                   ( 0.0% )
+           - error        : 0                   ( 0.0% )
+
+==============================================================
+RESULTS
+==============================================================
+
+---------------------------------------------------------------------------------------------------
+       Name                                       |    Result    |  Engine  |  Bound  |  Time    
+---------------------------------------------------------------------------------------------------
+
+---[ <embedded> ]----------------------------------------------------------------------------------
+[1]   simple_req_ack._assert_1                         proven          Hp     Infinite    0.002 s      
+[2]   simple_req_ack._assert_1:precondition1           covered         PRE           1    0.000 s      
+[3]   simple_req_ack._assert_2                         proven          Hp     Infinite    0.002 s      
+[4]   simple_req_ack._assert_2:precondition1           covered         PRE           1    0.000 s      
+[5]   simple_req_ack._assert_3                         proven          PRE    Infinite    0.000 s      
+[6]   simple_req_ack._assert_3:precondition1           covered         Hp            1    0.001 s      
+[7]   simple_req_ack._assert_3:precondition2           covered         PRE           1    0.000 s      
+[8]   simple_req_ack._assert_3:precondition3           covered         Hp            1    0.001 s      
+[9]   simple_req_ack._assert_3:precondition4           covered         PRE           1    0.000 s      
