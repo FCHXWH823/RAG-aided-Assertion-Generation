@@ -256,8 +256,8 @@ with open(f'Results/Dynamic-RAG-Openai-4o-mini-Prompted-Assertion-Generation-Res
     for folder in os.listdir("Evaluation/Dataset/"):
         if Excute_Folder != 'ALL_DESIGNS' and Excute_Folder not in folder:
             continue
-        if folder in ["Ripple_Carry_Adder", "or1200_operandmuxes", "gray", "Flip_Flop_Array", "PSGBusArb", "apb", "host_interface", "control_unit", "Programmable_Sequence_Detector", "PWM", "module_i2c", "delay2", "simple_req_ack", "Gray_Code_Counter", "uartTrans", "i2c", "uartRec", "APB_FSM_Controller", "register", "SEVEN","arbiter","simple_pipeline","lcd","Parallel_In_Serial_Out_Shift_Reg","fifo"]:
-            continue
+        # if folder in ["Ripple_Carry_Adder", "or1200_operandmuxes", "gray", "Flip_Flop_Array", "PSGBusArb", "apb", "host_interface", "control_unit", "Programmable_Sequence_Detector", "PWM", "module_i2c", "delay2", "simple_req_ack", "Gray_Code_Counter", "uartTrans", "i2c", "uartRec", "APB_FSM_Controller", "register", "SEVEN","arbiter","simple_pipeline","lcd","Parallel_In_Serial_Out_Shift_Reg","fifo"]:
+        #     continue
         folder_path = os.path.join("Evaluation/Dataset/",folder)
         if os.path.isdir(folder_path):
             with open(folder_path+"/"+folder+".sv","r") as file:
@@ -273,6 +273,9 @@ with open(f'Results/Dynamic-RAG-Openai-4o-mini-Prompted-Assertion-Generation-Res
 
             llm_responses = []
             for assertion, details in explanation_json.items():
+                if "Assertion" not in assertion:
+                    # leaf_sv_files = details
+                    continue
                 explanation = details.get("Assertion Explaination", "No explanation provided").lower()
 
                 # clk_condition = "" if details.get("clock signal condition") is "none" else details.get("clock signal condition")
@@ -376,6 +379,9 @@ with open(f'Results/Dynamic-RAG-Openai-4o-mini-Prompted-Assertion-Generation-Res
                 llm_logic_expressions = []
 
                 for assertion, details in explanation_json.items():
+                    if "Assertion" not in assertion:
+                        # leaf_sv_files = details
+                        continue
                     clk_condition = "" if details.get("clock signal condition") == "none" else details.get("clock signal condition")
                     disable_condition = "" if details.get("disable condition") == "none" else details.get("disable condition")
                     logic_expression = details.get("logical expression")

@@ -137,6 +137,9 @@ with open('Results/Openai-4o-mini-Prompted-Assertion-Generation-Results-for-New-
 
             llm_responses = []
             for assertion, details in explanation_json.items():
+                if "Assertion" not in assertion:
+                    # leaf_sv_files = details
+                    continue
                 explanation = details.get("Assertion Explaination", "No explanation provided")
                 signals = details.get("Signals", "No signals provided")
                 # clk_condition = "" if details.get("clock signal condition") is "none" else details.get("clock signal condition")
@@ -207,6 +210,9 @@ with open('Results/Openai-4o-mini-Prompted-Assertion-Generation-Results-for-New-
                 llm_logic_expressions = []
 
                 for assertion, details in explanation_json.items():
+                    if "Assertion" not in assertion:
+                        # leaf_sv_files = details
+                        continue
                     clk_condition = "" if details.get("clock signal condition") == "none" else details.get("clock signal condition")
                     disable_condition = "" if details.get("disable condition") == "none" else details.get("disable condition")
                     logic_expression = details.get("logical expression")
